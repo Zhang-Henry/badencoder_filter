@@ -1,0 +1,118 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "optimize_filter_stl",
+      "type": "python",
+      "request": "launch",
+      "program": "/home/hrzhang/projects/BadEncoder-main/optimize_filter_stl.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "env": {
+        "CUDA_VISIBLE_DEVICES": "0"
+      },
+    },
+    {
+      "name": "optimize_filter",
+      "type": "python",
+      "request": "launch",
+      "program": "/home/hrzhang/projects/BadEncoder-main/optimize_filter.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "env": {
+        "CUDA_VISIBLE_DEVICES": "5"
+      },
+    },
+    {
+      "name": "badencoder:cifar10",
+      "type": "python",
+      "request": "launch",
+      "program": "/home/hrzhang/projects/BadEncoder-main/badencoder.py",
+      "console": "integratedTerminal",
+      "args": [
+        "--lr",
+        "0.001",
+        "--batch_size",
+        "256",
+        "--results_dir",
+        "./output/cifar10/stl10_backdoored_encoder",
+        "--shadow_dataset",
+        "cifar10",
+        "--pretrained_encoder",
+        "./output/cifar10/clean_encoder/model_1000.pth",
+        "--encoder_usage_info",
+        "cifar10",
+        "--gpu",
+        "1",
+        "--reference_file",
+        "reference/cifar10/truck.npz",
+        "--trigger_file",
+        "trigger/trigger_pt_white_21_10_ap_replace.npz"
+      ],
+      "justMyCode": true
+    },
+    {
+      "name": "badencoder:stl",
+      "type": "python",
+      "request": "launch",
+      "program": "/home/hrzhang/projects/BadEncoder-main/badencoder.py",
+      "console": "integratedTerminal",
+      "args": [
+        "--lr",
+        "0.001",
+        "--batch_size",
+        "256",
+        "--results_dir",
+        "./output/stl10/gtsrb_backdoored_encoder",
+        "--shadow_dataset",
+        "stl10",
+        "--pretrained_encoder",
+        "./output/stl10/clean_encoder/model_1000.pth",
+        "--encoder_usage_info",
+        "stl10",
+        "--gpu",
+        "1",
+        "--reference_file",
+        "reference/stl10/priority.npz",
+        "--trigger_file",
+        "trigger/trigger_pt_white_21_10_ap_replace.npz"
+      ],
+      "justMyCode": true,
+      "cwd":"/home/hrzhang/projects/BadEncoder-main"
+    },
+    {
+      "name": "badencoder:imagenet",
+      "type": "python",
+      "request": "launch",
+      "program": "/home/hrzhang/projects/BadEncoder-main/badencoder.py",
+      "console": "integratedTerminal",
+      "args": [
+        "--lr",
+        "0.001",
+        "--batch_size",
+        "256",
+        "--results_dir",
+        "./output/imagenet/gtsrb_backdoored_encoder",
+        "--shadow_dataset",
+        "imagenet",
+        "--pretrained_encoder",
+        "./output/imagenet/clean_encoder/resnet50-1x.pth",
+        "--encoder_usage_info",
+        "imagenet",
+        "--gpu",
+        "1",
+        "--reference_file",
+        "reference/imagenet/priority.npz",
+        "--trigger_file",
+        "trigger/trigger_pt_white_173_50_ap_replace.npz"
+      ],
+      "env": {
+        "CUDA_VISIBLE_DEVICES": "1"
+      },
+      "justMyCode": true
+    }
+  ]
+}
