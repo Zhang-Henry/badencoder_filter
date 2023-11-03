@@ -1,7 +1,18 @@
+import sys
+sys.path.append("..")
 from torch.autograd import Function
 import torch.nn as nn
 import torch
 import numpy as np
+from torchvision import models
+from torchvision.models import resnet50, ResNet50_Weights,vit_l_16,ViT_L_16_Weights,vit_b_16,ViT_B_16_Weights,swin_s,Swin_S_Weights
+from torch.nn import MSELoss,Identity
+from moco.builder import MoCo
+from collections import OrderedDict
+from simclr_converter.resnet_wider import resnet50x1, resnet50x2, resnet50x4
+from pytorch_pretrained_vit import ViT
+import gc
+
 """
 Adapted from https://github.com/fungtion/DSN/blob/master/functions.py
 """
@@ -256,3 +267,234 @@ class SinkhornDistance(nn.Module):
     def ave(u, u1, tau):
         "Barycenter subroutine, used by kinetic acceleration through extrapolation."
         return tau * u + (1 - tau) * u1
+
+
+class Recorder:
+    def __init__(self, args):
+        super().__init__()
+
+        # Best optimization results
+        # self.mask_best = None
+        # self.pattern_best = None
+        self.best = -float("inf")
+
+        # Logs and counters for adjusting balance cost
+        self.logs = []
+        self.cost_set_counter = 0
+        self.cost_up_counter = 0
+        self.cost_down_counter = 0
+        self.cost_up_flag = False
+        self.cost_down_flag = False
+
+        # Counter for early stop
+        self.early_stop_counter = 0
+        self.early_stop_reg_best = self.best
+
+        # Cost
+        self.cost = args.init_cost
+        self.cost_multiplier_up = args.cost_multiplier_up
+        self.cost_multiplier_down = args.cost_multiplier_down
+
+    def reset_state(self, args):
+        self.cost = args.init_cost
+        self.cost_up_counter = 0
+        self.cost_down_counter = 0
+        self.cost_up_flag = False
+        self.cost_down_flag = False
+        print("Initialize cost to {:f}".format(self.cost))
+
+
+class Loss:
+    def __init__(self):
+        super().__init__()
+        self.losses=[]
+        self.avg=0.0
+
+    def update(self,num):
+        self.losses.append(num)
+        self.avg=np.mean(self.losses)
+
+    def reset(self):
+        self.losses=[]
+        self.avg=0.0
+
+
+class Loss_Tracker:
+    def __init__(self) -> None:
+        self.loss=Loss()
+        self.wd=Loss()
+        self.ssim=Loss()
+        self.psnr=Loss()
+        self.lp=Loss()
+        self.mse=Loss()
+        self.sim=Loss()
+        self.far=Loss()
+
+    def update(self,loss,wd,ssim,psnr,lp,mse,sim,far):
+        self.loss.update(loss)
+        self.wd.update(wd)
+        self.ssim.update(ssim)
+        self.psnr.update(psnr)
+        self.lp.update(lp)
+        self.mse.update(mse)
+        self.sim.update(sim)
+        self.far.update(far)
+
+    def get_avg_loss(self):
+        return self.loss.avg,self.wd.avg,self.ssim.avg,self.psnr.avg,self.lp.avg,self.mse.avg,self.sim.avg,self.far.avg
+
+    def reset(self):
+        self.loss.reset()
+        self.wd.reset()
+        self.ssim.reset()
+        self.psnr.reset()
+        self.lp.reset()
+        self.mse.reset()
+        self.sim.reset()
+        self.far.reset()
+
+
+
+class ResNetFeatureExtractor(torch.nn.Module):
+    def __init__(self, resnet):
+        super(ResNetFeatureExtractor, self).__init__()
+        # 将ResNet的层分开
+        self.conv1 = resnet.conv1
+        self.bn1 = resnet.bn1
+        self.relu = resnet.relu
+        self.maxpool = resnet.maxpool
+
+        self.layer1 = resnet.layer1
+        self.layer2 = resnet.layer2
+        self.layer3 = resnet.layer3
+        self.layer4 = resnet.layer4
+
+    def forward(self, x):
+        # 提取各个层的特征
+        x = self.conv1(x)
+        x = self.bn1(x)
+        x = self.relu(x)
+        conv1_out = x
+
+        x = self.maxpool(x)
+        x = self.layer1(x)
+        layer1_out = x
+
+        x = self.layer2(x)
+        layer2_out = x
+
+        x = self.layer3(x)
+        layer3_out = x
+
+        x = self.layer4(x)
+        layer4_out = x
+
+        # 返回提取的特征
+        # return conv1_out, layer1_out, layer2_out, layer3_out, layer4_out
+        return layer4_out
+
+
+def gram_matrix(input):
+    a, b, c, d = input.size()  # batch size(=1), feature map number, dimensions
+    features = input.view(a * b, c * d)  # resize F_XL into \hat F_XL
+    G = torch.mm(features, features.t())  # compute the gram product
+
+    # normalize the values of the gram matrix by dividing by the number of element in each feature maps.
+    return G.div(a * b * c * d)
+
+
+def load_backbone():
+        # self.backbone=resnet50(weights=ResNet50_Weights.IMAGENET1K_V2).to(self.device).eval()
+        # self.backbone=vit_l_16(weights=ViT_L_16_Weights.IMAGENET1K_SWAG_LINEAR_V1).to(self.device).eval()
+        # self.backbone=vit_b_16(weights=ViT_B_16_Weights.IMAGENET1K_SWAG_LINEAR_V1).to(self.device).eval()
+        # self.backbone=swin_s(weights=Swin_S_Weights.IMAGENET1K_V1).to(self.device).eval()
+        # self.backbone.head=Identity()
+
+        ################ simclr pretrained #################
+        # self.backbone = resnet50x1().to(self.device) # simclr
+        # sd = torch.load('../simclr_converter/resnet50-1x.pth', map_location=torch.device('cuda:0'))
+        # self.backbone.load_state_dict(sd['state_dict'])
+
+        ################ simclr finetuned all #################
+        # self.backbone = resnet50x1().to(self.device) # simclr
+        # self.backbone = torch.load('backbone/best_model_acc80.19.pth', map_location=torch.device('cuda:0'))
+        # self.backbone.load_state_dict(sd)
+
+        ############# moco trained by myself #################
+        moco=MoCo(
+            models.__dict__['resnet18'],
+            128, 65536, 0.999,
+            contr_tau=0.2,
+            align_alpha=None,
+            unif_t=None,
+            unif_intra_batch=True,
+            mlp=True) # moco trained by myself
+
+        checkpoint = torch.load('../moco/save/custom_imagenet_n02106550/mocom0.999_contr1tau0.2_mlp_aug+_cos_b256_lr0.06_e120,160,200/checkpoint_0199.pth.tar', map_location=torch.device('cuda:0'))
+        state_dict =checkpoint['state_dict']
+
+        new_state_dict = OrderedDict()
+
+        for k, v in state_dict.items():
+            if 'module' in k:
+                k = k.split('.')[1:]
+                k = '.'.join(k)
+            new_state_dict[k]=v
+
+        moco.load_state_dict(new_state_dict)
+        backbone=moco.encoder_q
+
+        ############### moco pretrained https://github.com/facebookresearch/moco ##############
+        # model = models.__dict__['resnet50']()
+
+        # checkpoint = torch.load('/home/hrzhang/projects/SSL-Backdoor/moco/save/moco_v2_800ep_pretrain.pth.tar')
+        # state_dict = checkpoint["state_dict"]
+
+        # for k in list(state_dict.keys()):
+        #     # retain only encoder_q up to before the embedding layer
+        #     if k.startswith("module.encoder_q") and not k.startswith(
+        #         "module.encoder_q.fc"
+        #     ):
+        #         # remove prefix
+        #         state_dict[k[len("module.encoder_q.") :]] = state_dict[k]
+        #     # delete renamed or unused k
+        #     del state_dict[k]
+
+        # model.load_state_dict(state_dict, strict=False)
+
+        ################## moco finetuned ###################
+        # model = models.__dict__['resnet50']()
+        # model.fc = nn.Sequential(
+        #     nn.Linear(model.fc.in_features, 1024),
+        #     nn.ReLU(),
+        #     nn.Linear(1024, 512),
+        #     nn.ReLU(),
+        #     nn.Linear(512, 256),
+        #     nn.ReLU(),
+        #     nn.Linear(256, 100),
+        # )
+        # state_dict=torch.load("backbone/best_model_acc80.19.pth")
+        # model.load_state_dict(state_dict, strict=False)
+
+        ################# resnet trained by SCL ###############
+        # state_dict=torch.load('backbone/supcon.pth')['model']
+
+        # for k in list(state_dict.keys()):
+        #     # retain only encoder_q up to before the embedding layer
+        #     if k.startswith("module.encoder"):
+        #         state_dict[k[len("module.encoder.") :]] = state_dict[k]
+        #     # delete renamed or unused k
+        #     del state_dict[k]
+
+        # model = models.__dict__['resnet50']()
+        # # model.fc = Identity()
+        # model.load_state_dict(state_dict,strict=False)
+
+        # backbone = ResNetFeatureExtractor(model) # 提取resnet的conv1, layer1, layer2, layer3, layer4的特征
+        # del model
+        # gc.collect()
+        ################# pretrained VIT ###############
+        # model = ViT('B_16_imagenet1k', pretrained=True, image_size=224)
+        # model.fc=Identity()
+
+        return backbone

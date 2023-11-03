@@ -234,6 +234,7 @@ class R2U_Net(nn.Module):
         self.Up_RRCNN2 = RRCNN_block(ch_in=128, ch_out=64,t=t)
 
         self.Conv_1x1 = nn.Conv2d(64,output_ch,kernel_size=1,stride=1,padding=0)
+        self.sig = nn.Sigmoid()
 
 
     def forward(self,x):
@@ -270,6 +271,7 @@ class R2U_Net(nn.Module):
         d2 = self.Up_RRCNN2(d2)
 
         d1 = self.Conv_1x1(d2)
+        d1 = self.sig(d1) # limit to 0-1
 
         return d1
 
@@ -304,6 +306,7 @@ class AttU_Net(nn.Module):
         self.Up_conv2 = conv_block(ch_in=128, ch_out=64)
 
         self.Conv_1x1 = nn.Conv2d(64,output_ch,kernel_size=1,stride=1,padding=0)
+        # self.sig = nn.Sigmoid()
 
 
     def forward(self,x):
@@ -344,6 +347,7 @@ class AttU_Net(nn.Module):
         d2 = self.Up_conv2(d2)
 
         d1 = self.Conv_1x1(d2)
+        # d1 = self.sig(d1) # limit to 0-1
 
         return d1
 
@@ -383,6 +387,7 @@ class R2AttU_Net(nn.Module):
         self.Up_RRCNN2 = RRCNN_block(ch_in=128, ch_out=64,t=t)
 
         self.Conv_1x1 = nn.Conv2d(64,output_ch,kernel_size=1,stride=1,padding=0)
+        self.sig = nn.Sigmoid()
 
 
     def forward(self,x):
@@ -423,5 +428,7 @@ class R2AttU_Net(nn.Module):
         d2 = self.Up_RRCNN2(d2)
 
         d1 = self.Conv_1x1(d2)
+
+        d1 = self.sig(d1) # limit to 0-1
 
         return d1

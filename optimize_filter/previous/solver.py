@@ -15,7 +15,7 @@ from PIL import Image
 from func import CMD, SinkhornDistance, MMD_loss
 # import lpips
 from network import U_Net
-from data_loader import aug
+from optimize_filter.previous.data_loader import aug
 
 class Solver():
     def __init__(self, args, train_loader):

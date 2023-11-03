@@ -1,6 +1,6 @@
 import argparse,torch,random,os
 import numpy as np
-from data_loader import create_data_loader
+from optimize_filter.previous.data_loader import create_data_loader
 from solver import Solver
 
 def seed_torch(seed=1029):
