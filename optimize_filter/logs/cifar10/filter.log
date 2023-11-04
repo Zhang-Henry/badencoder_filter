@@ -1,0 +1,177 @@
+Start Time: 2023-11-04 01:38:52
+Namespace(ablation=False, batch_size=128, beta1=0.9, beta2=0.999, cost_multiplier_down=2.0, cost_multiplier_up=1.5, epsilon=1e-08, gamma=0.1, gpu=2, init_cost=1.0, init_cost2=1, lp_threshold=0.5, lr=0.005, mode='train_filter', n_epoch=150, num=0.05, num_workers=2, optimizer='Adam', patience=5, psnr_threshold=20.0, resume=None, ssim_threshold=0.8, step_size=50, timestamp='2023-11-04-01-38-50', use_feature=True)
+Loading data...
+Setting up [LPIPS] perceptual loss: trunk [alex], v[0.1], spatial [off]
+Loading model from: /home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/lpips/weights/v0.1/alex.pth
+ResNet(
+  (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (relu): ReLU(inplace=True)
+  (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  (layer1): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (2): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer2): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (2): BasicBlock(
+      (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (3): BasicBlock(
+      (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer3): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (2): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (3): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (4): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (5): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer4): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (2): BasicBlock(
+      (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (fc): Identity()
+)/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=AlexNet_Weights.IMAGENET1K_V1`. You can also use `weights=AlexNet_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+
+Start training...
+  0%|          | 0/150 [00:00<?, ?it/s]Loss: 0.7597545892000198, lr: 0.005, SIM: 0.93959, far:-0.17983929677269397, WD: 0.17983929677269397, SSIM: 0.33444, pnsr:11.97124, lp:0.08726,mse:0.06782,  cost:1.0:   0%|          | 0/150 [00:32<?, ?it/s]Loss: 0.7597545892000198, lr: 0.005, SIM: 0.93959, far:-0.17983929677269397, WD: 0.17983929677269397, SSIM: 0.33444, pnsr:11.97124, lp:0.08726,mse:0.06782,  cost:1.0:   1%|          | 1/150 [00:32<1:20:37, 32.47s/it]Loss: 0.528125979197331, lr: 0.005, SIM: 0.68344, far:-0.15531588265529045, WD: 0.15531588265529045, SSIM: 0.37151, pnsr:12.71790, lp:0.06908,mse:0.05357,  cost:1.0:   1%|          | 1/150 [01:01<1:20:37, 32.47s/it] Loss: 0.528125979197331, lr: 0.005, SIM: 0.68344, far:-0.15531588265529045, WD: 0.15531588265529045, SSIM: 0.37151, pnsr:12.71790, lp:0.06908,mse:0.05357,  cost:1.0:   1%|▏         | 2/150 [01:01<1:15:29, 30.61s/it]Loss: 0.4630386187480046, lr: 0.005, SIM: 0.62063, far:-0.15759590480190058, WD: 0.15759590480190058, SSIM: 0.38201, pnsr:12.95932, lp:0.06506,mse:0.05066,  cost:1.0:   1%|▏         | 2/150 [01:31<1:15:29, 30.61s/it]Loss: 0.4630386187480046, lr: 0.005, SIM: 0.62063, far:-0.15759590480190058, WD: 0.15759590480190058, SSIM: 0.38201, pnsr:12.95932, lp:0.06506,mse:0.05066,  cost:1.0:   2%|▏         | 3/150 [01:31<1:13:52, 30.15s/it]Loss: 0.42873263083971463, lr: 0.005, SIM: 0.57746, far:-0.14873159925142923, WD: 0.14873159925142923, SSIM: 0.39119, pnsr:13.16273, lp:0.06268,mse:0.04834,  cost:1.0:   2%|▏         | 3/150 [02:01<1:13:52, 30.15s/it]Loss: 0.42873263083971463, lr: 0.005, SIM: 0.57746, far:-0.14873159925142923, WD: 0.14873159925142923, SSIM: 0.39119, pnsr:13.16273, lp:0.06268,mse:0.04834,  cost:1.0:   3%|▎         | 4/150 [02:01<1:13:33, 30.23s/it]Loss: 0.40611095352050586, lr: 0.005, SIM: 0.55137, far:-0.14525907375873665, WD: 0.14525907375873665, SSIM: 0.39740, pnsr:13.26928, lp:0.06122,mse:0.04716,  cost:0.5:   3%|▎         | 4/150 [02:30<1:13:33, 30.23s/it]Loss: 0.40611095352050586, lr: 0.005, SIM: 0.55137, far:-0.14525907375873665, WD: 0.14525907375873665, SSIM: 0.39740, pnsr:13.26928, lp:0.06122,mse:0.04716,  cost:0.5:   3%|▎         | 5/150 [02:30<1:11:57, 29.77s/it]
+--------------------------------------------------
+Down cost from 1.0 to 0.5
+--------------------------------------------------
+Loss: 0.4634698109749036, lr: 0.005, SIM: 0.53618, far:-0.07270757828194362, WD: 0.14541515656388723, SSIM: 0.40121, pnsr:13.33392, lp:0.06041,mse:0.04647,  cost:0.5:   3%|▎         | 5/150 [03:00<1:11:57, 29.77s/it] Loss: 0.4634698109749036, lr: 0.005, SIM: 0.53618, far:-0.07270757828194362, WD: 0.14541515656388723, SSIM: 0.40121, pnsr:13.33392, lp:0.06041,mse:0.04647,  cost:0.5:   4%|▍         | 6/150 [03:00<1:11:13, 29.68s/it]Loss: 0.4455144919646092, lr: 0.005, SIM: 0.51845, far:-0.0729402392051923, WD: 0.1458804784103846, SSIM: 0.40525, pnsr:13.39758, lp:0.05936,mse:0.04579,  cost:0.5:   4%|▍         | 6/150 [03:29<1:11:13, 29.68s/it]  Loss: 0.4455144919646092, lr: 0.005, SIM: 0.51845, far:-0.0729402392051923, WD: 0.1458804784103846, SSIM: 0.40525, pnsr:13.39758, lp:0.05936,mse:0.04579,  cost:0.5:   5%|▍         | 7/150 [03:29<1:10:12, 29.46s/it]Loss: 0.42430708828644875, lr: 0.005, SIM: 0.49956, far:-0.0752508536936381, WD: 0.1505017073872762, SSIM: 0.40920, pnsr:13.47877, lp:0.05827,mse:0.04495,  cost:0.5:   5%|▍         | 7/150 [03:58<1:10:12, 29.46s/it]Loss: 0.42430708828644875, lr: 0.005, SIM: 0.49956, far:-0.0752508536936381, WD: 0.1505017073872762, SSIM: 0.40920, pnsr:13.47877, lp:0.05827,mse:0.04495,  cost:0.5:   5%|▌         | 8/150 [03:58<1:09:26, 29.34s/it]Loss: 0.40819864716285315, lr: 0.005, SIM: 0.48438, far:-0.07618352425977205, WD: 0.1523670485195441, SSIM: 0.41294, pnsr:13.54701, lp:0.05747,mse:0.04424,  cost:0.5:   5%|▌         | 8/150 [04:27<1:09:26, 29.34s/it]Loss: 0.40819864716285315, lr: 0.005, SIM: 0.48438, far:-0.07618352425977205, WD: 0.1523670485195441, SSIM: 0.41294, pnsr:13.54701, lp:0.05747,mse:0.04424,  cost:0.5:   6%|▌         | 9/150 [04:27<1:09:12, 29.45s/it]Loss: 0.3991433039689675, lr: 0.005, SIM: 0.47582, far:-0.07667416283526482, WD: 0.15334832567052964, SSIM: 0.41427, pnsr:13.57121, lp:0.05687,mse:0.04400,  cost:0.25:   6%|▌         | 9/150 [04:57<1:09:12, 29.45s/it]Loss: 0.3991433039689675, lr: 0.005, SIM: 0.47582, far:-0.07667416283526482, WD: 0.15334832567052964, SSIM: 0.41427, pnsr:13.57121, lp:0.05687,mse:0.04400,  cost:0.25:   7%|▋         | 10/150 [04:57<1:09:04, 29.60s/it]
+--------------------------------------------------
+Down cost from 0.5 to 0.25
+--------------------------------------------------
+Loss: 0.42521682419838047, lr: 0.005, SIM: 0.46386, far:-0.03864388762949369, WD: 0.15457555051797475, SSIM: 0.41696, pnsr:13.61331, lp:0.05615,mse:0.04357,  cost:0.25:   7%|▋         | 10/150 [05:27<1:09:04, 29.60s/it]Loss: 0.42521682419838047, lr: 0.005, SIM: 0.46386, far:-0.03864388762949369, WD: 0.15457555051797475, SSIM: 0.41696, pnsr:13.61331, lp:0.05615,mse:0.04357,  cost:0.25:   7%|▋         | 11/150 [05:27<1:08:50, 29.72s/it]Loss: 0.42216980151641065, lr: 0.005, SIM: 0.46147, far:-0.039295874450069206, WD: 0.15718349780027682, SSIM: 0.41731, pnsr:13.61689, lp:0.05596,mse:0.04354,  cost:0.25:   7%|▋         | 11/150 [05:57<1:08:50, 29.72s/it]Loss: 0.42216980151641065, lr: 0.005, SIM: 0.46147, far:-0.039295874450069206, WD: 0.15718349780027682, SSIM: 0.41731, pnsr:13.61689, lp:0.05596,mse:0.04354,  cost:0.25:   8%|▊         | 12/150 [05:57<1:07:59, 29.56s/it]Loss: 0.4143360510850564, lr: 0.005, SIM: 0.45393, far:-0.03959140446610176, WD: 0.15836561786440703, SSIM: 0.41875, pnsr:13.64600, lp:0.05550,mse:0.04324,  cost:0.25:   8%|▊         | 12/150 [06:25<1:07:59, 29.56s/it]  Loss: 0.4143360510850564, lr: 0.005, SIM: 0.45393, far:-0.03959140446610176, WD: 0.15836561786440703, SSIM: 0.41875, pnsr:13.64600, lp:0.05550,mse:0.04324,  cost:0.25:   9%|▊         | 13/150 [06:25<1:06:51, 29.28s/it]Loss: 0.4143360510850564, lr: 0.005, SIM: 0.45393, far:-0.03959140446610176, WD: 0.15836561786440703, SSIM: 0.41875, pnsr:13.64600, lp:0.05550,mse:0.04324,  cost:0.25:   9%|▊         | 13/150 [06:53<1:12:32, 31.77s/it]
+Traceback (most recent call last):
+  File "main.py", line 69, in <module>
+    solver.train(args,train_loader)
+  File "/home/hrzhang/projects/badencoder_filter/optimize_filter/solver.py", line 55, in train
+    self.train_one_epoch(args,recorder,bar,tracker,train_loader)
+  File "/home/hrzhang/projects/badencoder_filter/optimize_filter/solver.py", line 66, in train_one_epoch
+    filter_img = self.net(img_trans)
+  File "/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/hrzhang/projects/badencoder_filter/optimize_filter/network.py", line 320, in forward
+    x3 = self.Conv3(x3)
+  File "/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/hrzhang/projects/badencoder_filter/optimize_filter/network.py", line 43, in forward
+    x = self.conv(x)
+  File "/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1611, in __getattr__
+    modules = self.__dict__['_modules']
+KeyboardInterrupt

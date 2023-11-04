@@ -1,102 +1,51 @@
-from torchvision import transforms
-import moco.loader as loader
-import moco.dataset as dataset
+import sys
+sys.path.append("..")
+
 import torch
+from torchvision import transforms
+from torch.utils.data import DataLoader
+from datasets.backdoor_dataset import CIFAR10M
+import numpy as np
+from datasets.backdoor_dataset_imagenet import BadEncoderDataset
 
 
-aug = transforms.Compose([
-    transforms.RandomResizedCrop(224, scale=(0.2, 1.)),
-    transforms.RandomApply([
-        transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)  # not strengthened
-    ], p=0.8),
-    transforms.RandomGrayscale(p=0.2),
-    transforms.RandomApply([loader.GaussianBlur([.1, 2.])], p=0.5),
-    transforms.RandomHorizontalFlip(),
-    transforms.ToTensor(),
-    # transforms.Normalize(mean=[0.485, 0.456, 0.406],
-    #                                  std=[0.229, 0.224, 0.225])
-])
+def cifar10_dataloader(args):
+    classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+    train_transform = transforms.Compose([
+        transforms.RandomResizedCrop(32),
+        transforms.RandomHorizontalFlip(p=0.5),
+        transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
+        transforms.RandomGrayscale(p=0.2),
+        transforms.ToTensor()])
 
-# aug = transforms.Compose([
-#     transforms.Resize(256),
-#     transforms.CenterCrop(224),
-#     transforms.RandomApply([
-#         transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)  # not strengthened
-#     ], p=0.8),
-#     transforms.RandomGrayscale(p=0.2),
-#     transforms.RandomApply([loader.GaussianBlur([.1, 2.])], p=0.5),
-#     transforms.RandomHorizontalFlip(),
-#     transforms.ToTensor(),
-#     # transforms.Normalize(mean=[0.485, 0.456, 0.406],
-#     #                                  std=[0.229, 0.224, 0.225])
-# ])
-
-
-
-def create_data_loader(args):
-    trans=transforms.Compose([
-        transforms.RandomResizedCrop(224, scale=(0.2, 1.)),
-        transforms.ToTensor(),
-        ])
-
-    train_dataset = dataset.FileListDataset(
-        '/home/hrzhang/projects/SSL-Backdoor/poison-generation/data/clean/train/clean_filelist_5subset.txt',
-        trans)
-
-    train_sampler = None
-
-    train_loader = torch.utils.data.DataLoader(
-        train_dataset, batch_size=args.batch_size, shuffle=(train_sampler is None),
-        num_workers=args.num_workers, pin_memory=True, sampler=train_sampler, drop_last=True)
-
+    memory_data = CIFAR10M(numpy_file='../data/cifar10/train.npz', class_type=classes, transform=train_transform)
+    train_loader = DataLoader(memory_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True, drop_last=True)
     return train_loader
 
 
-def create_finetune_dataloader(args):
-    trans = transforms.Compose([
-        transforms.RandomResizedCrop(224, scale=(0.2, 1.)),
-        transforms.RandomApply([
-            transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)  # not strengthened
-        ], p=0.8),
-        transforms.RandomGrayscale(p=0.2),
-        transforms.RandomApply([loader.GaussianBlur([.1, 2.])], p=0.5),
-        transforms.RandomHorizontalFlip(),
+def imagenet_dataloader(args):
+    bd_transform = transforms.Compose([
+        transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=1.0),
+        transforms.RandomGrayscale(p=1.0),
         transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                         std=[0.229, 0.224, 0.225])
     ])
 
-    val_transform = transforms.Compose([
-        transforms.Resize(256),
-        transforms.CenterCrop(224),
+    transform1 = transforms.Compose([
         transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                         std=[0.229, 0.224, 0.225])
     ])
 
-    train_dataset = dataset.FileListDataset(
-        '/home/hrzhang/projects/SSL-Backdoor/poison-generation/data/clean/train/finetune_train.txt',
-        trans)
-
-    val_dataset = dataset.FileListDataset(
-        '/home/hrzhang/projects/SSL-Backdoor/poison-generation/data/clean/train/finetune_val.txt',
-        val_transform)
-
-    test_dataset = dataset.FileListDataset(
-        '/home/hrzhang/projects/SSL-Backdoor/poison-generation/data/clean/train/finetune_test.txt',
-        val_transform)
+    classes = [str(i) for i in range(1000)]
 
 
-    train_loader = torch.utils.data.DataLoader(
-        train_dataset, batch_size=args.batch_size, shuffle=True,
-        num_workers=args.num_workers, pin_memory=True, drop_last=True)
+    training_data_num = 1000000
+    # np.random.seed(100)
+    training_data_sampling_indices = np.random.choice(training_data_num, int(training_data_num*0.01), replace=False)
 
-    val_loader = torch.utils.data.DataLoader(
-        val_dataset, batch_size=args.batch_size, shuffle=True,
-        num_workers=args.num_workers, pin_memory=True, drop_last=True)
-
-    test_loader = torch.utils.data.DataLoader(
-        test_dataset, batch_size=args.batch_size, shuffle=True,
-        num_workers=args.num_workers, pin_memory=True, drop_last=True)
-
-    return train_loader,val_loader,test_loader
+    shadow_dataset = BadEncoderDataset(
+        root = "data/imagenet/train",
+        class_type=classes,indices = training_data_sampling_indices,
+        transform=transform1,
+        bd_transform=bd_transform,
+    )
+    train_loader = DataLoader(shadow_dataset, batch_size=16, shuffle=True, num_workers=8, pin_memory=True, drop_last=True)
+    return train_loader

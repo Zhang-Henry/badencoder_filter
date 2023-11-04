@@ -4,13 +4,9 @@ from torch.autograd import Function
 import torch.nn as nn
 import torch
 import numpy as np
-from torchvision import models
-from torchvision.models import resnet50, ResNet50_Weights,vit_l_16,ViT_L_16_Weights,vit_b_16,ViT_B_16_Weights,swin_s,Swin_S_Weights
-from torch.nn import MSELoss,Identity
-from moco.builder import MoCo
-from collections import OrderedDict
-from simclr_converter.resnet_wider import resnet50x1, resnet50x2, resnet50x4
-from pytorch_pretrained_vit import ViT
+from torch.nn import Identity
+from PyTorch_CIFAR10.cifar10_models.resnet import resnet34
+
 import gc
 
 """
@@ -390,8 +386,8 @@ class ResNetFeatureExtractor(torch.nn.Module):
         layer4_out = x
 
         # 返回提取的特征
-        # return conv1_out, layer1_out, layer2_out, layer3_out, layer4_out
-        return layer4_out
+        return conv1_out, layer1_out, layer2_out, layer3_out, layer4_out
+        # return layer4_out
 
 
 def gram_matrix(input):
@@ -404,97 +400,7 @@ def gram_matrix(input):
 
 
 def load_backbone():
-        # self.backbone=resnet50(weights=ResNet50_Weights.IMAGENET1K_V2).to(self.device).eval()
-        # self.backbone=vit_l_16(weights=ViT_L_16_Weights.IMAGENET1K_SWAG_LINEAR_V1).to(self.device).eval()
-        # self.backbone=vit_b_16(weights=ViT_B_16_Weights.IMAGENET1K_SWAG_LINEAR_V1).to(self.device).eval()
-        # self.backbone=swin_s(weights=Swin_S_Weights.IMAGENET1K_V1).to(self.device).eval()
-        # self.backbone.head=Identity()
-
-        ################ simclr pretrained #################
-        # self.backbone = resnet50x1().to(self.device) # simclr
-        # sd = torch.load('../simclr_converter/resnet50-1x.pth', map_location=torch.device('cuda:0'))
-        # self.backbone.load_state_dict(sd['state_dict'])
-
-        ################ simclr finetuned all #################
-        # self.backbone = resnet50x1().to(self.device) # simclr
-        # self.backbone = torch.load('backbone/best_model_acc80.19.pth', map_location=torch.device('cuda:0'))
-        # self.backbone.load_state_dict(sd)
-
-        ############# moco trained by myself #################
-        moco=MoCo(
-            models.__dict__['resnet18'],
-            128, 65536, 0.999,
-            contr_tau=0.2,
-            align_alpha=None,
-            unif_t=None,
-            unif_intra_batch=True,
-            mlp=True) # moco trained by myself
-
-        checkpoint = torch.load('../moco/save/custom_imagenet_n02106550/mocom0.999_contr1tau0.2_mlp_aug+_cos_b256_lr0.06_e120,160,200/checkpoint_0199.pth.tar', map_location=torch.device('cuda:0'))
-        state_dict =checkpoint['state_dict']
-
-        new_state_dict = OrderedDict()
-
-        for k, v in state_dict.items():
-            if 'module' in k:
-                k = k.split('.')[1:]
-                k = '.'.join(k)
-            new_state_dict[k]=v
-
-        moco.load_state_dict(new_state_dict)
-        backbone=moco.encoder_q
-
-        ############### moco pretrained https://github.com/facebookresearch/moco ##############
-        # model = models.__dict__['resnet50']()
-
-        # checkpoint = torch.load('/home/hrzhang/projects/SSL-Backdoor/moco/save/moco_v2_800ep_pretrain.pth.tar')
-        # state_dict = checkpoint["state_dict"]
-
-        # for k in list(state_dict.keys()):
-        #     # retain only encoder_q up to before the embedding layer
-        #     if k.startswith("module.encoder_q") and not k.startswith(
-        #         "module.encoder_q.fc"
-        #     ):
-        #         # remove prefix
-        #         state_dict[k[len("module.encoder_q.") :]] = state_dict[k]
-        #     # delete renamed or unused k
-        #     del state_dict[k]
-
-        # model.load_state_dict(state_dict, strict=False)
-
-        ################## moco finetuned ###################
-        # model = models.__dict__['resnet50']()
-        # model.fc = nn.Sequential(
-        #     nn.Linear(model.fc.in_features, 1024),
-        #     nn.ReLU(),
-        #     nn.Linear(1024, 512),
-        #     nn.ReLU(),
-        #     nn.Linear(512, 256),
-        #     nn.ReLU(),
-        #     nn.Linear(256, 100),
-        # )
-        # state_dict=torch.load("backbone/best_model_acc80.19.pth")
-        # model.load_state_dict(state_dict, strict=False)
-
-        ################# resnet trained by SCL ###############
-        # state_dict=torch.load('backbone/supcon.pth')['model']
-
-        # for k in list(state_dict.keys()):
-        #     # retain only encoder_q up to before the embedding layer
-        #     if k.startswith("module.encoder"):
-        #         state_dict[k[len("module.encoder.") :]] = state_dict[k]
-        #     # delete renamed or unused k
-        #     del state_dict[k]
-
-        # model = models.__dict__['resnet50']()
-        # # model.fc = Identity()
-        # model.load_state_dict(state_dict,strict=False)
-
-        # backbone = ResNetFeatureExtractor(model) # 提取resnet的conv1, layer1, layer2, layer3, layer4的特征
-        # del model
-        # gc.collect()
-        ################# pretrained VIT ###############
-        # model = ViT('B_16_imagenet1k', pretrained=True, image_size=224)
-        # model.fc=Identity()
-
-        return backbone
+    backbone = resnet34(pretrained=True)
+    backbone.fc = Identity()
+    backbone.eval() # for evaluation
+    return backbone

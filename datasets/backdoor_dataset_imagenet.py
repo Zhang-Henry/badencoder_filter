@@ -19,7 +19,7 @@ import torch.nn as nn
 
 import copy
 
-from .CTRL.utils.frequency import PoisonFre
+# from .CTRL.utils.frequency import PoisonFre
 
 
 def has_file_allowed_extension(filename: str, extensions: Tuple[str, ...]) -> bool:

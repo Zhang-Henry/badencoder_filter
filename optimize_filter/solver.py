@@ -13,7 +13,7 @@ from tqdm import tqdm
 from PIL import Image
 from utils import *
 from network import U_Net,R2AttU_Net,R2U_Net,AttU_Net
-from optimize_filter.previous.data_loader import aug
+# from optimize_filter.previous.data_loader import aug
 from torchmetrics.image import PeakSignalNoiseRatio
 
 
@@ -30,7 +30,7 @@ class Solver():
         self.loss_cmd = CMD()
         self.loss_fn = lpips.LPIPS(net='alex').to(self.device)
         self.loss_mmd = MMD_loss()
-        # self.WD=SinkhornDistance(eps=0.1, max_iter=100)
+        self.WD=SinkhornDistance(eps=0.1, max_iter=100)
         self.psnr = PeakSignalNoiseRatio().to(self.device)
         self.backbone = load_backbone()
         self.backbone = self.backbone.to(self.device).eval()
@@ -58,35 +58,27 @@ class Solver():
     def train_one_epoch(self,args,recorder,bar,tracker,train_loader):
         tracker.reset() # 重置损失记录器
 
-        for img,label in train_loader:
+        for img,img_trans in train_loader:
             img = img.to(self.device)
+            img_trans = img_trans.to(self.device)
 
-            # 将滤镜作用在输入图像上
+            # 将滤镜作用在Aug的图像上
+            # filter_img = self.net(img_trans)
             filter_img = self.net(img)
+
             filter_img = torch.clamp(filter_img, min=0, max=1)
-
-            # 将滤镜作用在backdoor的图像上
-            scaled_images = (filter_img.cpu().detach().numpy() * 255).astype(np.uint8)
-            aug_filter_img_list=[]
-            for scale_img in scaled_images:
-                scaled_filter_img = Image.fromarray(np.transpose(scale_img,(1,2,0))).convert('RGB')
-                aug_filter_img_list.append(aug(scaled_filter_img)) # 对backdoor图片进行transform
-
-            aug_filter_img = torch.stack(aug_filter_img_list)
-            aug_filter_img=aug_filter_img.cuda()
 
             if args.use_feature:
                 with torch.no_grad():
+                    img_trans_feature = self.backbone(img_trans)
                     filter_img_feature = self.backbone(filter_img)
-                    aug_filter_img_feature = self.backbone(aug_filter_img)
 
-                    # filter_img_feature = F.normalize(filter_img_feature, dim=1)
-                    # aug_filter_img_feature = F.normalize(aug_filter_img_feature, dim=1)
-                    # wd,_,_=self.WD(filter_img_feature,aug_filter_img_feature) # wd越小越相似，拉远backdoor img和transformed backdoor img的距离
+                    img_trans_feature = F.normalize(img_trans_feature, dim=1)
+                    filter_img_feature = F.normalize(filter_img_feature, dim=1)
+                    wd,_,_=self.WD(filter_img_feature,img_trans_feature) # wd越小越相似，拉远backdoor img和transformed backdoor img的距离
+
                     # wd = self.compute_style_loss(filter_img_feature,aug_filter_img_feature)
-                    wd = self.compute_euclidean_loss(filter_img_feature,aug_filter_img_feature)
 
-                    # wd_p,_,_=self.WD(filter_img.view(aug_filter_img.shape[0],-1),aug_filter_img.view(aug_filter_img.shape[0],-1))
             else:
                 wd,_,_=self.WD(filter_img.view(aug_filter_img.shape[0],-1),aug_filter_img.view(aug_filter_img.shape[0],-1)) # wd越小越相似
 

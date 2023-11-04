@@ -10,8 +10,8 @@ from torchvision.models import resnet50, ResNet50_Weights,vit_l_16,ViT_L_16_Weig
 import numpy as np
 from tqdm import tqdm
 from utils import *
-from optimize_filter.previous.data_loader import aug
-from simclr_converter.resnet_wider import resnet50x1, resnet50x2, resnet50x4
+# from optimize_filter.previous.data_loader import aug
+# from simclr_converter.resnet_wider import resnet50x1, resnet50x2, resnet50x4
 
 
 

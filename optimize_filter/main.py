@@ -1,9 +1,9 @@
 import argparse,torch,random,os
 import numpy as np
-from optimize_filter.previous.data_loader import create_data_loader, create_finetune_dataloader
 from solver import Solver
 from finetune import Finetuner
 from datetime import datetime
+from data_loader import cifar10_dataloader,imagenet_dataloader
 
 def seed_torch(seed=1029):
     random.seed(seed)
@@ -62,14 +62,15 @@ if __name__ == '__main__':
 
     print('Loading data...')
     if args.mode == 'train_filter':
-        train_loader = create_data_loader(args)
+        train_loader = cifar10_dataloader(args)
         os.makedirs(f'trigger/moco/{args.timestamp}',exist_ok=True)
         solver=Solver(args)
         # solver=Solver_ab(args,train_loader)
         solver.train(args,train_loader)
 
     elif args.mode == 'finetune_backbone':
-        train_loader,val_loader,test_loader = create_finetune_dataloader(args)
+        # train_loader,val_loader,test_loader = create_finetune_dataloader(args)
 
-        finetuner=Finetuner(args)
-        finetuner.train(args,train_loader,val_loader,test_loader)
+        # finetuner=Finetuner(args)
+        # finetuner.train(args,train_loader,val_loader,test_loader)
+        pass

@@ -11,7 +11,7 @@ import pilgram
 import torch.nn.functional as F
 
 import copy
-from .CTRL.utils.frequency import PoisonFre
+# from .CTRL.utils.frequency import PoisonFre
 
 
 
@@ -95,24 +95,24 @@ class BadEncoderDataset(Dataset):
             ###########################
             # for customized filter only
 
-            # img_copy=torch.Tensor(img_copy)
-            # backdoored_image = F.conv2d(img_copy.permute(2, 0, 1), self.filter, padding=7//2)
-            # img_backdoor = self.bd_transform(backdoored_image.permute(1,2,0).detach().numpy())
+            img_copy=torch.Tensor(img_copy)
+            backdoored_image = F.conv2d(img_copy.permute(2, 0, 1), self.filter, padding=7//2)
+            img_backdoor = self.bd_transform(backdoored_image.permute(1,2,0).detach().numpy())
 
             ###########################
             # for ctrl only
-            trans=transforms.Compose([
-                    transforms.ToTensor()
-                ])
+            # trans=transforms.Compose([
+            #         transforms.ToTensor()
+            #     ])
 
-            image_pil = Image.fromarray(img_copy)
-            tensor_image = trans(image_pil)
+            # image_pil = Image.fromarray(img_copy)
+            # tensor_image = trans(image_pil)
 
-            base_image=tensor_image.unsqueeze(0)
-            poison_frequency_agent = PoisonFre('args',32, [1,2], 32, [15,31],  False,  True)
+            # base_image=tensor_image.unsqueeze(0)
+            # poison_frequency_agent = PoisonFre('args',32, [1,2], 32, [15,31],  False,  True)
 
-            x_tensor,_ = poison_frequency_agent.Poison_Frequency_Diff(base_image,0, 100.0)
-            img_backdoor = x_tensor.squeeze()
+            # x_tensor,_ = poison_frequency_agent.Poison_Frequency_Diff(base_image,0, 100.0)
+            # img_backdoor = x_tensor.squeeze()
             # img_backdoor = np.clip(img_backdoor, 0, 1) #限制颜色范围在0-1
 
             # img_backdoor = self.bd_transform(img_backdoor.detach().numpy())
@@ -178,25 +178,26 @@ class BadEncoderTestBackdoor(Dataset):
         ###########################
         # for customized filter only
 
-        # img_copy=torch.Tensor(img)
-        # backdoored_image = F.conv2d(img_copy.permute(2, 0, 1), self.filter, padding=7//2)
-        # img_backdoor = self.test_transform(backdoored_image.permute(1,2,0).detach().numpy())
+        img_copy=torch.Tensor(img)
+        backdoored_image = F.conv2d(img_copy.permute(2, 0, 1), self.filter, padding=7//2)
+        img_backdoor = self.test_transform(backdoored_image.permute(1,2,0).detach().numpy())
 
         ###########################
         ###########################
         # for ctrl only
-        trans=transforms.Compose([
-                transforms.ToTensor()
-            ])
+        # trans=transforms.Compose([
+        #         transforms.ToTensor()
+        #     ])
 
-        image_pil = Image.fromarray(img)
-        tensor_image = trans(image_pil)
+        # image_pil = Image.fromarray(img)
+        # tensor_image = trans(image_pil)
 
-        base_image=tensor_image.unsqueeze(0)
-        poison_frequency_agent = PoisonFre('args',32, [1,2], 32, [15,31],  False,  True)
+        # base_image=tensor_image.unsqueeze(0)
+        # poison_frequency_agent = PoisonFre('args',32, [1,2], 32, [15,31],  False,  True)
 
-        x_tensor,_ = poison_frequency_agent.Poison_Frequency_Diff(base_image,0, 100.0)
-        img_backdoor = x_tensor.squeeze()
+        # x_tensor,_ = poison_frequency_agent.Poison_Frequency_Diff(base_image,0, 100.0)
+        # img_backdoor = x_tensor.squeeze()
+
         # img_backdoor = np.clip(img_backdoor, 0, 1) #限制颜色范围在0-1
 
         # img_backdoor = self.bd_transform(img_backdoor.detach().numpy())
@@ -224,6 +225,9 @@ class CIFAR10CUSTOM(Dataset):
         self.targets = self.input_array['y'][:,0].tolist()
         self.classes = class_type
         self.transform = transform
+        self.transform2 = transforms.Compose([
+            transforms.ToTensor(),])
+
     def __len__(self):
         return self.data.shape[0]
 
@@ -257,9 +261,10 @@ class CIFAR10M(CIFAR10CUSTOM):
     """CIFAR10 Dataset.
     """
     def __getitem__(self, index):
+
         img, target = self.data[index], self.targets[index]
         img = Image.fromarray(img)
         if self.transform is not None:
             img_trans = self.transform(img)
 
-        return img, img_trans
+        return self.transform2(img), img_trans
