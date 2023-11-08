@@ -9,7 +9,7 @@ from .nn_classifier import predict_feature
 
 
 # test using a knn monitor
-def test(net, memory_data_loader, test_data_clean_loader, test_data_backdoor_loader, epoch, args):
+def test(net, memory_data_loader, test_data_clean_loader, test_data_backdoor_loader, epoch, args,filter):
     net.eval()
     classes = len(memory_data_loader.dataset.classes)
     total_top1, total_top5, total_num, feature_bank = 0.0, 0.0, 0, []
@@ -47,6 +47,11 @@ def test(net, memory_data_loader, test_data_clean_loader, test_data_backdoor_loa
             # data = F.conv2d(data, filter, padding=3//2)
 
             ###########################
+            ############## add filter to backdoor img
+            data=filter(data)
+            # data = torch.clamp(data, min=0, max=1)
+
+
             feature = net(data)
             feature = F.normalize(feature, dim=1)
 

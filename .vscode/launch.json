@@ -27,7 +27,7 @@
       "name": "optimize_filter_stl",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/BadEncoder-main/optimize_filter_stl.py",
+      "program": "/home/hrzhang/projects/badencoder_filter/optimize_filter_stl.py",
       "console": "integratedTerminal",
       "justMyCode": true,
       "env": {
@@ -38,7 +38,7 @@
       "name": "optimize_filter",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/BadEncoder-main/optimize_filter.py",
+      "program": "/home/hrzhang/projects/badencoder_filter/optimize_filter.py",
       "console": "integratedTerminal",
       "justMyCode": true,
       "env": {
@@ -49,7 +49,7 @@
       "name": "badencoder:cifar10",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/BadEncoder-main/badencoder.py",
+      "program": "/home/hrzhang/projects/badencoder_filter/badencoder.py",
       "console": "integratedTerminal",
       "args": [
         "--lr",
@@ -65,19 +65,20 @@
         "--encoder_usage_info",
         "cifar10",
         "--gpu",
-        "1",
+        "0",
         "--reference_file",
         "reference/cifar10/truck.npz",
         "--trigger_file",
         "trigger/trigger_pt_white_21_10_ap_replace.npz"
       ],
-      "justMyCode": true
+      "justMyCode": true,
+      "cwd": "/home/hrzhang/projects/badencoder_filter"
     },
     {
       "name": "badencoder:stl",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/BadEncoder-main/badencoder.py",
+      "program": "/home/hrzhang/projects/badencoder_filter/badencoder.py",
       "console": "integratedTerminal",
       "args": [
         "--lr",
@@ -100,19 +101,19 @@
         "trigger/trigger_pt_white_21_10_ap_replace.npz"
       ],
       "justMyCode": true,
-      "cwd":"/home/hrzhang/projects/BadEncoder-main"
+      "cwd":"/home/hrzhang/projects/badencoder_filter"
     },
     {
       "name": "badencoder:imagenet",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/BadEncoder-main/badencoder.py",
+      "program": "/home/hrzhang/projects/badencoder_filter/badencoder.py",
       "console": "integratedTerminal",
       "args": [
         "--lr",
         "0.001",
         "--batch_size",
-        "256",
+        "64",
         "--results_dir",
         "./output/imagenet/gtsrb_backdoored_encoder",
         "--shadow_dataset",
@@ -122,14 +123,14 @@
         "--encoder_usage_info",
         "imagenet",
         "--gpu",
-        "1",
+        "2",
         "--reference_file",
         "reference/imagenet/priority.npz",
         "--trigger_file",
         "trigger/trigger_pt_white_173_50_ap_replace.npz"
       ],
       "env": {
-        "CUDA_VISIBLE_DEVICES": "1"
+        "CUDA_VISIBLE_DEVICES": "2"
       },
       "justMyCode": true
     }

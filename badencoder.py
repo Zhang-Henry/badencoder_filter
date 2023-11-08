@@ -14,9 +14,10 @@ import torch.nn.functional as F
 from models import get_encoder_architecture_usage
 from datasets import get_shadow_dataset
 from evaluation import test
+from optimize_filter.network import AttU_Net
 
 
-def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args):
+def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args ,filter):
     backdoored_encoder.train()
 
     for module in backdoored_encoder.modules():
@@ -58,6 +59,10 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args)
 
         feature_backdoor_list = []
         for img_backdoor in img_backdoor_cuda_list:
+            ############## add filter to backdoor img
+            img_backdoor=filter(img_backdoor)
+            # img_backdoor = torch.clamp(img_backdoor, min=0, max=1)
+
             feature_backdoor = backdoored_encoder(img_backdoor)
             feature_backdoor = F.normalize(feature_backdoor, dim=-1)
             feature_backdoor_list.append(feature_backdoor)
@@ -127,6 +132,7 @@ if __name__ == '__main__':
     parser.add_argument('--seed', default=100, type=int, help='which seed the code runs on')
     parser.add_argument('--gpu', default='1', type=str, help='which gpu the code runs on')
     parser.add_argument('--pretraining_dataset', type=str, default='cifar10')
+    parser.add_argument('--filter_path', default='', type=str, help='path to the filter trigger')
 
     args = parser.parse_args()
 
@@ -182,18 +188,23 @@ if __name__ == '__main__':
         else:
             raise NotImplementedError()
 
+    state_dict = torch.load(args.filter_path, map_location=torch.device('cuda:0'))
+    net = AttU_Net(img_ch=3,output_ch=3)
+    net.load_state_dict(state_dict['model_state_dict'])
+    net=net.cuda().eval()
+
     if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10':
         # check whether the pre-trained encoder is loaded successfully or not
-        test_acc_1 = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor,0, args)
+        test_acc_1 = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor,0, args,net)
         print('initial test acc: {}'.format(test_acc_1))
 
     # training loop
     for epoch in range(1, args.epochs + 1):
         print("=================================================")
         if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10':
-            train_loss = train(model.f, clean_model.f, train_loader, optimizer, args)
+            train_loss = train(model.f, clean_model.f, train_loader, optimizer, args, net)
             # the test code is used to monitor the finetune of the pre-trained encoder, it is not required by our BadEncoder. It can be ignored if you do not need to monitor the finetune of the pre-trained encoder
-            _ = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor, epoch, args)
+            _ = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor, epoch, args,net)
         elif args.encoder_usage_info == 'imagenet' or args.encoder_usage_info == 'CLIP':
             train_loss = train(model.visual, clean_model.visual, train_loader, optimizer, args)
         else:

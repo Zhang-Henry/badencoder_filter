@@ -15,7 +15,7 @@ from datetime import datetime
 from tqdm import tqdm
 
 from torchvision import transforms
-from bd_dataset_imagenet_filter import BadEncoderDataset
+from datasets.bd_dataset_imagenet_filter import BadEncoderDataset
 import numpy as np
 from network import U_Net
 

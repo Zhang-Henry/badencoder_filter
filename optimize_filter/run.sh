@@ -34,7 +34,7 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 nohup python main.py \
     --timestamp $timestamp \
     --lr 0.005 \
-    --gpu 3 \
+    --gpu 0 \
     --batch_size 1024 \
     --ssim_threshold 0.95 \
     --psnr_threshold 25.0 \
@@ -42,7 +42,7 @@ nohup python main.py \
     --n_epoch 150 \
     --step_size 50 \
     --patience 5 \
-    --init_cost 1 \
+    --init_cost 3 \
     --cost_multiplier_up 1.5 \
     --cost_multiplier_down 2 \
     --use_feature \

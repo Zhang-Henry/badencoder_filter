@@ -1,0 +1,494 @@
+Start Time: 2023-11-08 13:16:48
+Namespace(ablation=False, batch_size=1024, beta1=0.9, beta2=0.999, cost_multiplier_down=2.0, cost_multiplier_up=1.5, epsilon=1e-08, gamma=0.1, gpu=0, init_cost=1.0, init_cost2=1, lp_threshold=0.1, lr=0.005, mode='train_filter', n_epoch=150, num=0.05, num_workers=2, optimizer='Adam', patience=5, psnr_threshold=25.0, resume=None, ssim_threshold=0.95, step_size=50, timestamp='2023-11-08-13-16-45', use_feature=True)
+Loading data...
+Setting up [LPIPS] perceptual loss: trunk [alex], v[0.1], spatial [off]
+Loading model from: /home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/lpips/weights/v0.1/alex.pth
+ResNet(
+  (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+  (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (relu): ReLU(inplace=True)
+  (maxpool): MaxPool2d(kernel_size=3, stride=2, padding=1, dilation=1, ceil_mode=False)
+  (layer1): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (2): BasicBlock(
+      (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer2): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (2): BasicBlock(
+      (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (3): BasicBlock(
+      (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer3): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (2): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (3): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (4): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (5): BasicBlock(
+      (conv1): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (layer4): Sequential(
+    (0): BasicBlock(
+      (conv1): Conv2d(256, 512, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (downsample): Sequential(
+        (0): Conv2d(256, 512, kernel_size=(1, 1), stride=(2, 2), bias=False)
+        (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      )
+    )
+    (1): BasicBlock(
+      (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (2): BasicBlock(
+      (conv1): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (relu): ReLU(inplace=True)
+      (conv2): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+      (bn2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+  )
+  (avgpool): AdaptiveAvgPool2d(output_size=(1, 1))
+  (fc): Identity()
+)/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=AlexNet_Weights.IMAGENET1K_V1`. You can also use `weights=AlexNet_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+
+AttU_Net(
+  (Maxpool): MaxPool2d(kernel_size=2, stride=2, padding=0, dilation=1, ceil_mode=False)
+  (Conv1): conv_block(
+    (conv): Sequential(
+      (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (5): ReLU(inplace=True)
+    )
+  )
+  (Conv2): conv_block(
+    (conv): Sequential(
+      (0): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (4): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (5): ReLU(inplace=True)
+    )
+  )
+  (Conv3): conv_block(
+    (conv): Sequential(
+      (0): Conv2d(128, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (4): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (5): ReLU(inplace=True)
+    )
+  )
+  (Conv4): conv_block(
+    (conv): Sequential(
+      (0): Conv2d(256, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (4): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (5): ReLU(inplace=True)
+    )
+  )
+  (Conv5): conv_block(
+    (conv): Sequential(
+      (0): Conv2d(512, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): Conv2d(1024, 1024, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (4): BatchNorm2d(1024, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (5): ReLU(inplace=True)
+    )
+  )
+  (Up5): up_conv(
+    (up): Sequential(
+      (0): Upsample(scale_factor=2.0, mode='nearest')
+      (1): Conv2d(1024, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (2): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (3): ReLU(inplace=True)
+    )
+  )
+  (Att5): Attention_block(
+    (W_g): Sequential(
+      (0): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (W_x): Sequential(
+      (0): Conv2d(512, 256, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (psi): Sequential(
+      (0): Conv2d(256, 1, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(1, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): Sigmoid()
+    )
+    (relu): ReLU(inplace=True)
+  )
+  (Up_conv5): conv_block(
+    (conv): Sequential(
+      (0): Conv2d(1024, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): Conv2d(512, 512, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (4): BatchNorm2d(512, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (5): ReLU(inplace=True)
+    )
+  )
+  (Up4): up_conv(
+    (up): Sequential(
+      (0): Upsample(scale_factor=2.0, mode='nearest')
+      (1): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (2): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (3): ReLU(inplace=True)
+    )
+  )
+  (Att4): Attention_block(
+    (W_g): Sequential(
+      (0): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (W_x): Sequential(
+      (0): Conv2d(256, 128, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (psi): Sequential(
+      (0): Conv2d(128, 1, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(1, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): Sigmoid()
+    )
+    (relu): ReLU(inplace=True)
+  )
+  (Up_conv4): conv_block(
+    (conv): Sequential(
+      (0): Conv2d(512, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (4): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (5): ReLU(inplace=True)
+    )
+  )
+  (Up3): up_conv(
+    (up): Sequential(
+      (0): Upsample(scale_factor=2.0, mode='nearest')
+      (1): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (2): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (3): ReLU(inplace=True)
+    )
+  )
+  (Att3): Attention_block(
+    (W_g): Sequential(
+      (0): Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (W_x): Sequential(
+      (0): Conv2d(128, 64, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (psi): Sequential(
+      (0): Conv2d(64, 1, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(1, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): Sigmoid()
+    )
+    (relu): ReLU(inplace=True)
+  )
+  (Up_conv3): conv_block(
+    (conv): Sequential(
+      (0): Conv2d(256, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (4): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (5): ReLU(inplace=True)
+    )
+  )
+  (Up2): up_conv(
+    (up): Sequential(
+      (0): Upsample(scale_factor=2.0, mode='nearest')
+      (1): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (2): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (3): ReLU(inplace=True)
+    )
+  )
+  (Att2): Attention_block(
+    (W_g): Sequential(
+      (0): Conv2d(64, 32, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (W_x): Sequential(
+      (0): Conv2d(64, 32, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    )
+    (psi): Sequential(
+      (0): Conv2d(32, 1, kernel_size=(1, 1), stride=(1, 1))
+      (1): BatchNorm2d(1, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): Sigmoid()
+    )
+    (relu): ReLU(inplace=True)
+  )
+  (Up_conv2): conv_block(
+    (conv): Sequential(
+      (0): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU(inplace=True)
+      (3): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (5): ReLU(inplace=True)
+    )
+  )
+  (Conv_1x1): Conv2d(64, 3, kernel_size=(1, 1), stride=(1, 1))
+  (sig): Sigmoid()
+)
+Start training...
+  0%|          | 0/150 [00:00<?, ?it/s]Loss: -1.2974582687020302, lr: 0.005, SIM: -0.95208, far:-0.3453809901451071, WD: 0.3453809901451071, SSIM: 0.90213, pnsr:25.68748, lp:0.02344,mse:0.00675,  cost:1.0:   0%|          | 0/150 [00:30<?, ?it/s]Loss: -1.2974582687020302, lr: 0.005, SIM: -0.95208, far:-0.3453809901451071, WD: 0.3453809901451071, SSIM: 0.90213, pnsr:25.68748, lp:0.02344,mse:0.00675,  cost:1.0:   1%|          | 1/150 [00:30<1:15:59, 30.60s/it]Loss: -2.0248034174243608, lr: 0.005, SIM: -1.56219, far:-0.4626153577119112, WD: 0.4626153577119112, SSIM: 0.97961, pnsr:31.98813, lp:0.00168,mse:0.00064,  cost:1.0:   1%|          | 1/150 [00:57<1:15:59, 30.60s/it]Loss: -2.0248034174243608, lr: 0.005, SIM: -1.56219, far:-0.4626153577119112, WD: 0.4626153577119112, SSIM: 0.97961, pnsr:31.98813, lp:0.00168,mse:0.00064,  cost:1.0:   1%|▏         | 2/150 [00:57<1:09:29, 28.17s/it]
+--------------------------------------------------
+Updated !!! Best sim:-1.5621880541245143, far:-0.4626153577119112, SSIM: 0.9796066383520762, psnr: 31.98812731107076, lp: 0.0016824984001383807, Best WD: 0.4626153577119112
+--------------------------------------------------
+Loss: -2.186860665678978, lr: 0.005, SIM: -1.66348, far:-0.5233798443029324, WD: 0.5233798443029324, SSIM: 0.98665, pnsr:33.76649, lp:0.00115,mse:0.00043,  cost:1.0:   1%|▏         | 2/150 [01:23<1:09:29, 28.17s/it] Loss: -2.186860665678978, lr: 0.005, SIM: -1.66348, far:-0.5233798443029324, WD: 0.5233798443029324, SSIM: 0.98665, pnsr:33.76649, lp:0.00115,mse:0.00043,  cost:1.0:   2%|▏         | 3/150 [01:23<1:06:55, 27.31s/it]
+--------------------------------------------------
+Updated !!! Best sim:-1.6634808257222176, far:-0.5233798443029324, SSIM: 0.9866546851893266, psnr: 33.766486406326294, lp: 0.001149820999368482, Best WD: 0.5233798443029324
+--------------------------------------------------
+Loss: -2.2725359300772348, lr: 0.005, SIM: -1.73044, far:-0.5420919178674618, WD: 0.5420919178674618, SSIM: 0.98992, pnsr:35.01061, lp:0.00100,mse:0.00032,  cost:1.0:   2%|▏         | 3/150 [01:48<1:06:55, 27.31s/it]Loss: -2.2725359300772348, lr: 0.005, SIM: -1.73044, far:-0.5420919178674618, WD: 0.5420919178674618, SSIM: 0.98992, pnsr:35.01061, lp:0.00100,mse:0.00032,  cost:1.0:   3%|▎         | 4/150 [01:48<1:04:37, 26.56s/it]
+--------------------------------------------------
+Updated !!! Best sim:-1.7304440041383107, far:-0.5420919178674618, SSIM: 0.9899235504368941, psnr: 35.010612646738686, lp: 0.0010010207697632723, Best WD: 0.5420919178674618
+--------------------------------------------------
+Loss: -2.3319524029890695, lr: 0.005, SIM: -1.77862, far:-0.5533285749455293, WD: 0.5533285749455293, SSIM: 0.99150, pnsr:35.91501, lp:0.00086,mse:0.00026,  cost:1.0:   3%|▎         | 4/150 [02:16<1:04:37, 26.56s/it]Loss: -2.3319524029890695, lr: 0.005, SIM: -1.77862, far:-0.5533285749455293, WD: 0.5533285749455293, SSIM: 0.99150, pnsr:35.91501, lp:0.00086,mse:0.00026,  cost:1.0:   3%|▎         | 5/150 [02:16<1:04:54, 26.86s/it]
+--------------------------------------------------
+Updated !!! Best sim:-1.778623841702938, far:-0.5533285749455293, SSIM: 0.991496380418539, psnr: 35.91501466433207, lp: 0.0008623301049131745, Best WD: 0.5533285749455293
+--------------------------------------------------
+Loss: -2.3482553164164224, lr: 0.005, SIM: -1.79145, far:-0.5568038324515024, WD: 0.5568038324515024, SSIM: 0.99240, pnsr:36.14406, lp:0.00082,mse:0.00025,  cost:1.0:   3%|▎         | 5/150 [02:42<1:04:54, 26.86s/it]Loss: -2.3482553164164224, lr: 0.005, SIM: -1.79145, far:-0.5568038324515024, WD: 0.5568038324515024, SSIM: 0.99240, pnsr:36.14406, lp:0.00082,mse:0.00025,  cost:1.0:   4%|▍         | 6/150 [02:42<1:03:54, 26.63s/it]
+--------------------------------------------------
+Updated !!! Best sim:-1.791451481481393, far:-0.5568038324515024, SSIM: 0.9923997124036154, psnr: 36.14405965805054, lp: 0.0008151240169051258, Best WD: 0.5568038324515024
+--------------------------------------------------
+Loss: -2.38426980872949, lr: 0.005, SIM: -1.82174, far:-0.562527863929669, WD: 0.562527863929669, SSIM: 0.99308, pnsr:36.72068, lp:0.00074,mse:0.00022,  cost:1.0:   4%|▍         | 6/150 [03:07<1:03:54, 26.63s/it]    Loss: -2.38426980872949, lr: 0.005, SIM: -1.82174, far:-0.562527863929669, WD: 0.562527863929669, SSIM: 0.99308, pnsr:36.72068, lp:0.00074,mse:0.00022,  cost:1.0:   5%|▍         | 7/150 [03:07<1:02:03, 26.04s/it]
+--------------------------------------------------
+Updated !!! Best sim:-1.8217419584592183, far:-0.562527863929669, SSIM: 0.9930831640958786, psnr: 36.72068007787069, lp: 0.0007375232192619782, Best WD: 0.562527863929669
+--------------------------------------------------
+Loss: -2.4125394225120544, lr: 0.005, SIM: -1.84631, far:-0.5662282928824425, WD: 0.5662282928824425, SSIM: 0.99376, pnsr:37.19071, lp:0.00070,mse:0.00020,  cost:1.0:   5%|▍         | 7/150 [03:30<1:02:03, 26.04s/it]Loss: -2.4125394225120544, lr: 0.005, SIM: -1.84631, far:-0.5662282928824425, WD: 0.5662282928824425, SSIM: 0.99376, pnsr:37.19071, lp:0.00070,mse:0.00020,  cost:1.0:   5%|▌         | 8/150 [03:30<59:51, 25.29s/it]  
+--------------------------------------------------
+Updated !!! Best sim:-1.8463111395637195, far:-0.5662282928824425, SSIM: 0.9937627675632635, psnr: 37.19071205457052, lp: 0.000698725285474211, Best WD: 0.5662282928824425
+--------------------------------------------------
+Loss: -2.4353239635626474, lr: 0.005, SIM: -1.87030, far:-0.5650247260928154, WD: 0.5650247260928154, SSIM: 0.99416, pnsr:37.64435, lp:0.00061,mse:0.00018,  cost:1.0:   5%|▌         | 8/150 [03:52<59:51, 25.29s/it]Loss: -2.4353239635626474, lr: 0.005, SIM: -1.87030, far:-0.5650247260928154, WD: 0.5650247260928154, SSIM: 0.99416, pnsr:37.64435, lp:0.00061,mse:0.00018,  cost:1.0:   6%|▌         | 9/150 [03:52<57:06, 24.30s/it]Loss: -2.4683960725863776, lr: 0.005, SIM: -1.89950, far:-0.5688998103141785, WD: 0.5688998103141785, SSIM: 0.99467, pnsr:38.20416, lp:0.00054,mse:0.00016,  cost:1.0:   6%|▌         | 9/150 [04:15<57:06, 24.30s/it]Loss: -2.4683960725863776, lr: 0.005, SIM: -1.89950, far:-0.5688998103141785, WD: 0.5688998103141785, SSIM: 0.99467, pnsr:38.20416, lp:0.00054,mse:0.00016,  cost:1.0:   7%|▋         | 10/150 [04:15<55:36, 23.83s/it]
+--------------------------------------------------
+Updated !!! Best sim:-1.8994962324698765, far:-0.5688998103141785, SSIM: 0.9946654910842577, psnr: 38.20416251818339, lp: 0.0005377398750473125, Best WD: 0.5688998103141785
+--------------------------------------------------
+Loss: -2.45551073551178, lr: 0.005, SIM: -1.88796, far:-0.5675497837364674, WD: 0.5675497837364674, SSIM: 0.99469, pnsr:37.98068, lp:0.00058,mse:0.00017,  cost:1.0:   7%|▋         | 10/150 [04:38<55:36, 23.83s/it]  Loss: -2.45551073551178, lr: 0.005, SIM: -1.88796, far:-0.5675497837364674, WD: 0.5675497837364674, SSIM: 0.99469, pnsr:37.98068, lp:0.00058,mse:0.00017,  cost:1.0:   7%|▋         | 11/150 [04:38<54:37, 23.58s/it]Loss: -2.5015593568483987, lr: 0.005, SIM: -1.93134, far:-0.5702222852657238, WD: 0.5702222852657238, SSIM: 0.99551, pnsr:38.81005, lp:0.00047,mse:0.00013,  cost:1.0:   7%|▋         | 11/150 [05:02<54:37, 23.58s/it]Loss: -2.5015593568483987, lr: 0.005, SIM: -1.93134, far:-0.5702222852657238, WD: 0.5702222852657238, SSIM: 0.99551, pnsr:38.81005, lp:0.00047,mse:0.00013,  cost:1.0:   8%|▊         | 12/150 [05:02<54:05, 23.51s/it]
+--------------------------------------------------
+Updated !!! Best sim:-1.9313370808959007, far:-0.5702222852657238, SSIM: 0.9955054372549057, psnr: 38.81004865964254, lp: 0.0004670815002706756, Best WD: 0.5702222852657238
+--------------------------------------------------
+Loss: -2.4794253955284753, lr: 0.005, SIM: -1.91131, far:-0.5681185101469358, WD: 0.5681185101469358, SSIM: 0.99522, pnsr:38.41969, lp:0.00049,mse:0.00016,  cost:1.0:   8%|▊         | 12/150 [05:24<54:05, 23.51s/it]Loss: -2.4794253955284753, lr: 0.005, SIM: -1.91131, far:-0.5681185101469358, WD: 0.5681185101469358, SSIM: 0.99522, pnsr:38.41969, lp:0.00049,mse:0.00016,  cost:1.0:   9%|▊         | 13/150 [05:24<52:57, 23.19s/it]Loss: -2.5255077530940375, lr: 0.005, SIM: -1.95348, far:-0.5720241566499075, WD: 0.5720241566499075, SSIM: 0.99581, pnsr:39.23449, lp:0.00041,mse:0.00012,  cost:1.0:   9%|▊         | 13/150 [05:47<52:57, 23.19s/it]Loss: -2.5255077530940375, lr: 0.005, SIM: -1.95348, far:-0.5720241566499075, WD: 0.5720241566499075, SSIM: 0.99581, pnsr:39.23449, lp:0.00041,mse:0.00012,  cost:1.0:   9%|▉         | 14/150 [05:47<52:24, 23.12s/it]
+--------------------------------------------------
+Updated !!! Best sim:-1.9534836063782375, far:-0.5720241566499075, SSIM: 0.9958114884793758, psnr: 39.23448967933655, lp: 0.00040524171163269784, Best WD: 0.5720241566499075
+--------------------------------------------------
+Loss: -2.5338645378748574, lr: 0.005, SIM: -1.96249, far:-0.5713730119168758, WD: 0.5713730119168758, SSIM: 0.99619, pnsr:39.40431, lp:0.00039,mse:0.00013,  cost:1.0:   9%|▉         | 14/150 [06:10<52:24, 23.12s/it]Loss: -2.5338645378748574, lr: 0.005, SIM: -1.96249, far:-0.5713730119168758, WD: 0.5713730119168758, SSIM: 0.99619, pnsr:39.40431, lp:0.00039,mse:0.00013,  cost:1.0:  10%|█         | 15/150 [06:10<52:02, 23.13s/it]Loss: -2.4879294484853745, lr: 0.005, SIM: -1.91748, far:-0.5704488027840853, WD: 0.5704488027840853, SSIM: 0.99579, pnsr:38.52116, lp:0.00044,mse:0.00015,  cost:1.0:  10%|█         | 15/150 [06:35<52:02, 23.13s/it]Loss: -2.4879294484853745, lr: 0.005, SIM: -1.91748, far:-0.5704488027840853, WD: 0.5704488027840853, SSIM: 0.99579, pnsr:38.52116, lp:0.00044,mse:0.00015,  cost:1.0:  11%|█         | 16/150 [06:35<53:03, 23.75s/it]Loss: -2.499937320748965, lr: 0.005, SIM: -1.93289, far:-0.5670466721057892, WD: 0.5670466721057892, SSIM: 0.99598, pnsr:38.85070, lp:0.00056,mse:0.00014,  cost:1.0:  11%|█         | 16/150 [07:02<53:03, 23.75s/it] Loss: -2.499937320748965, lr: 0.005, SIM: -1.93289, far:-0.5670466721057892, WD: 0.5670466721057892, SSIM: 0.99598, pnsr:38.85070, lp:0.00056,mse:0.00014,  cost:1.0:  11%|█▏        | 17/150 [07:02<54:31, 24.60s/it]Loss: -2.5225072453419366, lr: 0.005, SIM: -1.95317, far:-0.5693394156793753, WD: 0.5693394156793753, SSIM: 0.99636, pnsr:39.22069, lp:0.00042,mse:0.00013,  cost:1.5:  11%|█▏        | 17/150 [07:29<54:31, 24.60s/it]Loss: -2.5225072453419366, lr: 0.005, SIM: -1.95317, far:-0.5693394156793753, WD: 0.5693394156793753, SSIM: 0.99636, pnsr:39.22069, lp:0.00042,mse:0.00013,  cost:1.5:  12%|█▏        | 18/150 [07:29<55:39, 25.30s/it]
+--------------------------------------------------
+Up cost from 1.0 to 1.5
+--------------------------------------------------
+Loss: -2.849996323386828, lr: 0.005, SIM: -1.99103, far:-0.8589661680161953, WD: 0.5726441132525603, SSIM: 0.99668, pnsr:39.95724, lp:0.00035,mse:0.00011,  cost:1.5:  12%|█▏        | 18/150 [07:56<55:39, 25.30s/it] Loss: -2.849996323386828, lr: 0.005, SIM: -1.99103, far:-0.8589661680161953, WD: 0.5726441132525603, SSIM: 0.99668, pnsr:39.95724, lp:0.00035,mse:0.00011,  cost:1.5:  13%|█▎        | 19/150 [07:56<56:38, 25.94s/it]
+--------------------------------------------------
+Updated !!! Best sim:-1.99103016157945, far:-0.8589661680161953, SSIM: 0.9966763121386369, psnr: 39.95723875363668, lp: 0.0003508127671617937, Best WD: 0.5726441132525603
+--------------------------------------------------
+Loss: -2.840056136250496, lr: 0.005, SIM: -1.98644, far:-0.8536111923555533, WD: 0.5690741278231144, SSIM: 0.99654, pnsr:39.86877, lp:0.00035,mse:0.00011,  cost:1.5:  13%|█▎        | 19/150 [08:22<56:38, 25.94s/it]Loss: -2.840056136250496, lr: 0.005, SIM: -1.98644, far:-0.8536111923555533, WD: 0.5690741278231144, SSIM: 0.99654, pnsr:39.86877, lp:0.00035,mse:0.00011,  cost:1.5:  13%|█▎        | 20/150 [08:22<56:14, 25.96s/it]Loss: -2.8179126530885696, lr: 0.005, SIM: -1.96469, far:-0.853224920729796, WD: 0.5688166134059429, SSIM: 0.99643, pnsr:39.44216, lp:0.00038,mse:0.00012,  cost:1.5:  13%|█▎        | 20/150 [08:49<56:14, 25.96s/it]Loss: -2.8179126530885696, lr: 0.005, SIM: -1.96469, far:-0.853224920729796, WD: 0.5688166134059429, SSIM: 0.99643, pnsr:39.44216, lp:0.00038,mse:0.00012,  cost:1.5:  14%|█▍        | 21/150 [08:49<56:05, 26.09s/it]Loss: -2.8624648501475654, lr: 0.005, SIM: -2.00380, far:-0.8586678591867288, WD: 0.5724452411135038, SSIM: 0.99684, pnsr:40.21079, lp:0.00036,mse:0.00010,  cost:1.5:  14%|█▍        | 21/150 [09:15<56:05, 26.09s/it]Loss: -2.8624648501475654, lr: 0.005, SIM: -2.00380, far:-0.8586678591867288, WD: 0.5724452411135038, SSIM: 0.99684, pnsr:40.21079, lp:0.00036,mse:0.00010,  cost:1.5:  15%|█▍        | 22/150 [09:15<55:56, 26.22s/it]Loss: -2.8605105727910995, lr: 0.005, SIM: -2.00447, far:-0.8560432468851408, WD: 0.5706954983373483, SSIM: 0.99699, pnsr:40.21541, lp:0.00033,mse:0.00010,  cost:2.25:  15%|█▍        | 22/150 [09:42<55:56, 26.22s/it]Loss: -2.8605105727910995, lr: 0.005, SIM: -2.00447, far:-0.8560432468851408, WD: 0.5706954983373483, SSIM: 0.99699, pnsr:40.21541, lp:0.00033,mse:0.00010,  cost:2.25:  15%|█▌        | 23/150 [09:42<55:40, 26.30s/it]
+--------------------------------------------------
+Up cost from 1.5 to 2.25
+--------------------------------------------------
+Loss: -3.3083700090646744, lr: 0.005, SIM: -2.01917, far:-1.289198949933052, WD: 0.5729773156344891, SSIM: 0.99715, pnsr:40.50392, lp:0.00032,mse:0.00010,  cost:2.25:  15%|█▌        | 23/150 [10:11<55:40, 26.30s/it] Loss: -3.3083700090646744, lr: 0.005, SIM: -2.01917, far:-1.289198949933052, WD: 0.5729773156344891, SSIM: 0.99715, pnsr:40.50392, lp:0.00032,mse:0.00010,  cost:2.25:  16%|█▌        | 24/150 [10:11<57:02, 27.16s/it]
+--------------------------------------------------
+Updated !!! Best sim:-2.019171061615149, far:-1.289198949933052, SSIM: 0.9971512618164221, psnr: 40.50392293930054, lp: 0.00031764007993236493, Best WD: 0.5729773156344891
+--------------------------------------------------
+Loss: -3.3290655612945557, lr: 0.005, SIM: -2.04624, far:-1.2828228672345479, WD: 0.5701434959967931, SSIM: 0.99731, pnsr:41.03850, lp:0.00030,mse:0.00008,  cost:2.25:  16%|█▌        | 24/150 [10:38<57:02, 27.16s/it]Loss: -3.3290655612945557, lr: 0.005, SIM: -2.04624, far:-1.2828228672345479, WD: 0.5701434959967931, SSIM: 0.99731, pnsr:41.03850, lp:0.00030,mse:0.00008,  cost:2.25:  17%|█▋        | 25/150 [10:38<56:34, 27.15s/it]Loss: -3.3426831662654877, lr: 0.005, SIM: -2.05416, far:-1.2885263835390408, WD: 0.5726783908903599, SSIM: 0.99736, pnsr:41.19075, lp:0.00027,mse:0.00008,  cost:2.25:  17%|█▋        | 25/150 [11:05<56:34, 27.15s/it]Loss: -3.3426831662654877, lr: 0.005, SIM: -2.05416, far:-1.2885263835390408, WD: 0.5726783908903599, SSIM: 0.99736, pnsr:41.19075, lp:0.00027,mse:0.00008,  cost:2.25:  17%|█▋        | 26/150 [11:05<55:57, 27.08s/it]Loss: -3.268069783846537, lr: 0.005, SIM: -1.97644, far:-1.2916310131549835, WD: 0.5740582297245661, SSIM: 0.99702, pnsr:39.66487, lp:0.00038,mse:0.00012,  cost:2.25:  17%|█▋        | 26/150 [11:33<55:57, 27.08s/it] Loss: -3.268069783846537, lr: 0.005, SIM: -1.97644, far:-1.2916310131549835, WD: 0.5740582297245661, SSIM: 0.99702, pnsr:39.66487, lp:0.00038,mse:0.00012,  cost:2.25:  18%|█▊        | 27/150 [11:33<56:23, 27.50s/it]
+--------------------------------------------------
+Updated !!! Best sim:-1.9764387706915538, far:-1.2916310131549835, SSIM: 0.997021596878767, psnr: 39.66486914952596, lp: 0.0003826306619885145, Best WD: 0.5740582297245661
+--------------------------------------------------
+Loss: -3.3270315527915955, lr: 0.005, SIM: -2.03611, far:-1.2909182136257489, WD: 0.5737414273122946, SSIM: 0.99735, pnsr:40.83003, lp:0.00027,mse:0.00009,  cost:2.25:  18%|█▊        | 27/150 [12:01<56:23, 27.50s/it]Loss: -3.3270315527915955, lr: 0.005, SIM: -2.03611, far:-1.2909182136257489, WD: 0.5737414273122946, SSIM: 0.99735, pnsr:40.83003, lp:0.00027,mse:0.00009,  cost:2.25:  19%|█▊        | 28/150 [12:01<55:54, 27.50s/it]Loss: -3.2774514804283776, lr: 0.005, SIM: -1.99568, far:-1.281771110991637, WD: 0.569676049053669, SSIM: 0.99719, pnsr:40.03572, lp:0.00033,mse:0.00011,  cost:2.25:  19%|█▊        | 28/150 [12:29<55:54, 27.50s/it]  Loss: -3.2774514804283776, lr: 0.005, SIM: -1.99568, far:-1.281771110991637, WD: 0.569676049053669, SSIM: 0.99719, pnsr:40.03572, lp:0.00033,mse:0.00011,  cost:2.25:  19%|█▉        | 29/150 [12:29<55:45, 27.65s/it]Loss: -3.3317494988441467, lr: 0.005, SIM: -2.03889, far:-1.292861523727576, WD: 0.5746051234503587, SSIM: 0.99735, pnsr:40.88269, lp:0.00026,mse:0.00009,  cost:2.25:  19%|█▉        | 29/150 [12:57<55:45, 27.65s/it]Loss: -3.3317494988441467, lr: 0.005, SIM: -2.03889, far:-1.292861523727576, WD: 0.5746051234503587, SSIM: 0.99735, pnsr:40.88269, lp:0.00026,mse:0.00009,  cost:2.25:  20%|██        | 30/150 [12:57<55:21, 27.68s/it]
+--------------------------------------------------
+Updated !!! Best sim:-2.038887990017732, far:-1.292861523727576, SSIM: 0.9973470456898212, psnr: 40.88269114494324, lp: 0.00025936593465303304, Best WD: 0.5746051234503587
+--------------------------------------------------
+Loss: -3.3372250696023307, lr: 0.005, SIM: -2.03744, far:-1.2997829169034958, WD: 0.5776812992990017, SSIM: 0.99743, pnsr:40.85721, lp:0.00028,mse:0.00009,  cost:2.25:  20%|██        | 30/150 [13:24<55:21, 27.68s/it]Loss: -3.3372250696023307, lr: 0.005, SIM: -2.03744, far:-1.2997829169034958, WD: 0.5776812992990017, SSIM: 0.99743, pnsr:40.85721, lp:0.00028,mse:0.00009,  cost:2.25:  21%|██        | 31/150 [13:24<54:42, 27.58s/it]
+--------------------------------------------------
+Updated !!! Best sim:-2.0374421502153077, far:-1.2997829169034958, SSIM: 0.9974307678639889, psnr: 40.857213497161865, lp: 0.0002849328135804778, Best WD: 0.5776812992990017
+--------------------------------------------------
+Loss: -3.338534598549207, lr: 0.005, SIM: -2.04743, far:-1.2911078532536824, WD: 0.5738257120052973, SSIM: 0.99751, pnsr:41.06147, lp:0.00032,mse:0.00009,  cost:2.25:  21%|██        | 31/150 [13:52<54:42, 27.58s/it] Loss: -3.338534598549207, lr: 0.005, SIM: -2.04743, far:-1.2911078532536824, WD: 0.5738257120052973, SSIM: 0.99751, pnsr:41.06147, lp:0.00032,mse:0.00009,  cost:2.25:  21%|██▏       | 32/150 [13:52<54:22, 27.65s/it]Loss: -3.29999570051829, lr: 0.005, SIM: -2.01129, far:-1.288710318505764, WD: 0.5727601436277231, SSIM: 0.99744, pnsr:40.33344, lp:0.00028,mse:0.00010,  cost:2.25:  21%|██▏       | 32/150 [14:18<54:22, 27.65s/it]  Loss: -3.29999570051829, lr: 0.005, SIM: -2.01129, far:-1.288710318505764, WD: 0.5727601436277231, SSIM: 0.99744, pnsr:40.33344, lp:0.00028,mse:0.00010,  cost:2.25:  22%|██▏       | 33/150 [14:18<53:04, 27.21s/it]Loss: -3.324443052212397, lr: 0.005, SIM: -2.03554, far:-1.2888999183972676, WD: 0.5728444096942743, SSIM: 0.99768, pnsr:40.81046, lp:0.00027,mse:0.00009,  cost:2.25:  22%|██▏       | 33/150 [14:43<53:04, 27.21s/it]Loss: -3.324443052212397, lr: 0.005, SIM: -2.03554, far:-1.2888999183972676, WD: 0.5728444096942743, SSIM: 0.99768, pnsr:40.81046, lp:0.00027,mse:0.00009,  cost:2.25:  23%|██▎       | 34/150 [14:43<51:11, 26.48s/it]Loss: -3.342190459370613, lr: 0.005, SIM: -2.05416, far:-1.2880295266707738, WD: 0.572457566857338, SSIM: 0.99768, pnsr:41.17945, lp:0.00025,mse:0.00008,  cost:3.375:  23%|██▎       | 34/150 [15:07<51:11, 26.48s/it]Loss: -3.342190459370613, lr: 0.005, SIM: -2.05416, far:-1.2880295266707738, WD: 0.572457566857338, SSIM: 0.99768, pnsr:41.17945, lp:0.00025,mse:0.00008,  cost:3.375:  23%|██▎       | 35/150 [15:07<49:37, 25.89s/it]
+--------------------------------------------------
+Up cost from 2.25 to 3.375
+--------------------------------------------------
+Loss: -3.9662459393342337, lr: 0.005, SIM: -2.03348, far:-1.932769315938155, WD: 0.5726723857223988, SSIM: 0.99771, pnsr:40.77155, lp:0.00028,mse:0.00009,  cost:3.375:  23%|██▎       | 35/150 [15:32<49:37, 25.89s/it]Loss: -3.9662459393342337, lr: 0.005, SIM: -2.03348, far:-1.932769315938155, WD: 0.5726723857223988, SSIM: 0.99771, pnsr:40.77155, lp:0.00028,mse:0.00009,  cost:3.375:  24%|██▍       | 36/150 [15:32<48:14, 25.39s/it]Loss: -3.9637019584576287, lr: 0.005, SIM: -2.02356, far:-1.940142661333084, WD: 0.5748570847014586, SSIM: 0.99752, pnsr:40.57915, lp:0.00029,mse:0.00010,  cost:3.375:  24%|██▍       | 36/150 [15:57<48:14, 25.39s/it]Loss: -3.9637019584576287, lr: 0.005, SIM: -2.02356, far:-1.940142661333084, WD: 0.5748570847014586, SSIM: 0.99752, pnsr:40.57915, lp:0.00029,mse:0.00010,  cost:3.375:  25%|██▍       | 37/150 [15:57<47:43, 25.34s/it]Loss: -3.9304831673701606, lr: 0.005, SIM: -2.00393, far:-1.9265495091676712, WD: 0.5708294895788034, SSIM: 0.99759, pnsr:40.19255, lp:0.00033,mse:0.00011,  cost:3.375:  25%|██▍       | 37/150 [16:21<47:43, 25.34s/it]Loss: -3.9304831673701606, lr: 0.005, SIM: -2.00393, far:-1.9265495091676712, WD: 0.5708294895788034, SSIM: 0.99759, pnsr:40.19255, lp:0.00033,mse:0.00011,  cost:3.375:  25%|██▌       | 38/150 [16:21<46:53, 25.12s/it]Loss: -3.991991937160492, lr: 0.005, SIM: -2.05715, far:-1.9348428423206012, WD: 0.5732867655654749, SSIM: 0.99777, pnsr:41.25086, lp:0.00032,mse:0.00008,  cost:3.375:  25%|██▌       | 38/150 [16:45<46:53, 25.12s/it] Loss: -3.991991937160492, lr: 0.005, SIM: -2.05715, far:-1.9348428423206012, WD: 0.5732867655654749, SSIM: 0.99777, pnsr:41.25086, lp:0.00032,mse:0.00008,  cost:3.375:  26%|██▌       | 39/150 [16:45<45:39, 24.68s/it]Loss: -3.9616249253352485, lr: 0.005, SIM: -2.02378, far:-1.9378476192553837, WD: 0.5741770739356676, SSIM: 0.99774, pnsr:40.57210, lp:0.00026,mse:0.00010,  cost:5.0625:  26%|██▌       | 39/150 [17:10<45:39, 24.68s/it]Loss: -3.9616249253352485, lr: 0.005, SIM: -2.02378, far:-1.9378476192553837, WD: 0.5741770739356676, SSIM: 0.99774, pnsr:40.57210, lp:0.00026,mse:0.00010,  cost:5.0625:  27%|██▋       | 40/150 [17:10<45:28, 24.80s/it]
+--------------------------------------------------
+Up cost from 3.375 to 5.0625
+--------------------------------------------------
+Loss: -4.996295462052028, lr: 0.005, SIM: -2.08400, far:-2.9122969855864844, WD: 0.5752685392896334, SSIM: 0.99794, pnsr:41.76924, lp:0.00024,mse:0.00007,  cost:5.0625:  27%|██▋       | 40/150 [17:37<45:28, 24.80s/it] Loss: -4.996295462052028, lr: 0.005, SIM: -2.08400, far:-2.9122969855864844, WD: 0.5752685392896334, SSIM: 0.99794, pnsr:41.76924, lp:0.00024,mse:0.00007,  cost:5.0625:  27%|██▋       | 41/150 [17:37<46:07, 25.39s/it]Loss: -4.940035780270894, lr: 0.005, SIM: -2.02928, far:-2.9107596377531686, WD: 0.5749648648003737, SSIM: 0.99768, pnsr:40.69304, lp:0.00031,mse:0.00010,  cost:5.0625:  27%|██▋       | 41/150 [18:03<46:07, 25.39s/it]Loss: -4.940035780270894, lr: 0.005, SIM: -2.02928, far:-2.9107596377531686, WD: 0.5749648648003737, SSIM: 0.99768, pnsr:40.69304, lp:0.00031,mse:0.00010,  cost:5.0625:  28%|██▊       | 42/150 [18:03<46:18, 25.73s/it]Loss: -4.946759611368179, lr: 0.005, SIM: -2.06436, far:-2.8824039896329245, WD: 0.5693637505173683, SSIM: 0.99786, pnsr:41.38850, lp:0.00029,mse:0.00008,  cost:5.0625:  28%|██▊       | 42/150 [18:31<46:18, 25.73s/it]Loss: -4.946759611368179, lr: 0.005, SIM: -2.06436, far:-2.8824039896329245, WD: 0.5693637505173683, SSIM: 0.99786, pnsr:41.38850, lp:0.00029,mse:0.00008,  cost:5.0625:  29%|██▊       | 43/150 [18:31<46:40, 26.18s/it]Loss: -4.965924064318339, lr: 0.005, SIM: -2.05354, far:-2.912388568123182, WD: 0.575286633024613, SSIM: 0.99785, pnsr:41.16919, lp:0.00028,mse:0.00009,  cost:5.0625:  29%|██▊       | 43/150 [18:58<46:40, 26.18s/it]  Loss: -4.965924064318339, lr: 0.005, SIM: -2.05354, far:-2.912388568123182, WD: 0.575286633024613, SSIM: 0.99785, pnsr:41.16919, lp:0.00028,mse:0.00009,  cost:5.0625:  29%|██▉       | 44/150 [18:58<47:07, 26.68s/it]Loss: -4.959727962811788, lr: 0.005, SIM: -2.05314, far:-2.906586463252703, WD: 0.5741405338048935, SSIM: 0.99805, pnsr:41.16199, lp:0.00030,mse:0.00009,  cost:7.59375:  29%|██▉       | 44/150 [19:25<47:07, 26.68s/it]Loss: -4.959727962811788, lr: 0.005, SIM: -2.05314, far:-2.906586463252703, WD: 0.5741405338048935, SSIM: 0.99805, pnsr:41.16199, lp:0.00030,mse:0.00009,  cost:7.59375:  30%|███       | 45/150 [19:25<46:44, 26.71s/it]
+--------------------------------------------------
+Up cost from 5.0625 to 7.59375
+--------------------------------------------------
+Loss: -6.45707580447197, lr: 0.005, SIM: -2.11171, far:-4.345365007718404, WD: 0.5722291357815266, SSIM: 0.99821, pnsr:42.31899, lp:0.00024,mse:0.00007,  cost:7.59375:  30%|███       | 45/150 [19:52<46:44, 26.71s/it] Loss: -6.45707580447197, lr: 0.005, SIM: -2.11171, far:-4.345365007718404, WD: 0.5722291357815266, SSIM: 0.99821, pnsr:42.31899, lp:0.00024,mse:0.00007,  cost:7.59375:  31%|███       | 46/150 [19:52<46:21, 26.74s/it]Loss: -6.449913104375203, lr: 0.005, SIM: -2.07185, far:-4.378068029880524, WD: 0.5765357029934725, SSIM: 0.99820, pnsr:41.52845, lp:0.00028,mse:0.00008,  cost:7.59375:  31%|███       | 46/150 [20:19<46:21, 26.74s/it]Loss: -6.449913104375203, lr: 0.005, SIM: -2.07185, far:-4.378068029880524, WD: 0.5765357029934725, SSIM: 0.99820, pnsr:41.52845, lp:0.00028,mse:0.00008,  cost:7.59375:  31%|███▏      | 47/150 [20:19<45:53, 26.74s/it]Loss: -6.405510952075322, lr: 0.005, SIM: -2.05445, far:-4.3510570873816805, WD: 0.572978712618351, SSIM: 0.99793, pnsr:41.18107, lp:0.00025,mse:0.00008,  cost:7.59375:  31%|███▏      | 47/150 [20:46<45:53, 26.74s/it]Loss: -6.405510952075322, lr: 0.005, SIM: -2.05445, far:-4.3510570873816805, WD: 0.572978712618351, SSIM: 0.99793, pnsr:41.18107, lp:0.00025,mse:0.00008,  cost:7.59375:  32%|███▏      | 48/150 [20:46<45:47, 26.93s/it]Loss: -6.4041190048058825, lr: 0.005, SIM: -2.05176, far:-4.3523631890614825, WD: 0.5731507129967213, SSIM: 0.99802, pnsr:41.12949, lp:0.00027,mse:0.00009,  cost:7.59375:  32%|███▏      | 48/150 [21:12<45:47, 26.93s/it]Loss: -6.4041190048058825, lr: 0.005, SIM: -2.05176, far:-4.3523631890614825, WD: 0.5731507129967213, SSIM: 0.99802, pnsr:41.12949, lp:0.00027,mse:0.00009,  cost:7.59375:  33%|███▎      | 49/150 [21:12<44:52, 26.66s/it]Loss: -6.473201155662537, lr: 0.0005, SIM: -2.09946, far:-4.373745650053024, WD: 0.5759665022293726, SSIM: 0.99830, pnsr:42.06498, lp:0.00021,mse:0.00007,  cost:11.390625:  33%|███▎      | 49/150 [21:39<44:52, 26.66s/it]Loss: -6.473201155662537, lr: 0.0005, SIM: -2.09946, far:-4.373745650053024, WD: 0.5759665022293726, SSIM: 0.99830, pnsr:42.06498, lp:0.00021,mse:0.00007,  cost:11.390625:  33%|███▎      | 50/150 [21:39<44:44, 26.84s/it]
+--------------------------------------------------
+Up cost from 7.59375 to 11.390625
+--------------------------------------------------
+Loss: -8.728655775388082, lr: 0.0005, SIM: -2.19081, far:-6.5378473202387495, WD: 0.573967391004165, SSIM: 0.99856, pnsr:43.87267, lp:0.00014,mse:0.00005,  cost:11.390625:  33%|███▎      | 50/150 [22:06<44:44, 26.84s/it]Loss: -8.728655775388082, lr: 0.0005, SIM: -2.19081, far:-6.5378473202387495, WD: 0.573967391004165, SSIM: 0.99856, pnsr:43.87267, lp:0.00014,mse:0.00005,  cost:11.390625:  34%|███▍      | 51/150 [22:06<44:07, 26.74s/it]Loss: -8.782938857873281, lr: 0.0005, SIM: -2.23179, far:-6.5511501232783, WD: 0.5751352645456791, SSIM: 0.99873, pnsr:44.68012, lp:0.00009,mse:0.00004,  cost:11.390625:  34%|███▍      | 51/150 [22:32<44:07, 26.74s/it]  Loss: -8.782938857873281, lr: 0.0005, SIM: -2.23179, far:-6.5511501232783, WD: 0.5751352645456791, SSIM: 0.99873, pnsr:44.68012, lp:0.00009,mse:0.00004,  cost:11.390625:  35%|███▍      | 52/150 [22:32<43:16, 26.50s/it]Loss: -8.788457115491232, lr: 0.0005, SIM: -2.25014, far:-6.538320064544678, WD: 0.5740088932216167, SSIM: 0.99881, pnsr:45.04357, lp:0.00009,mse:0.00003,  cost:11.390625:  35%|███▍      | 52/150 [22:59<43:16, 26.50s/it]Loss: -8.788457115491232, lr: 0.0005, SIM: -2.25014, far:-6.538320064544678, WD: 0.5740088932216167, SSIM: 0.99881, pnsr:45.04357, lp:0.00009,mse:0.00003,  cost:11.390625:  35%|███▌      | 53/150 [22:59<43:12, 26.73s/it]Loss: -8.758574108282724, lr: 0.0005, SIM: -2.21097, far:-6.547604918479919, WD: 0.5748240252335867, SSIM: 0.99878, pnsr:44.26300, lp:0.00010,mse:0.00004,  cost:11.390625:  35%|███▌      | 53/150 [23:26<43:12, 26.73s/it]Loss: -8.758574108282724, lr: 0.0005, SIM: -2.21097, far:-6.547604918479919, WD: 0.5748240252335867, SSIM: 0.99878, pnsr:44.26300, lp:0.00010,mse:0.00004,  cost:11.390625:  36%|███▌      | 54/150 [23:26<42:47, 26.74s/it]Loss: -8.781431953112284, lr: 0.0005, SIM: -2.21418, far:-6.567253679037094, WD: 0.5765490184227625, SSIM: 0.99875, pnsr:44.32685, lp:0.00009,mse:0.00004,  cost:17.0859375:  36%|███▌      | 54/150 [23:53<42:47, 26.74s/it]Loss: -8.781431953112284, lr: 0.0005, SIM: -2.21418, far:-6.567253679037094, WD: 0.5765490184227625, SSIM: 0.99875, pnsr:44.32685, lp:0.00009,mse:0.00004,  cost:17.0859375:  37%|███▋      | 55/150 [23:53<42:19, 26.73s/it]
+--------------------------------------------------
+Up cost from 11.390625 to 17.0859375
+--------------------------------------------------
+Loss: -12.099327901999155, lr: 0.0005, SIM: -2.23515, far:-9.864175140857697, WD: 0.5773271210491657, SSIM: 0.99880, pnsr:44.74419, lp:0.00009,mse:0.00004,  cost:17.0859375:  37%|███▋      | 55/150 [24:19<42:19, 26.73s/it]Loss: -12.099327901999155, lr: 0.0005, SIM: -2.23515, far:-9.864175140857697, WD: 0.5773271210491657, SSIM: 0.99880, pnsr:44.74419, lp:0.00009,mse:0.00004,  cost:17.0859375:  37%|███▋      | 56/150 [24:19<41:48, 26.68s/it]Loss: -12.074009696642557, lr: 0.0005, SIM: -2.24292, far:-9.831094145774841, WD: 0.575390969713529, SSIM: 0.99884, pnsr:44.89744, lp:0.00008,mse:0.00004,  cost:17.0859375:  37%|███▋      | 56/150 [24:48<41:48, 26.68s/it] Loss: -12.074009696642557, lr: 0.0005, SIM: -2.24292, far:-9.831094145774841, WD: 0.575390969713529, SSIM: 0.99884, pnsr:44.89744, lp:0.00008,mse:0.00004,  cost:17.0859375:  38%|███▊      | 57/150 [24:48<42:08, 27.19s/it]Loss: -12.088522891203562, lr: 0.0005, SIM: -2.25888, far:-9.82964132229487, WD: 0.5753059424459934, SSIM: 0.99887, pnsr:45.21851, lp:0.00009,mse:0.00003,  cost:17.0859375:  38%|███▊      | 57/150 [25:13<42:08, 27.19s/it]Loss: -12.088522891203562, lr: 0.0005, SIM: -2.25888, far:-9.82964132229487, WD: 0.5753059424459934, SSIM: 0.99887, pnsr:45.21851, lp:0.00009,mse:0.00003,  cost:17.0859375:  39%|███▊      | 58/150 [25:13<40:50, 26.64s/it]Loss: -12.144412755966187, lr: 0.0005, SIM: -2.26038, far:-9.88403699795405, WD: 0.5784895904362202, SSIM: 0.99888, pnsr:45.24660, lp:0.00008,mse:0.00003,  cost:17.0859375:  39%|███▊      | 58/150 [25:38<40:50, 26.64s/it]Loss: -12.144412755966187, lr: 0.0005, SIM: -2.26038, far:-9.88403699795405, WD: 0.5784895904362202, SSIM: 0.99888, pnsr:45.24660, lp:0.00008,mse:0.00003,  cost:17.0859375:  39%|███▉      | 59/150 [25:38<39:34, 26.10s/it]
+--------------------------------------------------
+Updated !!! Best sim:-2.2603757083415985, far:-9.88403699795405, SSIM: 0.998879990230004, psnr: 45.246599992116295, lp: 8.343340035329068e-05, Best WD: 0.5784895904362202
+--------------------------------------------------
+Loss: -12.066347738107046, lr: 0.0005, SIM: -2.25172, far:-9.814626495043436, WD: 0.5744271551569303, SSIM: 0.99887, pnsr:45.07305, lp:0.00008,mse:0.00003,  cost:17.0859375:  39%|███▉      | 59/150 [26:02<39:34, 26.10s/it]Loss: -12.066347738107046, lr: 0.0005, SIM: -2.25172, far:-9.814626495043436, WD: 0.5744271551569303, SSIM: 0.99887, pnsr:45.07305, lp:0.00008,mse:0.00003,  cost:17.0859375:  40%|████      | 60/150 [26:02<38:15, 25.50s/it]Loss: -12.090814530849457, lr: 0.0005, SIM: -2.27677, far:-9.814049005508423, WD: 0.5743933580815792, SSIM: 0.99890, pnsr:45.57301, lp:0.00008,mse:0.00003,  cost:17.0859375:  40%|████      | 60/150 [26:26<38:15, 25.50s/it]Loss: -12.090814530849457, lr: 0.0005, SIM: -2.27677, far:-9.814049005508423, WD: 0.5743933580815792, SSIM: 0.99890, pnsr:45.57301, lp:0.00008,mse:0.00003,  cost:17.0859375:  41%|████      | 61/150 [26:26<37:13, 25.10s/it]Loss: -12.085469563802084, lr: 0.0005, SIM: -2.23035, far:-9.855115075906118, WD: 0.5767968595027924, SSIM: 0.99883, pnsr:44.64912, lp:0.00009,mse:0.00004,  cost:17.0859375:  41%|████      | 61/150 [26:51<37:13, 25.10s/it]Loss: -12.085469563802084, lr: 0.0005, SIM: -2.23035, far:-9.855115075906118, WD: 0.5767968595027924, SSIM: 0.99883, pnsr:44.64912, lp:0.00009,mse:0.00004,  cost:17.0859375:  41%|████▏     | 62/150 [26:51<36:48, 25.10s/it]Loss: -12.101084073384603, lr: 0.0005, SIM: -2.24897, far:-9.852109869321188, WD: 0.5766209736466408, SSIM: 0.99879, pnsr:45.02203, lp:0.00009,mse:0.00004,  cost:25.62890625:  41%|████▏     | 62/150 [27:15<36:48, 25.10s/it]Loss: -12.101084073384603, lr: 0.0005, SIM: -2.24897, far:-9.852109869321188, WD: 0.5766209736466408, SSIM: 0.99879, pnsr:45.02203, lp:0.00009,mse:0.00004,  cost:25.62890625:  42%|████▏     | 63/150 [27:15<35:50, 24.72s/it]
+--------------------------------------------------
+Up cost from 17.0859375 to 25.62890625
+--------------------------------------------------
+Loss: -16.95215380191803, lr: 0.0005, SIM: -2.26045, far:-14.691706160704294, WD: 0.5732474873463312, SSIM: 0.99890, pnsr:45.24705, lp:0.00008,mse:0.00003,  cost:25.62890625:  42%|████▏     | 63/150 [27:39<35:50, 24.72s/it]Loss: -16.95215380191803, lr: 0.0005, SIM: -2.26045, far:-14.691706160704294, WD: 0.5732474873463312, SSIM: 0.99890, pnsr:45.24705, lp:0.00008,mse:0.00003,  cost:25.62890625:  43%|████▎     | 64/150 [27:39<35:13, 24.57s/it]Loss: -16.95315722624461, lr: 0.0005, SIM: -2.21493, far:-14.738225221633911, WD: 0.5750625890990099, SSIM: 0.99868, pnsr:44.34379, lp:0.00009,mse:0.00005,  cost:25.62890625:  43%|████▎     | 64/150 [28:04<35:13, 24.57s/it]Loss: -16.95315722624461, lr: 0.0005, SIM: -2.21493, far:-14.738225221633911, WD: 0.5750625890990099, SSIM: 0.99868, pnsr:44.34379, lp:0.00009,mse:0.00005,  cost:25.62890625:  43%|████▎     | 65/150 [28:04<34:42, 24.50s/it]Loss: -17.089781681696575, lr: 0.0005, SIM: -2.28733, far:-14.802455504735311, WD: 0.5775687557955583, SSIM: 0.99894, pnsr:45.78350, lp:0.00008,mse:0.00003,  cost:25.62890625:  43%|████▎     | 65/150 [28:30<34:42, 24.50s/it]Loss: -17.089781681696575, lr: 0.0005, SIM: -2.28733, far:-14.802455504735311, WD: 0.5775687557955583, SSIM: 0.99894, pnsr:45.78350, lp:0.00008,mse:0.00003,  cost:25.62890625:  44%|████▍     | 66/150 [28:30<35:09, 25.11s/it]Loss: -16.992474853992462, lr: 0.0005, SIM: -2.25354, far:-14.738930662473043, WD: 0.5750901140272617, SSIM: 0.99890, pnsr:45.10778, lp:0.00007,mse:0.00004,  cost:25.62890625:  44%|████▍     | 66/150 [28:57<35:09, 25.11s/it]Loss: -16.992474853992462, lr: 0.0005, SIM: -2.25354, far:-14.738930662473043, WD: 0.5750901140272617, SSIM: 0.99890, pnsr:45.10778, lp:0.00007,mse:0.00004,  cost:25.62890625:  45%|████▍     | 67/150 [28:57<35:33, 25.70s/it]Loss: -16.96179501215617, lr: 0.0005, SIM: -2.25594, far:-14.705851972103119, WD: 0.5737994350492954, SSIM: 0.99885, pnsr:45.15947, lp:0.00009,mse:0.00004,  cost:38.443359375:  45%|████▍     | 67/150 [29:25<35:33, 25.70s/it]Loss: -16.96179501215617, lr: 0.0005, SIM: -2.25594, far:-14.705851972103119, WD: 0.5737994350492954, SSIM: 0.99885, pnsr:45.15947, lp:0.00009,mse:0.00004,  cost:38.443359375:  45%|████▌     | 68/150 [29:25<35:56, 26.29s/it]
+--------------------------------------------------
+Up cost from 25.62890625 to 38.443359375
+--------------------------------------------------
+Loss: -24.306769013404846, lr: 0.0005, SIM: -2.24590, far:-22.06087072690328, WD: 0.5738538727164268, SSIM: 0.99887, pnsr:44.95724, lp:0.00008,mse:0.00004,  cost:38.443359375:  45%|████▌     | 68/150 [29:52<35:56, 26.29s/it]Loss: -24.306769013404846, lr: 0.0005, SIM: -2.24590, far:-22.06087072690328, WD: 0.5738538727164268, SSIM: 0.99887, pnsr:44.95724, lp:0.00008,mse:0.00004,  cost:38.443359375:  46%|████▌     | 69/150 [29:52<35:55, 26.61s/it]Loss: -24.34760332107544, lr: 0.0005, SIM: -2.22730, far:-22.120304822921753, WD: 0.5753998955090841, SSIM: 0.99878, pnsr:44.58725, lp:0.00008,mse:0.00004,  cost:38.443359375:  46%|████▌     | 69/150 [30:19<35:55, 26.61s/it]Loss: -24.34760332107544, lr: 0.0005, SIM: -2.22730, far:-22.120304822921753, WD: 0.5753998955090841, SSIM: 0.99878, pnsr:44.58725, lp:0.00008,mse:0.00004,  cost:38.443359375:  47%|████▋     | 70/150 [30:19<35:45, 26.82s/it]Loss: -24.30676241715749, lr: 0.0005, SIM: -2.24419, far:-22.0625718832016, WD: 0.5738981241981188, SSIM: 0.99890, pnsr:44.92243, lp:0.00008,mse:0.00003,  cost:38.443359375:  47%|████▋     | 70/150 [30:46<35:45, 26.82s/it]  Loss: -24.30676241715749, lr: 0.0005, SIM: -2.24419, far:-22.0625718832016, WD: 0.5738981241981188, SSIM: 0.99890, pnsr:44.92243, lp:0.00008,mse:0.00003,  cost:38.443359375:  47%|████▋     | 71/150 [30:46<35:12, 26.74s/it]Loss: -24.338581164677937, lr: 0.0005, SIM: -2.26723, far:-22.071346481641132, WD: 0.5741263727347056, SSIM: 0.99895, pnsr:45.38209, lp:0.00008,mse:0.00003,  cost:38.443359375:  47%|████▋     | 71/150 [31:13<35:12, 26.74s/it]Loss: -24.338581164677937, lr: 0.0005, SIM: -2.26723, far:-22.071346481641132, WD: 0.5741263727347056, SSIM: 0.99895, pnsr:45.38209, lp:0.00008,mse:0.00003,  cost:38.443359375:  48%|████▊     | 72/150 [31:13<35:02, 26.95s/it]Loss: -24.41528570652008, lr: 0.0005, SIM: -2.27309, far:-22.142200589179993, WD: 0.5759694489339987, SSIM: 0.99899, pnsr:45.49768, lp:0.00008,mse:0.00003,  cost:57.6650390625:  48%|████▊     | 72/150 [31:40<35:02, 26.95s/it]Loss: -24.41528570652008, lr: 0.0005, SIM: -2.27309, far:-22.142200589179993, WD: 0.5759694489339987, SSIM: 0.99899, pnsr:45.49768, lp:0.00008,mse:0.00003,  cost:57.6650390625:  49%|████▊     | 73/150 [31:40<34:31, 26.90s/it]
+--------------------------------------------------
+Up cost from 38.443359375 to 57.6650390625
+--------------------------------------------------
+Loss: -35.334497690200806, lr: 0.0005, SIM: -2.19725, far:-33.13725094000498, WD: 0.5746506328384081, SSIM: 0.99881, pnsr:43.98675, lp:0.00009,mse:0.00005,  cost:57.6650390625:  49%|████▊     | 73/150 [32:06<34:31, 26.90s/it]Loss: -35.334497690200806, lr: 0.0005, SIM: -2.19725, far:-33.13725094000498, WD: 0.5746506328384081, SSIM: 0.99881, pnsr:43.98675, lp:0.00009,mse:0.00005,  cost:57.6650390625:  49%|████▉     | 74/150 [32:06<33:42, 26.61s/it]Loss: -35.62847129503886, lr: 0.0005, SIM: -2.24028, far:-33.388190825780235, WD: 0.5790023095905781, SSIM: 0.99886, pnsr:44.84493, lp:0.00008,mse:0.00004,  cost:57.6650390625:  49%|████▉     | 74/150 [32:34<33:42, 26.61s/it]Loss: -35.62847129503886, lr: 0.0005, SIM: -2.24028, far:-33.388190825780235, WD: 0.5790023095905781, SSIM: 0.99886, pnsr:44.84493, lp:0.00008,mse:0.00004,  cost:57.6650390625:  50%|█████     | 75/150 [32:34<33:45, 27.00s/it]
+--------------------------------------------------
+Updated !!! Best sim:-2.2402806356549263, far:-33.388190825780235, SSIM: 0.9988562949001789, psnr: 44.844930013020836, lp: 8.222108825369408e-05, Best WD: 0.5790023095905781
+--------------------------------------------------
+Loss: -35.49030613899231, lr: 0.0005, SIM: -2.26348, far:-33.22682400544485, WD: 0.5762039609253407, SSIM: 0.99893, pnsr:45.30760, lp:0.00008,mse:0.00003,  cost:57.6650390625:  50%|█████     | 75/150 [33:02<33:45, 27.00s/it] Loss: -35.49030613899231, lr: 0.0005, SIM: -2.26348, far:-33.22682400544485, WD: 0.5762039609253407, SSIM: 0.99893, pnsr:45.30760, lp:0.00008,mse:0.00003,  cost:57.6650390625:  51%|█████     | 76/150 [33:02<33:33, 27.20s/it]Loss: -35.39320961634318, lr: 0.0005, SIM: -2.26909, far:-33.12411562601725, WD: 0.5744228437542915, SSIM: 0.99895, pnsr:45.41911, lp:0.00008,mse:0.00003,  cost:57.6650390625:  51%|█████     | 76/150 [33:28<33:33, 27.20s/it]Loss: -35.39320961634318, lr: 0.0005, SIM: -2.26909, far:-33.12411562601725, WD: 0.5744228437542915, SSIM: 0.99895, pnsr:45.41911, lp:0.00008,mse:0.00003,  cost:57.6650390625:  51%|█████▏    | 77/150 [33:28<32:51, 27.01s/it]Loss: -35.30543700853983, lr: 0.0005, SIM: -2.25582, far:-33.049614787101746, WD: 0.5731308820346991, SSIM: 0.99895, pnsr:45.15297, lp:0.00008,mse:0.00004,  cost:57.6650390625:  51%|█████▏    | 77/150 [33:57<32:51, 27.01s/it]Loss: -35.30543700853983, lr: 0.0005, SIM: -2.25582, far:-33.049614787101746, WD: 0.5731308820346991, SSIM: 0.99895, pnsr:45.15297, lp:0.00008,mse:0.00004,  cost:57.6650390625:  52%|█████▏    | 78/150 [33:57<32:51, 27.38s/it]Loss: -35.487214962641396, lr: 0.0005, SIM: -2.23776, far:-33.24945696194967, WD: 0.5765964550276598, SSIM: 0.99893, pnsr:44.79324, lp:0.00008,mse:0.00004,  cost:86.49755859375:  52%|█████▏    | 78/150 [34:23<32:51, 27.38s/it]Loss: -35.487214962641396, lr: 0.0005, SIM: -2.23776, far:-33.24945696194967, WD: 0.5765964550276598, SSIM: 0.99893, pnsr:44.79324, lp:0.00008,mse:0.00004,  cost:86.49755859375:  53%|█████▎    | 79/150 [34:23<31:55, 26.97s/it]
+--------------------------------------------------
+Up cost from 57.6650390625 to 86.49755859375
+--------------------------------------------------
+Loss: -52.24349315961202, lr: 0.0005, SIM: -2.26747, far:-49.97602295875549, WD: 0.5777738007406393, SSIM: 0.99903, pnsr:45.38521, lp:0.00008,mse:0.00003,  cost:86.49755859375:  53%|█████▎    | 79/150 [34:49<31:55, 26.97s/it] Loss: -52.24349315961202, lr: 0.0005, SIM: -2.26747, far:-49.97602295875549, WD: 0.5777738007406393, SSIM: 0.99903, pnsr:45.38521, lp:0.00008,mse:0.00003,  cost:86.49755859375:  53%|█████▎    | 80/150 [34:49<31:09, 26.71s/it]Loss: -51.679812590281166, lr: 0.0005, SIM: -2.21524, far:-49.46457521120707, WD: 0.5718609417478243, SSIM: 0.99881, pnsr:44.34693, lp:0.00009,mse:0.00004,  cost:86.49755859375:  53%|█████▎    | 80/150 [35:16<31:09, 26.71s/it]Loss: -51.679812590281166, lr: 0.0005, SIM: -2.21524, far:-49.46457521120707, WD: 0.5718609417478243, SSIM: 0.99881, pnsr:44.34693, lp:0.00009,mse:0.00004,  cost:86.49755859375:  54%|█████▍    | 81/150 [35:16<30:47, 26.78s/it]Loss: -52.161854108174644, lr: 0.0005, SIM: -2.27413, far:-49.887726147969566, WD: 0.5767529979348183, SSIM: 0.99896, pnsr:45.51886, lp:0.00008,mse:0.00003,  cost:86.49755859375:  54%|█████▍    | 81/150 [35:43<30:47, 26.78s/it]Loss: -52.161854108174644, lr: 0.0005, SIM: -2.27413, far:-49.887726147969566, WD: 0.5767529979348183, SSIM: 0.99896, pnsr:45.51886, lp:0.00008,mse:0.00003,  cost:86.49755859375:  55%|█████▍    | 82/150 [35:43<30:34, 26.97s/it]Loss: -51.973543087641396, lr: 0.0005, SIM: -2.27623, far:-49.69731426239014, WD: 0.5745516406993071, SSIM: 0.99895, pnsr:45.56436, lp:0.00009,mse:0.00003,  cost:86.49755859375:  55%|█████▍    | 82/150 [36:07<30:34, 26.97s/it] Loss: -51.973543087641396, lr: 0.0005, SIM: -2.27623, far:-49.69731426239014, WD: 0.5745516406993071, SSIM: 0.99895, pnsr:45.56436, lp:0.00009,mse:0.00003,  cost:86.49755859375:  55%|█████▌    | 83/150 [36:07<29:05, 26.05s/it]Loss: -51.97058963775635, lr: 0.0005, SIM: -2.29102, far:-49.679567178090416, WD: 0.5743464690943559, SSIM: 0.99902, pnsr:45.85574, lp:0.00008,mse:0.00003,  cost:129.746337890625:  55%|█████▌    | 83/150 [36:30<29:05, 26.05s/it]Loss: -51.97058963775635, lr: 0.0005, SIM: -2.29102, far:-49.679567178090416, WD: 0.5743464690943559, SSIM: 0.99902, pnsr:45.85574, lp:0.00008,mse:0.00003,  cost:129.746337890625:  56%|█████▌    | 84/150 [36:30<27:43, 25.21s/it]
+--------------------------------------------------
+Up cost from 86.49755859375 to 129.746337890625
+--------------------------------------------------
+Loss: -77.18851439158122, lr: 0.0005, SIM: -2.25479, far:-74.93372138341267, WD: 0.5775401641925176, SSIM: 0.99892, pnsr:45.13317, lp:0.00008,mse:0.00004,  cost:129.746337890625:  56%|█████▌    | 84/150 [36:54<27:43, 25.21s/it] Loss: -77.18851439158122, lr: 0.0005, SIM: -2.25479, far:-74.93372138341267, WD: 0.5775401641925176, SSIM: 0.99892, pnsr:45.13317, lp:0.00008,mse:0.00004,  cost:129.746337890625:  57%|█████▋    | 85/150 [36:54<26:58, 24.89s/it]Loss: -77.3479593594869, lr: 0.0005, SIM: -2.29333, far:-75.05463314056396, WD: 0.5784720766047636, SSIM: 0.99903, pnsr:45.90061, lp:0.00007,mse:0.00003,  cost:129.746337890625:  57%|█████▋    | 85/150 [37:18<26:58, 24.89s/it] Loss: -77.3479593594869, lr: 0.0005, SIM: -2.29333, far:-75.05463314056396, WD: 0.5784720766047636, SSIM: 0.99903, pnsr:45.90061, lp:0.00007,mse:0.00003,  cost:129.746337890625:  57%|█████▋    | 86/150 [37:18<26:09, 24.52s/it]Loss: -76.74085664749146, lr: 0.0005, SIM: -2.26095, far:-74.47991021474202, WD: 0.5740424866477648, SSIM: 0.99894, pnsr:45.25670, lp:0.00008,mse:0.00004,  cost:129.746337890625:  57%|█████▋    | 86/150 [37:42<26:09, 24.52s/it]Loss: -76.74085664749146, lr: 0.0005, SIM: -2.26095, far:-74.47991021474202, WD: 0.5740424866477648, SSIM: 0.99894, pnsr:45.25670, lp:0.00008,mse:0.00004,  cost:129.746337890625:  58%|█████▊    | 87/150 [37:42<25:41, 24.46s/it]Loss: -77.07385953267415, lr: 0.0005, SIM: -2.23273, far:-74.84112819035848, WD: 0.5768265190223852, SSIM: 0.99891, pnsr:44.69337, lp:0.00009,mse:0.00004,  cost:129.746337890625:  58%|█████▊    | 87/150 [38:07<25:41, 24.46s/it]Loss: -77.07385953267415, lr: 0.0005, SIM: -2.23273, far:-74.84112819035848, WD: 0.5768265190223852, SSIM: 0.99891, pnsr:44.69337, lp:0.00009,mse:0.00004,  cost:129.746337890625:  59%|█████▊    | 88/150 [38:07<25:26, 24.63s/it]Loss: -77.1370644569397, lr: 0.0005, SIM: -2.28858, far:-74.84848419825236, WD: 0.5768832104901472, SSIM: 0.99907, pnsr:45.80712, lp:0.00008,mse:0.00003,  cost:194.6195068359375:  59%|█████▊    | 88/150 [38:32<25:26, 24.63s/it]Loss: -77.1370644569397, lr: 0.0005, SIM: -2.28858, far:-74.84848419825236, WD: 0.5768832104901472, SSIM: 0.99907, pnsr:45.80712, lp:0.00008,mse:0.00003,  cost:194.6195068359375:  59%|█████▉    | 89/150 [38:32<25:04, 24.66s/it]
+--------------------------------------------------
+Up cost from 129.746337890625 to 194.6195068359375
+--------------------------------------------------
+Loss: -114.2827221552531, lr: 0.0005, SIM: -2.28871, far:-111.99401299158733, WD: 0.5754511170089245, SSIM: 0.99898, pnsr:45.80993, lp:0.00008,mse:0.00003,  cost:194.6195068359375:  59%|█████▉    | 89/150 [38:56<25:04, 24.66s/it]Loss: -114.2827221552531, lr: 0.0005, SIM: -2.28871, far:-111.99401299158733, WD: 0.5754511170089245, SSIM: 0.99898, pnsr:45.80993, lp:0.00008,mse:0.00003,  cost:194.6195068359375:  60%|██████    | 90/150 [38:56<24:32, 24.54s/it]Loss: -114.57550700505574, lr: 0.0005, SIM: -2.27473, far:-112.30077664057414, WD: 0.5770273444553217, SSIM: 0.99898, pnsr:45.53196, lp:0.00008,mse:0.00003,  cost:194.6195068359375:  60%|██████    | 90/150 [39:22<24:32, 24.54s/it]Loss: -114.57550700505574, lr: 0.0005, SIM: -2.27473, far:-112.30077664057414, WD: 0.5770273444553217, SSIM: 0.99898, pnsr:45.53196, lp:0.00008,mse:0.00003,  cost:194.6195068359375:  61%|██████    | 91/150 [39:22<24:24, 24.82s/it]Loss: -114.00170151392619, lr: 0.0005, SIM: -2.28909, far:-111.71260913213094, WD: 0.5740051989754041, SSIM: 0.99908, pnsr:45.81759, lp:0.00009,mse:0.00003,  cost:194.6195068359375:  61%|██████    | 91/150 [39:48<24:24, 24.82s/it]Loss: -114.00170151392619, lr: 0.0005, SIM: -2.28909, far:-111.71260913213094, WD: 0.5740051989754041, SSIM: 0.99908, pnsr:45.81759, lp:0.00009,mse:0.00003,  cost:194.6195068359375:  61%|██████▏   | 92/150 [39:48<24:31, 25.37s/it]Loss: -114.2873026529948, lr: 0.0005, SIM: -2.27541, far:-112.01189454396565, WD: 0.5755429963270823, SSIM: 0.99903, pnsr:45.54247, lp:0.00007,mse:0.00003,  cost:194.6195068359375:  61%|██████▏   | 92/150 [40:17<24:31, 25.37s/it] Loss: -114.2873026529948, lr: 0.0005, SIM: -2.27541, far:-112.01189454396565, WD: 0.5755429963270823, SSIM: 0.99903, pnsr:45.54247, lp:0.00007,mse:0.00003,  cost:194.6195068359375:  62%|██████▏   | 93/150 [40:17<24:53, 26.21s/it]Loss: -114.31640386581421, lr: 0.0005, SIM: -2.27502, far:-112.04138390223186, WD: 0.5756945225099722, SSIM: 0.99893, pnsr:45.53838, lp:0.00008,mse:0.00003,  cost:291.92926025390625:  62%|██████▏   | 93/150 [40:45<24:53, 26.21s/it]Loss: -114.31640386581421, lr: 0.0005, SIM: -2.27502, far:-112.04138390223186, WD: 0.5756945225099722, SSIM: 0.99893, pnsr:45.53838, lp:0.00008,mse:0.00003,  cost:291.92926025390625:  63%|██████▎   | 94/150 [40:45<25:03, 26.84s/it]
+--------------------------------------------------
+Up cost from 194.6195068359375 to 291.92926025390625
+--------------------------------------------------
+Loss: -169.0825866063436, lr: 0.0005, SIM: -2.27057, far:-166.81201839447021, WD: 0.5714124652246634, SSIM: 0.99900, pnsr:45.44717, lp:0.00008,mse:0.00003,  cost:291.92926025390625:  63%|██████▎   | 94/150 [41:12<25:03, 26.84s/it] Loss: -169.0825866063436, lr: 0.0005, SIM: -2.27057, far:-166.81201839447021, WD: 0.5714124652246634, SSIM: 0.99900, pnsr:45.44717, lp:0.00008,mse:0.00003,  cost:291.92926025390625:  63%|██████▎   | 95/150 [41:12<24:41, 26.93s/it]Loss: -170.93869018554688, lr: 0.0005, SIM: -2.28526, far:-168.65342712402344, WD: 0.5777201925714811, SSIM: 0.99904, pnsr:45.74050, lp:0.00008,mse:0.00003,  cost:291.92926025390625:  63%|██████▎   | 95/150 [41:37<24:41, 26.93s/it]Loss: -170.93869018554688, lr: 0.0005, SIM: -2.28526, far:-168.65342712402344, WD: 0.5777201925714811, SSIM: 0.99904, pnsr:45.74050, lp:0.00008,mse:0.00003,  cost:291.92926025390625:  64%|██████▍   | 96/150 [41:37<23:39, 26.29s/it]Loss: -170.03539562225342, lr: 0.0005, SIM: -2.27900, far:-167.75639279683432, WD: 0.5746474079787731, SSIM: 0.99905, pnsr:45.61628, lp:0.00009,mse:0.00003,  cost:291.92926025390625:  64%|██████▍   | 96/150 [42:03<23:39, 26.29s/it]Loss: -170.03539562225342, lr: 0.0005, SIM: -2.27900, far:-167.75639279683432, WD: 0.5746474079787731, SSIM: 0.99905, pnsr:45.61628, lp:0.00009,mse:0.00003,  cost:291.92926025390625:  65%|██████▍   | 97/150 [42:03<23:12, 26.28s/it]Loss: -170.62983512878418, lr: 0.0005, SIM: -2.27171, far:-168.358128229777, WD: 0.5767086409032345, SSIM: 0.99911, pnsr:45.46538, lp:0.00007,mse:0.00003,  cost:291.92926025390625:  65%|██████▍   | 97/150 [42:30<23:12, 26.28s/it]  Loss: -170.62983512878418, lr: 0.0005, SIM: -2.27171, far:-168.358128229777, WD: 0.5767086409032345, SSIM: 0.99911, pnsr:45.46538, lp:0.00007,mse:0.00003,  cost:291.92926025390625:  65%|██████▌   | 98/150 [42:30<23:02, 26.58s/it]Loss: -170.20580387115479, lr: 0.0005, SIM: -2.26223, far:-167.94357331593832, WD: 0.57528859252731, SSIM: 0.99898, pnsr:45.28225, lp:0.00009,mse:0.00004,  cost:437.8938903808594:  65%|██████▌   | 98/150 [42:57<23:02, 26.58s/it] Loss: -170.20580387115479, lr: 0.0005, SIM: -2.26223, far:-167.94357331593832, WD: 0.57528859252731, SSIM: 0.99898, pnsr:45.28225, lp:0.00009,mse:0.00004,  cost:437.8938903808594:  66%|██████▌   | 99/150 [42:57<22:31, 26.49s/it]
+--------------------------------------------------
+Up cost from 291.92926025390625 to 437.8938903808594
+--------------------------------------------------
+Loss: -254.313232421875, lr: 5e-05, SIM: -2.29203, far:-252.02120081583658, WD: 0.5755302980542183, SSIM: 0.99907, pnsr:45.87349, lp:0.00007,mse:0.00003,  cost:437.8938903808594:  66%|██████▌   | 99/150 [43:24<22:31, 26.49s/it] Loss: -254.313232421875, lr: 5e-05, SIM: -2.29203, far:-252.02120081583658, WD: 0.5755302980542183, SSIM: 0.99907, pnsr:45.87349, lp:0.00007,mse:0.00003,  cost:437.8938903808594:  67%|██████▋   | 100/150 [43:24<22:09, 26.58s/it]Loss: -253.4924929936727, lr: 5e-05, SIM: -2.28659, far:-251.20590368906656, WD: 0.5736684376994768, SSIM: 0.99910, pnsr:45.76235, lp:0.00006,mse:0.00003,  cost:437.8938903808594:  67%|██████▋   | 100/150 [43:51<22:09, 26.58s/it]Loss: -253.4924929936727, lr: 5e-05, SIM: -2.28659, far:-251.20590368906656, WD: 0.5736684376994768, SSIM: 0.99910, pnsr:45.76235, lp:0.00006,mse:0.00003,  cost:437.8938903808594:  67%|██████▋   | 101/150 [43:51<22:00, 26.96s/it]Loss: -254.15438397725424, lr: 5e-05, SIM: -2.32032, far:-251.83406035105386, WD: 0.5751029327511787, SSIM: 0.99914, pnsr:46.43467, lp:0.00006,mse:0.00003,  cost:437.8938903808594:  67%|██████▋   | 101/150 [44:19<22:00, 26.96s/it]Loss: -254.15438397725424, lr: 5e-05, SIM: -2.32032, far:-251.83406035105386, WD: 0.5751029327511787, SSIM: 0.99914, pnsr:46.43467, lp:0.00006,mse:0.00003,  cost:437.8938903808594:  68%|██████▊   | 102/150 [44:19<21:46, 27.23s/it]Loss: -255.0453259150187, lr: 5e-05, SIM: -2.31176, far:-252.7335697809855, WD: 0.577157107492288, SSIM: 0.99914, pnsr:46.26242, lp:0.00005,mse:0.00003,  cost:437.8938903808594:  68%|██████▊   | 102/150 [44:47<21:46, 27.23s/it]   Loss: -255.0453259150187, lr: 5e-05, SIM: -2.31176, far:-252.7335697809855, WD: 0.577157107492288, SSIM: 0.99914, pnsr:46.26242, lp:0.00005,mse:0.00003,  cost:437.8938903808594:  69%|██████▊   | 103/150 [44:47<21:21, 27.27s/it]Loss: -254.1073694229126, lr: 5e-05, SIM: -2.32111, far:-251.78625392913818, WD: 0.5749937618772188, SSIM: 0.99911, pnsr:46.45234, lp:0.00006,mse:0.00003,  cost:656.8408355712891:  69%|██████▊   | 103/150 [45:16<21:21, 27.27s/it]Loss: -254.1073694229126, lr: 5e-05, SIM: -2.32111, far:-251.78625392913818, WD: 0.5749937618772188, SSIM: 0.99911, pnsr:46.45234, lp:0.00006,mse:0.00003,  cost:656.8408355712891:  69%|██████▉   | 104/150 [45:16<21:27, 28.00s/it]
+--------------------------------------------------
+Up cost from 437.8938903808594 to 656.8408355712891
+--------------------------------------------------
+Loss: -379.34106890360516, lr: 5e-05, SIM: -2.31715, far:-377.02391688028973, WD: 0.5739958683649699, SSIM: 0.99914, pnsr:46.37175, lp:0.00006,mse:0.00003,  cost:656.8408355712891:  69%|██████▉   | 104/150 [45:44<21:27, 28.00s/it]Loss: -379.34106890360516, lr: 5e-05, SIM: -2.31715, far:-377.02391688028973, WD: 0.5739958683649699, SSIM: 0.99914, pnsr:46.37175, lp:0.00006,mse:0.00003,  cost:656.8408355712891:  70%|███████   | 105/150 [45:44<20:54, 27.88s/it]Loss: -381.6424617767334, lr: 5e-05, SIM: -2.31618, far:-379.3262818654378, WD: 0.5775010772049427, SSIM: 0.99911, pnsr:46.35341, lp:0.00006,mse:0.00003,  cost:656.8408355712891:  70%|███████   | 105/150 [46:12<20:54, 27.88s/it]  Loss: -381.6424617767334, lr: 5e-05, SIM: -2.31618, far:-379.3262818654378, WD: 0.5775010772049427, SSIM: 0.99911, pnsr:46.35341, lp:0.00006,mse:0.00003,  cost:656.8408355712891:  71%|███████   | 106/150 [46:12<20:29, 27.93s/it]Loss: -379.0561103820801, lr: 5e-05, SIM: -2.33213, far:-376.7239793141683, WD: 0.5735392322142919, SSIM: 0.99914, pnsr:46.67084, lp:0.00006,mse:0.00002,  cost:656.8408355712891:  71%|███████   | 106/150 [46:39<20:29, 27.93s/it]Loss: -379.0561103820801, lr: 5e-05, SIM: -2.33213, far:-376.7239793141683, WD: 0.5735392322142919, SSIM: 0.99914, pnsr:46.67084, lp:0.00006,mse:0.00002,  cost:656.8408355712891:  71%|███████▏  | 107/150 [46:39<19:51, 27.71s/it]Loss: -380.88287417093915, lr: 5e-05, SIM: -2.29144, far:-378.5914357503255, WD: 0.5763823240995407, SSIM: 0.99911, pnsr:45.85910, lp:0.00006,mse:0.00003,  cost:656.8408355712891:  71%|███████▏  | 107/150 [47:07<19:51, 27.71s/it]Loss: -380.88287417093915, lr: 5e-05, SIM: -2.29144, far:-378.5914357503255, WD: 0.5763823240995407, SSIM: 0.99911, pnsr:45.85910, lp:0.00006,mse:0.00003,  cost:656.8408355712891:  72%|███████▏  | 108/150 [47:07<19:28, 27.82s/it]Loss: -379.367680867513, lr: 5e-05, SIM: -2.32106, far:-377.0466251373291, WD: 0.5740304390589396, SSIM: 0.99910, pnsr:46.45107, lp:0.00006,mse:0.00003,  cost:985.2612533569336:  72%|███████▏  | 108/150 [47:33<19:28, 27.82s/it]  Loss: -379.367680867513, lr: 5e-05, SIM: -2.32106, far:-377.0466251373291, WD: 0.5740304390589396, SSIM: 0.99910, pnsr:46.45107, lp:0.00006,mse:0.00003,  cost:985.2612533569336:  73%|███████▎  | 109/150 [47:33<18:32, 27.13s/it]
+--------------------------------------------------
+Up cost from 656.8408355712891 to 985.2612533569336
+--------------------------------------------------
+Loss: -569.3450965881348, lr: 5e-05, SIM: -2.30345, far:-567.0416475931803, WD: 0.5755241674681505, SSIM: 0.99913, pnsr:46.09805, lp:0.00006,mse:0.00003,  cost:985.2612533569336:  73%|███████▎  | 109/150 [47:57<18:32, 27.13s/it]Loss: -569.3450965881348, lr: 5e-05, SIM: -2.30345, far:-567.0416475931803, WD: 0.5755241674681505, SSIM: 0.99913, pnsr:46.09805, lp:0.00006,mse:0.00003,  cost:985.2612533569336:  73%|███████▎  | 110/150 [47:57<17:26, 26.15s/it]Loss: -571.2138163248698, lr: 5e-05, SIM: -2.28144, far:-568.9323768615723, WD: 0.577443178743124, SSIM: 0.99908, pnsr:45.65975, lp:0.00006,mse:0.00003,  cost:985.2612533569336:  73%|███████▎  | 110/150 [48:21<17:26, 26.15s/it] Loss: -571.2138163248698, lr: 5e-05, SIM: -2.28144, far:-568.9323768615723, WD: 0.577443178743124, SSIM: 0.99908, pnsr:45.65975, lp:0.00006,mse:0.00003,  cost:985.2612533569336:  74%|███████▍  | 111/150 [48:21<16:36, 25.56s/it]Loss: -569.2343775431315, lr: 5e-05, SIM: -2.31424, far:-566.9201354980469, WD: 0.5754008342822393, SSIM: 0.99916, pnsr:46.31212, lp:0.00005,mse:0.00003,  cost:985.2612533569336:  74%|███████▍  | 111/150 [48:45<16:36, 25.56s/it]Loss: -569.2343775431315, lr: 5e-05, SIM: -2.31424, far:-566.9201354980469, WD: 0.5754008342822393, SSIM: 0.99916, pnsr:46.31212, lp:0.00005,mse:0.00003,  cost:985.2612533569336:  75%|███████▍  | 112/150 [48:45<15:57, 25.20s/it]Loss: -568.7210731506348, lr: 5e-05, SIM: -2.29337, far:-566.4276962280273, WD: 0.5749010282258192, SSIM: 0.99910, pnsr:45.89609, lp:0.00005,mse:0.00003,  cost:985.2612533569336:  75%|███████▍  | 112/150 [49:09<15:57, 25.20s/it]Loss: -568.7210731506348, lr: 5e-05, SIM: -2.29337, far:-566.4276962280273, WD: 0.5749010282258192, SSIM: 0.99910, pnsr:45.89609, lp:0.00005,mse:0.00003,  cost:985.2612533569336:  75%|███████▌  | 113/150 [49:09<15:19, 24.84s/it]Loss: -568.7719179789225, lr: 5e-05, SIM: -2.31019, far:-566.4617335001627, WD: 0.5749355802933375, SSIM: 0.99912, pnsr:46.23332, lp:0.00006,mse:0.00003,  cost:1477.8918800354004:  75%|███████▌  | 113/150 [49:33<15:19, 24.84s/it]Loss: -568.7719179789225, lr: 5e-05, SIM: -2.31019, far:-566.4617335001627, WD: 0.5749355802933375, SSIM: 0.99912, pnsr:46.23332, lp:0.00006,mse:0.00003,  cost:1477.8918800354004:  76%|███████▌  | 114/150 [49:33<14:44, 24.56s/it]
+--------------------------------------------------
+Up cost from 985.2612533569336 to 1477.8918800354004
+--------------------------------------------------
+Loss: -857.7947896321615, lr: 5e-05, SIM: -2.34166, far:-855.4531300862631, WD: 0.5788333788514137, SSIM: 0.99916, pnsr:46.86019, lp:0.00005,mse:0.00002,  cost:1477.8918800354004:  76%|███████▌  | 114/150 [49:57<14:44, 24.56s/it]Loss: -857.7947896321615, lr: 5e-05, SIM: -2.34166, far:-855.4531300862631, WD: 0.5788333788514137, SSIM: 0.99916, pnsr:46.86019, lp:0.00005,mse:0.00002,  cost:1477.8918800354004:  77%|███████▋  | 115/150 [49:57<14:13, 24.40s/it]Loss: -855.3575248718262, lr: 5e-05, SIM: -2.29245, far:-853.0650787353516, WD: 0.5772175267338753, SSIM: 0.99910, pnsr:45.87779, lp:0.00005,mse:0.00003,  cost:1477.8918800354004:  77%|███████▋  | 115/150 [50:21<14:13, 24.40s/it]Loss: -855.3575248718262, lr: 5e-05, SIM: -2.29245, far:-853.0650787353516, WD: 0.5772175267338753, SSIM: 0.99910, pnsr:45.87779, lp:0.00005,mse:0.00003,  cost:1477.8918800354004:  77%|███████▋  | 116/150 [50:21<13:46, 24.31s/it]Loss: -854.7011731465658, lr: 5e-05, SIM: -2.33445, far:-852.3667182922363, WD: 0.57674498980244, SSIM: 0.99914, pnsr:46.71815, lp:0.00006,mse:0.00003,  cost:1477.8918800354004:  77%|███████▋  | 116/150 [50:46<13:46, 24.31s/it]  Loss: -854.7011731465658, lr: 5e-05, SIM: -2.33445, far:-852.3667182922363, WD: 0.57674498980244, SSIM: 0.99914, pnsr:46.71815, lp:0.00006,mse:0.00003,  cost:1477.8918800354004:  78%|███████▊  | 117/150 [50:46<13:22, 24.33s/it]Loss: -849.2388280232748, lr: 5e-05, SIM: -2.29896, far:-846.9398663838705, WD: 0.5730729661881924, SSIM: 0.99905, pnsr:46.01006, lp:0.00006,mse:0.00003,  cost:1477.8918800354004:  78%|███████▊  | 117/150 [51:11<13:22, 24.33s/it]Loss: -849.2388280232748, lr: 5e-05, SIM: -2.29896, far:-846.9398663838705, WD: 0.5730729661881924, SSIM: 0.99905, pnsr:46.01006, lp:0.00006,mse:0.00003,  cost:1477.8918800354004:  79%|███████▊  | 118/150 [51:11<13:05, 24.56s/it]Loss: -851.8779118855795, lr: 5e-05, SIM: -2.32230, far:-849.5556119283041, WD: 0.5748428838948408, SSIM: 0.99916, pnsr:46.47416, lp:0.00006,mse:0.00003,  cost:2216.8378200531006:  79%|███████▊  | 118/150 [51:39<13:05, 24.56s/it]Loss: -851.8779118855795, lr: 5e-05, SIM: -2.32230, far:-849.5556119283041, WD: 0.5748428838948408, SSIM: 0.99916, pnsr:46.47416, lp:0.00006,mse:0.00003,  cost:2216.8378200531006:  79%|███████▉  | 119/150 [51:39<13:13, 25.59s/it]
+--------------------------------------------------
+Up cost from 1477.8918800354004 to 2216.8378200531006
+--------------------------------------------------
+Loss: -1282.4248631795247, lr: 5e-05, SIM: -2.32894, far:-1280.0959218343098, WD: 0.577442274739345, SSIM: 0.99913, pnsr:46.60718, lp:0.00005,mse:0.00003,  cost:2216.8378200531006:  79%|███████▉  | 119/150 [52:04<13:13, 25.59s/it]Loss: -1282.4248631795247, lr: 5e-05, SIM: -2.32894, far:-1280.0959218343098, WD: 0.577442274739345, SSIM: 0.99913, pnsr:46.60718, lp:0.00005,mse:0.00003,  cost:2216.8378200531006:  80%|████████  | 120/150 [52:04<12:49, 25.64s/it]Loss: -1278.387316385905, lr: 5e-05, SIM: -2.31963, far:-1276.0676752726238, WD: 0.5756251625716686, SSIM: 0.99915, pnsr:46.41968, lp:0.00005,mse:0.00003,  cost:2216.8378200531006:  80%|████████  | 120/150 [52:31<12:49, 25.64s/it]Loss: -1278.387316385905, lr: 5e-05, SIM: -2.31963, far:-1276.0676752726238, WD: 0.5756251625716686, SSIM: 0.99915, pnsr:46.41968, lp:0.00005,mse:0.00003,  cost:2216.8378200531006:  81%|████████  | 121/150 [52:31<12:31, 25.91s/it]Loss: -1280.5899963378906, lr: 5e-05, SIM: -2.34140, far:-1278.2485987345378, WD: 0.5766089620689551, SSIM: 0.99915, pnsr:46.85542, lp:0.00005,mse:0.00002,  cost:2216.8378200531006:  81%|████████  | 121/150 [52:57<12:31, 25.91s/it]Loss: -1280.5899963378906, lr: 5e-05, SIM: -2.34140, far:-1278.2485987345378, WD: 0.5766089620689551, SSIM: 0.99915, pnsr:46.85542, lp:0.00005,mse:0.00002,  cost:2216.8378200531006:  81%|████████▏ | 122/150 [52:57<12:07, 25.97s/it]Loss: -1275.1319173177083, lr: 5e-05, SIM: -2.36722, far:-1272.7646942138672, WD: 0.5741352128485838, SSIM: 0.99917, pnsr:47.37158, lp:0.00005,mse:0.00002,  cost:2216.8378200531006:  81%|████████▏ | 122/150 [53:21<12:07, 25.97s/it]Loss: -1275.1319173177083, lr: 5e-05, SIM: -2.36722, far:-1272.7646942138672, WD: 0.5741352128485838, SSIM: 0.99917, pnsr:47.37158, lp:0.00005,mse:0.00002,  cost:2216.8378200531006:  82%|████████▏ | 123/150 [53:21<11:28, 25.50s/it]Loss: -1280.053830464681, lr: 5e-05, SIM: -2.31777, far:-1277.7360585530598, WD: 0.5763777606189251, SSIM: 0.99915, pnsr:46.38411, lp:0.00006,mse:0.00003,  cost:3325.256730079651:  82%|████████▏ | 123/150 [53:47<11:28, 25.50s/it]  Loss: -1280.053830464681, lr: 5e-05, SIM: -2.31777, far:-1277.7360585530598, WD: 0.5763777606189251, SSIM: 0.99915, pnsr:46.38411, lp:0.00006,mse:0.00003,  cost:3325.256730079651:  83%|████████▎ | 124/150 [53:47<11:06, 25.63s/it]
+--------------------------------------------------
+Up cost from 2216.8378200531006 to 3325.256730079651
+--------------------------------------------------
+Loss: -1914.9802220662434, lr: 5e-05, SIM: -2.33100, far:-1912.6492258707683, WD: 0.575188418229421, SSIM: 0.99917, pnsr:46.64732, lp:0.00005,mse:0.00002,  cost:3325.256730079651:  83%|████████▎ | 124/150 [54:13<11:06, 25.63s/it]Loss: -1914.9802220662434, lr: 5e-05, SIM: -2.33100, far:-1912.6492258707683, WD: 0.575188418229421, SSIM: 0.99917, pnsr:46.64732, lp:0.00005,mse:0.00002,  cost:3325.256730079651:  83%|████████▎ | 125/150 [54:13<10:41, 25.64s/it]Loss: -1923.026222229004, lr: 5e-05, SIM: -2.32923, far:-1920.6969909667969, WD: 0.5776086151599884, SSIM: 0.99911, pnsr:46.61377, lp:0.00006,mse:0.00003,  cost:3325.256730079651:  83%|████████▎ | 125/150 [54:39<10:41, 25.64s/it]Loss: -1923.026222229004, lr: 5e-05, SIM: -2.32923, far:-1920.6969909667969, WD: 0.5776086151599884, SSIM: 0.99911, pnsr:46.61377, lp:0.00006,mse:0.00003,  cost:3325.256730079651:  84%|████████▍ | 126/150 [54:39<10:18, 25.79s/it]Loss: -1920.5597457885742, lr: 5e-05, SIM: -2.31877, far:-1918.2409769694011, WD: 0.5768700204789639, SSIM: 0.99914, pnsr:46.40521, lp:0.00006,mse:0.00003,  cost:3325.256730079651:  84%|████████▍ | 126/150 [55:05<10:18, 25.79s/it]Loss: -1920.5597457885742, lr: 5e-05, SIM: -2.31877, far:-1918.2409769694011, WD: 0.5768700204789639, SSIM: 0.99914, pnsr:46.40521, lp:0.00006,mse:0.00003,  cost:3325.256730079651:  85%|████████▍ | 127/150 [55:05<09:54, 25.83s/it]Loss: -1917.515983581543, lr: 5e-05, SIM: -2.32499, far:-1915.1909891764324, WD: 0.5759528006116549, SSIM: 0.99914, pnsr:46.52901, lp:0.00006,mse:0.00003,  cost:3325.256730079651:  85%|████████▍ | 127/150 [55:31<09:54, 25.83s/it] Loss: -1917.515983581543, lr: 5e-05, SIM: -2.32499, far:-1915.1909891764324, WD: 0.5759528006116549, SSIM: 0.99914, pnsr:46.52901, lp:0.00006,mse:0.00003,  cost:3325.256730079651:  85%|████████▌ | 128/150 [55:31<09:26, 25.73s/it]Loss: -1918.1114883422852, lr: 5e-05, SIM: -2.32042, far:-1915.7910690307617, WD: 0.576133261124293, SSIM: 0.99920, pnsr:46.43585, lp:0.00006,mse:0.00002,  cost:4987.885095119476:  85%|████████▌ | 128/150 [55:56<09:26, 25.73s/it]Loss: -1918.1114883422852, lr: 5e-05, SIM: -2.32042, far:-1915.7910690307617, WD: 0.576133261124293, SSIM: 0.99920, pnsr:46.43585, lp:0.00006,mse:0.00002,  cost:4987.885095119476:  86%|████████▌ | 129/150 [55:56<08:56, 25.56s/it]
+--------------------------------------------------
+Up cost from 3325.256730079651 to 4987.885095119476
+--------------------------------------------------
+Loss: -2874.1141459147134, lr: 5e-05, SIM: -2.32126, far:-2871.7928568522134, WD: 0.5757535919547081, SSIM: 0.99918, pnsr:46.45253, lp:0.00005,mse:0.00003,  cost:4987.885095119476:  86%|████████▌ | 129/150 [56:21<08:56, 25.56s/it]Loss: -2874.1141459147134, lr: 5e-05, SIM: -2.32126, far:-2871.7928568522134, WD: 0.5757535919547081, SSIM: 0.99918, pnsr:46.45253, lp:0.00005,mse:0.00003,  cost:4987.885095119476:  87%|████████▋ | 130/150 [56:21<08:26, 25.35s/it]Loss: -2876.3937327067056, lr: 5e-05, SIM: -2.33916, far:-2874.0545806884766, WD: 0.5762070330480734, SSIM: 0.99916, pnsr:46.81035, lp:0.00005,mse:0.00003,  cost:4987.885095119476:  87%|████████▋ | 130/150 [56:45<08:26, 25.35s/it]Loss: -2876.3937327067056, lr: 5e-05, SIM: -2.33916, far:-2874.0545806884766, WD: 0.5762070330480734, SSIM: 0.99916, pnsr:46.81035, lp:0.00005,mse:0.00003,  cost:4987.885095119476:  87%|████████▋ | 131/150 [56:45<07:58, 25.16s/it]Loss: -2875.721593221029, lr: 5e-05, SIM: -2.31926, far:-2873.402318318685, WD: 0.5760762691497803, SSIM: 0.99916, pnsr:46.41334, lp:0.00006,mse:0.00003,  cost:4987.885095119476:  87%|████████▋ | 131/150 [57:12<07:58, 25.16s/it]  Loss: -2875.721593221029, lr: 5e-05, SIM: -2.31926, far:-2873.402318318685, WD: 0.5760762691497803, SSIM: 0.99916, pnsr:46.41334, lp:0.00006,mse:0.00003,  cost:4987.885095119476:  88%|████████▊ | 132/150 [57:12<07:39, 25.50s/it]

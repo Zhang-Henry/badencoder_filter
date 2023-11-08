@@ -35,6 +35,7 @@ class Solver():
         self.backbone = load_backbone()
         self.backbone = self.backbone.to(self.device).eval()
         print(self.backbone)
+        print(self.net)
 
 
     def train(self,args,train_loader):
@@ -66,7 +67,7 @@ class Solver():
             # filter_img = self.net(img_trans)
             filter_img = self.net(img)
 
-            filter_img = torch.clamp(filter_img, min=0, max=1)
+            # filter_img = torch.clamp(filter_img, min=0, max=1)
 
             if args.use_feature:
                 with torch.no_grad():
@@ -79,8 +80,8 @@ class Solver():
 
                     # wd = self.compute_style_loss(filter_img_feature,aug_filter_img_feature)
 
-            else:
-                wd,_,_=self.WD(filter_img.view(aug_filter_img.shape[0],-1),aug_filter_img.view(aug_filter_img.shape[0],-1)) # wd越小越相似
+            # else:
+            #     wd,_,_=self.WD(filter_img.view(aug_filter_img.shape[0],-1),aug_filter_img.view(aug_filter_img.shape[0],-1)) # wd越小越相似
 
             # cmd=loss_cmd(filter_img.view(aug_filter_img.shape[0],-1),aug_filter_img.view(aug_filter_img.shape[0],-1),5)
 
@@ -100,7 +101,7 @@ class Solver():
 
             ############################ wd ############################
             if args.use_feature:
-                loss_sim = 1 - loss_ssim + 10 * lp_loss.mean() - 0.05 * loss_psnr
+                loss_sim = 1 - loss_ssim + 10 * lp_loss.mean() - 0.025 * loss_psnr
                 loss_far = - recorder.cost * wd
                 loss = loss_sim + loss_far
             else:
@@ -127,7 +128,7 @@ class Solver():
                 'optimizer_state_dict': self.optimizer.state_dict(),
                 'best': recorder.best
             }
-            torch.save(state, f'trigger/moco/{self.args.timestamp}/ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}.pt')
+            torch.save(state, f'trigger/{self.args.timestamp}/ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}.pt')
 
             recorder.best = wd
             print('\n--------------------------------------------------')
