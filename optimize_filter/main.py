@@ -63,7 +63,7 @@ if __name__ == '__main__':
     print('Loading data...')
     if args.mode == 'train_filter':
         train_loader = cifar10_dataloader(args)
-        os.makedirs(f'trigger/moco/{args.timestamp}',exist_ok=True)
+        os.makedirs(f'trigger/{args.timestamp}',exist_ok=True)
         solver=Solver(args)
         # solver=Solver_ab(args,train_loader)
         solver.train(args,train_loader)

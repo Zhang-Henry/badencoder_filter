@@ -145,7 +145,7 @@ class BadEncoderDataset(Dataset):
             target_image_list_return.append(target_image)
             target_img_1_list_return.append(target_img_1)
 
-        return img_raw, img_backdoor_list, target_image_list_return, target_img_1_list_return
+        return img_raw, img_backdoor_list, target_image_list_return, target_img_1_list_return, im_1
 
     def __len__(self):
         return len(self.indices)
@@ -239,7 +239,7 @@ class BadEncoderTestBackdoor(Dataset):
 
 class CIFAR10CUSTOM(Dataset):
 
-    def __init__(self, numpy_file, class_type, transform=None):
+    def __init__(self, numpy_file, class_type, transform=None, transform2=None):
         """
         Args:
             numpy_file (string): Path to the numpy file.
@@ -251,8 +251,7 @@ class CIFAR10CUSTOM(Dataset):
         self.targets = self.input_array['y'][:,0].tolist()
         self.classes = class_type
         self.transform = transform
-        self.transform2 = transforms.Compose([
-            transforms.ToTensor(),])
+        self.transform2 = transform2
 
     def __len__(self):
         return self.data.shape[0]

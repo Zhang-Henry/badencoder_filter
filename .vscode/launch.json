@@ -65,7 +65,7 @@
         "--encoder_usage_info",
         "cifar10",
         "--gpu",
-        "0",
+        "5",
         "--reference_file",
         "reference/cifar10/truck.npz",
         "--trigger_file",
@@ -84,7 +84,7 @@
         "--lr",
         "0.001",
         "--batch_size",
-        "256",
+        "512",
         "--results_dir",
         "./output/stl10/gtsrb_backdoored_encoder",
         "--shadow_dataset",
@@ -101,7 +101,10 @@
         "trigger/trigger_pt_white_21_10_ap_replace.npz"
       ],
       "justMyCode": true,
-      "cwd":"/home/hrzhang/projects/badencoder_filter"
+      "cwd":"/home/hrzhang/projects/badencoder_filter",
+      "env": {
+        "CUDA_VISIBLE_DEVICES": "1"
+      }
     },
     {
       "name": "badencoder:imagenet",

@@ -192,7 +192,7 @@ class BadEncoderDataset(VisionDataset):
         self.bd_transform = bd_transform
         self.ftt_transform = ftt_transform
 
-        self.filter = torch.load('trigger/filter.pt', map_location=torch.device('cpu'))
+        # self.filter = torch.load('trigger/filter.pt', map_location=torch.device('cpu'))
 
     @staticmethod
     def make_dataset(
@@ -268,17 +268,17 @@ class BadEncoderDataset(VisionDataset):
 
             ###########################
             # for unet filter
-            trans=transforms.Compose([
-                    transforms.ToTensor()
-                ])
+            # trans=transforms.Compose([
+            #         transforms.ToTensor()
+            #     ])
 
-            image_pil = Image.fromarray(img_copy)
-            tensor_image = trans(image_pil)
-            backdoored_image=self.filter(tensor_image.unsqueeze(0))
-            img_backdoor = backdoored_image.squeeze()
-            sig = nn.Sigmoid()
-            img_backdoor = sig(img_backdoor)
-            img_backdoor = self.bd_transform(img_backdoor.permute(1,2,0).detach().numpy())
+            # image_pil = Image.fromarray(img_copy)
+            # tensor_image = trans(image_pil)
+            # backdoored_image=self.filter(tensor_image.unsqueeze(0))
+            # img_backdoor = backdoored_image.squeeze()
+            # sig = nn.Sigmoid()
+            # img_backdoor = sig(img_backdoor)
+            # img_backdoor = self.bd_transform(img_backdoor.permute(1,2,0).detach().numpy())
 
             ###########################
             # for ctrl only
@@ -299,6 +299,7 @@ class BadEncoderDataset(VisionDataset):
             # img_backdoor = self.bd_transform(img_backdoor)
 
             ###########################
+            img_backdoor = self.bd_transform(backdoored_image)
 
             img_backdoor_list.append(img_backdoor)
 
@@ -313,7 +314,7 @@ class BadEncoderDataset(VisionDataset):
             target_img_1_list_return.append(target_img_1)
             #print("target_image.shape",target_image.shape)
 
-        return img_raw, img_backdoor_list, target_image_list_return, target_img_1_list_return
+        return img_raw, img_backdoor_list, target_image_list_return, target_img_1_list_return,im_1
 
     def __len__(self):
         return len(self.indices)

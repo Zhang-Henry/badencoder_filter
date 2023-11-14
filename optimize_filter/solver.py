@@ -27,7 +27,7 @@ class Solver():
 
         self.mse = MSELoss()
         self.ssim = SSIM()
-        self.loss_cmd = CMD()
+        # self.loss_cmd = CMD()
         self.loss_fn = lpips.LPIPS(net='alex').to(self.device)
         self.loss_mmd = MMD_loss()
         self.WD=SinkhornDistance(eps=0.1, max_iter=100)
@@ -44,6 +44,7 @@ class Solver():
         bar=tqdm(range(1, args.n_epoch+1))
         recorder=Recorder(args)
         tracker=Loss_Tracker()
+
         # 恢复模型和优化器状态
         if args.resume:
             checkpoint = torch.load(args.resume)
@@ -78,10 +79,9 @@ class Solver():
                     filter_img_feature = F.normalize(filter_img_feature, dim=1)
                     wd,_,_=self.WD(filter_img_feature,img_trans_feature) # wd越小越相似，拉远backdoor img和transformed backdoor img的距离
 
-                    # wd = self.compute_style_loss(filter_img_feature,aug_filter_img_feature)
-
-            # else:
-            #     wd,_,_=self.WD(filter_img.view(aug_filter_img.shape[0],-1),aug_filter_img.view(aug_filter_img.shape[0],-1)) # wd越小越相似
+                    # wd = self.compute_style_loss(filter_img_feature,img_trans_feature)
+            else:
+                wd,_,_=self.WD(filter_img.view(filter_img.shape[0],-1),img_trans.view(img_trans.shape[0],-1)) # wd越小越相似
 
             # cmd=loss_cmd(filter_img.view(aug_filter_img.shape[0],-1),aug_filter_img.view(aug_filter_img.shape[0],-1),5)
 
@@ -90,6 +90,13 @@ class Solver():
 
             # filter后的图片和原图的mse和ssim，差距要尽可能小
             loss_mse = self.mse(filter_img, img)
+
+            # mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(1, 3, 1, 1).cuda()
+            # std = torch.tensor([0.2023, 0.1994, 0.2010]).view(1, 3, 1, 1).cuda()
+
+            # filter_img = filter_img * std + mean # denormalize
+            # img = img * std + mean
+
             loss_psnr = self.psnr(filter_img, img)
             loss_ssim = self.ssim(filter_img, img)
 
@@ -97,17 +104,15 @@ class Solver():
             d_list = self.loss_fn(filter_img,img)
             lp_loss=d_list.squeeze()
 
-            # wd = 0.0002 * wd_p + wd_f # wd_pixel wd_feature
-
             ############################ wd ############################
             if args.use_feature:
                 loss_sim = 1 - loss_ssim + 10 * lp_loss.mean() - 0.025 * loss_psnr
                 loss_far = - recorder.cost * wd
                 loss = loss_sim + loss_far
             else:
-                loss_sim = 1 - loss_ssim + 10 * lp_loss.mean() - 0.05 * loss_psnr
+                loss_sim = 1 - loss_ssim + 10 * lp_loss.mean() - 0.025 * loss_psnr
                 loss_far = - recorder.cost * wd
-                loss = loss_sim + loss_far
+                loss = loss_sim
 
             self.optimizer.zero_grad()
             loss.backward()
@@ -174,14 +179,14 @@ class Solver():
     def compute_style_loss(self, generated_features, style_features):
         style_loss = 0.0
         for gen_feat, style_feat in zip(generated_features, style_features):
-            # G_gen = gram_matrix(gen_feat)
-            # G_style = gram_matrix(style_feat)
+            G_gen = gram_matrix(gen_feat)
+            G_style = gram_matrix(style_feat)
 
-            G_gen = gen_feat.view(gen_feat.shape[0],-1)
-            G_style = style_feat.view(style_feat.shape[0],-1)
+            # G_gen = gen_feat.view(gen_feat.shape[0],-1)
+            # G_style = style_feat.view(style_feat.shape[0],-1)
             wd,_,_=self.WD(G_gen,G_style)
-            # wd,_,_=WD(gen_feat,style_feat)
-            # style_loss += torch.nn.functional.mse_loss(G_gen, G_style)
+            # wd,_,_=self.WD(gen_feat,style_feat)
+            style_loss += torch.nn.functional.mse_loss(G_gen, G_style)
             style_loss += wd
         return style_loss/5
 

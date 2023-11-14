@@ -31,22 +31,22 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 #     > logs/moco/filter_nofeature_$timestamp.log 2>&1 &
 
 ######### use feature #########
-nohup python main.py \
-    --timestamp $timestamp \
-    --lr 0.005 \
-    --gpu 0 \
-    --batch_size 1024 \
-    --ssim_threshold 0.95 \
-    --psnr_threshold 25.0 \
-    --lp_threshold 0.1 \
-    --n_epoch 150 \
-    --step_size 50 \
-    --patience 5 \
-    --init_cost 3 \
-    --cost_multiplier_up 1.5 \
-    --cost_multiplier_down 2 \
-    --use_feature \
-    > logs/cifar10/filter_$timestamp.log 2>&1 &
+# nohup python main.py \
+#     --timestamp $timestamp \
+#     --lr 0.005 \
+#     --gpu 3 \
+#     --batch_size 1024 \
+#     --ssim_threshold 0.95 \
+#     --psnr_threshold 30.0 \
+#     --lp_threshold 0.01 \
+#     --n_epoch 150 \
+#     --step_size 50 \
+#     --patience 5 \
+#     --init_cost 3 \
+#     --cost_multiplier_up 1.5 \
+#     --cost_multiplier_down 2 \
+#     --use_feature \
+#     > logs/cifar10/filter_$timestamp.log 2>&1 &
 
 
 
@@ -66,3 +66,20 @@ nohup python main.py \
 #     > logs/moco/filter_unet_wd_ablation_$timestamp.log 2>&1 &
 
 
+######### NOT use feature #########
+# 跟原图越接近，wd越近
+nohup python main.py \
+    --timestamp $timestamp \
+    --lr 0.005 \
+    --gpu 3 \
+    --batch_size 1024 \
+    --ssim_threshold 0.95 \
+    --psnr_threshold 35.0 \
+    --lp_threshold 0.01 \
+    --n_epoch 150 \
+    --step_size 50 \
+    --patience 5 \
+    --init_cost 0.0001 \
+    --cost_multiplier_up 2 \
+    --cost_multiplier_down 3 \
+    > logs/cifar10/filter_nofeature_$timestamp.log 2>&1 &

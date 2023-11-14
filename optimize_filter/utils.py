@@ -5,7 +5,7 @@ import torch.nn as nn
 import torch
 import numpy as np
 from torch.nn import Identity
-from PyTorch_CIFAR10.cifar10_models.resnet import resnet34
+from optimize_filter.PyTorch_CIFAR10.cifar10_models.resnet import resnet34
 
 import gc
 
@@ -290,6 +290,8 @@ class Recorder:
         self.cost = args.init_cost
         self.cost_multiplier_up = args.cost_multiplier_up
         self.cost_multiplier_down = args.cost_multiplier_down
+        self.max_cost = args.max_cost
+        self.min_cost = args.min_cost
 
     def reset_state(self, args):
         self.cost = args.init_cost
@@ -322,22 +324,20 @@ class Loss_Tracker:
         self.ssim=Loss()
         self.psnr=Loss()
         self.lp=Loss()
-        self.mse=Loss()
         self.sim=Loss()
         self.far=Loss()
 
-    def update(self,loss,wd,ssim,psnr,lp,mse,sim,far):
+    def update(self,loss,wd,ssim,psnr,lp,sim,far):
         self.loss.update(loss)
         self.wd.update(wd)
         self.ssim.update(ssim)
         self.psnr.update(psnr)
         self.lp.update(lp)
-        self.mse.update(mse)
         self.sim.update(sim)
         self.far.update(far)
 
     def get_avg_loss(self):
-        return self.loss.avg,self.wd.avg,self.ssim.avg,self.psnr.avg,self.lp.avg,self.mse.avg,self.sim.avg,self.far.avg
+        return self.loss.avg,self.wd.avg,self.ssim.avg,self.psnr.avg,self.lp.avg,self.sim.avg,self.far.avg
 
     def reset(self):
         self.loss.reset()
@@ -345,7 +345,6 @@ class Loss_Tracker:
         self.ssim.reset()
         self.psnr.reset()
         self.lp.reset()
-        self.mse.reset()
         self.sim.reset()
         self.far.reset()
 
@@ -402,5 +401,9 @@ def gram_matrix(input):
 def load_backbone():
     backbone = resnet34(pretrained=True)
     backbone.fc = Identity()
+
+    # model = resnet34(pretrained=True)
+    # backbone = ResNetFeatureExtractor(model)
+    # del model
     backbone.eval() # for evaluation
     return backbone
