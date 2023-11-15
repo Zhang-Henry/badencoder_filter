@@ -389,13 +389,6 @@ class ResNetFeatureExtractor(torch.nn.Module):
         # return layer4_out
 
 
-def gram_matrix(input):
-    a, b, c, d = input.size()  # batch size(=1), feature map number, dimensions
-    features = input.view(a * b, c * d)  # resize F_XL into \hat F_XL
-    G = torch.mm(features, features.t())  # compute the gram product
-
-    # normalize the values of the gram matrix by dividing by the number of element in each feature maps.
-    return G.div(a * b * c * d)
 
 
 def load_backbone():

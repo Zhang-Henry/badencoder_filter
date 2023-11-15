@@ -68,18 +68,37 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 
 ######### NOT use feature #########
 # 跟原图越接近，wd越近
+# nohup python main.py \
+#     --timestamp $timestamp \
+#     --lr 0.005 \
+#     --gpu 3 \
+#     --batch_size 1024 \
+#     --ssim_threshold 0.95 \
+#     --psnr_threshold 35.0 \
+#     --lp_threshold 0.01 \
+#     --n_epoch 150 \
+#     --step_size 50 \
+#     --patience 5 \
+#     --init_cost 0.0001 \
+#     --cost_multiplier_up 2 \
+#     --cost_multiplier_down 3 \
+#     > logs/cifar10/filter_nofeature_$timestamp.log 2>&1 &
+
+
+######### color loss #########
+
 nohup python main.py \
     --timestamp $timestamp \
     --lr 0.005 \
-    --gpu 3 \
-    --batch_size 1024 \
-    --ssim_threshold 0.95 \
-    --psnr_threshold 35.0 \
+    --gpu 1 \
+    --batch_size 1800 \
+    --ssim_threshold 0.90 \
+    --psnr_threshold 25.0 \
     --lp_threshold 0.01 \
     --n_epoch 150 \
     --step_size 50 \
     --patience 5 \
-    --init_cost 0.0001 \
-    --cost_multiplier_up 2 \
-    --cost_multiplier_down 3 \
+    --init_cost 0.35 \
+    --cost_multiplier_up 1.2 \
+    --cost_multiplier_down 1.5 \
     > logs/cifar10/filter_nofeature_$timestamp.log 2>&1 &

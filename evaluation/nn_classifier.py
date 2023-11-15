@@ -87,7 +87,7 @@ def predict_feature(net, data_loader,keyword='clean'):
     net.eval()
     feature_bank, target_bank = [], []
     if keyword=='backdoor':
-        filter_path="optimize_filter/trigger/unet_filter_trained.pt"
+        filter_path="output/cifar10/unet_filter.pt"
         state_dict = torch.load(filter_path, map_location=torch.device('cuda:0'))
         filter = AttU_Net(img_ch=3,output_ch=3)
         filter.load_state_dict(state_dict['model_state_dict'])

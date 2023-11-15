@@ -55,6 +55,8 @@ if __name__ == '__main__':
     parser.add_argument('--use_feature', action='store_true',help='use feature or not')
     parser.add_argument('--resume', type=str)
     parser.add_argument('--mode', type=str,choices=['train_filter','finetune_backbone'],default='train_filter')
+    parser.add_argument('--max_cost', type=float, default=1e-2)
+    parser.add_argument('--min_cost', type=float, default=1e-3)
 
     args = parser.parse_args()
     print(args)

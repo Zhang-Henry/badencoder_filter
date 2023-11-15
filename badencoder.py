@@ -106,6 +106,7 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
         for img_backdoor in img_backdoor_cuda_list:
             ############## add filter to backdoor img
             img_backdoor=filter(img_backdoor)
+            
             # img_backdoor = torch.clamp(img_backdoor, min=0, max=1)
 
             feature_backdoor = backdoored_encoder(img_backdoor)
@@ -153,12 +154,11 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
         loss.backward()
         train_optimizer.step()
 
-        wd_loss=filter_wd_loss(filter,img_clean,img_trans,psnr,ssim,loss_fn,WD,tracker,recorder)
-        # wd_loss = loss_0 # backdoor img接近reference img
-        optimizer_wd.zero_grad()
-        wd_loss.backward()
-        optimizer_wd.step()
-
+    #     wd_loss=filter_wd_loss(filter,img_clean,img_trans,psnr,ssim,loss_fn,WD,tracker,recorder)
+    #     # wd_loss = loss_0 # backdoor img接近reference img
+    #     optimizer_wd.zero_grad()
+    #     wd_loss.backward()
+    #     optimizer_wd.step()
 
 
         total_num += data_loader.batch_size
@@ -166,52 +166,53 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
         total_loss_0 += loss_0.item() * data_loader.batch_size
         total_loss_1 += loss_1.item() * data_loader.batch_size
         total_loss_2 += loss_2.item() * data_loader.batch_size
-        train_bar.set_description('Train Epoch: [{}/{}], lr: {:.6f}, Loss: {:.6f}, Loss0: {:.6f}, Loss1: {:.6f},  Loss2: {:.6f}, Loss_wd:{:.6f}'.format(epoch, args.epochs, train_optimizer.param_groups[0]['lr'], total_loss / total_num,  total_loss_0 / total_num , total_loss_1 / total_num,  total_loss_2 / total_num, wd_loss.item()))
+        train_bar.set_description('Train Epoch: [{}/{}], lr: {:.6f}, Loss: {:.6f}, Loss0: {:.6f}, Loss1: {:.6f},  Loss2: {:.6f}'.format(epoch, args.epochs, train_optimizer.param_groups[0]['lr'], total_loss / total_num,  total_loss_0 / total_num , total_loss_1 / total_num,  total_loss_2 / total_num))
+        # train_bar.set_description('Train Epoch: [{}/{}], lr: {:.6f}, Loss: {:.6f}, Loss0: {:.6f}, Loss1: {:.6f},  Loss2: {:.6f}, Loss_wd:{:.6f}'.format(epoch, args.epochs, train_optimizer.param_groups[0]['lr'], total_loss / total_num,  total_loss_0 / total_num , total_loss_1 / total_num,  total_loss_2 / total_num, wd_loss.item()))
 
-    avg_loss,wd,ssim,psnr,lp,sim,far = tracker.get_avg_loss()
+    # avg_loss,wd,ssim,psnr,lp,sim,far = tracker.get_avg_loss()
 
-    if ssim >= args.ssim_threshold and psnr >= args.psnr_threshold and lp <= args.lp_threshold and wd >= recorder.best:
-        torch.save({'model_state_dict': net.state_dict()}, args.results_dir + f'/{args.timestamp}/unet_filter_trained_ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}.pt')
+    # if ssim >= args.ssim_threshold and psnr >= args.psnr_threshold and lp <= args.lp_threshold and wd >= recorder.best:
+    #     torch.save({'model_state_dict': net.state_dict()}, args.results_dir + f'/{args.timestamp}/unet_filter_trained_ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}.pt')
 
-        recorder.best = wd
-        print('\n--------------------------------------------------')
-        print(f"Updated !!! Best sim:{sim}, far:{far}, SSIM: {ssim}, psnr: {psnr}, lp: {lp}, Best WD: {wd}")
-        print('--------------------------------------------------')
-        recorder.cost_up_counter = 0
-        recorder.cost_down_counter = 0
-
-
-    if ssim >= args.ssim_threshold and psnr >= args.psnr_threshold and lp <= args.lp_threshold:
-        recorder.cost_up_counter += 1
-        recorder.cost_down_counter = 0
-    else:
-        recorder.cost_up_counter = 0
-        recorder.cost_down_counter += 1
-
-    if recorder.cost_up_counter >= args.patience:
-        recorder.cost_up_counter = 0
-        print('\n--------------------------------------------------')
-        print("Up cost from {} to {}".format(recorder.cost, recorder.cost * recorder.cost_multiplier_up))
-        print('--------------------------------------------------')
-
-        recorder.cost *= recorder.cost_multiplier_up
-        if recorder.cost > args.max_cost:
-            recorder.cost = args.max_cost
-        recorder.cost_up_flag = True
-
-    elif recorder.cost_down_counter >= args.patience:
-        recorder.cost_down_counter = 0
-        print('\n--------------------------------------------------')
-        print("Down cost from {} to {}".format(recorder.cost, recorder.cost / recorder.cost_multiplier_down))
-        print('--------------------------------------------------')
-        recorder.cost /= recorder.cost_multiplier_down
-        if recorder.cost < args.min_cost:
-            recorder.cost = args.min_cost
-        recorder.cost_down_flag = True
+    #     recorder.best = wd
+    #     print('\n--------------------------------------------------')
+    #     print(f"Updated !!! Best sim:{sim}, far:{far}, SSIM: {ssim}, psnr: {psnr}, lp: {lp}, Best WD: {wd}")
+    #     print('--------------------------------------------------')
+    #     recorder.cost_up_counter = 0
+    #     recorder.cost_down_counter = 0
 
 
-    # if args.use_feature:
-    print(f"Loss: {avg_loss}, SIM: {sim:.5f}, far:{far}, WD: {wd}, SSIM: {ssim:.5f}, pnsr:{psnr:.5f}, lp:{lp:.5f},  cost:{recorder.cost}")
+    # if ssim >= args.ssim_threshold and psnr >= args.psnr_threshold and lp <= args.lp_threshold:
+    #     recorder.cost_up_counter += 1
+    #     recorder.cost_down_counter = 0
+    # else:
+    #     recorder.cost_up_counter = 0
+    #     recorder.cost_down_counter += 1
+
+    # if recorder.cost_up_counter >= args.patience:
+    #     recorder.cost_up_counter = 0
+    #     print('\n--------------------------------------------------')
+    #     print("Up cost from {} to {}".format(recorder.cost, recorder.cost * recorder.cost_multiplier_up))
+    #     print('--------------------------------------------------')
+
+    #     recorder.cost *= recorder.cost_multiplier_up
+    #     if recorder.cost > args.max_cost:
+    #         recorder.cost = args.max_cost
+    #     recorder.cost_up_flag = True
+
+    # elif recorder.cost_down_counter >= args.patience:
+    #     recorder.cost_down_counter = 0
+    #     print('\n--------------------------------------------------')
+    #     print("Down cost from {} to {}".format(recorder.cost, recorder.cost / recorder.cost_multiplier_down))
+    #     print('--------------------------------------------------')
+    #     recorder.cost /= recorder.cost_multiplier_down
+    #     if recorder.cost < args.min_cost:
+    #         recorder.cost = args.min_cost
+    #     recorder.cost_down_flag = True
+
+
+    # # if args.use_feature:
+    # print(f"Loss: {avg_loss}, SIM: {sim:.5f}, far:{far}, WD: {wd}, SSIM: {ssim:.5f}, pnsr:{psnr:.5f}, lp:{lp:.5f},  cost:{recorder.cost}")
     return total_loss / total_num
 
 
