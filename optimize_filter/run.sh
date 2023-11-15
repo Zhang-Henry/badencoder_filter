@@ -90,15 +90,15 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 nohup python main.py \
     --timestamp $timestamp \
     --lr 0.005 \
-    --gpu 1 \
+    --gpu 2 \
     --batch_size 1800 \
-    --ssim_threshold 0.90 \
+    --ssim_threshold 0.96 \
     --psnr_threshold 25.0 \
     --lp_threshold 0.01 \
-    --n_epoch 150 \
-    --step_size 50 \
+    --n_epoch 200 \
+    --step_size 100 \
     --patience 5 \
-    --init_cost 0.35 \
-    --cost_multiplier_up 1.2 \
-    --cost_multiplier_down 1.5 \
-    > logs/cifar10/filter_nofeature_$timestamp.log 2>&1 &
+    --init_cost 0.3 \
+    --cost_multiplier_up 1.5 \
+    --cost_multiplier_down 1.3 \
+    > logs/cifar10/filter_color_wd_$timestamp.log 2>&1 &

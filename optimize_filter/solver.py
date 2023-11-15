@@ -30,7 +30,7 @@ class Solver():
         # self.loss_mmd = MMD_loss()
         self.WD=SinkhornDistance(eps=0.1, max_iter=100)
         self.psnr = PeakSignalNoiseRatio().to(self.device)
-        self.color_loss_fn = ColorLoss().to(self.device)
+        self.color_loss_fn = CombinedColorLoss().to(self.device)
         self.backbone = load_backbone()
         self.backbone = self.backbone.to(self.device).eval()
         print(self.backbone)
@@ -42,7 +42,8 @@ class Solver():
 
         bar=tqdm(range(1, args.n_epoch+1))
         recorder=Recorder(args)
-        tracker=Loss_Tracker()
+        tracker=Loss_Tracker(['loss', 'wd', 'ssim', 'psnr', 'lp', 'sim', 'far','color'])
+
 
         # 恢复模型和优化器状态
         if args.resume:
@@ -93,7 +94,14 @@ class Solver():
             else:
                 # wd,_,_=self.WD(filter_img.view(filter_img.shape[0],-1),img_trans.view(img_trans.shape[0],-1)) # wd越小越相似
                 color_loss = self.color_loss_fn(filter_img, img_trans)
+                with torch.no_grad():
+                    img_trans_feature = self.backbone(img_trans)
+                    filter_img_feature = self.backbone(filter_img)
 
+                    img_trans_feature = F.normalize(img_trans_feature, dim=-1)
+                    filter_img_feature = F.normalize(filter_img_feature, dim=-1)
+                    wd,_,_=self.WD(filter_img_feature,img_trans_feature) # wd越小越相似，拉远backdoor img和transformed backdoor img的距离
+                    # wd = compute_style_loss(filter_img_feature,img_trans_feature)
 
             # filter后的图片和原图的mse和ssim，差距要尽可能小
 
@@ -112,7 +120,7 @@ class Solver():
                 loss_far = - recorder.cost * wd
                 loss = loss_sim + loss_far
             else:
-                loss_sim = 1 - loss_ssim + 10 * lp_loss.mean() - 0.025 * loss_psnr
+                loss_sim = 1 - loss_ssim + 10 * lp_loss.mean() - 0.025 * loss_psnr + wd
                 loss_far = - recorder.cost * color_loss
                 loss = loss_sim + loss_far
 
@@ -120,26 +128,29 @@ class Solver():
             loss.backward()
 
             self.optimizer.step()
-            tracker.update(loss.item(),color_loss.item(),loss_ssim.item(),loss_psnr.item(),lp_loss.mean().item(),loss_sim.item(),loss_far.item())
+            losses={'loss':loss.item(),'wd':wd.item(),'ssim':loss_ssim.item(),'psnr':loss_psnr.item(),'lp':lp_loss.mean().item(),'sim':loss_sim.item(),'far':loss_far.item(),'color':color_loss.item()}
+            tracker.update(losses)
 
         self.scheduler.step()
         # 计算平均损失
 
-        avg_loss,wd,ssim,psnr,lp,sim,far = tracker.get_avg_loss()
+        avg_losses = tracker.get_avg_loss()
+        avg_loss,wd, ssim, psnr, lp, sim, far, color = avg_losses.values()
+
 
 
         # torch.save(self.net, f'trigger/moco/{self.args.timestamp}/ssim{ssim:.4f}_wd{wd:.1f}.pt')
-        if ssim >= args.ssim_threshold and psnr >= args.psnr_threshold and lp <= args.lp_threshold and wd >= recorder.best:
+        if ssim >= args.ssim_threshold and psnr >= args.psnr_threshold and lp <= args.lp_threshold and color >= recorder.best:
             state = {
                 'model_state_dict': self.net.state_dict(),
                 'optimizer_state_dict': self.optimizer.state_dict(),
                 'best': recorder.best
             }
-            torch.save(state, f'trigger/{self.args.timestamp}/ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}.pt')
+            torch.save(state, f'trigger/{self.args.timestamp}/ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}_color{color:.3f}.pt')
 
-            recorder.best = wd
+            recorder.best = color
             print('\n--------------------------------------------------')
-            print(f"Updated !!! Best sim:{sim}, far:{far}, SSIM: {ssim}, psnr: {psnr}, lp: {lp}, Best WD: {wd}")
+            print(f"Updated !!! Best sim:{sim}, far:{far}, SSIM: {ssim}, psnr: {psnr}, lp: {lp}, WD: {wd}, color: {color}")
             print('--------------------------------------------------')
             recorder.cost_up_counter = 0
             recorder.cost_down_counter = 0
@@ -171,7 +182,7 @@ class Solver():
 
 
         # if args.use_feature:
-        bar.set_description(f"Loss: {avg_loss}, lr: {self.optimizer.param_groups[0]['lr']}, SIM: {sim:.5f}, far:{far}, WD: {wd}, SSIM: {ssim:.5f}, pnsr:{psnr:.5f}, lp:{lp:.5f},  cost:{recorder.cost}")
+        bar.set_description(f"Loss: {avg_loss}, lr: {self.optimizer.param_groups[0]['lr']}, SIM: {sim:.5f}, far:{far:.5f}, WD: {wd:.5f}, SSIM: {ssim:.5f}, pnsr:{psnr:.5f}, lp:{lp:.5f}, color:{color:.5f},  cost:{recorder.cost}")
 
         # bar.set_description(f"Loss: {avg_loss}, lr: {self.optimizer.param_groups[0]['lr']}, SIM: {sim:.5f}, far:{far:.5f}, WD: {wd:.8f}, SSIM: {ssim:.5f}, pnsr:{psnr:.5f}, lp:{lp:.5f},mse:{mse:.5f},  cost:{recorder.cost}")
         # else:

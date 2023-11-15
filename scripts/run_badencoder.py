@@ -18,7 +18,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     # filter_path="optimize_filter/trigger/unet_filter.pt"
 
     cmd = f'CUDA_VISIBLE_DEVICES=2 nohup python3 -u badencoder.py \
-    --epochs 200 \
+    --epochs 50 \
     --timestamp {time} \
     --lr 0.001 \
     --batch_size {bz}   \
@@ -34,9 +34,9 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     os.system(cmd)
 
 
-# run_finetune(5, 'cifar10', 'cifar10', 'stl10', 'trigger_pt_white_21_10_ap_replace.npz', 'truck','cifar10',256)
-# run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'trigger_pt_white_21_10_ap_replace.npz', 'priority','cifar10',512)
-run_finetune(4, 'cifar10', 'cifar10', 'svhn', 'trigger_pt_white_21_10_ap_replace.npz', 'one','cifar10',256)
+run_finetune(5, 'cifar10', 'cifar10', 'stl10', 'trigger_pt_white_21_10_ap_replace.npz', 'truck','cifar10',512)
+# run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'trigger_pt_white_21_10_ap_replace.npz', 'priority','cifar10',256)
+# run_finetune(4, 'cifar10', 'cifar10', 'svhn', 'trigger_pt_white_21_10_ap_replace.npz', 'one','cifar10',256)
 
 # run_finetune(1, 'stl10', 'stl10', 'cifar10', 'trigger_pt_white_21_10_ap_replace.npz', 'airplane', 'stl10',512)
 # run_finetune(5, 'stl10', 'stl10', 'gtsrb', 'trigger_pt_white_21_10_ap_replace.npz', 'priority', 'stl10',512)

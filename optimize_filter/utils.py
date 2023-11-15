@@ -317,38 +317,51 @@ class Loss:
         self.avg=0.0
 
 
-class Loss_Tracker:
-    def __init__(self) -> None:
-        self.loss=Loss()
-        self.wd=Loss()
-        self.ssim=Loss()
-        self.psnr=Loss()
-        self.lp=Loss()
-        self.sim=Loss()
-        self.far=Loss()
+# class Loss_Tracker:
+#     def __init__(self) -> None:
+#         self.loss=Loss()
+#         self.wd=Loss()
+#         self.ssim=Loss()
+#         self.psnr=Loss()
+#         self.lp=Loss()
+#         self.sim=Loss()
+#         self.far=Loss()
 
-    def update(self,loss,wd,ssim,psnr,lp,sim,far):
-        self.loss.update(loss)
-        self.wd.update(wd)
-        self.ssim.update(ssim)
-        self.psnr.update(psnr)
-        self.lp.update(lp)
-        self.sim.update(sim)
-        self.far.update(far)
+#     def update(self,loss,wd,ssim,psnr,lp,sim,far,):
+#         self.loss.update(loss)
+#         self.wd.update(wd)
+#         self.ssim.update(ssim)
+#         self.psnr.update(psnr)
+#         self.lp.update(lp)
+#         self.sim.update(sim)
+#         self.far.update(far)
+
+#     def get_avg_loss(self):
+#         return self.loss.avg,self.wd.avg,self.ssim.avg,self.psnr.avg,self.lp.avg,self.sim.avg,self.far.avg
+
+#     def reset(self):
+#         self.loss.reset()
+#         self.wd.reset()
+#         self.ssim.reset()
+#         self.psnr.reset()
+#         self.lp.reset()
+#         self.sim.reset()
+#         self.far.reset()
+
+class Loss_Tracker:
+    def __init__(self, loss_names):
+        self.losses = {name: Loss() for name in loss_names}
+
+    def update(self, losses):
+        for name, value in losses.items():
+            self.losses[name].update(value)
 
     def get_avg_loss(self):
-        return self.loss.avg,self.wd.avg,self.ssim.avg,self.psnr.avg,self.lp.avg,self.sim.avg,self.far.avg
+        return {name: loss.avg for name, loss in self.losses.items()}
 
     def reset(self):
-        self.loss.reset()
-        self.wd.reset()
-        self.ssim.reset()
-        self.psnr.reset()
-        self.lp.reset()
-        self.sim.reset()
-        self.far.reset()
-
-
+        for loss in self.losses.values():
+            loss.reset()
 
 class ResNetFeatureExtractor(torch.nn.Module):
     def __init__(self, resnet):

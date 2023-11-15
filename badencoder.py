@@ -106,7 +106,7 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
         for img_backdoor in img_backdoor_cuda_list:
             ############## add filter to backdoor img
             img_backdoor=filter(img_backdoor)
-            
+
             # img_backdoor = torch.clamp(img_backdoor, min=0, max=1)
 
             feature_backdoor = backdoored_encoder(img_backdoor)
@@ -309,7 +309,7 @@ if __name__ == '__main__':
     net=net.cuda().eval()
     optimizer_wd = torch.optim.Adam(list(net.parameters()), lr=args.lr, betas=(0.9, 0.999), eps=1e-8)
     recorder=Recorder(args)
-    tracker=Loss_Tracker()
+    tracker=Loss_Tracker(['loss', 'wd', 'ssim', 'psnr', 'lp', 'sim', 'far','color'])
 
     if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10':
         # check whether the pre-trained encoder is loaded successfully or not
