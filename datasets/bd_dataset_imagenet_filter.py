@@ -171,7 +171,7 @@ class BadEncoderDataset(VisionDataset):
         self.transform = transform
         self.bd_transform = bd_transform
 
-        self.filter = torch.load('trigger/filter.pt', map_location=torch.device('cpu'))
+        # self.filter = torch.load('trigger/filter.pt', map_location=torch.device('cpu'))
 
     @staticmethod
     def make_dataset(
@@ -219,7 +219,7 @@ class BadEncoderDataset(VisionDataset):
 
         img_raw = self.transform(img)
 
-        return img_trans, img_raw
+        return img_raw, img_trans
 
     def __len__(self):
         return len(self.indices)

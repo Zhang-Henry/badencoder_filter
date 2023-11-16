@@ -83,12 +83,11 @@ def net_test(net, test_loader, epoch, criterion, keyword='Accuracy'):
     return test_acc
 
 
-def predict_feature(net, data_loader,keyword='clean'):
+def predict_feature(args,net, data_loader,keyword='clean'):
     net.eval()
     feature_bank, target_bank = [], []
     if keyword=='backdoor':
-        filter_path="output/cifar10/unet_filter.pt"
-        state_dict = torch.load(filter_path, map_location=torch.device('cuda:0'))
+        state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
         filter = AttU_Net(img_ch=3,output_ch=3)
         filter.load_state_dict(state_dict['model_state_dict'])
         filter=filter.cuda().eval()

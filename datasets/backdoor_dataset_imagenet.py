@@ -168,23 +168,18 @@ class BadEncoderDataset(VisionDataset):
         self.class_to_idx = class_to_idx
         self.samples = samples
         #self.targets = [s[1] for s in samples]
-        self.trigger_input_array = np.load(trigger_file)
+        # self.trigger_input_array = np.load(trigger_file)
         self.target_input_array = np.load(reference_file)
 
-        self.trigger_patch_list = self.trigger_input_array['t']
-        self.trigger_mask_list = self.trigger_input_array['tm']
+        # self.trigger_patch_list = self.trigger_input_array['t']
+        # self.trigger_mask_list = self.trigger_input_array['tm']
 
         #carlini
         # if not isinstance(self.trigger_patch_list, list):
         #     self.trigger_patch_list = [self.trigger_patch_list]
         #     self.trigger_mask_list = [self.trigger_mask_list]
 
-        #print(self.trigger_patch_list)
-        print("self.trigger_patch_list[0].max():",self.trigger_patch_list[0].max())
-
-        #print(self.trigger_patch_list)
         self.target_image_list = self.target_input_array['x']
-        print("self.target_image_list.shape",self.target_image_list.shape)
 
         self.classes = class_type
         self.indices = indices
@@ -243,7 +238,7 @@ class BadEncoderDataset(VisionDataset):
         '''generate backdoor image'''
 
         img_backdoor_list = []
-        for i in range(len(self.target_image_list)):
+        for i in range(2):
             ###########################
             ### for ins filter only ###
 

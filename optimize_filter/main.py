@@ -3,7 +3,7 @@ import numpy as np
 from solver import Solver
 from finetune import Finetuner
 from datetime import datetime
-from data_loader import cifar10_dataloader,imagenet_dataloader
+from data_loader import *
 
 def seed_torch(seed=1029):
     random.seed(seed)
@@ -54,7 +54,6 @@ if __name__ == '__main__':
     parser.add_argument('--num', type=float, default=0.05)
     parser.add_argument('--use_feature', action='store_true',help='use feature or not')
     parser.add_argument('--resume', type=str)
-    parser.add_argument('--mode', type=str,choices=['train_filter','finetune_backbone'],default='train_filter')
     parser.add_argument('--max_cost', type=float, default=1e-2)
     parser.add_argument('--min_cost', type=float, default=1e-3)
 
@@ -63,16 +62,11 @@ if __name__ == '__main__':
     os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu)
 
     print('Loading data...')
-    if args.mode == 'train_filter':
-        train_loader = cifar10_dataloader(args)
-        os.makedirs(f'trigger/{args.timestamp}',exist_ok=True)
-        solver=Solver(args)
-        # solver=Solver_ab(args,train_loader)
-        solver.train(args,train_loader)
+    # train_loader = cifar10_dataloader(args)
+    # train_loader = stl10_dataloader(args)
+    train_loader = imagenet_dataloader(args)
 
-    elif args.mode == 'finetune_backbone':
-        # train_loader,val_loader,test_loader = create_finetune_dataloader(args)
-
-        # finetuner=Finetuner(args)
-        # finetuner.train(args,train_loader,val_loader,test_loader)
-        pass
+    os.makedirs(f'trigger/imagenet/{args.timestamp}',exist_ok=True)
+    solver=Solver(args)
+    # solver=Solver_ab(args,train_loader)
+    solver.train(args,train_loader)

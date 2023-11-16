@@ -80,15 +80,15 @@ if __name__ == '__main__':
             model.load_state_dict(checkpoint['state_dict'])
 
     if args.encoder_usage_info in ['CLIP', 'imagenet']:
-        feature_bank_training, label_bank_training = predict_feature(model.visual, train_loader)
-        feature_bank_testing, label_bank_testing = predict_feature(model.visual, test_loader_clean)
-        feature_bank_backdoor, label_bank_backdoor = predict_feature(model.visual, test_loader_backdoor,'backdoor')
-        feature_bank_target, label_bank_target = predict_feature(model.visual, target_loader)
+        feature_bank_training, label_bank_training = predict_feature(args,model.visual, train_loader)
+        feature_bank_testing, label_bank_testing = predict_feature(args,model.visual, test_loader_clean)
+        feature_bank_backdoor, label_bank_backdoor = predict_feature(args,model.visual, test_loader_backdoor,'backdoor')
+        feature_bank_target, label_bank_target = predict_feature(args,model.visual, target_loader)
     else:
-        feature_bank_training, label_bank_training = predict_feature(model.f, train_loader)
-        feature_bank_testing, label_bank_testing = predict_feature(model.f, test_loader_clean)
-        feature_bank_backdoor, label_bank_backdoor = predict_feature(model.f, test_loader_backdoor,'backdoor')
-        feature_bank_target, label_bank_target = predict_feature(model.f, target_loader)
+        feature_bank_training, label_bank_training = predict_feature(args,model.f, train_loader)
+        feature_bank_testing, label_bank_testing = predict_feature(args,model.f, test_loader_clean)
+        feature_bank_backdoor, label_bank_backdoor = predict_feature(args,model.f, test_loader_backdoor,'backdoor')
+        feature_bank_target, label_bank_target = predict_feature(args,model.f, target_loader)
 
     nn_train_loader = create_torch_dataloader(feature_bank_training, label_bank_training, args.batch_size)
     nn_test_loader = create_torch_dataloader(feature_bank_testing, label_bank_testing, args.batch_size)

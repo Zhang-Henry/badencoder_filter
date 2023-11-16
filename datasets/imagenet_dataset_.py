@@ -12,6 +12,7 @@ transform_imagenet = transforms.Compose([
 #     transforms.ToTensor(),
 #     transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])])
 
+
 finetune_transform = transforms.Compose([
     transforms.RandomHorizontalFlip(p=0.5),
     transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),

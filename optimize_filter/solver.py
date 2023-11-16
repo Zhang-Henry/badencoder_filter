@@ -146,7 +146,7 @@ class Solver():
                 'optimizer_state_dict': self.optimizer.state_dict(),
                 'best': recorder.best
             }
-            torch.save(state, f'trigger/{self.args.timestamp}/ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}_color{color:.3f}.pt')
+            torch.save(state, f'trigger/imagenet/{self.args.timestamp}/ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}_color{color:.3f}.pt')
 
             recorder.best = color
             print('\n--------------------------------------------------')

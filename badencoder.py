@@ -53,12 +53,12 @@ def filter_wd_loss(filter,img_clean,img_trans,psnr,ssim,loss_fn,WD,tracker,recor
     return loss
 
 def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args ,filter,optimizer_wd, tracker,recorder):
-    tracker.reset()
-    WD=SinkhornDistance(eps=0.1, max_iter=100)
-    ssim = SSIM()
-        # self.loss_cmd = CMD()
-    loss_fn = lpips.LPIPS(net='alex').cuda()
-    psnr = PeakSignalNoiseRatio().cuda()
+    # tracker.reset()
+    # WD=SinkhornDistance(eps=0.1, max_iter=100)
+    # ssim = SSIM()
+    #     # self.loss_cmd = CMD()
+    # loss_fn = lpips.LPIPS(net='alex').cuda()
+    # psnr = PeakSignalNoiseRatio().cuda()
 
     backdoored_encoder.train()
 
@@ -303,7 +303,7 @@ if __name__ == '__main__':
         else:
             raise NotImplementedError()
 
-    state_dict = torch.load("output/cifar10/unet_filter.pt", map_location=torch.device('cuda:0'))
+    state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
     net = AttU_Net(img_ch=3,output_ch=3)
     net.load_state_dict(state_dict['model_state_dict'])
     net=net.cuda().eval()
@@ -324,7 +324,7 @@ if __name__ == '__main__':
             # the test code is used to monitor the finetune of the pre-trained encoder, it is not required by our BadEncoder. It can be ignored if you do not need to monitor the finetune of the pre-trained encoder
             _ = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor, epoch, args,net)
         elif args.encoder_usage_info == 'imagenet' or args.encoder_usage_info == 'CLIP':
-            train_loss = train(model.visual, clean_model.visual, train_loader, optimizer, args,net,optimizer_wd, tracker)
+            train_loss = train(model.visual, clean_model.visual, train_loader, optimizer, args,net,optimizer_wd, tracker,recorder)
         else:
             raise NotImplementedError()
 

@@ -87,18 +87,37 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 
 ######### color loss #########
 
+# nohup python main.py \
+#     --timestamp $timestamp \
+#     --lr 0.005 \
+#     --gpu 2 \
+#     --batch_size 1800 \
+#     --ssim_threshold 0.96 \
+#     --psnr_threshold 25.0 \
+#     --lp_threshold 0.01 \
+#     --n_epoch 200 \
+#     --step_size 100 \
+#     --patience 5 \
+#     --init_cost 0.3 \
+#     --cost_multiplier_up 1.5 \
+#     --cost_multiplier_down 1.3 \
+#     > logs/cifar10/filter_color_wd_$timestamp.log 2>&1 &
+
+
+
+### imagenet ###
 nohup python main.py \
     --timestamp $timestamp \
     --lr 0.005 \
-    --gpu 2 \
-    --batch_size 1800 \
+    --gpu 0 \
+    --batch_size 40 \
     --ssim_threshold 0.96 \
     --psnr_threshold 25.0 \
-    --lp_threshold 0.01 \
-    --n_epoch 200 \
-    --step_size 100 \
+    --lp_threshold 0.05 \
+    --n_epoch 100 \
+    --step_size 50 \
     --patience 5 \
-    --init_cost 0.3 \
+    --init_cost 1 \
     --cost_multiplier_up 1.5 \
     --cost_multiplier_down 1.3 \
-    > logs/cifar10/filter_color_wd_$timestamp.log 2>&1 &
+    > logs/imagenet/filter_color_wd_$timestamp.log 2>&1 &
