@@ -5,6 +5,48 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "training_downstream_classifier_imagenet",
+      "type": "python",
+      "request": "launch",
+      "program": "/home/hrzhang/projects/badencoder_filter/training_downstream_classifier.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "args": ["--encoder_usage_info","imagenet",
+      "--dataset","gtsrb",
+      "--trigger_file","optimize_filter/trigger/imagenet/imagenet_filter.pt",
+      "--encoder","output/imagenet/gtsrb_backdoored_encoder/model_200.pth",
+      "--reference_label","12",
+      "--reference_file","./reference/imagenet/priority.npz",
+      "--gpu","2",
+    ],
+    "cwd": "/home/hrzhang/projects/badencoder_filter",
+    },
+    {
+      "name": "training_downstream_classifier",
+      "type": "python",
+      "request": "launch",
+      "program": "/home/hrzhang/projects/badencoder_filter/training_downstream_classifier.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "args": [
+        "--encoder_usage_info",
+        "cifar10",
+        "--dataset",
+        "gtsrb",
+        "--trigger_file",
+        "./trigger/cifar10/unet_filter.pt",
+        "--encoder",
+        "./output/cifar10/gtsrb_backdoored_encoder/model_200.pth",
+        "--reference_label",
+        "12",
+        "--reference_file",
+        "./reference/cifar10/priority.npz",
+        "--gpu",
+        "2",
+      ],
+      "cwd": "/home/hrzhang/projects/badencoder_filter",
+    },
+    {
       "name": "optimize",
       "type": "python",
       "request": "launch",
@@ -13,14 +55,20 @@
       "args": [
         // "--use_feature",
         "--gpu",
-        "5",
+        "1",
         "--batch_size",
-        "1800","--init_cost","1","--cost_multiplier_up","2",
+        "40",
+        "--init_cost",
+        "1",
+        "--cost_multiplier_up",
+        "2",
         "--cost_multiplier_down",
-        "3"
+        "3",
+        "--dataset",
+        "imagenet_gtsrb"
       ],
       "env": {
-        "CUDA_VISIBLE_DEVICES": "0"
+        "CUDA_VISIBLE_DEVICES": "1"
       },
       "justMyCode": true,
       "cwd": "${fileDirname}",
@@ -103,7 +151,7 @@
         "trigger/trigger_pt_white_21_10_ap_replace.npz"
       ],
       "justMyCode": true,
-      "cwd":"/home/hrzhang/projects/badencoder_filter",
+      "cwd": "/home/hrzhang/projects/badencoder_filter",
       "env": {
         "CUDA_VISIBLE_DEVICES": "1"
       }

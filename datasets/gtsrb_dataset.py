@@ -12,7 +12,10 @@ test_transform_stl10 = transforms.Compose([
     transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])])
 
 test_transform_imagenet = transforms.Compose([
-    transforms.ToTensor(),])
+    transforms.ToTensor(),
+    transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])
+    # transforms.Normalize([0.34000303,0.31203701,0.32112844], [0.2098569,0.24831778,0.25540807])
+    ])
 
 test_transform_CLIP = transforms.Compose([
     transforms.ToTensor(),
@@ -92,3 +95,5 @@ def get_downstream_gtsrb(args):
     test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)
 
     return target_dataset, memory_data, test_data_clean, test_data_backdoor
+
+

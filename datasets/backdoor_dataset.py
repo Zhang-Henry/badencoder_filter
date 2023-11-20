@@ -12,7 +12,7 @@ import random
 import pilgram
 import torch.nn.functional as F
 
-import copy
+import copy,os
 # from .CTRL.utils.frequency import PoisonFre
 from optimize_filter.network import AttU_Net
 
@@ -293,3 +293,49 @@ class CIFAR10M(CIFAR10CUSTOM):
             img_trans = self.transform(img)
 
         return self.transform2(img), img_trans
+
+
+### 读取gtrsb_224,cifar10_224，stl10_224数据集
+class CustomDataset_224(Dataset):
+    def __init__(self, directory, transform1=None, transform2=None):
+        self.clean_transform = transform1
+        self.bd_transform = transform2
+        self.images = []
+        self.labels = []
+        for filename in os.listdir(directory):
+            if filename.endswith('.jpeg'):
+                self.images.append(os.path.join(directory, filename))
+
+
+    def __len__(self):
+        return len(self.images)
+
+    def __getitem__(self, idx):
+        image = Image.open(self.images[idx])
+        img_raw = self.clean_transform(image)
+        img_trans = self.bd_transform(image)
+
+        return img_raw,img_trans
+
+
+class CustomDataset_label(Dataset):
+    def __init__(self, directory, transform=None):
+        self.transform = transform
+        self.images = []
+        self.labels = []
+        for filename in os.listdir(directory):
+            if filename.endswith('.jpeg'):
+                self.images.append(os.path.join(directory, filename))
+                # Extract label from filename
+                label = int(filename.split('_')[3].replace('.jpeg', '')[1:-1])
+                self.labels.append(label)
+
+    def __len__(self):
+        return len(self.images)
+
+    def __getitem__(self, idx):
+        image = Image.open(self.images[idx])
+        if self.transform:
+            image = self.transform(image)
+        label = self.labels[idx]
+        return image, label

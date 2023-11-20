@@ -19,8 +19,8 @@ from evaluation import create_torch_dataloader, NeuralNet, net_train, net_test, 
 
 
 if __name__ == '__main__':
-    print(torch.cuda.is_available())
-    os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+    # print(torch.cuda.is_available())
+    # os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 
     parser = argparse.ArgumentParser(description='Evaluate the clean or backdoored encoders')
     parser.add_argument('--dataset', default='cifar10', type=str, help='downstream dataset')
@@ -79,6 +79,7 @@ if __name__ == '__main__':
         else:
             model.load_state_dict(checkpoint['state_dict'])
 
+    print('Predicting features')
     if args.encoder_usage_info in ['CLIP', 'imagenet']:
         feature_bank_training, label_bank_training = predict_feature(args,model.visual, train_loader)
         feature_bank_testing, label_bank_testing = predict_feature(args,model.visual, test_loader_clean)

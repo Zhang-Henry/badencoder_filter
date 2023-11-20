@@ -106,18 +106,38 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 
 
 ### imagenet ###
+# nohup python main.py \
+#     --timestamp $timestamp \
+#     --lr 0.005 \
+#     --gpu 0 \
+#     --batch_size 32 \
+#     --ssim_threshold 0.85 \
+#     --psnr_threshold 18.0 \
+#     --lp_threshold 0.05 \
+#     --n_epoch 100 \
+#     --step_size 50 \
+#     --patience 5 \
+#     --init_cost 1.5 \
+#     --cost_multiplier_up 1.5 \
+#     --cost_multiplier_down 1.3 \
+#     --dataset 'imagenet' \
+#     > logs/imagenet/filter_color_wd_$timestamp.log 2>&1 &
+
+### imagenet filter_gtsrb_stl_svhn_ ###
 nohup python main.py \
     --timestamp $timestamp \
     --lr 0.005 \
-    --gpu 0 \
-    --batch_size 40 \
-    --ssim_threshold 0.96 \
-    --psnr_threshold 25.0 \
+    --gpu 1 \
+    --batch_size 20 \
+    --ssim_threshold 0.85 \
+    --psnr_threshold 18.0 \
     --lp_threshold 0.05 \
     --n_epoch 100 \
     --step_size 50 \
     --patience 5 \
-    --init_cost 1 \
+    --init_cost 2 \
     --cost_multiplier_up 1.5 \
     --cost_multiplier_down 1.3 \
-    > logs/imagenet/filter_color_wd_$timestamp.log 2>&1 &
+    --dataset 'imagenet' \
+    > logs/imagenet/filter_gtsrb_stl_svhn_all_$timestamp.log 2>&1 &
+

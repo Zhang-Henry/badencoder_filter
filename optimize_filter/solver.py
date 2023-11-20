@@ -69,14 +69,22 @@ class Solver():
             filter_img = self.net(img)
 
             # filter_img = torch.clamp(filter_img, min=0, max=1)
-
-            mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(1, 3, 1, 1).cuda()
-            std = torch.tensor([0.2023, 0.1994, 0.2010]).view(1, 3, 1, 1).cuda()
+            if args.dataset=='cifar10':
+                mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(1, 3, 1, 1).cuda()
+                std = torch.tensor([0.2023, 0.1994, 0.2010]).view(1, 3, 1, 1).cuda()
+            elif args.dataset=='stl10':
+                mean = torch.tensor([0.44087798, 0.42790666, 0.38678814]).view(1, 3, 1, 1).cuda()
+                std = torch.tensor([0.25507198, 0.24801506, 0.25641308]).view(1, 3, 1, 1).cuda()
+            elif args.dataset=='imagenet':
+                mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(1, 3, 1, 1).cuda()
+                std = torch.tensor([0.2023, 0.1994, 0.2010]).view(1, 3, 1, 1).cuda()
+            elif args.dataset=='imagenet_gtsrb':
+                mean = torch.tensor([0.34000303,0.31203701,0.32112844]).view(1, 3, 1, 1).cuda()
+                std = torch.tensor([0.2098569,0.24831778,0.25540807]).view(1, 3, 1, 1).cuda()
 
             filter_img = filter_img * std + mean # denormalize
             img = img * std + mean
             img_trans = img_trans * std + mean
-
             sig=torch.nn.Sigmoid()
             filter_img = sig(filter_img)
             # filter_img = torch.clamp(filter_img, min=0, max=1)
@@ -146,7 +154,7 @@ class Solver():
                 'optimizer_state_dict': self.optimizer.state_dict(),
                 'best': recorder.best
             }
-            torch.save(state, f'trigger/imagenet/{self.args.timestamp}/ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}_color{color:.3f}.pt')
+            torch.save(state, f'trigger/{args.dataset}/{self.args.timestamp}/ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}_color{color:.3f}.pt')
 
             recorder.best = color
             print('\n--------------------------------------------------')

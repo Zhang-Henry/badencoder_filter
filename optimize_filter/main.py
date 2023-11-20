@@ -56,17 +56,24 @@ if __name__ == '__main__':
     parser.add_argument('--resume', type=str)
     parser.add_argument('--max_cost', type=float, default=1e-2)
     parser.add_argument('--min_cost', type=float, default=1e-3)
+    parser.add_argument('--dataset', type=str,choices=['cifar10','stl10','imagenet','imagenet_gtsrb','imagenet_gtsrb_stl_svhn'],default='cifar10')
 
     args = parser.parse_args()
     print(args)
     os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu)
 
     print('Loading data...')
-    # train_loader = cifar10_dataloader(args)
-    # train_loader = stl10_dataloader(args)
-    train_loader = imagenet_dataloader(args)
+    if args.dataset == 'cifar10':
+        train_loader = cifar10_dataloader(args)
+    elif args.dataset == 'stl10':
+        train_loader = stl10_dataloader(args)
+    elif args.dataset == 'imagenet':
+        train_loader = imagenet_dataloader(args)
+    elif args.dataset == 'imagenet_gtsrb':
+        train_loader = imagenet_gtsrb_dataloader(args)
 
-    os.makedirs(f'trigger/imagenet/{args.timestamp}',exist_ok=True)
+
+    os.makedirs(f'trigger/{args.dataset}/{args.timestamp}',exist_ok=True)
     solver=Solver(args)
     # solver=Solver_ab(args,train_loader)
     solver.train(args,train_loader)
