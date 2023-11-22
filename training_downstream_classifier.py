@@ -96,7 +96,7 @@ if __name__ == '__main__':
     nn_backdoor_loader = create_torch_dataloader(feature_bank_backdoor, label_bank_backdoor, args.batch_size)
 
     input_size = feature_bank_training.shape[1]
- 
+
     criterion = nn.CrossEntropyLoss()
 
     net = NeuralNet(input_size, [args.hidden_size_1, args.hidden_size_2], num_of_classes).cuda()

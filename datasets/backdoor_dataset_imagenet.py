@@ -16,6 +16,7 @@ import torch
 import random
 import torch.nn.functional as F
 import torch.nn as nn
+from optimize_filter.network import AttU_Net
 
 import copy
 
@@ -188,6 +189,10 @@ class BadEncoderDataset(VisionDataset):
         self.ftt_transform = ftt_transform
 
         # self.filter = torch.load('trigger/filter.pt', map_location=torch.device('cpu'))
+        # state_dict = torch.load(trigger_file, map_location=torch.device('cpu'))
+        # self.net = AttU_Net(img_ch=3,output_ch=3)
+        # self.net.load_state_dict(state_dict['model_state_dict'])
+        # self.net=self.net.eval()
 
     @staticmethod
     def make_dataset(
@@ -238,7 +243,7 @@ class BadEncoderDataset(VisionDataset):
         '''generate backdoor image'''
 
         img_backdoor_list = []
-        for i in range(2):
+        for i in range(len(self.target_image_list)):
             ###########################
             ### for ins filter only ###
 
@@ -269,7 +274,7 @@ class BadEncoderDataset(VisionDataset):
 
             # image_pil = Image.fromarray(img_copy)
             # tensor_image = trans(image_pil)
-            # backdoored_image=self.filter(tensor_image.unsqueeze(0))
+            # backdoored_image=self.net(tensor_image.unsqueeze(0))
             # img_backdoor = backdoored_image.squeeze()
             # sig = nn.Sigmoid()
             # img_backdoor = sig(img_backdoor)

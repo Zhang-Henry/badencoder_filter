@@ -15,20 +15,20 @@ transform_imagenet = transforms.Compose([
 #     transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])])
 
 
-# finetune_transform = transforms.Compose([
-#     transforms.RandomHorizontalFlip(p=0.5),
-#     transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
-#     transforms.RandomGrayscale(p=0.2),
-#     transforms.ToTensor(),
-#     transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])
-#     ])
+finetune_transform = transforms.Compose([
+    transforms.RandomHorizontalFlip(p=0.5),
+    transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
+    transforms.RandomGrayscale(p=0.2),
+    transforms.ToTensor(),
+    # transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])
+    ])
 
 #classes = ['airplane', 'bird', 'car', 'cat', 'deer', 'dog', 'horse', 'monkey', 'ship', 'truck']
 classes = [str(i) for i in range(1000)]
 
 train_transform = transform_imagenet
 backdoor_transform = transform_imagenet
-finetune_transform = transform_imagenet
+finetune_transform = finetune_transform
 
 def get_shadow_imagenet(args):
     training_data_num = 1000000

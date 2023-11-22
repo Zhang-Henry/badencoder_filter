@@ -127,15 +127,15 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 nohup python main.py \
     --timestamp $timestamp \
     --lr 0.005 \
-    --gpu 1 \
-    --batch_size 20 \
+    --gpu 3 \
+    --batch_size 38 \
     --ssim_threshold 0.85 \
     --psnr_threshold 18.0 \
-    --lp_threshold 0.05 \
+    --lp_threshold 0.1 \
     --n_epoch 100 \
     --step_size 50 \
     --patience 5 \
-    --init_cost 2 \
+    --init_cost 5 \
     --cost_multiplier_up 1.5 \
     --cost_multiplier_down 1.3 \
     --dataset 'imagenet' \

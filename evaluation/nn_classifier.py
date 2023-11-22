@@ -84,6 +84,7 @@ def net_test(net, test_loader, epoch, criterion, keyword='Accuracy'):
 
 
 def predict_feature(args,net, data_loader,keyword='clean'):
+    sig=torch.nn.Sigmoid()
     net.eval()
     feature_bank, target_bank = [], []
     if keyword=='backdoor':
@@ -98,6 +99,8 @@ def predict_feature(args,net, data_loader,keyword='clean'):
             data=data.cuda(non_blocking=True)
             if keyword=='backdoor':
                 data=filter(data)
+                data=sig(data)
+
             feature = net(data)
             feature = F.normalize(feature, dim=1)
             feature_bank.append(feature)

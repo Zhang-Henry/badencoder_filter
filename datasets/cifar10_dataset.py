@@ -1,5 +1,5 @@
 from torchvision import transforms
-from .backdoor_dataset import CIFAR10Mem, CIFAR10Pair, BadEncoderTestBackdoor, BadEncoderDataset, ReferenceImg
+from .backdoor_dataset import *
 import numpy as np
 import torch
 
@@ -118,25 +118,34 @@ def get_downstream_cifar10(args):
     if args.encoder_usage_info == 'cifar10':
         print('test_transform_cifar10')
         test_transform = test_transform_cifar10
+        memory_data = CIFAR10Mem(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
+        test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
+        test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)
     elif args.encoder_usage_info == 'stl10':
         print('test_transform_stl10')
         test_transform = test_transform_stl10
+        memory_data = CIFAR10Mem(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
+        test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
+        test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)
     elif args.encoder_usage_info == 'CLIP':
         print('test_transform_CLIP')
         test_transform = test_transform_CLIP
         training_file_name = 'train_224.npz'
         testing_file_name = 'test_224.npz'
+        memory_data = CIFAR10Mem_224(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
+        test_data_backdoor = BadEncoderTestBackdoor_224(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
+        test_data_clean = CIFAR10Mem_224(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)
     elif args.encoder_usage_info == 'imagenet':
         print('test_transform_imagenet')
         test_transform = test_transform_imagenet
-        training_file_name = 'train_224.npz'
-        testing_file_name = 'test_224.npz'
+        training_file_name = 'train_224'
+        testing_file_name = 'test_224'
+        memory_data = CIFAR10Mem_224(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
+        test_data_backdoor = BadEncoderTestBackdoor_224(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
+        test_data_clean = CIFAR10Mem_224(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)
     else:
         raise NotImplementedError
 
     target_dataset = ReferenceImg(reference_file=args.reference_file, transform=test_transform)
-    memory_data = CIFAR10Mem(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
-    test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
-    test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)
 
     return target_dataset, memory_data, test_data_clean, test_data_backdoor

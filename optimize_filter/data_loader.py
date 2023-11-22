@@ -91,7 +91,7 @@ def imagenet_gtsrb_dataloader(args):
             if image.mode != 'RGB':
                 return image.convert('RGB')
             return image
-        
+
     train_transform = transforms.Compose([
         transforms.RandomResizedCrop(256),
         transforms.CenterCrop(size=(224, 224)),
@@ -100,12 +100,12 @@ def imagenet_gtsrb_dataloader(args):
         transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
         transforms.RandomGrayscale(p=0.2),
         transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ])
 
     clean_transform = transforms.Compose([
         transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ])
 
     classes = [str(i) for i in range(1000)]

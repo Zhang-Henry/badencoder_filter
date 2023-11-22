@@ -16,7 +16,7 @@ from datasets import get_shadow_dataset
 from evaluation import test
 from optimize_filter.network import AttU_Net
 from optimize_filter.utils import SinkhornDistance, Recorder, Loss_Tracker
-from torch.nn import MSELoss
+from torch.nn import MSELoss,Sigmoid
 from pytorch_ssim import SSIM
 from torchmetrics.image import PeakSignalNoiseRatio
 from datetime import datetime
@@ -59,6 +59,7 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
     #     # self.loss_cmd = CMD()
     # loss_fn = lpips.LPIPS(net='alex').cuda()
     # psnr = PeakSignalNoiseRatio().cuda()
+    sig=Sigmoid()
 
     backdoored_encoder.train()
 
@@ -106,6 +107,7 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
         for img_backdoor in img_backdoor_cuda_list:
             ############## add filter to backdoor img
             img_backdoor=filter(img_backdoor)
+            img_backdoor=sig(img_backdoor)
 
             # img_backdoor = torch.clamp(img_backdoor, min=0, max=1)
 

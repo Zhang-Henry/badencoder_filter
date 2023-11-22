@@ -64,10 +64,12 @@ class BadEncoderDataset(Dataset):
         self.transform = transform
         self.bd_transform = bd_transform
         self.ftt_transform = ftt_transform
+
         # self.filter = torch.load('trigger/filter.pt', map_location=torch.device('cpu'))
-        # state_dict = torch.load('trigger/unet_filter.pt', map_location=torch.device('cpu'))
+        # state_dict = torch.load(trigger_file, map_location=torch.device('cpu'))
         # self.net = AttU_Net(img_ch=3,output_ch=3)
         # self.net.load_state_dict(state_dict['model_state_dict'])
+        # self.net=self.net.eval()
 
     def __getitem__(self, index):
         img = self.data[self.indices[index]]
@@ -81,7 +83,7 @@ class BadEncoderDataset(Dataset):
         '''generate backdoor image'''
 
         img_backdoor_list = []
-        for i in range(2):
+        for i in range(len(self.target_image_list)):
 
             ###########################
             ### for ins filter only ###
@@ -125,6 +127,7 @@ class BadEncoderDataset(Dataset):
 
             ###########################
             # unet
+
             # img = self.bd_transform(img_copy)
             # img_backdoor_=self.net(img.unsqueeze(0))
             # img_backdoor = img_backdoor_.squeeze()
@@ -289,6 +292,160 @@ class CIFAR10M(CIFAR10CUSTOM):
 
         img, target = self.data[index], self.targets[index]
         img = Image.fromarray(img)
+        if self.transform is not None:
+            img_trans = self.transform(img)
+
+        return self.transform2(img), img_trans
+
+
+class BadEncoderTestBackdoor_224(Dataset):
+
+    def __init__(self, numpy_file, trigger_file, reference_label, transform=None):
+        """
+        Args:
+            numpy_file (string): Path to the numpy file.
+            transform (callable, optional): Optional transform to be applied
+                on a sample.
+        """
+        self.data = []
+        self.targets = []
+        for filename in os.listdir(numpy_file):
+            if filename.endswith('.jpeg'):
+                self.data.append(os.path.join(numpy_file, filename))
+                # Extract label from filename
+                label = int(filename.split('_')[3].replace('.jpeg', '')[1:-1])
+                self.targets.append(label)
+
+        self.target_class = reference_label
+        self.test_transform = transform
+
+        # state_dict = torch.load('trigger/unet_filter.pt', map_location=torch.device('cpu'))
+        # self.net = AttU_Net(img_ch=3,output_ch=3)
+        # self.net.load_state_dict(state_dict['model_state_dict'])
+
+    def __getitem__(self,index):
+        img = Image.open(self.data[index])
+
+        ###########################
+        ### for ins filter only ###
+
+        # image_pil = Image.fromarray(img)
+        # filtered_image_pil = pilgram.kelvin(image_pil)
+        # img_backdoor =self.test_transform(filtered_image_pil)
+
+        ###########################
+
+        # img[:] =img * self.trigger_mask_list[0] + self.trigger_patch_list[0][:]
+        # img_backdoor =self.test_transform(Image.fromarray(img))
+
+        ###########################
+        # for customized filter only
+
+        # img_copy=torch.Tensor(img)
+        # backdoored_image = F.conv2d(img_copy.permute(2, 0, 1), self.filter, padding=7//2)
+        # img_backdoor = self.test_transform(backdoored_image.permute(1,2,0).detach().numpy())
+
+        ###########################
+        ###########################
+        # for ctrl only
+        # trans=transforms.Compose([
+        #         transforms.ToTensor()
+        #     ])
+
+        # image_pil = Image.fromarray(img)
+        # tensor_image = trans(image_pil)
+
+        # base_image=tensor_image.unsqueeze(0)
+        # poison_frequency_agent = PoisonFre('args',32, [1,2], 32, [15,31],  False,  True)
+
+        # x_tensor,_ = poison_frequency_agent.Poison_Frequency_Diff(base_image,0, 100.0)
+        # img_backdoor = x_tensor.squeeze()
+
+        # img_backdoor = np.clip(img_backdoor, 0, 1) #限制颜色范围在0-1
+
+        # img_backdoor = self.bd_transform(img_backdoor.detach().numpy())
+
+        ###########################
+        # unet
+        # img = self.test_transform(img)
+        # img_backdoor_=self.net(img.unsqueeze(0))
+        # img_backdoor = img_backdoor_.squeeze()
+        # img_backdoor = torch.clamp(img_backdoor, min=0, max=1)
+
+        img_backdoor = self.test_transform(img)
+        ###########################
+        return img_backdoor, self.target_class
+
+
+    def __len__(self):
+        return len(self.data)
+
+
+
+class CIFAR10CUSTOM_224(Dataset):
+
+    def __init__(self, numpy_file, class_type, transform=None, transform2=None):
+        """
+        Args:
+            numpy_file (string): Path to the numpy file.
+            transform (callable, optional): Optional transform to be applied
+                on a sample.
+        """
+        self.data = []
+        self.targets = []
+        for filename in os.listdir(numpy_file):
+            if filename.endswith('.jpeg'):
+                self.data.append(os.path.join(numpy_file, filename))
+                # Extract label from filename
+                label = int(filename.split('_')[3].replace('.jpeg', '')[1:-1])
+                self.targets.append(label)
+
+        self.classes = class_type
+        self.transform = transform
+        self.transform2 = transform2
+
+    def __len__(self):
+        return len(self.data)
+        # return self.data.shape[0]
+
+
+class CIFAR10Pair_224(CIFAR10CUSTOM_224):
+    """CIFAR10 Dataset.
+    """
+    def __getitem__(self, index):
+        img = self.data[index]
+        # img = Image.fromarray(img)
+        img = Image.open(img)
+
+        if self.transform is not None:
+            im_1 = self.transform(img)
+            im_2 = self.transform(img)
+
+        return im_1, im_2
+
+
+class CIFAR10Mem_224(CIFAR10CUSTOM_224):
+    """CIFAR10 Dataset.
+    """
+    def __getitem__(self, index):
+        img, target = self.data[index], self.targets[index]
+        # img = Image.fromarray(img)
+        img = Image.open(img)
+        if self.transform is not None:
+            img = self.transform(img)
+
+        return img, target
+
+
+class CIFAR10M_224(CIFAR10CUSTOM_224):
+    """CIFAR10 Dataset.
+    """
+    def __getitem__(self, index):
+
+        img, target = self.data[index], self.targets[index]
+        # img = Image.fromarray(img)
+        img = Image.open(img)
+
         if self.transform is not None:
             img_trans = self.transform(img)
 
