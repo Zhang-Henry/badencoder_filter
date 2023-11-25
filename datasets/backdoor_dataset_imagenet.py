@@ -169,9 +169,9 @@ class BadEncoderDataset(VisionDataset):
         self.class_to_idx = class_to_idx
         self.samples = samples
         #self.targets = [s[1] for s in samples]
-        # self.trigger_input_array = np.load(trigger_file)
         self.target_input_array = np.load(reference_file)
 
+        # self.trigger_input_array = np.load(trigger_file)
         # self.trigger_patch_list = self.trigger_input_array['t']
         # self.trigger_mask_list = self.trigger_input_array['tm']
 

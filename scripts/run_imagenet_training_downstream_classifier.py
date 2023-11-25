@@ -8,7 +8,6 @@ print('Start evaluation')
 
 def evaluate_imagenet(gpu, encoder_usage_info, downstream_dataset, encoder, reference_label, trigger, reference, key='clean'):
     cmd = f"nohup python3 -u training_downstream_classifier.py \
-            --lr 0.001 \
             --batch_size 64 \
             --encoder_usage_info {encoder_usage_info} \
             --dataset {downstream_dataset} \
@@ -26,9 +25,13 @@ def evaluate_imagenet(gpu, encoder_usage_info, downstream_dataset, encoder, refe
 # evaluate_imagenet(2, 'imagenet', 'gtsrb', './output/imagenet/backdoor/priority/model_200.pth', 12, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'priority', 'backdoor')
 # evaluate_imagenet(3, 'imagenet', 'svhn', './output/imagenet/backdoor/one/model_200.pth', 1, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'one', 'backdoor')
 
-# evaluate_imagenet(0, 'imagenet', 'stl10', 'output/imagenet/stl10_backdoored_encoder/model_200.pth', 9, 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'truck', 'backdoor')
-# evaluate_imagenet(4, 'imagenet', 'gtsrb', 'output/imagenet/gtsrb_backdoored_encoder/model_200.pth', 12, 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'priority', 'backdoor')
-evaluate_imagenet(3, 'imagenet', 'svhn', 'output/imagenet/svhn_backdoored_encoder/model_200.pth', 1, 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'one', 'backdoor')
+evaluate_imagenet(4, 'imagenet', 'stl10', 'output/imagenet/stl10_backdoored_encoder/model_100.pth', 9, 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'truck', 'backdoor')
+# evaluate_imagenet(4, 'imagenet', 'gtsrb', 'output/imagenet/gtsrb_backdoored_encoder/model_100.pth', 12, 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'priority', 'backdoor')
+# evaluate_imagenet(5, 'imagenet', 'svhn', 'output/imagenet/svhn_backdoored_encoder/model_100.pth', 1, 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'one', 'backdoor')
+
+# evaluate_imagenet(2, 'imagenet', 'stl10', 'output/imagenet/stl10_backdoored_encoder/model_100.pth', 9, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'truck', 'backdoor')
+# evaluate_imagenet(2, 'imagenet', 'gtsrb', 'output/imagenet/gtsrb_backdoored_encoder/model_100.pth', 12, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'priority', 'backdoor')
+# evaluate_imagenet(3, 'imagenet', 'svhn', 'output/imagenet/svhn_backdoored_encoder/model_100.pth', 1, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'one', 'backdoor')
 
 # evaluate_imagenet(0, 'imagenet', 'stl10', './output/imagenet/clean_encoder/resnet50-1x.pth', 9, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'truck')
 # evaluate_imagenet(5, 'imagenet', 'gtsrb', './output/imagenet/clean_encoder/resnet50-1x.pth', 12, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'priority')

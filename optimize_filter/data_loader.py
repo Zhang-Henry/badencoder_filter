@@ -85,7 +85,7 @@ def imagenet_dataloader(args):
     return train_loader
 
 
-def imagenet_gtsrb_dataloader(args):
+def imagenet_all_dataloader(args):
     class ConvertToRGB:
         def __call__(self, image):
             if image.mode != 'RGB':
@@ -100,12 +100,21 @@ def imagenet_gtsrb_dataloader(args):
         transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
         transforms.RandomGrayscale(p=0.2),
         transforms.ToTensor(),
-        # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ])
+
+    # train_transform2 = transforms.Compose([
+    #     ConvertToRGB(),
+    #     transforms.RandomHorizontalFlip(p=0.5),
+    #     transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
+    #     transforms.RandomGrayscale(p=0.2),
+    #     transforms.ToTensor(),
+    #     # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+    #     ])
 
     clean_transform = transforms.Compose([
         transforms.ToTensor(),
-        # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ])
 
     classes = [str(i) for i in range(1000)]
@@ -123,9 +132,9 @@ def imagenet_gtsrb_dataloader(args):
     )
 
 
-    gtsrb_data = CustomDataset_224(directory='../data/gtsrb/train_224', transform1=clean_transform,transform2=train_transform)
-    stl10_data = CustomDataset_224(directory='../data/stl10/train_224', transform1=clean_transform,transform2=train_transform)
-    svhn_data = CustomDataset_224(directory='../data/svhn/train_224', transform1=clean_transform,transform2=train_transform)
+    gtsrb_data = CustomDataset_224(directory='../data/gtsrb/selected_train_224', transform1=clean_transform,transform2=train_transform)
+    stl10_data = CustomDataset_224(directory='../data/stl10/selected_train_224', transform1=clean_transform,transform2=train_transform)
+    svhn_data = CustomDataset_224(directory='../data/svhn/selected_train_224', transform1=clean_transform,transform2=train_transform)
 
     train_dataset = ConcatDataset([imagenet_dataset, gtsrb_data,stl10_data,svhn_data])
 

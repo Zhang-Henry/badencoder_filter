@@ -10,14 +10,14 @@ if not os.path.exists('./log/bad_encoder'):
 
 
 def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, trigger, reference, pretraining_dataset, bz, clean_encoder='model_1000.pth'):
-    save_path = f'./output/{encoder_usage_info}/{downstream_dataset}_backdoored_encoder'
+    save_path = f'./output/{encoder_usage_info}/{downstream_dataset}_backdoored_encoder/{time}'
     if not os.path.exists(save_path):
         os.makedirs(save_path)
 
-    os.makedirs(f'{save_path}/{time}')
+    # os.makedirs(f'{save_path}/{time}')
     # filter_path="optimize_filter/trigger/unet_filter.pt"
 
-    cmd = f'CUDA_VISIBLE_DEVICES=4 nohup python3 -u badencoder.py \
+    cmd = f'CUDA_VISIBLE_DEVICES=2 nohup python3 -u badencoder.py \
     --epochs 100 \
     --timestamp {time} \
     --lr 0.001 \
@@ -45,9 +45,13 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 # run_finetune(2, 'stl10', 'stl10', 'gtsrb', 'stl10/unet_filter.pt', 'stop', 'stl10',512)
 ############
 
-# run_finetune(3, 'imagenet', 'imagenet', 'stl10', 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'truck', 'imagenet',12,clean_encoder='resnet50-1x.pth')
-run_finetune(2, 'imagenet', 'imagenet', 'gtsrb', 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'priority','imagenet',12,clean_encoder='resnet50-1x.pth')
-# run_finetune(5, 'imagenet', 'imagenet', 'svhn', 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'one','imagenet',20,clean_encoder='resnet50-1x.pth')
+# run_finetune(2, 'imagenet', 'imagenet', 'stl10', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'truck', 'imagenet',22,clean_encoder='resnet50-1x.pth')
+# run_finetune(3, 'imagenet', 'imagenet', 'gtsrb', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'priority','imagenet',24,clean_encoder='resnet50-1x.pth')
+# run_finetune(3, 'imagenet', 'imagenet', 'svhn', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'one','imagenet',32,clean_encoder='resnet50-1x.pth')
+
+# run_finetune(3, 'imagenet', 'imagenet', 'stl10', 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'truck', 'imagenet',14,clean_encoder='resnet50-1x.pth')
+# run_finetune(2, 'imagenet', 'imagenet', 'gtsrb', 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'priority','imagenet',12,clean_encoder='resnet50-1x.pth')
+run_finetune(5, 'imagenet', 'imagenet', 'svhn', 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'one','imagenet',12,clean_encoder='resnet50-1x.pth')
 
 # run_finetune(3, 'CLIP', 'cifar10', 'stl10', 'trigger_pt_white_21_10_ap_replace.npz', 'truck', 32,clean_encoder='encode_image.pth')
 # run_finetune(0, 'CLIP', 'cifar10', 'gtsrb', 'trigger_pt_white_21_10_ap_replace.npz', 'priority',32,clean_encoder='encode_image.pth')

@@ -127,7 +127,7 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 nohup python main.py \
     --timestamp $timestamp \
     --lr 0.005 \
-    --gpu 3 \
+    --gpu 4 \
     --batch_size 38 \
     --ssim_threshold 0.85 \
     --psnr_threshold 18.0 \
@@ -135,9 +135,9 @@ nohup python main.py \
     --n_epoch 100 \
     --step_size 50 \
     --patience 5 \
-    --init_cost 5 \
+    --init_cost 3 \
     --cost_multiplier_up 1.5 \
     --cost_multiplier_down 1.3 \
-    --dataset 'imagenet' \
+    --dataset 'imagenet_gtsrb_stl10_svhn' \
     > logs/imagenet/filter_gtsrb_stl_svhn_all_$timestamp.log 2>&1 &
 

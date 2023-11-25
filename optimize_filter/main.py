@@ -56,7 +56,7 @@ if __name__ == '__main__':
     parser.add_argument('--resume', type=str)
     parser.add_argument('--max_cost', type=float, default=1e-2)
     parser.add_argument('--min_cost', type=float, default=1e-3)
-    parser.add_argument('--dataset', type=str,choices=['cifar10','stl10','imagenet','imagenet_gtsrb','imagenet_gtsrb_stl_svhn'],default='cifar10')
+    parser.add_argument('--dataset', type=str,choices=['cifar10','stl10','imagenet','imagenet_gtsrb','imagenet_gtsrb_stl10_svhn'],default='cifar10')
 
     args = parser.parse_args()
     print(args)
@@ -69,8 +69,8 @@ if __name__ == '__main__':
         train_loader = stl10_dataloader(args)
     elif args.dataset == 'imagenet':
         train_loader = imagenet_dataloader(args)
-    elif args.dataset == 'imagenet_gtsrb':
-        train_loader = imagenet_gtsrb_dataloader(args)
+    elif args.dataset == 'imagenet_gtsrb_stl10_svhn':
+        train_loader = imagenet_all_dataloader(args)
 
 
     os.makedirs(f'trigger/{args.dataset}/{args.timestamp}',exist_ok=True)

@@ -26,33 +26,33 @@ now = datetime.now()
 print("当前时间：", now.strftime("%Y-%m-%d %H:%M:%S"))
 
 
-def filter_wd_loss(filter,img_clean,img_trans,psnr,ssim,loss_fn,WD,tracker,recorder):
-    # mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(1, 3, 1, 1).cuda()
-    # std = torch.tensor([0.2023, 0.1994, 0.2010]).view(1, 3, 1, 1).cuda()
+# def filter_wd_loss(filter,img_clean,img_trans,psnr,ssim,loss_fn,WD,tracker,recorder):
+#     # mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(1, 3, 1, 1).cuda()
+#     # std = torch.tensor([0.2023, 0.1994, 0.2010]).view(1, 3, 1, 1).cuda()
 
-    filter_img = filter(img_clean)
-    # filter_img = filter_img * std + mean
-    # img_clean = img_clean * std + mean
-    # img_trans_unnorm = img_trans * std + mean
-    wd,_,_=WD(filter_img.view(filter_img.shape[0],-1),img_trans.view(img_trans.shape[0],-1))
-    # wd,_,_=WD(filter_img_unnorm.view(filter_img.shape[0],-1),img_trans_unnorm.view(img_trans.shape[0],-1))
+#     filter_img = filter(img_clean)
+#     # filter_img = filter_img * std + mean
+#     # img_clean = img_clean * std + mean
+#     # img_trans_unnorm = img_trans * std + mean
+#     wd,_,_=WD(filter_img.view(filter_img.shape[0],-1),img_trans.view(img_trans.shape[0],-1))
+#     # wd,_,_=WD(filter_img_unnorm.view(filter_img.shape[0],-1),img_trans_unnorm.view(img_trans.shape[0],-1))
 
-    loss_psnr = psnr(filter_img, img_clean)
-    loss_ssim = ssim(filter_img, img_clean)
-    d_list = loss_fn(filter_img,img_clean)
-    lp_loss=d_list.squeeze()
+#     loss_psnr = psnr(filter_img, img_clean)
+#     loss_ssim = ssim(filter_img, img_clean)
+#     d_list = loss_fn(filter_img,img_clean)
+#     lp_loss=d_list.squeeze()
 
-    loss_sim = 1 - loss_ssim + 10 * lp_loss.mean() - 0.025 * loss_psnr
-    loss_far = recorder.cost * wd
+#     loss_sim = 1 - loss_ssim + 10 * lp_loss.mean() - 0.025 * loss_psnr
+#     loss_far = recorder.cost * wd
 
-    loss = loss_sim - loss_far
+#     loss = loss_sim - loss_far
 
-    print(f'\nloss:{loss},loss_sim:{loss_sim}, loss_far:{loss_far}, wd:{wd},ssim:{loss_ssim},lp:{lp_loss.mean()},psnr:{loss_psnr},cost:{recorder.cost}')
+#     print(f'\nloss:{loss},loss_sim:{loss_sim}, loss_far:{loss_far}, wd:{wd},ssim:{loss_ssim},lp:{lp_loss.mean()},psnr:{loss_psnr},cost:{recorder.cost}')
 
-    tracker.update(loss.item(),wd.item(),loss_ssim.item(),loss_psnr.item(),lp_loss.mean().item(),loss_sim.item(),loss_far.item())
-    return loss
+#     tracker.update(loss.item(),wd.item(),loss_ssim.item(),loss_psnr.item(),lp_loss.mean().item(),loss_sim.item(),loss_far.item())
+#     return loss
 
-def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args ,filter,optimizer_wd, tracker,recorder):
+def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args, filter):
     # tracker.reset()
     # WD=SinkhornDistance(eps=0.1, max_iter=100)
     # ssim = SSIM()
@@ -309,29 +309,34 @@ if __name__ == '__main__':
     net = AttU_Net(img_ch=3,output_ch=3)
     net.load_state_dict(state_dict['model_state_dict'])
     net=net.cuda().eval()
-    optimizer_wd = torch.optim.Adam(list(net.parameters()), lr=args.lr, betas=(0.9, 0.999), eps=1e-8)
-    recorder=Recorder(args)
-    tracker=Loss_Tracker(['loss', 'wd', 'ssim', 'psnr', 'lp', 'sim', 'far','color'])
+    # optimizer_wd = torch.optim.Adam(list(net.parameters()), lr=args.lr, betas=(0.9, 0.999), eps=1e-8)
+    # recorder=Recorder(args)
+    # tracker=Loss_Tracker(['loss', 'wd', 'ssim', 'psnr', 'lp', 'sim', 'far','color'])
 
     if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10':
         # check whether the pre-trained encoder is loaded successfully or not
-        test_acc_1 = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor,0, args,net)
+        test_acc_1 = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor,0, args)
         print('initial test acc: {}'.format(test_acc_1))
 
     # training loop
     for epoch in range(1, args.epochs + 1):
         print("=================================================")
         if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10':
-            train_loss = train(model.f, clean_model.f, train_loader, optimizer, args, net, optimizer_wd, tracker,recorder)
+            # train_loss = train(model.f, clean_model.f, train_loader, optimizer, args, net, optimizer_wd, tracker,recorder)
+            train_loss = train(model.f, clean_model.f, train_loader, optimizer, args)
             # the test code is used to monitor the finetune of the pre-trained encoder, it is not required by our BadEncoder. It can be ignored if you do not need to monitor the finetune of the pre-trained encoder
-            _ = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor, epoch, args,net)
+            # _ = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor, epoch, args,net)
+            _ = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor, epoch, args)
+
         elif args.encoder_usage_info == 'imagenet' or args.encoder_usage_info == 'CLIP':
-            train_loss = train(model.visual, clean_model.visual, train_loader, optimizer, args,net,optimizer_wd, tracker,recorder)
+            train_loss = train(model.visual, clean_model.visual, train_loader, optimizer, args, net)
+            # train_loss = train(model.visual, clean_model.visual, train_loader, optimizer, args)
+
         else:
             raise NotImplementedError()
 
         # Save the BadEncoder
-        if epoch % args.epochs == 0:
+        if epoch % 100 == 0:
             torch.save({'epoch': epoch, 'state_dict': model.state_dict(), 'optimizer' : optimizer.state_dict(),}, args.results_dir + '/model_' + str(epoch) + '.pth')
 
         # Save the intermediate checkpoint

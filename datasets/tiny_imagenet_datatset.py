@@ -31,6 +31,14 @@ backdoor_transform = transform_imagenet
 finetune_transform = transform_imagenet
 # finetune_transform = finetune_transform
 
+def get_pretraining_imagenet(data_dir):
+
+    train_data = CIFAR10Pair(numpy_file=data_dir + "train.npz", class_type= classes, transform=train_transform)
+    memory_data = CIFAR10Mem(numpy_file=data_dir + "train.npz", class_type= classes, transform=test_transform_cifar10)
+    test_data  = CIFAR10Mem(numpy_file=data_dir + "test.npz", class_type= classes,transform=test_transform_cifar10)
+
+    return train_data, memory_data, test_data
+
 
 
 def get_shadow_imagenet(args):

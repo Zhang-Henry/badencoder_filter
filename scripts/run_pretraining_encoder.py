@@ -10,8 +10,8 @@ if not os.path.exists(cifar10_results_dir):
 if not os.path.exists(stl10_results_dir):
     os.makedirs(stl10_results_dir)
 
-cmd = f"nohup python3 -u pretraining_encoder.py --pretraining_dataset cifar10 --gpu 1 --results_dir {cifar10_results_dir} > ./log/clean_encoder/cifar10.log &"
+cmd = f"nohup python3 -u pretraining_encoder.py --pretraining_dataset cifar10 --gpu 2 --results_dir {cifar10_results_dir} > ./log/clean_encoder/cifar10.log &"
 os.system(cmd)
 
-cmd = f"nohup python3 -u pretraining_encoder.py --pretraining_dataset stl10 --gpu 0 --results_dir {stl10_results_dir} > ./log/clean_encoder/stl10.log &"
-os.system(cmd)
+# cmd = f"nohup python3 -u pretraining_encoder.py --pretraining_dataset stl10 --gpu 0 --results_dir {stl10_results_dir} > ./log/clean_encoder/stl10.log &"
+# os.system(cmd)
