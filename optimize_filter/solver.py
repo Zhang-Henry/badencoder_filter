@@ -89,27 +89,15 @@ class Solver():
             filter_img = sig(filter_img)
             # filter_img = torch.clamp(filter_img, min=0, max=1)
 
-            if args.use_feature:
-                with torch.no_grad():
-                    img_trans_feature = self.backbone(img_trans)
-                    filter_img_feature = self.backbone(filter_img)
+            color_loss = self.color_loss_fn(filter_img, img_trans)
+            with torch.no_grad():
+                img_trans_feature = self.backbone(img_trans)
+                filter_img_feature = self.backbone(filter_img)
 
-                    img_trans_feature = F.normalize(img_trans_feature, dim=1)
-                    filter_img_feature = F.normalize(filter_img_feature, dim=1)
-                    wd,_,_=self.WD(filter_img_feature,img_trans_feature) # wd越小越相似，拉远backdoor img和transformed backdoor img的距离
-
-                    # wd = self.compute_style_loss(filter_img_feature,img_trans_feature)
-            else:
-                # wd,_,_=self.WD(filter_img.view(filter_img.shape[0],-1),img_trans.view(img_trans.shape[0],-1)) # wd越小越相似
-                color_loss = self.color_loss_fn(filter_img, img_trans)
-                with torch.no_grad():
-                    img_trans_feature = self.backbone(img_trans)
-                    filter_img_feature = self.backbone(filter_img)
-
-                    img_trans_feature = F.normalize(img_trans_feature, dim=-1)
-                    filter_img_feature = F.normalize(filter_img_feature, dim=-1)
-                    wd,_,_=self.WD(filter_img_feature,img_trans_feature) # wd越小越相似，拉远backdoor img和transformed backdoor img的距离
-                    # wd = compute_style_loss(filter_img_feature,img_trans_feature)
+                img_trans_feature = F.normalize(img_trans_feature, dim=-1)
+                filter_img_feature = F.normalize(filter_img_feature, dim=-1)
+                wd,_,_=self.WD(filter_img_feature,img_trans_feature) # wd越小越相似，拉远backdoor img和transformed backdoor img的距离
+                # wd = compute_style_loss(filter_img_feature,img_trans_feature)
 
             # filter后的图片和原图的mse和ssim，差距要尽可能小
 
@@ -123,9 +111,9 @@ class Solver():
 
             # torch.autograd.set_detect_anomaly(True)
             ############################ wd ############################
-            if args.use_feature:
-                loss_sim = 1 - loss_ssim + 10 * lp_loss.mean() - 0.025 * loss_psnr
-                loss_far = - recorder.cost * wd
+            if args.ablation:
+                loss_sim = 10 * lp_loss.mean() + wd
+                loss_far = recorder.cost * (1 - loss_ssim - 0.025 * loss_psnr)
                 loss = loss_sim + loss_far
             else:
                 loss_sim = 1 - loss_ssim + 10 * lp_loss.mean() - 0.025 * loss_psnr + wd
@@ -145,46 +133,85 @@ class Solver():
         avg_losses = tracker.get_avg_loss()
         avg_loss,wd, ssim, psnr, lp, sim, far, color = avg_losses.values()
 
-        # torch.save(self.net, f'trigger/moco/{self.args.timestamp}/ssim{ssim:.4f}_wd{wd:.1f}.pt')
-        if ssim >= args.ssim_threshold and psnr >= args.psnr_threshold and lp <= args.lp_threshold and color >= recorder.best:
-            state = {
-                'model_state_dict': self.net.state_dict(),
-                'optimizer_state_dict': self.optimizer.state_dict(),
-                'best': recorder.best
-            }
-            torch.save(state, f'trigger/{args.dataset}/{self.args.timestamp}/ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}_color{color:.3f}.pt')
+        if args.ablation:
+            if ssim >= args.ssim_threshold and ssim < args.ssim_threshold+0.01:
+                state = {
+                    'model_state_dict': self.net.state_dict(),
+                    'optimizer_state_dict': self.optimizer.state_dict(),
+                    'best': recorder.best
+                }
+                torch.save(state, f'trigger/{args.dataset}/{self.args.timestamp}/ablation_ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}_color{color:.3f}.pt')
 
-            recorder.best = color
-            print('\n--------------------------------------------------')
-            print(f"Updated !!! Best sim:{sim}, far:{far}, SSIM: {ssim}, psnr: {psnr}, lp: {lp}, WD: {wd}, color: {color}")
-            print('--------------------------------------------------')
-            recorder.cost_up_counter = 0
-            recorder.cost_down_counter = 0
+                recorder.best = color
+                print('\n--------------------------------------------------')
+                print(f"Updated !!! Best sim:{sim}, far:{far}, SSIM: {ssim}, psnr: {psnr}, lp: {lp}, WD: {wd}, color: {color}")
+                print('--------------------------------------------------')
+                recorder.cost_up_counter = 0
+                recorder.cost_down_counter = 0
+
+            if ssim >= args.ssim_threshold and psnr >= args.psnr_threshold and lp <= args.lp_threshold:
+                recorder.cost_up_counter += 1
+                recorder.cost_down_counter = 0
+            else:
+                recorder.cost_up_counter = 0
+                recorder.cost_down_counter += 1
+
+            if recorder.cost_up_counter >= args.patience:
+                recorder.cost_up_counter = 0
+                print('\n--------------------------------------------------')
+                print("Up cost from {} to {}".format(recorder.cost, recorder.cost * recorder.cost_multiplier_up))
+                print('--------------------------------------------------')
+
+                recorder.cost *= recorder.cost_multiplier_up
+                recorder.cost_up_flag = True
+
+            elif recorder.cost_down_counter >= args.patience:
+                recorder.cost_down_counter = 0
+                print('\n--------------------------------------------------')
+                print("Down cost from {} to {}".format(recorder.cost, recorder.cost / recorder.cost_multiplier_down))
+                print('--------------------------------------------------')
+                recorder.cost /= recorder.cost_multiplier_down
+                recorder.cost_down_flag = True
+        else: # 正常情况
+            if ssim >= args.ssim_threshold and psnr >= args.psnr_threshold and lp <= args.lp_threshold and color >= recorder.best:
+                state = {
+                    'model_state_dict': self.net.state_dict(),
+                    'optimizer_state_dict': self.optimizer.state_dict(),
+                    'best': recorder.best
+                }
+                torch.save(state, f'trigger/{args.dataset}/{self.args.timestamp}/ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}_color{color:.3f}.pt')
+
+                recorder.best = color
+                print('\n--------------------------------------------------')
+                print(f"Updated !!! Best sim:{sim}, far:{far}, SSIM: {ssim}, psnr: {psnr}, lp: {lp}, WD: {wd}, color: {color}")
+                print('--------------------------------------------------')
+                recorder.cost_up_counter = 0
+                recorder.cost_down_counter = 0
 
 
-        if ssim >= args.ssim_threshold and psnr >= args.psnr_threshold and lp <= args.lp_threshold:
-            recorder.cost_up_counter += 1
-            recorder.cost_down_counter = 0
-        else:
-            recorder.cost_up_counter = 0
-            recorder.cost_down_counter += 1
+            if ssim >= args.ssim_threshold and psnr >= args.psnr_threshold and lp <= args.lp_threshold:
+                recorder.cost_up_counter += 1
+                recorder.cost_down_counter = 0
+            else:
+                recorder.cost_up_counter = 0
+                recorder.cost_down_counter += 1
 
-        if recorder.cost_up_counter >= args.patience:
-            recorder.cost_up_counter = 0
-            print('\n--------------------------------------------------')
-            print("Up cost from {} to {}".format(recorder.cost, recorder.cost * recorder.cost_multiplier_up))
-            print('--------------------------------------------------')
+            if recorder.cost_up_counter >= args.patience:
+                recorder.cost_up_counter = 0
+                print('\n--------------------------------------------------')
+                print("Up cost from {} to {}".format(recorder.cost, recorder.cost * recorder.cost_multiplier_up))
+                print('--------------------------------------------------')
 
-            recorder.cost *= recorder.cost_multiplier_up
-            recorder.cost_up_flag = True
+                recorder.cost *= recorder.cost_multiplier_up
+                recorder.cost_up_flag = True
 
-        elif recorder.cost_down_counter >= args.patience:
-            recorder.cost_down_counter = 0
-            print('\n--------------------------------------------------')
-            print("Down cost from {} to {}".format(recorder.cost, recorder.cost / recorder.cost_multiplier_down))
-            print('--------------------------------------------------')
-            recorder.cost /= recorder.cost_multiplier_down
-            recorder.cost_down_flag = True
+            elif recorder.cost_down_counter >= args.patience:
+                recorder.cost_down_counter = 0
+                print('\n--------------------------------------------------')
+                print("Down cost from {} to {}".format(recorder.cost, recorder.cost / recorder.cost_multiplier_down))
+                print('--------------------------------------------------')
+                recorder.cost /= recorder.cost_multiplier_down
+                recorder.cost_down_flag = True
 
 
         # if args.use_feature:

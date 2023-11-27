@@ -6,12 +6,15 @@ from .gtsrb_dataset import  get_downstream_gtsrb
 from .svhn_dataset import get_downstream_svhn
 from .stl10_dataset import get_pretraining_stl10, get_shadow_stl10, get_downstream_stl10
 from .imagenet_dataset_ import get_shadow_imagenet
+from .tiny_imagenet_datatset import get_pretraining_imagenet
 
 def get_pretraining_dataset(args):
     if args.pretraining_dataset == 'cifar10':
         return get_pretraining_cifar10(args.data_dir)
     elif args.pretraining_dataset == 'stl10':
         return get_pretraining_stl10(args.data_dir)
+    elif args.pretraining_dataset == 'tiny_imagenet':
+        return get_pretraining_imagenet(args.data_dir)
     else:
         raise NotImplementedError
 

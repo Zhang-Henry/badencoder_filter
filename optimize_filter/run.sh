@@ -84,25 +84,62 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 #     --cost_multiplier_down 3 \
 #     > logs/cifar10/filter_nofeature_$timestamp.log 2>&1 &
 
+# color loss stl10
+nohup python main.py \
+    --timestamp $timestamp \
+    --lr 0.005 \
+    --gpu 2 \
+    --batch_size 512 \
+    --ssim_threshold 0.95 \
+    --psnr_threshold 24.0 \
+    --lp_threshold 0.02 \
+    --n_epoch 200 \
+    --step_size 100 \
+    --patience 5 \
+    --init_cost 0.5 \
+    --cost_multiplier_up 2 \
+    --cost_multiplier_down 1.5 \
+    --dataset 'stl10' \
+    > logs/stl10/filter_color_wd_$timestamp.log 2>&1 &
 
-######### color loss #########
+######### color loss ablation #########
 
 # nohup python main.py \
 #     --timestamp $timestamp \
 #     --lr 0.005 \
-#     --gpu 2 \
-#     --batch_size 1800 \
-#     --ssim_threshold 0.96 \
+#     --gpu 4 \
+#     --batch_size 900 \
+#     --ssim_threshold 0.95 \
 #     --psnr_threshold 25.0 \
 #     --lp_threshold 0.01 \
 #     --n_epoch 200 \
 #     --step_size 100 \
-#     --patience 5 \
-#     --init_cost 0.3 \
-#     --cost_multiplier_up 1.5 \
-#     --cost_multiplier_down 1.3 \
-#     > logs/cifar10/filter_color_wd_$timestamp.log 2>&1 &
+#     --patience 3 \
+#     --init_cost 1 \
+#     --cost_multiplier_up -0.3 \
+#     --cost_multiplier_down -1.1 \
+#     --dataset 'cifar10' \
+#     --ablation \
+#     > logs/cifar10/ablation_filter_color_wd_$timestamp.log 2>&1 &
 
+
+# nohup python main.py \
+#     --timestamp $timestamp \
+#     --lr 0.005 \
+#     --gpu 1 \
+#     --batch_size 512 \
+#     --ssim_threshold 0.95 \
+#     --psnr_threshold 25.0 \
+#     --lp_threshold 0.01 \
+#     --n_epoch 200 \
+#     --step_size 100 \
+#     --patience 3 \
+#     --init_cost 1 \
+#     --cost_multiplier_up -0.3 \
+#     --cost_multiplier_down -1.1 \
+#     --dataset 'stl10' \
+#     --ablation \
+#     > logs/stl10/ablation_filter_color_wd_$timestamp.log 2>&1 &
 
 
 ### imagenet ###
@@ -124,20 +161,20 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 #     > logs/imagenet/filter_color_wd_$timestamp.log 2>&1 &
 
 ### imagenet filter_gtsrb_stl_svhn_ ###
-nohup python main.py \
-    --timestamp $timestamp \
-    --lr 0.005 \
-    --gpu 4 \
-    --batch_size 38 \
-    --ssim_threshold 0.85 \
-    --psnr_threshold 18.0 \
-    --lp_threshold 0.1 \
-    --n_epoch 100 \
-    --step_size 50 \
-    --patience 5 \
-    --init_cost 3 \
-    --cost_multiplier_up 1.5 \
-    --cost_multiplier_down 1.3 \
-    --dataset 'imagenet_gtsrb_stl10_svhn' \
-    > logs/imagenet/filter_gtsrb_stl_svhn_all_$timestamp.log 2>&1 &
+# nohup python main.py \
+#     --timestamp $timestamp \
+#     --lr 0.005 \
+#     --gpu 4 \
+#     --batch_size 38 \
+#     --ssim_threshold 0.85 \
+#     --psnr_threshold 18.0 \
+#     --lp_threshold 0.1 \
+#     --n_epoch 100 \
+#     --step_size 50 \
+#     --patience 5 \
+#     --init_cost 3 \
+#     --cost_multiplier_up 1.5 \
+#     --cost_multiplier_down 1.3 \
+#     --dataset 'imagenet_gtsrb_stl10_svhn' \
+#     > logs/imagenet/filter_gtsrb_stl_svhn_all_$timestamp.log 2>&1 &
 

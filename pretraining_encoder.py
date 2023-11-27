@@ -174,5 +174,5 @@ if __name__ == '__main__':
         # Save model
         # torch.save({'epoch': epoch, 'state_dict': model.state_dict(), 'optimizer' : optimizer.state_dict(),}, args.results_dir + '/model_last.pth')
 
-        if epoch % args.epochs == 0:
+        if epoch % 200 == 0:
             torch.save({'epoch': epoch, 'state_dict': model.state_dict(), 'optimizer' : optimizer.state_dict(),}, args.results_dir + '/model_' + str(epoch) + '.pth')

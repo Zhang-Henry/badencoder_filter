@@ -203,6 +203,23 @@
         "CUDA_VISIBLE_DEVICES": "3"
       },
       "justMyCode": true
-    }
+    },{
+      "name": "pretrain:imagenet",
+      "type": "python",
+      "request": "launch",
+      "program": "/home/hrzhang/projects/badencoder_filter/pretraining_encoder.py",
+      "console": "integratedTerminal",
+      "args": [
+        "--pretraining_dataset","tiny_imagenet",
+        "--batch_size",
+        "240",
+        "--results_dir",
+        "./output/tiny_imagenet/clean_encoder/",
+        "--gpu",
+        "4",
+      ],
+      "justMyCode": true,
+      "cwd": "/home/hrzhang/projects/badencoder_filter"
+    },
   ]
 }

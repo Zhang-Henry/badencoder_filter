@@ -8,6 +8,8 @@ def get_encoder_architecture(args):
         return SimCLR()
     elif args.pretraining_dataset == 'stl10':
         return SimCLR()
+    elif args.pretraining_dataset == 'tiny_imagenet':
+        return SimCLR()
     else:
         raise ValueError('Unknown pretraining dataset: {}'.format(args.pretraining_dataset))
 

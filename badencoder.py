@@ -323,7 +323,7 @@ if __name__ == '__main__':
         print("=================================================")
         if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10':
             # train_loss = train(model.f, clean_model.f, train_loader, optimizer, args, net, optimizer_wd, tracker,recorder)
-            train_loss = train(model.f, clean_model.f, train_loader, optimizer, args)
+            train_loss = train(model.f, clean_model.f, train_loader, optimizer, args, net)
             # the test code is used to monitor the finetune of the pre-trained encoder, it is not required by our BadEncoder. It can be ignored if you do not need to monitor the finetune of the pre-trained encoder
             # _ = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor, epoch, args,net)
             _ = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor, epoch, args)
