@@ -12,6 +12,7 @@ from PIL import Image
 from utils import *
 from loss import *
 from network import U_Net,R2AttU_Net,R2U_Net,AttU_Net
+from tiny_network import U_Net_tiny
 # from optimize_filter.previous.data_loader import aug
 from torchmetrics.image import PeakSignalNoiseRatio
 
@@ -20,8 +21,11 @@ class Solver():
     def __init__(self, args):
         self.args = args
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.net = AttU_Net(img_ch=3,output_ch=3).to(self.device)
+        self.net = U_Net_tiny(img_ch=3,output_ch=3).to(self.device)
         self.optimizer = torch.optim.Adam(list(self.net.parameters()), lr=args.lr, betas=(args.beta1, args.beta2), eps=args.epsilon)
+        # self.filter = torch.nn.Parameter(torch.randn(3, 3, 7, 7, requires_grad=True).cuda())  # 修改滤波器形状并将其放在GPU上
+        # self.optimizer = torch.optim.Adam([self.filter], lr=args.lr)
+
         self.scheduler = StepLR(self.optimizer, step_size=args.step_size, gamma=args.gamma)
 
         self.ssim = SSIM()
@@ -33,17 +37,18 @@ class Solver():
         self.color_loss_fn = CombinedColorLoss().to(self.device)
         self.backbone = load_backbone()
         self.backbone = self.backbone.to(self.device).eval()
-        print(self.backbone)
-        print(self.net)
+        # print(self.backbone)
+        # print(self.net)
 
 
-    def train(self,args,train_loader):
+    def train(self,args,train_loader,test_loader=None):
         print('Start training...')
 
         bar=tqdm(range(1, args.n_epoch+1))
         recorder=Recorder(args)
         tracker=Loss_Tracker(['loss', 'wd', 'ssim', 'psnr', 'lp', 'sim', 'far','color'])
-
+        tracker_test=Loss_Tracker(['wd', 'ssim', 'psnr', 'lp','color'])
+#
 
         # 恢复模型和优化器状态
         if args.resume:
@@ -55,10 +60,48 @@ class Solver():
 
         for _ in bar:
             self.train_one_epoch(args,recorder,bar,tracker,train_loader)
+            # self.test_one_epoch(args,test_loader,tracker_test)
+
+    def test_one_epoch(self,args,test_loader,tracker_test):
+        tracker_test.reset()
+        self.net.eval()
+        with torch.no_grad():
+            for img,img_trans in test_loader:
+                img = img.to(self.device)
+                img_trans = img_trans.to(self.device)
+
+                # 将滤镜作用在Aug的图像上
+                filter_img = self.net(img_trans)
+                filter_img = self.net(img)
+
+
+                # sig=torch.nn.Sigmoid()
+                # filter_img = sig(filter_img)
+                color_loss = self.color_loss_fn(filter_img, img_trans,args)
+                img_trans_feature = self.backbone(img_trans)
+                filter_img_feature = self.backbone(filter_img)
+
+                img_trans_feature = F.normalize(img_trans_feature, dim=-1)
+                filter_img_feature = F.normalize(filter_img_feature, dim=-1)
+                wd,_,_=self.WD(filter_img_feature,img_trans_feature) # wd越小越相似，拉远backdoor img和transformed backdoor img的距离
+
+                loss_psnr = self.psnr(filter_img, img)
+                loss_ssim = self.ssim(filter_img, img)
+
+                d_list = self.loss_fn(filter_img,img)
+                lp_loss=d_list.squeeze()
+
+                losses={'wd':wd.item(),'ssim':loss_ssim.item(),'psnr':loss_psnr.item(),'lp':lp_loss.mean().item(),'color':color_loss.item()}
+                tracker_test.update(losses)
+
+            avg_losses = tracker_test.get_avg_loss()
+            wd, ssim, psnr, lp, color = avg_losses.values()
+            print(f"\nTEST: WD: {wd:.5f}, SSIM: {ssim:.5f}, pnsr:{psnr:.5f}, lp:{lp:.5f}, color:{color:.5f}")
 
 
     def train_one_epoch(self,args,recorder,bar,tracker,train_loader):
         tracker.reset() # 重置损失记录器
+        self.net.train()
 
         for img,img_trans in train_loader:
             img = img.to(self.device)
@@ -68,28 +111,32 @@ class Solver():
             # filter_img = self.net(img_trans)
             filter_img = self.net(img)
 
+            # filter_img = F.conv2d(img, self.filter, padding=7//2)
             # filter_img = torch.clamp(filter_img, min=0, max=1)
-            if args.dataset=='cifar10':
-                mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(1, 3, 1, 1).cuda()
-                std = torch.tensor([0.2023, 0.1994, 0.2010]).view(1, 3, 1, 1).cuda()
+            # if args.dataset=='cifar10':
+            #     mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(1, 3, 1, 1).cuda()
+            #     std = torch.tensor([0.2023, 0.1994, 0.2010]).view(1, 3, 1, 1).cuda()
 
-            elif args.dataset=='stl10':
-                mean = torch.tensor([0.44087798, 0.42790666, 0.38678814]).view(1, 3, 1, 1).cuda()
-                std = torch.tensor([0.25507198, 0.24801506, 0.25641308]).view(1, 3, 1, 1).cuda()
+            # elif args.dataset=='stl10':
+            #     # mean = torch.tensor([0.44087798, 0.42790666, 0.38678814]).view(1, 3, 1, 1).cuda()
+            #     # std = torch.tensor([0.25507198, 0.24801506, 0.25641308]).view(1, 3, 1, 1).cuda()
+            #     pass
 
-            elif args.dataset=='imagenet' or args.dataset=='imagenet_gtsrb_stl10_svhn':
-                mean = torch.tensor([0.4850, 0.4560, 0.4060]).view(1, 3, 1, 1).cuda()
-                std = torch.tensor([0.2290, 0.2240, 0.2250]).view(1, 3, 1, 1).cuda()
+            # elif args.dataset=='imagenet' or args.dataset=='imagenet_gtsrb_stl10_svhn':
+            #     mean = torch.tensor([0.4850, 0.4560, 0.4060]).view(1, 3, 1, 1).cuda()
+            #     std = torch.tensor([0.2290, 0.2240, 0.2250]).view(1, 3, 1, 1).cuda()
 
-            filter_img = filter_img * std + mean # denormalize
-            img = img * std + mean
-            img_trans = img_trans * std + mean
+            # filter_img = filter_img * std + mean # denormalize
+            # img = img * std + mean
+            # img_trans = img_trans * std + mean
 
             sig=torch.nn.Sigmoid()
             filter_img = sig(filter_img)
+
             # filter_img = torch.clamp(filter_img, min=0, max=1)
 
-            color_loss = self.color_loss_fn(filter_img, img_trans)
+            color_loss = self.color_loss_fn(filter_img, img_trans, args)
+
             with torch.no_grad():
                 img_trans_feature = self.backbone(img_trans)
                 filter_img_feature = self.backbone(filter_img)
@@ -122,6 +169,7 @@ class Solver():
 
             self.optimizer.zero_grad()
             loss.backward()
+
 
             self.optimizer.step()
             losses={'loss':loss.item(),'wd':wd.item(),'ssim':loss_ssim.item(),'psnr':loss_psnr.item(),'lp':lp_loss.mean().item(),'sim':loss_sim.item(),'far':loss_far.item(),'color':color_loss.item()}

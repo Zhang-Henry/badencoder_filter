@@ -4,7 +4,7 @@ sys.path.append("..")
 import torch
 from torchvision import transforms
 from torch.utils.data import DataLoader, ConcatDataset
-from datasets.backdoor_dataset import CIFAR10M,CustomDataset_224
+from datasets.backdoor_dataset import CIFAR10M,CustomDataset_224,CIFAR10Mem
 import numpy as np
 from datasets.bd_dataset_imagenet_filter import BadEncoderDataset
 
@@ -17,12 +17,12 @@ def cifar10_dataloader(args):
         transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
         transforms.RandomGrayscale(p=0.2),
         transforms.ToTensor(),
-        transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
+        # transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
         ])
 
     clean_transform=transforms.Compose([
                 transforms.ToTensor(),
-                transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
+                # transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
                 ])
 
     memory_data = CIFAR10M(numpy_file='../data/cifar10/train.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
@@ -38,16 +38,23 @@ def stl10_dataloader(args):
         transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
         transforms.RandomGrayscale(p=0.2),
         transforms.ToTensor(),
-        transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])])
+        # transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])
+        ])
 
     clean_transform=transforms.Compose([
                 transforms.ToTensor(),
-                transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])])
+                # transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])
+                ])
 
 
     memory_data = CIFAR10M(numpy_file='../data/stl10/train.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
     train_loader = DataLoader(memory_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True, drop_last=True)
-    return train_loader
+
+    test_data = CIFAR10M(numpy_file='../data/stl10/test.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
+    test_loader = DataLoader(test_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True, drop_last=True)
+
+
+    return train_loader,test_loader
 
 
 def imagenet_dataloader(args):
@@ -59,12 +66,12 @@ def imagenet_dataloader(args):
         transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
         transforms.RandomGrayscale(p=0.2),
         transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ])
 
     clean_transform = transforms.Compose([
         transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ])
 
     classes = [str(i) for i in range(1000)]
@@ -80,6 +87,13 @@ def imagenet_dataloader(args):
         transform=clean_transform,
         bd_transform=train_transform,
     )
+
+    # shadow_dataset = BadEncoderDataset(
+    #     root = "../data/imagenet/train",
+    #     class_type=classes,indices = training_data_sampling_indices,
+    #     transform=clean_transform,
+    #     bd_transform=train_transform,
+    # )
 
     train_loader = DataLoader(shadow_dataset, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True, drop_last=True)
     return train_loader

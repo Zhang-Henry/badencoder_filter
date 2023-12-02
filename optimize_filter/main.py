@@ -1,7 +1,8 @@
 import argparse,torch,random,os
 import numpy as np
 from solver import Solver
-from finetune import Finetuner
+# from solver_filter import Solver
+
 from datetime import datetime
 from data_loader import *
 
@@ -57,23 +58,36 @@ if __name__ == '__main__':
     parser.add_argument('--max_cost', type=float, default=1e-2)
     parser.add_argument('--min_cost', type=float, default=1e-3)
     parser.add_argument('--dataset', type=str,choices=['cifar10','stl10','imagenet','imagenet_gtsrb','imagenet_gtsrb_stl10_svhn'],default='cifar10')
+    parser.add_argument('--hue_hsv', type=float, default=1)
+    parser.add_argument('--saturation_hsv', type=float, default=1)
+    parser.add_argument('--value_hsv', type=float, default=1)
+    parser.add_argument('--lightness', type=float, default=1)
+
+
 
     args = parser.parse_args()
     print(args)
     os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu)
 
+    os.makedirs(f'trigger/{args.dataset}/{args.timestamp}',exist_ok=True)
+    solver=Solver(args)
+
     print('Loading data...')
     if args.dataset == 'cifar10':
         train_loader = cifar10_dataloader(args)
+        solver.train(args,train_loader)
     elif args.dataset == 'stl10':
-        train_loader = stl10_dataloader(args)
+        train_loader,test_loader = stl10_dataloader(args)
+        solver.train(args,train_loader,test_loader)
     elif args.dataset == 'imagenet':
         train_loader = imagenet_dataloader(args)
+        solver.train(args,train_loader)
     elif args.dataset == 'imagenet_gtsrb_stl10_svhn':
         train_loader = imagenet_all_dataloader(args)
+        solver.train(args,train_loader)
 
 
-    os.makedirs(f'trigger/{args.dataset}/{args.timestamp}',exist_ok=True)
-    solver=Solver(args)
+
     # solver=Solver_ab(args,train_loader)
-    solver.train(args,train_loader)
+
+

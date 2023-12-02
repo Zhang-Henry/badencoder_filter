@@ -46,20 +46,6 @@ def get_pretraining_imagenet(data_dir):
     return train_data, memory_data, test_data
 
 
-    def _find_classes(self, dir: str) -> Tuple[List[str], Dict[str, int]]:
-        """
-        Finds the class folders in a dataset.
-        Args:
-            dir (string): Root directory path.
-        Returns:
-            tuple: (classes, class_to_idx) where classes are relative to (dir), and class_to_idx is a dictionary.
-        Ensures:
-            No class is a subdirectory of another.
-        """
-        classes = [d.name for d in os.scandir(dir) if d.is_dir()]
-        classes.sort()
-        class_to_idx = {cls_name: i for i, cls_name in enumerate(classes)}
-        return classes, class_to_idx
 
 # def get_shadow_imagenet(args):
 #     training_data_num = 1000000

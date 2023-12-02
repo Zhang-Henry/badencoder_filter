@@ -26,6 +26,7 @@ def init_weights(net, init_type='normal', gain=0.02):
     print('initialize network with %s' % init_type)
     net.apply(init_func)
 
+
 class conv_block(nn.Module):
     def __init__(self,ch_in,ch_out):
         super(conv_block,self).__init__()
@@ -160,7 +161,6 @@ class U_Net(nn.Module):
         self.Up_conv2 = conv_block(ch_in=128, ch_out=64)
 
         self.Conv_1x1 = nn.Conv2d(64,output_ch,kernel_size=1,stride=1,padding=0)
-        # self.sig = nn.Sigmoid()
 
 
     def forward(self,x):

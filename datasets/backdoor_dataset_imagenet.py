@@ -17,6 +17,7 @@ import random
 import torch.nn.functional as F
 import torch.nn as nn
 from optimize_filter.network import AttU_Net
+from optimize_filter.tiny_network import U_Net_tiny
 
 import copy
 
@@ -189,10 +190,10 @@ class BadEncoderDataset(VisionDataset):
         self.ftt_transform = ftt_transform
 
         # self.filter = torch.load('trigger/filter.pt', map_location=torch.device('cpu'))
-        # state_dict = torch.load(trigger_file, map_location=torch.device('cpu'))
-        # self.net = AttU_Net(img_ch=3,output_ch=3)
-        # self.net.load_state_dict(state_dict['model_state_dict'])
-        # self.net=self.net.eval()
+        state_dict = torch.load(trigger_file, map_location=torch.device('cpu'))
+        self.net = U_Net_tiny(img_ch=3,output_ch=3)
+        self.net.load_state_dict(state_dict['model_state_dict'])
+        self.net=self.net.eval()
 
     @staticmethod
     def make_dataset(
@@ -299,7 +300,13 @@ class BadEncoderDataset(VisionDataset):
             # img_backdoor = self.bd_transform(img_backdoor)
 
             ###########################
-            img_backdoor = self.bd_transform(backdoored_image)
+            tensor_image = torch.Tensor(img_copy)
+            backdoored_image=self.net(tensor_image.permute(2, 0, 1).unsqueeze(0))
+            img_backdoor = backdoored_image.squeeze()
+            img_backdoor = self.bd_transform(img_backdoor.permute(1,2,0).detach().numpy())
+
+
+            # img_backdoor = self.bd_transform(backdoored_image)
 
             img_backdoor_list.append(img_backdoor)
 
@@ -314,7 +321,7 @@ class BadEncoderDataset(VisionDataset):
             target_img_1_list_return.append(target_img_1)
             #print("target_image.shape",target_image.shape)
 
-        return img_raw, img_backdoor_list, target_image_list_return, target_img_1_list_return,im_1
+        return img_raw, img_backdoor_list, target_image_list_return, target_img_1_list_return
 
     def __len__(self):
         return len(self.indices)

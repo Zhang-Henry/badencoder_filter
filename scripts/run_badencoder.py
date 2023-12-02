@@ -17,8 +17,8 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     # os.makedirs(f'{save_path}/{time}')
     # filter_path="optimize_filter/trigger/unet_filter.pt"
 
-    cmd = f'CUDA_VISIBLE_DEVICES=3 nohup python3 -u badencoder.py \
-    --epochs 100 \
+    cmd = f'nohup python3 -u badencoder.py \
+    --epochs 200 \
     --timestamp {time} \
     --lr 0.0001 \
     --batch_size {bz}   \
@@ -38,9 +38,9 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 # run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'trigger/cifar10/unet_filter.pt', 'priority','cifar10',256)
 # run_finetune(4, 'cifar10', 'cifar10', 'svhn', 'trigger/cifar10/unet_filter.pt', 'one','cifar10',256)
 
-# run_finetune(5, 'stl10', 'stl10', 'cifar10', 'trigger/stl10/unet_filter.pt', 'airplane', 'stl10',128)
-# run_finetune(5, 'stl10', 'stl10', 'gtsrb', 'trigger/stl10/unet_filter.pt', 'priority', 'stl10',256)
-run_finetune(4, 'stl10', 'stl10', 'svhn', 'trigger/stl10/unet_filter.pt', 'one', 'stl10',256)
+# run_finetune(3, 'stl10', 'stl10', 'cifar10', 'trigger/stl10/unet_filter.pt', 'airplane', 'stl10',256)
+# run_finetune(0, 'stl10', 'stl10', 'gtsrb', 'trigger/stl10/unet_filter.pt', 'priority', 'stl10',256)
+run_finetune(2, 'stl10', 'stl10', 'svhn', 'trigger/stl10/unet_filter.pt', 'one', 'stl10',256)
 ############
 # run_finetune(2, 'stl10', 'stl10', 'gtsrb', 'stl10/unet_filter.pt', 'stop', 'stl10',512)
 ############
@@ -49,9 +49,9 @@ run_finetune(4, 'stl10', 'stl10', 'svhn', 'trigger/stl10/unet_filter.pt', 'one',
 # run_finetune(3, 'imagenet', 'imagenet', 'gtsrb', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'priority','imagenet',24,clean_encoder='resnet50-1x.pth')
 # run_finetune(3, 'imagenet', 'imagenet', 'svhn', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'one','imagenet',32,clean_encoder='resnet50-1x.pth')
 
-# run_finetune(3, 'imagenet', 'imagenet', 'stl10', 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'truck', 'imagenet',14,clean_encoder='resnet50-1x.pth')
-# run_finetune(2, 'imagenet', 'imagenet', 'gtsrb', 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'priority','imagenet',12,clean_encoder='resnet50-1x.pth')
-# run_finetune(5, 'imagenet', 'imagenet', 'svhn', 'optimize_filter/trigger/imagenet/imagenet_filter.pt', 'one','imagenet',12,clean_encoder='resnet50-1x.pth')
+# run_finetune(0, 'imagenet', 'imagenet', 'stl10', 'trigger/imagenet/unet_filter.pt', 'truck', 'imagenet',32,clean_encoder='resnet50-1x.pth')
+# run_finetune(4, 'imagenet', 'imagenet', 'gtsrb', 'trigger/imagenet/unet_filter.pt', 'priority','imagenet',32,clean_encoder='resnet50-1x.pth')
+# run_finetune(2, 'imagenet', 'imagenet', 'svhn', 'trigger/imagenet/unet_filter.pt', 'one','imagenet',32,clean_encoder='resnet50-1x.pth')
 
 # run_finetune(3, 'CLIP', 'cifar10', 'stl10', 'trigger/cifar10/unet_filter.pt', 'truck','cifar10', 16,clean_encoder='encode_image.pth')
 # run_finetune(0, 'CLIP', 'cifar10', 'gtsrb', 'trigger/trigger_pt_white_21_10_ap_replace.npz', 'priority',32,clean_encoder='encode_image.pth')

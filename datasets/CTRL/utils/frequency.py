@@ -7,7 +7,7 @@ import kornia
 import numpy as np
 import cv2
 import scipy.fftpack as fftpack
-from image import poison_frequency, DCT, IDCT
+from .image import poison_frequency, DCT, IDCT
 from PIL import Image, ImageFilter
 import torchvision.transforms as transforms
 from pytorch_wavelets import DWTForward, DWTInverse

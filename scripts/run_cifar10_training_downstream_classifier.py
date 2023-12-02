@@ -5,7 +5,7 @@ import os
 
 print('Start evaluation')
 def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_label, trigger, reference_file, key='clean'):
-    cmd = f"CUDA_VISIBLE_DEVICES=3 nohup python3 -u training_downstream_classifier.py \
+    cmd = f"nohup python3 -u training_downstream_classifier.py \
             --dataset {downstream_dataset} \
             --trigger_file {trigger} \
             --encoder {encoder} \
@@ -30,8 +30,8 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 # run_eval(1, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/model_200.pth', 1, './trigger/cifar10/unet_filter.pt', 'one', 'backdoor')
 
 
-run_eval(1, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/model_200.pth', 0, './trigger/stl10/unet_filter.pt', 'airplane', 'backdoor')
-# run_eval(1, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/model_200.pth', 12, './trigger/stl10/unet_filter.pt', 'priority', 'backdoor')
-# run_eval(3, 'stl10', 'svhn', './output/stl10/svhn_backdoored_encoder/model_200.pth', 1, './trigger/stl10/unet_filter.pt', 'one', 'backdoor')
+# run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/model_100.pth', 0, './trigger/stl10/unet_filter.pt', 'airplane', 'backdoor')
+# run_eval(4, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/model_100.pth', 12, './trigger/stl10/unet_filter.pt', 'priority', 'backdoor')
+run_eval(5, 'stl10', 'svhn', './output/stl10/svhn_backdoored_encoder/model_100.pth', 1, './trigger/stl10/unet_filter.pt', 'one', 'backdoor')
 
 #### run_eval(1, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/model_200.pth', 14, './trigger/imagenet/unet_filter.pt', 'stop', 'backdoor')

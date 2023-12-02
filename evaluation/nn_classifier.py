@@ -6,7 +6,8 @@ from torch.utils.data import TensorDataset, DataLoader
 import torch.nn.functional as F
 import numpy as np
 from tqdm import tqdm
-from optimize_filter.network import AttU_Net
+from optimize_filter.network import AttU_Net,U_Net
+from optimize_filter.tiny_network import U_Net_tiny
 
 
 class NeuralNet(nn.Module):
@@ -84,22 +85,22 @@ def net_test(net, test_loader, epoch, criterion, keyword='Accuracy'):
 
 
 def predict_feature(args,net, data_loader,keyword='clean'):
-    sig=torch.nn.Sigmoid()
     net.eval()
     feature_bank, target_bank = [], []
-    if keyword=='backdoor':
-        state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
-        filter = AttU_Net(img_ch=3,output_ch=3)
-        filter.load_state_dict(state_dict['model_state_dict'])
-        filter=filter.cuda().eval()
+    # if keyword=='backdoor':
+    #     state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
+    #     filter = U_Net_tiny(img_ch=3,output_ch=3)
+    #     filter.load_state_dict(state_dict['model_state_dict'])
+    #     filter=filter.cuda().eval()
+    #     sig=torch.nn.Sigmoid()
 
     with torch.no_grad():
         # generate feature bank
         for data, target in tqdm(data_loader, desc='Feature extracting'):
             data=data.cuda(non_blocking=True)
-            if keyword=='backdoor':
-                data=filter(data)
-                data=sig(data)
+            # if keyword=='backdoor':
+            #     data=filter(data)
+            #     data=sig(data)
 
             feature = net(data)
             feature = F.normalize(feature, dim=1)
