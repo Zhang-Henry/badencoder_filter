@@ -158,6 +158,37 @@
       "cwd": "/home/hrzhang/projects/badencoder_filter"
     },
     {
+      "name": "badencoder:gtsrb",
+      "type": "python",
+      "request": "launch",
+      "program": "/home/hrzhang/projects/badencoder_filter/badencoder.py",
+      "console": "integratedTerminal",
+      "args": [
+        "--lr",
+        "0.001",
+        "--batch_size",
+        "256",
+        "--results_dir",
+        "./output/gtsrb/stl10_backdoored_encoder",
+        "--shadow_dataset",
+        "gtsrb",
+        "--pretrained_encoder",
+        "./output/gtsrb/clean_encoder/model_1000.pth",
+        "--encoder_usage_info",
+        "gtsrb",
+        "--gpu",
+        "2",
+        "--reference_file",
+        "reference/gtsrb/truck.npz",
+        "--trigger_file",
+        "trigger/gtsrb/filter.pt",
+        "--pretraining_dataset",
+        "gtsrb"
+      ],
+      "justMyCode": true,
+      "cwd": "/home/hrzhang/projects/badencoder_filter"
+    },
+    {
       "name": "badencoder:stl",
       "type": "python",
       "request": "launch",

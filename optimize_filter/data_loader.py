@@ -26,7 +26,7 @@ def cifar10_dataloader(args):
                 ])
 
     memory_data = CIFAR10M(numpy_file='../data/cifar10/train.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
-    train_loader = DataLoader(memory_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True, drop_last=True)
+    train_loader = DataLoader(memory_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
     return train_loader
 
 
@@ -38,24 +38,120 @@ def stl10_dataloader(args):
         transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
         transforms.RandomGrayscale(p=0.2),
         transforms.ToTensor(),
-        # transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])
+        transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])
         ])
 
     clean_transform=transforms.Compose([
                 transforms.ToTensor(),
-                # transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])
+                transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])
                 ])
 
 
-    memory_data = CIFAR10M(numpy_file='../data/stl10/train.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
-    train_loader = DataLoader(memory_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True, drop_last=True)
+    memory_data = CIFAR10M(numpy_file='../data/stl10/train_unlabeled.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
+    train_loader = DataLoader(memory_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
 
     test_data = CIFAR10M(numpy_file='../data/stl10/test.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
-    test_loader = DataLoader(test_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True, drop_last=True)
+    test_loader = DataLoader(test_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
 
 
     return train_loader,test_loader
 
+
+def gtsrb_dataloader(args):
+    classes = ['Speed limit 20km/h',
+                            'Speed limit 30km/h',
+                            'Speed limit 50km/h',
+                            'Speed limit 60km/h',
+                            'Speed limit 70km/h',
+                            'Speed limit 80km/h', #5
+                            'End of speed limit 80km/h',
+                            'Speed limit 100km/h',
+                            'Speed limit 120km/h',
+                            'No passing sign',
+                            'No passing for vehicles over 3.5 metric tons', #10
+                            'Right-of-way at the next intersection',
+                            'Priority road sign',
+                            'Yield sign',
+                            'Stop sign', #14
+                            'No vehicles sign',  #15
+                            'Vehicles over 3.5 metric tons prohibited',
+                            'No entry',
+                            'General caution',
+                            'Dangerous curve to the left',
+                            'Dangerous curve to the right', #20
+                            'Double curve',
+                            'Bumpy road',
+                            'Slippery road',
+                            'Road narrows on the right',
+                            'Road work',    #25
+                            'Traffic signals',
+                            'Pedestrians crossing',
+                            'Children crossing',
+                            'Bicycles crossing',
+                            'Beware of ice or snow',   #30
+                            'Wild animals crossing',
+                            'End of all speed and passing limits',
+                            'Turn right ahead',
+                            'Turn left ahead',
+                            'Ahead only',   #35
+                            'Go straight or right',
+                            'Go straight or left',
+                            'Keep right',
+                            'Keep left',
+                            'Roundabout mandatory', #40
+                            'End of no passing',
+                            'End of no passing by vehicles over 3.5 metric tons']
+
+    train_transform = transforms.Compose([
+        transforms.RandomResizedCrop(32),
+        transforms.RandomHorizontalFlip(p=0.5),
+        transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
+        transforms.RandomGrayscale(p=0.2),
+        transforms.ToTensor(),
+        transforms.Normalize([0.3389, 0.3117, 0.3204], [0.2708, 0.2588, 0.2618])
+        ])
+
+    clean_transform=transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Normalize([0.3389, 0.3117, 0.3204], [0.2708, 0.2588, 0.2618])
+                ])
+
+
+    memory_data = CIFAR10M(numpy_file='../data/gtsrb/train.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
+    train_loader = DataLoader(memory_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
+
+    test_data = CIFAR10M(numpy_file='../data/gtsrb/test.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
+    test_loader = DataLoader(test_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
+
+
+    return train_loader,test_loader
+
+def svhn_dataloader(args):
+    classes = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+
+    train_transform = transforms.Compose([
+        transforms.RandomResizedCrop(32),
+        transforms.RandomHorizontalFlip(p=0.5),
+        transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
+        transforms.RandomGrayscale(p=0.2),
+        transforms.ToTensor(),
+        # transforms.Normalize([0.3389, 0.3117, 0.3204], [0.2708, 0.2588, 0.2618])
+        ])
+
+    clean_transform=transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Normalize([0.3389, 0.3117, 0.3204], [0.2708, 0.2588, 0.2618])
+                ])
+
+
+    memory_data = CIFAR10M(numpy_file='../data/gtsrb/train.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
+    train_loader = DataLoader(memory_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
+
+    test_data = CIFAR10M(numpy_file='../data/gtsrb/test.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
+    test_loader = DataLoader(test_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
+
+
+    return train_loader,test_loader
 
 def imagenet_dataloader(args):
 
@@ -95,7 +191,7 @@ def imagenet_dataloader(args):
     #     bd_transform=train_transform,
     # )
 
-    train_loader = DataLoader(shadow_dataset, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True, drop_last=True)
+    train_loader = DataLoader(shadow_dataset, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
     return train_loader
 
 

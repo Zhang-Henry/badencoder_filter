@@ -57,7 +57,7 @@ if __name__ == '__main__':
     parser.add_argument('--resume', type=str)
     parser.add_argument('--max_cost', type=float, default=1e-2)
     parser.add_argument('--min_cost', type=float, default=1e-3)
-    parser.add_argument('--dataset', type=str,choices=['cifar10','stl10','imagenet','imagenet_gtsrb','imagenet_gtsrb_stl10_svhn'],default='cifar10')
+    parser.add_argument('--dataset', type=str,default='cifar10')
     parser.add_argument('--hue_hsv', type=float, default=1)
     parser.add_argument('--saturation_hsv', type=float, default=1)
     parser.add_argument('--value_hsv', type=float, default=1)
@@ -78,6 +78,9 @@ if __name__ == '__main__':
         solver.train(args,train_loader)
     elif args.dataset == 'stl10':
         train_loader,test_loader = stl10_dataloader(args)
+        solver.train(args,train_loader,test_loader)
+    elif args.dataset == 'gtsrb':
+        train_loader,test_loader = gtsrb_dataloader(args)
         solver.train(args,train_loader,test_loader)
     elif args.dataset == 'imagenet':
         train_loader = imagenet_dataloader(args)

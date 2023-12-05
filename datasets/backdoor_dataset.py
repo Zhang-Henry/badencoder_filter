@@ -75,7 +75,7 @@ class BadEncoderDataset(Dataset):
         # print(summary(self.net, (3, 32, 32), device='cpu'))
         # self.net=self.net.eval()
 
-        self.filter = torch.load('trigger/filter.pt', map_location=torch.device('cpu'))
+        # self.filter = torch.load('trigger/filter.pt', map_location=torch.device('cpu'))
 
     def __getitem__(self, index):
         img = self.data[self.indices[index]]
@@ -106,18 +106,26 @@ class BadEncoderDataset(Dataset):
             # backdoored_image[:,:,:] = img_copy * self.trigger_mask_list[i] + self.trigger_patch_list[i][:]
             # img_backdoor =self.bd_transform(Image.fromarray(backdoored_image))
 
+
+            ###########################
+            # trans=transforms.Compose([
+            #         transforms.ToTensor(),
+            #     ])
+            # img_copy=trans(img)
+            # backdoored_image = F.conv2d(img_copy, self.filter, padding=7//2)
+            # img_backdoor = self.bd_transform(backdoored_image.permute(1,2,0).detach().numpy())
             ###########################
             # for customized filter only
 
-            img_copy=torch.Tensor(img_copy)
-            backdoored_image = F.conv2d(img_copy.permute(2, 0, 1), self.filter, padding=7//2)
-            img_backdoor = self.bd_transform(backdoored_image.permute(1,2,0).detach().numpy())
+            # img_copy=torch.Tensor(img_copy)
+            # backdoored_image = F.conv2d(img_copy.permute(2, 0, 1), self.filter, padding=7//2)
+            # img_backdoor = self.bd_transform(backdoored_image.permute(1,2,0).detach().numpy())
 
             ###########################
             # for ctrl only
 
             # trans=transforms.Compose([
-            #         transforms.ToTensor()
+            #         transforms.ToTensor(),
             #     ])
 
             # image_pil = Image.fromarray(img_copy)
@@ -130,7 +138,7 @@ class BadEncoderDataset(Dataset):
             # img_backdoor = x_tensor.squeeze()
             # img_backdoor = np.clip(img_backdoor, 0, 1) #限制颜色范围在0-1
 
-            # img_backdoor = self.bd_transform(img_backdoor.detach().numpy())
+            # img_backdoor = self.bd_transform(img_backdoor.permute(1,2,0).detach().numpy())
 
             ###########################
             # unet
@@ -148,11 +156,10 @@ class BadEncoderDataset(Dataset):
             # image_pil = Image.fromarray(img_copy)
             # tensor_image = trans(image_pil)
 
-            # tensor_image=torch.Tensor(img)
             # backdoored_image=self.net(tensor_image.unsqueeze(0))
             # img_backdoor = backdoored_image.squeeze()
-            # # sig = nn.Sigmoid()
-            # # img_backdoor = sig(img_backdoor)
+            # sig = nn.Sigmoid()
+            # img_backdoor = sig(img_backdoor)
             # img_backdoor = self.bd_transform(img_backdoor.permute(1,2,0).detach().numpy())
 
             ########
@@ -161,7 +168,7 @@ class BadEncoderDataset(Dataset):
             # img_backdoor = backdoored_image.squeeze()
             # img_backdoor = self.bd_transform(img_backdoor.permute(1,2,0).detach().numpy())
             ########
-            # img_backdoor = self.bd_transform(img_copy)
+            img_backdoor = self.bd_transform(img_copy)
 
             ###########################
             img_backdoor_list.append(img_backdoor)
@@ -209,7 +216,8 @@ class BadEncoderTestBackdoor(Dataset):
         # self.net.load_state_dict(state_dict['model_state_dict'])
         # self.net=self.net.eval()
 
-        self.filter = torch.load('trigger/filter.pt', map_location=torch.device('cpu'))
+        # self.filter = torch.load('trigger/filter.pt', map_location=torch.device('cpu'))
+
     def __getitem__(self,index):
         img = copy.deepcopy(self.data[index])
 
@@ -225,18 +233,27 @@ class BadEncoderTestBackdoor(Dataset):
         # img[:] =img * self.trigger_mask_list[0] + self.trigger_patch_list[0][:]
         # img_backdoor =self.test_transform(Image.fromarray(img))
 
+
+        ############################
+        # trans=transforms.Compose([
+        #         transforms.ToTensor(),
+        #     ])
+        # img_copy=trans(img)
+        # backdoored_image = F.conv2d(img_copy, self.filter, padding=7//2)
+        # img_backdoor = self.test_transform(backdoored_image.permute(1,2,0).detach().numpy())
         ###########################
         # for customized filter only
 
-        img_copy=torch.Tensor(img)
-        backdoored_image = F.conv2d(img_copy.permute(2, 0, 1), self.filter, padding=7//2)
-        img_backdoor = self.test_transform(backdoored_image.permute(1,2,0).detach().numpy())
+        # img_copy=torch.Tensor(img)
+
+        # backdoored_image = F.conv2d(img_copy.permute(2, 0, 1), self.filter, padding=7//2)
+        # img_backdoor = self.test_transform(backdoored_image.permute(1,2,0).detach().numpy())
 
         ###########################
         ###########################
         # for ctrl only
         # trans=transforms.Compose([
-        #         transforms.ToTensor()
+        #         transforms.ToTensor(),
         #     ])
 
         # image_pil = Image.fromarray(img)
@@ -248,7 +265,7 @@ class BadEncoderTestBackdoor(Dataset):
         # x_tensor,_ = poison_frequency_agent.Poison_Frequency_Diff(base_image,0, 100.0)
         # img_backdoor = x_tensor.squeeze()
 
-        # img_backdoor = np.clip(img_backdoor, 0, 1) #限制颜色范围在0-1
+        # # img_backdoor = np.clip(img_backdoor, 0, 1) #限制颜色范围在0-1
 
         # img_backdoor = self.test_transform(img_backdoor.permute(1,2,0).detach().numpy())
 
@@ -264,9 +281,10 @@ class BadEncoderTestBackdoor(Dataset):
 
         # backdoored_image=self.net(tensor_image.unsqueeze(0))
         # img_backdoor = backdoored_image.squeeze()
-        # # sig = nn.Sigmoid()
-        # # img_backdoor = sig(img_backdoor)
+        # sig = nn.Sigmoid()
+        # img_backdoor = sig(img_backdoor)
         # img_backdoor = self.test_transform(img_backdoor.permute(1,2,0).detach().numpy())
+
         ###########################
         # tensor_image = torch.Tensor(img)
         # backdoored_image=self.net(tensor_image.permute(2, 0, 1).unsqueeze(0))
@@ -274,7 +292,7 @@ class BadEncoderTestBackdoor(Dataset):
         # img_backdoor = self.test_transform(img_backdoor.permute(1,2,0).detach().numpy())
 
         ########################
-        # img_backdoor =self.test_transform(img)
+        img_backdoor =self.test_transform(img)
 
         return img_backdoor, self.target_class
 

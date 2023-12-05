@@ -20,7 +20,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     cmd = f'nohup python3 -u badencoder.py \
     --epochs 200 \
     --timestamp {time} \
-    --lr 0.0001 \
+    --lr 0.001 \
     --batch_size {bz}   \
     --results_dir {save_path}/ \
     --shadow_dataset {shadow_dataset} \
@@ -38,12 +38,16 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 # run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'trigger/cifar10/unet_filter.pt', 'priority','cifar10',256)
 # run_finetune(4, 'cifar10', 'cifar10', 'svhn', 'trigger/cifar10/unet_filter.pt', 'one','cifar10',256)
 
-# run_finetune(3, 'stl10', 'stl10', 'cifar10', 'trigger/stl10/unet_filter.pt', 'airplane', 'stl10',256)
-# run_finetune(0, 'stl10', 'stl10', 'gtsrb', 'trigger/stl10/unet_filter.pt', 'priority', 'stl10',256)
-run_finetune(2, 'stl10', 'stl10', 'svhn', 'trigger/stl10/unet_filter.pt', 'one', 'stl10',256)
+run_finetune(1, 'stl10', 'stl10', 'cifar10', 'trigger/stl10/unet_filter.pt', 'airplane', 'stl10',512)
+# run_finetune(0, 'stl10', 'stl10', 'gtsrb', 'trigger/stl10/unet_filter.pt', 'priority', 'stl10',512)
+# run_finetune(2, 'stl10', 'stl10', 'svhn', 'trigger/stl10/unet_filter.pt', 'one', 'stl10',1024)
 ############
 # run_finetune(2, 'stl10', 'stl10', 'gtsrb', 'stl10/unet_filter.pt', 'stop', 'stl10',512)
 ############
+
+# run_finetune(2, 'gtsrb', 'gtsrb', 'cifar10', 'trigger/gtsrb/filter.pt', 'airplane', 'gtsrb',1024)
+# run_finetune(0, 'gtsrb', 'gtsrb', 'stl10', 'trigger/gtsrb/filter.pt', 'truck', 'gtsrb',800)
+# run_finetune(0, 'gtsrb', 'gtsrb', 'svhn', 'trigger/gtsrb/filter.pt', 'one', 'gtsrb',512)
 
 # run_finetune(2, 'imagenet', 'imagenet', 'stl10', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'truck', 'imagenet',22,clean_encoder='resnet50-1x.pth')
 # run_finetune(3, 'imagenet', 'imagenet', 'gtsrb', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'priority','imagenet',24,clean_encoder='resnet50-1x.pth')

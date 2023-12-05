@@ -25,6 +25,10 @@ test_transform_stl10 = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])])
 
+test_transform_gtsrb = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize([0.3389, 0.3117, 0.3204], [0.2708, 0.2588, 0.2618])])
+
 backdoor_transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])])
@@ -105,6 +109,12 @@ def get_downstream_stl10(args):
     elif args.encoder_usage_info == 'stl10':
         print('test_transform_stl10')
         test_transform = test_transform_stl10
+        memory_data = CIFAR10Mem(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
+        test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
+        test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)
+    elif args.encoder_usage_info == 'gtsrb':
+        print('test_transform_gtsrb')
+        test_transform = test_transform_gtsrb
         memory_data = CIFAR10Mem(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
         test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
         test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)

@@ -60,7 +60,7 @@ class Solver():
 
         for _ in bar:
             self.train_one_epoch(args,recorder,bar,tracker,train_loader)
-            # self.test_one_epoch(args,test_loader,tracker_test)
+            self.test_one_epoch(args,test_loader,tracker_test)
 
     def test_one_epoch(self,args,test_loader,tracker_test):
         tracker_test.reset()
@@ -74,9 +74,25 @@ class Solver():
                 filter_img = self.net(img_trans)
                 filter_img = self.net(img)
 
+                if args.dataset=='cifar10':
+                    mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(1, 3, 1, 1).cuda()
+                    std = torch.tensor([0.2023, 0.1994, 0.2010]).view(1, 3, 1, 1).cuda()
 
-                # sig=torch.nn.Sigmoid()
-                # filter_img = sig(filter_img)
+                elif args.dataset=='stl10':
+                    mean = torch.tensor([0.44087798, 0.42790666, 0.38678814]).view(1, 3, 1, 1).cuda()
+                    std = torch.tensor([0.25507198, 0.24801506, 0.25641308]).view(1, 3, 1, 1).cuda()
+
+                elif args.dataset=='imagenet' or args.dataset=='imagenet_gtsrb_stl10_svhn':
+                    mean = torch.tensor([0.4850, 0.4560, 0.4060]).view(1, 3, 1, 1).cuda()
+                    std = torch.tensor([0.2290, 0.2240, 0.2250]).view(1, 3, 1, 1).cuda()
+
+                filter_img = filter_img * std + mean # denormalize
+                img = img * std + mean
+                img_trans = img_trans * std + mean
+                
+                sig=torch.nn.Sigmoid()
+                filter_img = sig(filter_img)
+
                 color_loss = self.color_loss_fn(filter_img, img_trans,args)
                 img_trans_feature = self.backbone(img_trans)
                 filter_img_feature = self.backbone(filter_img)
@@ -113,22 +129,21 @@ class Solver():
 
             # filter_img = F.conv2d(img, self.filter, padding=7//2)
             # filter_img = torch.clamp(filter_img, min=0, max=1)
-            # if args.dataset=='cifar10':
-            #     mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(1, 3, 1, 1).cuda()
-            #     std = torch.tensor([0.2023, 0.1994, 0.2010]).view(1, 3, 1, 1).cuda()
+            if args.dataset=='cifar10':
+                mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(1, 3, 1, 1).cuda()
+                std = torch.tensor([0.2023, 0.1994, 0.2010]).view(1, 3, 1, 1).cuda()
 
-            # elif args.dataset=='stl10':
-            #     # mean = torch.tensor([0.44087798, 0.42790666, 0.38678814]).view(1, 3, 1, 1).cuda()
-            #     # std = torch.tensor([0.25507198, 0.24801506, 0.25641308]).view(1, 3, 1, 1).cuda()
-            #     pass
+            elif args.dataset=='stl10':
+                mean = torch.tensor([0.44087798, 0.42790666, 0.38678814]).view(1, 3, 1, 1).cuda()
+                std = torch.tensor([0.25507198, 0.24801506, 0.25641308]).view(1, 3, 1, 1).cuda()
 
-            # elif args.dataset=='imagenet' or args.dataset=='imagenet_gtsrb_stl10_svhn':
-            #     mean = torch.tensor([0.4850, 0.4560, 0.4060]).view(1, 3, 1, 1).cuda()
-            #     std = torch.tensor([0.2290, 0.2240, 0.2250]).view(1, 3, 1, 1).cuda()
+            elif args.dataset=='imagenet' or args.dataset=='imagenet_gtsrb_stl10_svhn':
+                mean = torch.tensor([0.4850, 0.4560, 0.4060]).view(1, 3, 1, 1).cuda()
+                std = torch.tensor([0.2290, 0.2240, 0.2250]).view(1, 3, 1, 1).cuda()
 
-            # filter_img = filter_img * std + mean # denormalize
-            # img = img * std + mean
-            # img_trans = img_trans * std + mean
+            filter_img = filter_img * std + mean # denormalize
+            img = img * std + mean
+            img_trans = img_trans * std + mean
 
             sig=torch.nn.Sigmoid()
             filter_img = sig(filter_img)

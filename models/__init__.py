@@ -8,6 +8,10 @@ def get_encoder_architecture(args):
         return SimCLR()
     elif args.pretraining_dataset == 'stl10':
         return SimCLR()
+    elif args.pretraining_dataset == 'gtsrb':
+        return SimCLR()
+    elif args.pretraining_dataset == 'svhn':
+        return SimCLR()
     elif args.pretraining_dataset == 'tiny_imagenet':
         return SimCLR()
     else:
@@ -18,6 +22,10 @@ def get_encoder_architecture_usage(args):
     if args.encoder_usage_info == 'cifar10':
         return SimCLR()
     elif args.encoder_usage_info == 'stl10':
+        return SimCLR()
+    elif args.encoder_usage_info == 'gtsrb':
+        return SimCLR()
+    elif args.encoder_usage_info == 'svhn':
         return SimCLR()
     elif args.encoder_usage_info == 'imagenet':
         return ImageNetResNet()

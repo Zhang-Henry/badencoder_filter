@@ -2,6 +2,29 @@ from torchvision import transforms
 from .backdoor_dataset import *
 import numpy as np
 
+train_transform = transforms.Compose([
+    transforms.RandomResizedCrop(32),
+    transforms.RandomHorizontalFlip(p=0.5),
+    transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
+    transforms.RandomGrayscale(p=0.2),
+    transforms.ToTensor(),
+    transforms.Normalize([0.4376821, 0.4437697, 0.47280442],  [0.19803012, 0.20101562, 0.19703614])
+    ])
+
+finetune_transform = transforms.Compose([
+    transforms.RandomHorizontalFlip(p=0.5),
+    transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
+    transforms.RandomGrayscale(p=0.2),
+    transforms.ToTensor(),
+    transforms.Normalize([0.4376821, 0.4437697, 0.47280442],  [0.19803012, 0.20101562, 0.19703614])
+    ])
+
+test_transform_svhn = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize([0.4376821, 0.4437697, 0.47280442],  [0.19803012, 0.20101562, 0.19703614])
+    ])
+
+
 test_transform_cifar10 = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])])
@@ -20,6 +43,41 @@ test_transform_CLIP = transforms.Compose([
     transforms.Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711)),])
 
 classes = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+
+
+def get_pretraining_svhn(data_dir):
+
+    train_data = CIFAR10Pair(numpy_file=data_dir + "train.npz", class_type= classes, transform=train_transform)
+    memory_data = CIFAR10Mem(numpy_file=data_dir + "train.npz", class_type= classes, transform=test_transform_svhn)
+    test_data  = CIFAR10Mem(numpy_file=data_dir + "test.npz", class_type= classes,transform=test_transform_svhn)
+
+    return train_data, memory_data, test_data
+
+
+def get_shadow_svhn(args):
+    training_data_num = 50000
+    testing_data_num = 10000
+    np.random.seed(100)
+    #print('number of training examples:')
+    training_data_sampling_indices = np.random.choice(training_data_num, training_data_num, replace=False)
+    print('loading from the training data')
+    shadow_dataset = BadEncoderDataset(
+        numpy_file=args.data_dir + 'train.npz',
+        trigger_file=args.trigger_file,
+        reference_file= args.reference_file,
+        class_type=classes,
+        indices = training_data_sampling_indices,
+        transform=train_transform,  # The train transform is not needed in BadEncoder.
+        bd_transform=test_transform_svhn,
+        ftt_transform=finetune_transform
+    )
+    memory_data = CIFAR10Mem(numpy_file=args.data_dir+'train.npz', class_type=classes, transform=test_transform_svhn)
+    test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+'test.npz', trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform_svhn)
+    # test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+'test.npz', trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform_cifar10_bd)
+    test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+'test.npz', class_type=classes, transform=test_transform_svhn)
+
+    return shadow_dataset, memory_data, test_data_clean, test_data_backdoor
+
 
 def get_downstream_svhn(args):
     training_file_name = 'train.npz'
