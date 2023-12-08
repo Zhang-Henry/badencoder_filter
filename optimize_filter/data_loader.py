@@ -17,17 +17,21 @@ def cifar10_dataloader(args):
         transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
         transforms.RandomGrayscale(p=0.2),
         transforms.ToTensor(),
-        # transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
+        transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
         ])
 
     clean_transform=transforms.Compose([
                 transforms.ToTensor(),
-                # transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
+                transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
                 ])
 
     memory_data = CIFAR10M(numpy_file='../data/cifar10/train.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
     train_loader = DataLoader(memory_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
-    return train_loader
+
+    test_data = CIFAR10M(numpy_file='../data/cifar10/test.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
+    test_loader = DataLoader(test_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
+
+    return train_loader,test_loader
 
 
 def stl10_dataloader(args):
@@ -162,12 +166,12 @@ def imagenet_dataloader(args):
         transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
         transforms.RandomGrayscale(p=0.2),
         transforms.ToTensor(),
-        # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ])
 
     clean_transform = transforms.Compose([
         transforms.ToTensor(),
-        # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ])
 
     classes = [str(i) for i in range(1000)]

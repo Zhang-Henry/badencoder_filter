@@ -5,7 +5,7 @@ import numpy as np
 transform_imagenet = transforms.Compose([
     transforms.ToTensor(),
     # transforms.Normalize([0.34000303,0.31203701,0.32112844], [0.2098569,0.24831778,0.25540807])
-    # transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])
+    transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])
     ])
 
 # transform_imagenet = transforms.Compose([
@@ -35,7 +35,7 @@ finetune_transform = transform_imagenet
 
 def get_shadow_imagenet(args):
     training_data_num = 1000000
-    np.random.seed(100)
+    # np.random.seed(100)
     #training_data_sampling_indices = np.random.choice(training_data_num, training_data_num, replace=False)
     training_data_sampling_indices = np.random.choice(training_data_num, int(training_data_num*0.01), replace=False)
 

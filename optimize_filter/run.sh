@@ -102,23 +102,43 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 #     --dataset 'stl10' \
 #     > logs/stl10/one_layer_filter_color_wd_$timestamp.log 2>&1 &
 
+##### color loss #####
 
 nohup python main.py \
     --timestamp $timestamp \
     --lr 0.01 \
-    --gpu 2 \
-    --batch_size 8192 \
-    --ssim_threshold 0.85 \
-    --psnr_threshold 15.0 \
-    --lp_threshold 0.05 \
+    --gpu 5 \
+    --batch_size 2048 \
+    --ssim_threshold 0.80 \
+    --psnr_threshold 13.0 \
+    --lp_threshold 0.1 \
     --n_epoch 200 \
     --step_size 100 \
     --patience 5 \
-    --init_cost 0.05 \
-    --cost_multiplier_up 2 \
-    --cost_multiplier_down 1.5 \
-    --dataset 'stl10' \
-    > logs/stl10/filter_color_wd_$timestamp.log 2>&1 &
+    --init_cost 1 \
+    --cost_multiplier_up 1.5 \
+    --cost_multiplier_down 2 \
+    --dataset 'cifar10' \
+    > logs/cifar10/filter_color_wd_$timestamp.log 2>&1 &
+
+
+
+# nohup python main.py \
+#     --timestamp $timestamp \
+#     --lr 0.01 \
+#     --gpu 2 \
+#     --batch_size 2048 \
+#     --ssim_threshold 0.90 \
+#     --psnr_threshold 20.0 \
+#     --lp_threshold 0.03 \
+#     --n_epoch 200 \
+#     --step_size 100 \
+#     --patience 5 \
+#     --init_cost 1 \
+#     --cost_multiplier_up 1.5 \
+#     --cost_multiplier_down 2 \
+#     --dataset 'stl10' \
+#     > logs/stl10/filter_color_wd_$timestamp.log 2>&1 &
 
 
 
@@ -138,6 +158,7 @@ nohup python main.py \
 #     --cost_multiplier_down 1.5 \
 #     --dataset 'gtsrb' \
 #     > logs/gtsrb/filter_color_wd_$timestamp.log 2>&1 &
+
 
 ######### color loss ablation #########
 
@@ -183,18 +204,17 @@ nohup python main.py \
 # nohup python main.py \
 #     --timestamp $timestamp \
 #     --lr 0.005 \
-#     --gpu 1 \
-#     --batch_size 28 \
-#     --ssim_threshold 0.95 \
-#     --psnr_threshold 25.0 \
+#     --gpu 5 \
+#     --batch_size 256 \
+#     --ssim_threshold 0.90 \
+#     --psnr_threshold 20.0 \
 #     --lp_threshold 0.1 \
-#     --n_epoch 100 \
+#     --n_epoch 150 \
 #     --step_size 50 \
 #     --patience 3 \
-#     --init_cost 0.05 \
+#     --init_cost 0.02 \
 #     --cost_multiplier_up 2 \
 #     --cost_multiplier_down 3 \
-#     --hue_hsv 5 \
 #     --dataset 'imagenet' \
 #     > logs/imagenet/filter_color_wd_$timestamp.log 2>&1 &
 

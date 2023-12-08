@@ -190,10 +190,11 @@ class BadEncoderDataset(VisionDataset):
         self.ftt_transform = ftt_transform
 
         # self.filter = torch.load('trigger/filter.pt', map_location=torch.device('cpu'))
-        state_dict = torch.load(trigger_file, map_location=torch.device('cpu'))
-        self.net = U_Net_tiny(img_ch=3,output_ch=3)
-        self.net.load_state_dict(state_dict['model_state_dict'])
-        self.net=self.net.eval()
+
+        # state_dict = torch.load(trigger_file, map_location=torch.device('cpu'))
+        # self.net = U_Net_tiny(img_ch=3,output_ch=3)
+        # self.net.load_state_dict(state_dict['model_state_dict'])
+        # self.net=self.net.eval()
 
     @staticmethod
     def make_dataset(
@@ -300,13 +301,13 @@ class BadEncoderDataset(VisionDataset):
             # img_backdoor = self.bd_transform(img_backdoor)
 
             ###########################
-            tensor_image = torch.Tensor(img_copy)
-            backdoored_image=self.net(tensor_image.permute(2, 0, 1).unsqueeze(0))
-            img_backdoor = backdoored_image.squeeze()
-            img_backdoor = self.bd_transform(img_backdoor.permute(1,2,0).detach().numpy())
+            # tensor_image = torch.Tensor(img_copy)
+            # backdoored_image=self.net(tensor_image.permute(2, 0, 1).unsqueeze(0))
+            # img_backdoor = backdoored_image.squeeze()
+            # img_backdoor = self.bd_transform(img_backdoor.permute(1,2,0).detach().numpy())
 
 
-            # img_backdoor = self.bd_transform(backdoored_image)
+            img_backdoor = self.bd_transform(backdoored_image)
 
             img_backdoor_list.append(img_backdoor)
 

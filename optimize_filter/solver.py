@@ -29,9 +29,8 @@ class Solver():
         self.scheduler = StepLR(self.optimizer, step_size=args.step_size, gamma=args.gamma)
 
         self.ssim = SSIM()
-        # self.loss_cmd = CMD()
         self.loss_fn = lpips.LPIPS(net='alex').to(self.device)
-        # self.loss_mmd = MMD_loss()
+        self.mse = nn.MSELoss()
         self.WD=SinkhornDistance(eps=0.1, max_iter=100)
         self.psnr = PeakSignalNoiseRatio().to(self.device)
         self.color_loss_fn = CombinedColorLoss().to(self.device)
@@ -46,8 +45,8 @@ class Solver():
 
         bar=tqdm(range(1, args.n_epoch+1))
         recorder=Recorder(args)
-        tracker=Loss_Tracker(['loss', 'wd', 'ssim', 'psnr', 'lp', 'sim', 'far','color'])
-        tracker_test=Loss_Tracker(['wd', 'ssim', 'psnr', 'lp','color'])
+        tracker=Loss_Tracker(['loss', 'wd', 'ssim', 'psnr','mse', 'lp', 'sim', 'far','color'])
+        tracker_test=Loss_Tracker(['wd', 'ssim', 'psnr','mse', 'lp','color'])
 #
 
         # 恢复模型和优化器状态
@@ -60,59 +59,9 @@ class Solver():
 
         for _ in bar:
             self.train_one_epoch(args,recorder,bar,tracker,train_loader)
-            self.test_one_epoch(args,test_loader,tracker_test)
-
-    def test_one_epoch(self,args,test_loader,tracker_test):
-        tracker_test.reset()
-        self.net.eval()
-        with torch.no_grad():
-            for img,img_trans in test_loader:
-                img = img.to(self.device)
-                img_trans = img_trans.to(self.device)
-
-                # 将滤镜作用在Aug的图像上
-                filter_img = self.net(img_trans)
-                filter_img = self.net(img)
-
-                if args.dataset=='cifar10':
-                    mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(1, 3, 1, 1).cuda()
-                    std = torch.tensor([0.2023, 0.1994, 0.2010]).view(1, 3, 1, 1).cuda()
-
-                elif args.dataset=='stl10':
-                    mean = torch.tensor([0.44087798, 0.42790666, 0.38678814]).view(1, 3, 1, 1).cuda()
-                    std = torch.tensor([0.25507198, 0.24801506, 0.25641308]).view(1, 3, 1, 1).cuda()
-
-                elif args.dataset=='imagenet' or args.dataset=='imagenet_gtsrb_stl10_svhn':
-                    mean = torch.tensor([0.4850, 0.4560, 0.4060]).view(1, 3, 1, 1).cuda()
-                    std = torch.tensor([0.2290, 0.2240, 0.2250]).view(1, 3, 1, 1).cuda()
-
-                filter_img = filter_img * std + mean # denormalize
-                img = img * std + mean
-                img_trans = img_trans * std + mean
-                
-                sig=torch.nn.Sigmoid()
-                filter_img = sig(filter_img)
-
-                color_loss = self.color_loss_fn(filter_img, img_trans,args)
-                img_trans_feature = self.backbone(img_trans)
-                filter_img_feature = self.backbone(filter_img)
-
-                img_trans_feature = F.normalize(img_trans_feature, dim=-1)
-                filter_img_feature = F.normalize(filter_img_feature, dim=-1)
-                wd,_,_=self.WD(filter_img_feature,img_trans_feature) # wd越小越相似，拉远backdoor img和transformed backdoor img的距离
-
-                loss_psnr = self.psnr(filter_img, img)
-                loss_ssim = self.ssim(filter_img, img)
-
-                d_list = self.loss_fn(filter_img,img)
-                lp_loss=d_list.squeeze()
-
-                losses={'wd':wd.item(),'ssim':loss_ssim.item(),'psnr':loss_psnr.item(),'lp':lp_loss.mean().item(),'color':color_loss.item()}
-                tracker_test.update(losses)
-
-            avg_losses = tracker_test.get_avg_loss()
-            wd, ssim, psnr, lp, color = avg_losses.values()
-            print(f"\nTEST: WD: {wd:.5f}, SSIM: {ssim:.5f}, pnsr:{psnr:.5f}, lp:{lp:.5f}, color:{color:.5f}")
+            if args.dataset != 'imagenet':
+                self.test_one_epoch(args,test_loader,tracker_test)
+            # self.test_one_epoch(args,test_loader,tracker_test)
 
 
     def train_one_epoch(self,args,recorder,bar,tracker,train_loader):
@@ -145,10 +94,10 @@ class Solver():
             img = img * std + mean
             img_trans = img_trans * std + mean
 
-            sig=torch.nn.Sigmoid()
-            filter_img = sig(filter_img)
+            # sig=torch.nn.Sigmoid()
+            # filter_img = sig(filter_img)
 
-            # filter_img = torch.clamp(filter_img, min=0, max=1)
+            filter_img = torch.clamp(filter_img, min=0, max=1)
 
             color_loss = self.color_loss_fn(filter_img, img_trans, args)
 
@@ -166,6 +115,7 @@ class Solver():
 
             loss_psnr = self.psnr(filter_img, img)
             loss_ssim = self.ssim(filter_img, img)
+            # loss_mse = self.mse(filter_img, img)
 
 
             d_list = self.loss_fn(filter_img,img)
@@ -185,16 +135,19 @@ class Solver():
             self.optimizer.zero_grad()
             loss.backward()
 
+            # torch.nn.utils.clip_grad_norm_(self.net.parameters(), max_norm=0.5)
 
             self.optimizer.step()
+            # losses={'loss':loss.item(),'wd':wd.item(),'ssim':loss_ssim.item(),'psnr':loss_psnr.item(),'mse':loss_mse.item(),'lp':lp_loss.mean().item(),'sim':loss_sim.item(),'far':loss_far.item(),'color':color_loss.item()}
             losses={'loss':loss.item(),'wd':wd.item(),'ssim':loss_ssim.item(),'psnr':loss_psnr.item(),'lp':lp_loss.mean().item(),'sim':loss_sim.item(),'far':loss_far.item(),'color':color_loss.item()}
+
             tracker.update(losses)
 
         self.scheduler.step()
         # 计算平均损失
 
         avg_losses = tracker.get_avg_loss()
-        avg_loss,wd, ssim, psnr, lp, sim, far, color = avg_losses.values()
+        avg_loss,wd, ssim, psnr, mse, lp, sim, far, color = avg_losses.values()
 
         if args.ablation:
             if ssim >= args.ssim_threshold and ssim < args.ssim_threshold+0.01:
@@ -276,11 +229,60 @@ class Solver():
                 recorder.cost /= recorder.cost_multiplier_down
                 recorder.cost_down_flag = True
 
+        bar.set_description(f"Loss: {avg_loss}, lr: {self.optimizer.param_groups[0]['lr']}, SIM: {sim:.5f}, far:{far:.5f}, WD: {wd:.5f}, SSIM: {ssim:.5f}, pnsr:{psnr:.5f}, mse:{mse:5f}, lp:{lp:.5f}, color:{color:.5f},  cost:{recorder.cost}")
 
-        # if args.use_feature:
-        bar.set_description(f"Loss: {avg_loss}, lr: {self.optimizer.param_groups[0]['lr']}, SIM: {sim:.5f}, far:{far:.5f}, WD: {wd:.5f}, SSIM: {ssim:.5f}, pnsr:{psnr:.5f}, lp:{lp:.5f}, color:{color:.5f},  cost:{recorder.cost}")
 
-        # bar.set_description(f"Loss: {avg_loss}, lr: {self.optimizer.param_groups[0]['lr']}, SIM: {sim:.5f}, far:{far:.5f}, WD: {wd:.8f}, SSIM: {ssim:.5f}, pnsr:{psnr:.5f}, lp:{lp:.5f},mse:{mse:.5f},  cost:{recorder.cost}")
-        # else:
-        #     bar.set_description(f"Loss: {avg_loss}, lr: {self.optimizer.param_groups[0]['lr']}, SIM: {sim}, far:{far}, WD: {wd},  SSIM: {ssim}, cost:{recorder.cost}, lp:{lp.mean()}")
+    def test_one_epoch(self,args,test_loader,tracker_test):
+        tracker_test.reset()
+        self.net.eval()
+        with torch.no_grad():
+            for img,img_trans in test_loader:
+                img = img.to(self.device)
+                img_trans = img_trans.to(self.device)
+
+                filter_img = self.net(img_trans)
+                filter_img = self.net(img)
+
+                if args.dataset=='cifar10':
+                    mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(1, 3, 1, 1).cuda()
+                    std = torch.tensor([0.2023, 0.1994, 0.2010]).view(1, 3, 1, 1).cuda()
+
+                elif args.dataset=='stl10':
+                    mean = torch.tensor([0.44087798, 0.42790666, 0.38678814]).view(1, 3, 1, 1).cuda()
+                    std = torch.tensor([0.25507198, 0.24801506, 0.25641308]).view(1, 3, 1, 1).cuda()
+
+                elif args.dataset=='imagenet' or args.dataset=='imagenet_gtsrb_stl10_svhn':
+                    mean = torch.tensor([0.4850, 0.4560, 0.4060]).view(1, 3, 1, 1).cuda()
+                    std = torch.tensor([0.2290, 0.2240, 0.2250]).view(1, 3, 1, 1).cuda()
+
+                filter_img = filter_img * std + mean # denormalize
+                img = img * std + mean
+                img_trans = img_trans * std + mean
+
+                # sig=torch.nn.Sigmoid()
+                # filter_img = sig(filter_img)
+
+                color_loss = self.color_loss_fn(filter_img, img_trans,args)
+                img_trans_feature = self.backbone(img_trans)
+                filter_img_feature = self.backbone(filter_img)
+
+                img_trans_feature = F.normalize(img_trans_feature, dim=-1)
+                filter_img_feature = F.normalize(filter_img_feature, dim=-1)
+                wd,_,_=self.WD(filter_img_feature,img_trans_feature) # wd越小越相似，拉远backdoor img和transformed backdoor img的距离
+
+                loss_psnr = self.psnr(filter_img, img)
+                loss_ssim = self.ssim(filter_img, img)
+                # loss_mse = self.mse(filter_img, img)
+
+                d_list = self.loss_fn(filter_img,img)
+                lp_loss=d_list.squeeze()
+
+                # losses={'wd':wd.item(),'ssim':loss_ssim.item(),'psnr':loss_psnr.item(),'mse':loss_mse.item(),'lp':lp_loss.mean().item(),'color':color_loss.item()}
+                losses={'wd':wd.item(),'ssim':loss_ssim.item(),'psnr':loss_psnr.item(),'lp':lp_loss.mean().item(),'color':color_loss.item()}
+
+                tracker_test.update(losses)
+
+            avg_losses = tracker_test.get_avg_loss()
+            wd, ssim, psnr, mse, lp, color = avg_losses.values()
+            print(f"\nTEST: WD: {wd:.5f}, SSIM: {ssim:.5f}, pnsr:{psnr:.5f}, lp:{lp:.5f}, color:{color:.5f}")
 

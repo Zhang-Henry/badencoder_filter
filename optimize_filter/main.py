@@ -74,8 +74,8 @@ if __name__ == '__main__':
 
     print('Loading data...')
     if args.dataset == 'cifar10':
-        train_loader = cifar10_dataloader(args)
-        solver.train(args,train_loader)
+        train_loader,test_loader = cifar10_dataloader(args)
+        solver.train(args,train_loader,test_loader)
     elif args.dataset == 'stl10':
         train_loader,test_loader = stl10_dataloader(args)
         solver.train(args,train_loader,test_loader)

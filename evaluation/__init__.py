@@ -48,7 +48,7 @@ def test(net, memory_data_loader, test_data_clean_loader, test_data_backdoor_loa
 
             ###########################
             ############## add filter to backdoor img
-            data=filter(data)
+            # data=filter(data)
             # sig=nn.Sigmoid()
             # data=sig(data)
             # data = torch.clamp(data, min=0, max=1)

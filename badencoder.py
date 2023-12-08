@@ -60,7 +60,7 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args,
     #     # self.loss_cmd = CMD()
     # loss_fn = lpips.LPIPS(net='alex').cuda()
     # psnr = PeakSignalNoiseRatio().cuda()
-    sig=Sigmoid()
+    # sig=Sigmoid()
 
     backdoored_encoder.train()
 
@@ -107,7 +107,7 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args,
         feature_backdoor_list = []
         for img_backdoor in img_backdoor_cuda_list:
             ############## add filter to backdoor img
-            img_backdoor=filter(img_backdoor)
+            # img_backdoor=filter(img_backdoor)
             # img_backdoor=sig(img_backdoor)
 
             # img_backdoor = torch.clamp(img_backdoor, min=0, max=1)
@@ -307,17 +307,17 @@ if __name__ == '__main__':
             raise NotImplementedError()
 
     # if args.encoder_usage_info == 'imagenet':
-    state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
-    net = U_Net_tiny(img_ch=3,output_ch=3)
-    net.load_state_dict(state_dict['model_state_dict'])
-    net=net.cuda().eval()
+    # state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
+    # net = U_Net_tiny(img_ch=3,output_ch=3)
+    # net.load_state_dict(state_dict['model_state_dict'])
+    # net=net.cuda().eval()
         # optimizer_wd = torch.optim.Adam(list(net.parameters()), lr=args.lr, betas=(0.9, 0.999), eps=1e-8)
         # recorder=Recorder(args)
         # tracker=Loss_Tracker(['loss', 'wd', 'ssim', 'psnr', 'lp', 'sim', 'far','color'])
 
     if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10' or args.encoder_usage_info == 'gtsrb':
         # check whether the pre-trained encoder is loaded successfully or not
-        test_acc_1 = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor,0, args,net)
+        test_acc_1 = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor,0, args)
         print('initial test acc: {}'.format(test_acc_1))
 
     # training loop
@@ -325,13 +325,13 @@ if __name__ == '__main__':
         print("=================================================")
         if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10' or args.encoder_usage_info == 'gtsrb':
             # train_loss = train(model.f, clean_model.f, train_loader, optimizer, args, net, optimizer_wd, tracker,recorder)
-            train_loss = train(model.f, clean_model.f, train_loader, optimizer, args,net)
+            train_loss = train(model.f, clean_model.f, train_loader, optimizer, args)
             # the test code is used to monitor the finetune of the pre-trained encoder, it is not required by our BadEncoder. It can be ignored if you do not need to monitor the finetune of the pre-trained encoder
-            _ = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor, epoch, args,net)
+            # _ = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor, epoch, args)
             # _ = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor, epoch, args)
 
         elif args.encoder_usage_info == 'imagenet' or args.encoder_usage_info == 'CLIP':
-            train_loss = train(model.visual, clean_model.visual, train_loader, optimizer, args)
+            train_loss = train(model.visual, clean_model.visual, train_loader, optimizer, args,net)
             # train_loss = train(model.visual, clean_model.visual, train_loader, optimizer, args)
 
         else:
