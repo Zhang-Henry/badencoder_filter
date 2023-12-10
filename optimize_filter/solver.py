@@ -1,6 +1,3 @@
-import sys
-sys.path.append("..")
-
 import torch,lpips
 from torch.optim.lr_scheduler import StepLR
 import torch.nn.functional as F
@@ -9,7 +6,7 @@ import numpy as np
 from pytorch_ssim import SSIM
 from tqdm import tqdm
 from PIL import Image
-from utils import *
+from util import *
 from loss import *
 from network import U_Net,R2AttU_Net,R2U_Net,AttU_Net
 from tiny_network import U_Net_tiny
@@ -76,8 +73,6 @@ class Solver():
             # filter_img = self.net(img_trans)
             filter_img = self.net(img)
 
-            # filter_img = F.conv2d(img, self.filter, padding=7//2)
-            # filter_img = torch.clamp(filter_img, min=0, max=1)
             if args.dataset=='cifar10':
                 mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(1, 3, 1, 1).cuda()
                 std = torch.tensor([0.2023, 0.1994, 0.2010]).view(1, 3, 1, 1).cuda()
@@ -102,12 +97,12 @@ class Solver():
             color_loss = self.color_loss_fn(filter_img, img_trans, args)
 
             with torch.no_grad():
-                img_trans_feature = self.backbone(img_trans)
+                img_feature = self.backbone(img)
                 filter_img_feature = self.backbone(filter_img)
 
-                img_trans_feature = F.normalize(img_trans_feature, dim=-1)
+                img_feature = F.normalize(img_feature, dim=-1)
                 filter_img_feature = F.normalize(filter_img_feature, dim=-1)
-                wd,_,_=self.WD(filter_img_feature,img_trans_feature) # wd越小越相似，拉远backdoor img和transformed backdoor img的距离
+                wd,_,_=self.WD(filter_img_feature,img_feature) # wd越小越相似，拉远backdoor img和transformed backdoor img的距离
                 # wd = compute_style_loss(filter_img_feature,img_trans_feature)
 
             # filter后的图片和原图的mse和ssim，差距要尽可能小

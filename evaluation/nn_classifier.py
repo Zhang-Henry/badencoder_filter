@@ -8,6 +8,7 @@ import numpy as np
 from tqdm import tqdm
 from optimize_filter.network import AttU_Net,U_Net
 from optimize_filter.tiny_network import U_Net_tiny
+from util import clamp_batch_images
 
 
 class NeuralNet(nn.Module):
@@ -71,11 +72,11 @@ def net_test(net, test_loader, epoch, criterion, keyword='Accuracy'):
             output = net(data)
             test_loss += criterion(output, target.long()).item()
             pred = output.argmax(dim=1, keepdim=True)
-            # if keyword=='Attack Success Rate (ASR)':
-            #     print('pred:', pred.squeeze())
-            #     print('target:', target)
-            correct += pred.eq(target.view_as(pred)).sum().item()
 
+            correct += pred.eq(target.view_as(pred)).sum().item()
+        # if keyword=='Attack Success Rate (ASR)':
+        #     print('pred:', pred.squeeze())
+        #     print('target:', target)
     test_acc = 100. * correct / len(test_loader.dataset)
     test_loss /= len(test_loader.dataset)
     print('{{"metric": "Eval - {}", "value": {}, "epoch": {}}}'.format(
@@ -87,20 +88,19 @@ def net_test(net, test_loader, epoch, criterion, keyword='Accuracy'):
 def predict_feature(args,net, data_loader,keyword='clean'):
     net.eval()
     feature_bank, target_bank = [], []
-    # if keyword=='backdoor':
-    #     state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
-    #     filter = U_Net_tiny(img_ch=3,output_ch=3)
-    #     filter.load_state_dict(state_dict['model_state_dict'])
-    #     filter=filter.cuda().eval()
-    #     sig=torch.nn.Sigmoid()
+    if keyword=='backdoor':
+        state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
+        filter = U_Net_tiny(img_ch=3,output_ch=3)
+        filter.load_state_dict(state_dict['model_state_dict'])
+        filter=filter.cuda().eval()
 
     with torch.no_grad():
         # generate feature bank
         for data, target in tqdm(data_loader, desc='Feature extracting'):
             data=data.cuda(non_blocking=True)
-            # if keyword=='backdoor':
-            #     data=filter(data)
-                # data=sig(data)
+            if keyword=='backdoor':
+                data=filter(data)
+                data= clamp_batch_images(data,args)
 
             feature = net(data)
             feature = F.normalize(feature, dim=1)

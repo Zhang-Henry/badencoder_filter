@@ -1,5 +1,5 @@
 import torch
-from utils import *
+from .utils import *
 import torch.nn.functional as F
 import cv2
 import numpy as np
@@ -145,5 +145,5 @@ class CombinedColorLoss(torch.nn.Module):
         # 综合损失
         total_loss = args.hue_hsv * hue_loss_hsv + args.saturation_hsv * saturation_loss_hsv + \
         args.value_hsv * value_loss_hsv + args.lightness * lightness_loss
-        
+
         return total_loss
