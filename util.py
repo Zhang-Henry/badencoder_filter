@@ -22,7 +22,7 @@ color_loss_fn = CombinedColorLoss().cuda()
 backbone = load_backbone()
 backbone = backbone.cuda().eval()
 
-def filter_color_loss(filter,img_clean,img_trans,tracker,recorder,loss_0,args):
+def filter_color_loss(filter,img_clean,img_trans,tracker,loss_0,args):
     # metric definition
     filter.train()
 
@@ -61,9 +61,10 @@ def filter_color_loss(filter,img_clean,img_trans,tracker,recorder,loss_0,args):
 
     color_loss = color_loss_fn(filter_img, img_trans, args)
     # loss_sim = 1 - loss_ssim + 10 * lp_loss.mean() - 0.025 * loss_psnr + wd + 5*loss_0
-    loss_sim = 1 - loss_ssim - 0.025 * loss_psnr + 5*loss_0
+    loss_sim = 1 - loss_ssim - args.psnr * loss_psnr + args.loss0 * loss_0
 
-    loss_far = 0.5*color_loss
+    loss_far = args.color * color_loss
+    # loss_far = 0.5*color_loss
 
     loss = loss_sim - loss_far
 

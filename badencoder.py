@@ -18,14 +18,14 @@ from optimize_filter.utils import Recorder, Loss_Tracker
 from datetime import datetime
 from optimize_filter.loss import *
 from util import filter_color_loss,clamp_batch_images
-
+import os
 
 now = datetime.now()
 print("当前时间：", now.strftime("%Y-%m-%d %H:%M:%S"))
 
 
 
-def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args ,filter,optimizer_wd, tracker,recorder):
+def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args ,filter,optimizer_wd, tracker):
     tracker.reset()
 
     backdoored_encoder.train()
@@ -111,7 +111,7 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
         # loss.backward()
         train_optimizer.step()
 
-        filter_loss=filter_color_loss(filter,img_clean,img_trans,tracker,recorder,loss_0,args)
+        filter_loss=filter_color_loss(filter,img_clean,img_trans,tracker,loss_0,args)
         # color_loss = loss_0 # backdoor img接近reference img
         optimizer_wd.zero_grad()
         filter_loss.backward()
@@ -193,22 +193,29 @@ if __name__ == '__main__':
     parser.add_argument('--gpu', default='1', type=str, help='which gpu the code runs on')
     parser.add_argument('--pretraining_dataset', type=str, default='cifar10')
     # parser.add_argument('--filter_path', default='', type=str, help='path to the filter trigger')
-    parser.add_argument('--ssim_threshold', type=float, default=0.90)
-    parser.add_argument('--psnr_threshold', type=float, default=25.0)
-    parser.add_argument('--lp_threshold', type=float, default=0.003)
-    parser.add_argument('--patience', type=int, default=3)
-    parser.add_argument('--init_cost', type=float, default=5e-3)
-    parser.add_argument('--cost_multiplier_up', type=float, default=1.2)
-    parser.add_argument('--cost_multiplier_down', type=float, default=1.5)
+    # parser.add_argument('--ssim_threshold', type=float, default=0.90)
+    # parser.add_argument('--psnr_threshold', type=float, default=25.0)
+    # parser.add_argument('--lp_threshold', type=float, default=0.003)
+    # parser.add_argument('--patience', type=int, default=3)
+    # parser.add_argument('--init_cost', type=float, default=5e-3)
+    # parser.add_argument('--cost_multiplier_up', type=float, default=1.2)
+    # parser.add_argument('--cost_multiplier_down', type=float, default=1.5)
     parser.add_argument('--timestamp', type=str)
-    parser.add_argument('--max_cost', type=float, default=1e-2)
-    parser.add_argument('--min_cost', type=float, default=1e-3)
+    # parser.add_argument('--max_cost', type=float, default=1e-2)
+    # parser.add_argument('--min_cost', type=float, default=1e-3)
 
     parser.add_argument('--hue_hsv', type=float, default=1)
     parser.add_argument('--saturation_hsv', type=float, default=1)
     parser.add_argument('--value_hsv', type=float, default=1)
     parser.add_argument('--lightness', type=float, default=1)
+
+    parser.add_argument('--psnr', type=float, default=0.025)
+    parser.add_argument('--loss0', type=float, default=1)
+    parser.add_argument('--color', type=float, default=0)
+
     args = parser.parse_args()
+
+    # os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 
     # Specify the pre-training data directory
     args.data_dir = f'./data/{args.shadow_dataset.split("_")[0]}/'
@@ -255,7 +262,7 @@ if __name__ == '__main__':
     net.load_state_dict(state_dict['model_state_dict'])
     net=net.cuda().eval()
     optimizer_wd = torch.optim.Adam(list(net.parameters()), lr=args.lr, betas=(0.9, 0.999), eps=1e-8)
-    recorder=Recorder(args)
+    # recorder=Recorder(args)
     tracker=Loss_Tracker(['loss', 'wd', 'ssim', 'psnr', 'lp', 'sim', 'far', 'color'])
 
     # if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10':
@@ -270,7 +277,7 @@ if __name__ == '__main__':
         train_loader = DataLoader(shadow_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True, drop_last=True)
 
         if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10':
-            train_loss = train(model.f, clean_model.f, train_loader, optimizer, args, net, optimizer_wd, tracker,recorder)
+            train_loss = train(model.f, clean_model.f, train_loader, optimizer, args, net, optimizer_wd, tracker)
             # the test code is used to monitor the finetune of the pre-trained encoder, it is not required by our BadEncoder. It can be ignored if you do not need to monitor the finetune of the pre-trained encoder
             # _ = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor, epoch, args,net)
         elif args.encoder_usage_info == 'imagenet' or args.encoder_usage_info == 'CLIP':
@@ -279,7 +286,7 @@ if __name__ == '__main__':
             raise NotImplementedError()
 
         # Save the BadEncoder
-        if epoch % 50 == 0:
+        if epoch % 25 == 0:
             torch.save({'epoch': epoch, 'state_dict': model.state_dict(), 'optimizer' : optimizer.state_dict(),}, args.results_dir + '/model_' + str(epoch) + '.pth')
             torch.save({'model_state_dict': net.state_dict()}, args.results_dir + f'/unet_filter_{epoch}_trained.pt')
     #     torch.save({'model_state_dict': net.state_dict()}, args.results_dir + f'/{args.timestamp}/unet_filter_trained_ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}.pt')

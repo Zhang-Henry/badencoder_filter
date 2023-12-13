@@ -15,12 +15,14 @@ import torch.nn.functional as F
 from datasets import get_dataset_evaluation
 from models import get_encoder_architecture_usage
 from evaluation import create_torch_dataloader, NeuralNet, net_train, net_test, predict_feature
-
+from datetime import datetime
 
 
 if __name__ == '__main__':
     # print(torch.cuda.is_available())
     # os.environ['CUDA_VISIBLE_DEVICES'] = '1'
+    now = datetime.now()
+    print("当前时间：", now.strftime("%Y-%m-%d %H:%M:%S"))
 
     parser = argparse.ArgumentParser(description='Evaluate the clean or backdoored encoders')
     parser.add_argument('--dataset', default='cifar10', type=str, help='downstream dataset')
@@ -40,8 +42,7 @@ if __name__ == '__main__':
     parser.add_argument('--reference_file', default='', type=str, help='path to the reference file (default: none)')
     args = parser.parse_args()
 
-    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"  # see issue #152
-    os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
+
     random.seed(args.seed)
     os.environ['PYTHONHASHSEED'] = str(args.seed)
     np.random.seed(args.seed)
@@ -111,3 +112,6 @@ if __name__ == '__main__':
         else:
             net_test(net, nn_test_loader, epoch, criterion, 'Backdoored Accuracy (BA)')
             net_test(net, nn_backdoor_loader, epoch, criterion, 'Attack Success Rate (ASR)')
+
+    now = datetime.now()
+    print("当前时间：", now.strftime("%Y-%m-%d %H:%M:%S"))

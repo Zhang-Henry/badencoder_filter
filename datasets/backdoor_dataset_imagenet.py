@@ -322,7 +322,7 @@ class BadEncoderDataset(VisionDataset):
             target_img_1_list_return.append(target_img_1)
             #print("target_image.shape",target_image.shape)
 
-        return img_raw, img_backdoor_list, target_image_list_return, target_img_1_list_return
+        return img_raw, img_backdoor_list, target_image_list_return, target_img_1_list_return, im_1
 
     def __len__(self):
         return len(self.indices)
