@@ -28,9 +28,9 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 # run_eval(5, 'cifar10', 'svhn', 'output/cifar10/clean_encoder/model_1000.pth', 1, './trigger/cifar10/unet_filter.pt', 'one')
 
 
-run_eval(0, 'cifar10', 'stl10', './output/cifar10/stl10_backdoored_encoder/2023-12-13-14:56:40/model_50.pth', 9, 'output/cifar10/stl10_backdoored_encoder/2023-12-13-14:56:40/unet_filter_50_trained.pt', 'truck', 'backdoor')
-# run_eval(0, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2023-12-13-15:05:47/model_50.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder/2023-12-13-15:05:47/unet_filter_50_trained.pt', 'priority', 'backdoor')
-# run_eval(0, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2023-12-13-15:05:30/model_50.pth', 1, 'output/cifar10/svhn_backdoored_encoder/2023-12-13-15:05:30/unet_filter_50_trained.pt', 'one', 'backdoor')
+# run_eval(5, 'cifar10', 'stl10', 'output/imagenet/stl10_backdoored_encoder/2023-12-11-10:59:03/model_150.pth', 9, 'output/imagenet/stl10_backdoored_encoder/2023-12-11-10:59:03/unet_filter_150_trained.pt', 'truck', 'backdoor')
+# run_eval(5, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2023-12-13-16:25:47/model_50.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder/2023-12-13-16:25:47/unet_filter_50_trained.pt', 'priority', 'backdoor')
+# run_eval(3, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2023-12-14-10:45:31/model_50.pth', 1, 'output/cifar10/svhn_backdoored_encoder/2023-12-14-10:45:31/unet_filter_50_trained.pt', 'one', 'backdoor')
 
 
 # run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2023-12-11-12:21:05/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2023-12-11-12:21:05/unet_filter_200_trained.pt', 'airplane', 'backdoor')

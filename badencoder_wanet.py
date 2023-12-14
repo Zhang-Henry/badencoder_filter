@@ -10,23 +10,44 @@ import torch.nn.functional as F
 
 from models import get_encoder_architecture_usage
 from datasets import get_shadow_dataset
-from evaluation import test
-from optimize_filter.network import AttU_Net
-from optimize_filter.tiny_network import U_Net_tiny
 
-from optimize_filter.utils import Recorder, Loss_Tracker
 from datetime import datetime
 from optimize_filter.loss import *
-from util import filter_color_loss,clamp_batch_images
-import os
+import os,random
+import kornia.augmentation as A
 
 now = datetime.now()
 print("当前时间：", now.strftime("%Y-%m-%d %H:%M:%S"))
 
 
+class ProbTransform(torch.nn.Module):
+    def __init__(self, f, p=1):
+        super(ProbTransform, self).__init__()
+        self.f = f
+        self.p = p
 
-def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args ,filter,optimizer_wd, tracker):
-    tracker.reset()
+    def forward(self, x):  # , **kwargs):
+        if random.random() < self.p:
+            return self.f(x)
+        else:
+            return x
+
+class PostTensorTransform(torch.nn.Module):
+    def __init__(self):
+        super(PostTensorTransform, self).__init__()
+        self.random_crop = ProbTransform(
+            A.RandomCrop((32, 32), padding=5), p=0.8
+        )
+        self.random_rotation = ProbTransform(A.RandomRotation(10), p=0.5)
+
+
+    def forward(self, x):
+        for module in self.children():
+            x = module(x)
+        return x
+
+
+def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args):
 
     backdoored_encoder.train()
 
@@ -74,8 +95,38 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
         for img_backdoor in img_backdoor_cuda_list:
             ############## add filter to backdoor img
             # filter.eval()
-            img_backdoor=filter(img_backdoor)
-            img_backdoor= clamp_batch_images(img_backdoor,args)
+            input_height=32
+            grid_rescale=1
+            s=0.5
+            k=4
+            num_bd = img_backdoor.shape[0] // 2
+            num_cross = num_bd
+            ins = torch.rand(1, 2, k, k) * 2 - 1
+            ins = ins / torch.mean(torch.abs(ins))
+            noise_grid = (
+                F.upsample(ins, size=input_height, mode="bicubic", align_corners=True)
+                .permute(0, 2, 3, 1)
+                .cuda()
+            )
+            array1d = torch.linspace(-1, 1, steps=input_height)
+            x, y = torch.meshgrid(array1d, array1d)
+            identity_grid = torch.stack((y, x), 2)[None, ...].cuda()
+
+            grid_temps = (identity_grid + s * noise_grid / input_height) * grid_rescale
+            grid_temps = torch.clamp(grid_temps, -1, 1)
+            transforms = PostTensorTransform().cuda()
+
+            ins = torch.rand(num_cross, input_height, input_height, 2).cuda() * 2 - 1
+            grid_temps2 = grid_temps.repeat(num_cross, 1, 1, 1) + ins / input_height
+            grid_temps2 = torch.clamp(grid_temps2, -1, 1)
+
+            inputs_bd = F.grid_sample(img_backdoor[:num_bd], grid_temps.repeat(num_bd, 1, 1, 1), align_corners=True)
+
+            inputs_cross = F.grid_sample(img_backdoor[num_bd : (num_bd + num_cross)], grid_temps2, align_corners=True)
+
+            total_inputs = torch.cat([inputs_bd, inputs_cross], dim=0)
+            total_inputs = transforms(total_inputs)
+
             # img_backdoor = torch.clamp(img_backdoor, min=0, max=1)
 
             feature_backdoor = backdoored_encoder(img_backdoor)
@@ -107,15 +158,9 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
         loss = loss_0 + args.lambda1 * loss_1 + args.lambda2 * loss_2
 
         train_optimizer.zero_grad()
-        loss.backward(retain_graph=True)
+        loss.backward()
         # loss.backward()
         train_optimizer.step()
-
-        filter_loss=filter_color_loss(filter,img_clean,img_trans,tracker,loss_0,args)
-        # color_loss = loss_0 # backdoor img接近reference img
-        optimizer_wd.zero_grad()
-        filter_loss.backward()
-        optimizer_wd.step()
 
 
         total_num += data_loader.batch_size
@@ -125,10 +170,6 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
         total_loss_2 += loss_2.item() * data_loader.batch_size
         train_bar.set_description('Train Epoch: [{}/{}], lr: {:.6f}, Loss: {:.6f}, Loss0: {:.6f}, Loss1: {:.6f},  Loss2: {:.6f}'.format(epoch, args.epochs, train_optimizer.param_groups[0]['lr'], total_loss / total_num,  total_loss_0 / total_num , total_loss_1 / total_num,  total_loss_2 / total_num))
 
-
-    avg_losses = tracker.get_avg_loss()
-    print()
-    print(avg_losses)
 
     return total_loss / total_num
 
@@ -175,6 +216,7 @@ if __name__ == '__main__':
     args.knn_t = 0.5
     args.reference_label = 0
     print(args)
+    os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
 
     # Create the Pytorch Datasets, and create the data loader for the training set
     # memory_data, test_data_clean, and test_data_backdoor are used to monitor the finetuning process. They are not reqruied by our BadEncoder
@@ -209,13 +251,7 @@ if __name__ == '__main__':
         else:
             raise NotImplementedError()
 
-    state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
-    net = U_Net_tiny(img_ch=3,output_ch=3)
-    net.load_state_dict(state_dict['model_state_dict'])
-    net=net.cuda().eval()
-    optimizer_wd = torch.optim.Adam(list(net.parameters()), lr=args.lr, betas=(0.9, 0.999), eps=1e-8)
-    # recorder=Recorder(args)
-    tracker=Loss_Tracker(['loss', 'wd', 'ssim', 'psnr', 'lp', 'sim', 'far', 'color'])
+
 
     # if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10':
     #     # check whether the pre-trained encoder is loaded successfully or not
@@ -229,18 +265,17 @@ if __name__ == '__main__':
         train_loader = DataLoader(shadow_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True, drop_last=True)
 
         if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10':
-            train_loss = train(model.f, clean_model.f, train_loader, optimizer, args, net, optimizer_wd, tracker)
+            train_loss = train(model.f, clean_model.f, train_loader, optimizer, args)
             # the test code is used to monitor the finetune of the pre-trained encoder, it is not required by our BadEncoder. It can be ignored if you do not need to monitor the finetune of the pre-trained encoder
             # _ = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor, epoch, args,net)
         elif args.encoder_usage_info == 'imagenet' or args.encoder_usage_info == 'CLIP':
-            train_loss = train(model.visual, clean_model.visual, train_loader, optimizer, args,net,optimizer_wd, tracker)
+            train_loss = train(model.visual, clean_model.visual, train_loader, optimizer, args)
         else:
             raise NotImplementedError()
 
         # Save the BadEncoder
         if epoch % 25 == 0:
-            torch.save({'epoch': epoch, 'state_dict': model.state_dict(), 'optimizer' : optimizer.state_dict(),'args':args}, args.results_dir + '/model_' + str(epoch) + '.pth')
-            torch.save({'model_state_dict': net.state_dict(),'args':args}, args.results_dir + f'/unet_filter_{epoch}_trained.pt')
+            torch.save({'epoch': epoch, 'state_dict': model.state_dict(), 'optimizer' : optimizer.state_dict(),}, args.results_dir + '/model_' + str(epoch) + '.pth')
     #     torch.save({'model_state_dict': net.state_dict()}, args.results_dir + f'/{args.timestamp}/unet_filter_trained_ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}.pt')
 
         # Save the intermediate checkpoint

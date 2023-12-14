@@ -19,7 +19,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     # os.makedirs(f'{save_path}/{time}')
     # filter_path="optimize_filter/trigger/unet_filter.pt"
 
-    cmd = f'nohup python3 -u badencoder.py \
+    cmd = f'nohup python3 -u badencoder_wanet.py \
     --epochs 200 \
     --timestamp {time} \
     --lr 0.001 \
@@ -32,15 +32,13 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     --reference_file ./reference/{encoder_usage_info}/{reference}.npz \
     --trigger_file {trigger} \
     --pretraining_dataset {pretraining_dataset} \
-    --color 0 \
-    --loss0 5 \
-    > ./log/bad_encoder/{encoder_usage_info}_{downstream_dataset}_{reference}.log 2>&1 &'
+    > ./log/bad_encoder/{encoder_usage_info}_{downstream_dataset}_{reference}_wanet.log 2>&1 &'
     os.system(cmd)
 
 
-# run_finetune(0, 'cifar10', 'cifar10', 'stl10', 'trigger/cifar10/unet_filter.pt', 'truck','cifar10',700)
-# run_finetune(2, 'cifar10', 'cifar10', 'gtsrb', 'trigger/cifar10/unet_filter.pt', 'priority','cifar10',800)
-run_finetune(4, 'cifar10', 'cifar10', 'svhn', 'trigger/cifar10/unet_filter.pt', 'one','cifar10',200)
+run_finetune(0, 'cifar10', 'cifar10', 'stl10', 'trigger/cifar10/unet_filter.pt', 'truck','cifar10',128)
+# run_finetune(2, 'cifar10', 'cifar10', 'gtsrb', 'trigger/cifar10/unet_filter.pt', 'priority','cifar10',128)
+# run_finetune(3, 'cifar10', 'cifar10', 'svhn', 'trigger/cifar10/unet_filter.pt', 'one','cifar10',128)
 
 # run_finetune(0, 'stl10', 'stl10', 'cifar10', 'trigger/stl10/unet_filter.pt', 'airplane', 'stl10',512)
 # run_finetune(0, 'stl10', 'stl10', 'gtsrb', 'trigger/stl10/unet_filter.pt', 'priority', 'stl10',64)

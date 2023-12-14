@@ -75,6 +75,7 @@ if __name__ == '__main__':
     if args.encoder != '':
         print('Loaded from: {}'.format(args.encoder))
         checkpoint = torch.load(args.encoder)
+        # print(checkpoint['args'])
         if args.encoder_usage_info in ['CLIP', 'imagenet'] and 'clean' in args.encoder:
             model.visual.load_state_dict(checkpoint['state_dict'])
         else:
