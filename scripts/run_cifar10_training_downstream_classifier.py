@@ -16,8 +16,7 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
             --reference_label {reference_label} \
             --reference_file ./reference/{encoder_usage_info}/{reference_file}.npz \
             --gpu {gpu} \
-            --seed {3407} \
-            >./log/{encoder_usage_info}/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}.txt 2>&1 &"
+            >./log/{encoder_usage_info}/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_wanet.txt 2>&1 &"
 
     os.system(cmd)
 
@@ -29,6 +28,11 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 
 
 # run_eval(5, 'cifar10', 'stl10', 'output/imagenet/stl10_backdoored_encoder/2023-12-11-10:59:03/model_150.pth', 9, 'output/imagenet/stl10_backdoored_encoder/2023-12-11-10:59:03/unet_filter_150_trained.pt', 'truck', 'backdoor')
+# run_eval(5, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2023-12-13-16:25:47/model_50.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder/2023-12-13-16:25:47/unet_filter_50_trained.pt', 'priority', 'backdoor')
+# run_eval(3, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2023-12-14-10:45:31/model_50.pth', 1, 'output/cifar10/svhn_backdoored_encoder/2023-12-14-10:45:31/unet_filter_50_trained.pt', 'one', 'backdoor')
+
+######## Ablation study Wanet
+run_eval(4, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-14-14:58:07/model_200.pth', 9, 'xx', 'truck', 'backdoor')
 # run_eval(5, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2023-12-13-16:25:47/model_50.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder/2023-12-13-16:25:47/unet_filter_50_trained.pt', 'priority', 'backdoor')
 # run_eval(3, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2023-12-14-10:45:31/model_50.pth', 1, 'output/cifar10/svhn_backdoored_encoder/2023-12-14-10:45:31/unet_filter_50_trained.pt', 'one', 'backdoor')
 

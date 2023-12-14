@@ -402,10 +402,10 @@ class BadEncoderTestBackdoor_224(Dataset):
         self.target_class = reference_label
         self.test_transform = transform
 
-        # self.trigger_input_array = np.load(trigger_file)
+        self.trigger_input_array = np.load(trigger_file)
 
-        # self.trigger_patch_list = self.trigger_input_array['t']
-        # self.trigger_mask_list = self.trigger_input_array['tm']
+        self.trigger_patch_list = self.trigger_input_array['t']
+        self.trigger_mask_list = self.trigger_input_array['tm']
 
         # state_dict = torch.load(trigger_file, map_location=torch.device('cpu'))
         # self.net = U_Net_tiny(img_ch=3,output_ch=3)
@@ -422,9 +422,9 @@ class BadEncoderTestBackdoor_224(Dataset):
         # img_backdoor =self.test_transform(filtered_image_pil)
 
         ###########################
-        # img = np.array(img)
-        # img[:] =img * self.trigger_mask_list[0] + self.trigger_patch_list[0][:]
-        # img_backdoor =self.test_transform(Image.fromarray(img))
+        img = np.array(img)
+        img[:] =img * self.trigger_mask_list[0] + self.trigger_patch_list[0][:]
+        img_backdoor =self.test_transform(Image.fromarray(img))
 
         ###########################
         # for customized filter only
@@ -470,7 +470,7 @@ class BadEncoderTestBackdoor_224(Dataset):
         # img_backdoor = self.test_transform(img_backdoor.permute(1,2,0).detach().numpy())
         ################################
 
-        img_backdoor = self.test_transform(img)
+        # img_backdoor = self.test_transform(img)
         ###########################
         return img_backdoor, self.target_class
 
@@ -595,108 +595,3 @@ class CustomDataset_label(Dataset):
         label = self.labels[idx]
         return image, label
 
-
-
-# class TinyImageNet(Dataset):
-#     def __init__(self, root_dir, class_type, transform=None):
-#         self.root_dir = root_dir
-#         self.transform = transform
-#         # self.images = []
-#         self.classes = class_type
-
-#         # Loop over all files in the root directory
-#         # for class_label in os.listdir(root_dir):
-#         #     class_dir = os.path.join(root_dir, class_label)
-#         #     for file in os.listdir(class_dir):
-#         #         if file.endswith('.JPEG'):
-#         #             self.images.append(os.path.join(class_dir, file))
-#         #             self.targets.append(int(class_label[1:]))
-
-#         classes, class_to_idx = self._find_classes(self.root_dir)
-#         samples = self.make_dataset(self.root_dir, class_to_idx, extensions=('JPEG','jpeg'))
-#         self.classes = classes
-#         self.class_to_idx = class_to_idx
-#         self.samples = samples
-#         self.targets = [target for _, target in samples]
-
-#     def __len__(self):
-#         return len(self.samples)
-
-#     @staticmethod
-#     def make_dataset(
-#         directory: str,
-#         class_to_idx: Dict[str, int],
-#         extensions: Optional[Tuple[str, ...]] = None,
-#         is_valid_file: Optional[Callable[[str], bool]] = None,
-#     ) -> List[Tuple[str, int]]:
-#         return make_dataset(directory, class_to_idx, extensions=extensions, is_valid_file=is_valid_file)
-
-#     def _find_classes(self, dir: str):
-#         """
-#         Finds the class folders in a dataset.
-#         Args:
-#             dir (string): Root directory path.
-#         Returns:
-#             tuple: (classes, class_to_idx) where classes are relative to (dir), and class_to_idx is a dictionary.
-#         Ensures:
-#             No class is a subdirectory of another.
-#         """
-#         classes = [d.name for d in os.scandir(dir) if d.is_dir()]
-#         classes.sort()
-#         class_to_idx = {cls_name: i for i, cls_name in enumerate(classes)}
-#         return classes, class_to_idx
-
-# class TinyImageNetPair(TinyImageNet):
-
-#     def __getitem__(self, idx):
-#         img_path, target = self.samples[idx]
-#         image = Image.open(img_path)
-#         image = image.convert('RGB')
-
-#         if self.transform:
-#             im_1 = self.transform(image)
-#             im_2 = self.transform(image)
-
-#         return im_1, im_2
-
-# class TinyImageNetMem(TinyImageNet):
-
-#     def __getitem__(self, idx):
-#         img_path, label = self.samples[idx]
-
-#         image = Image.open(img_path)
-#         image = image.convert('RGB')
-#         if self.transform:
-#             image = self.transform(image)
-#         return image, label
-
-
-# class TinyImageNetM(TinyImageNet):
-#     def __init__(self, root_dir, transform=None, transform2=None):
-#         self.root_dir = root_dir
-#         self.transform = transform
-#         self.transform2 = transform2
-
-#         self.images = []
-#         self.targets = []
-
-#         # Loop over all files in the root directory
-#         for class_label in os.listdir(root_dir):
-#             class_dir = os.path.join(root_dir, class_label)
-#             for file in os.listdir(class_dir):
-#                 if file.endswith('.JPEG'):
-#                     self.images.append(os.path.join(class_dir, file))
-#                     self.targets.append(class_label)
-
-#     def __len__(self):
-#         return len(self.images)
-
-
-#     def __getitem__(self, index):
-
-#         img, target = self.images[index], self.targets[index]
-#         img = Image.fromarray(img)
-#         if self.transform is not None:
-#             img_trans = self.transform(img)
-
-#         return self.transform2(img), img_trans

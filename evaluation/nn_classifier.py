@@ -75,8 +75,8 @@ def net_test(net, test_loader, epoch, criterion, keyword='Accuracy'):
 
             correct += pred.eq(target.view_as(pred)).sum().item()
         # if keyword=='Attack Success Rate (ASR)':
-        print('pred:', pred.squeeze())
-        print('target:', target)
+        # print('pred:', pred.squeeze())
+        # print('target:', target)
     test_acc = 100. * correct / len(test_loader.dataset)
     test_loss /= len(test_loader.dataset)
     print('{{"metric": "Eval - {}", "value": {}, "epoch": {}}}'.format(
@@ -88,19 +88,40 @@ def net_test(net, test_loader, epoch, criterion, keyword='Accuracy'):
 def predict_feature(args,net, data_loader,keyword='clean'):
     net.eval()
     feature_bank, target_bank = [], []
-    if keyword=='backdoor':
-        state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
-        filter = U_Net_tiny(img_ch=3,output_ch=3)
-        filter.load_state_dict(state_dict['model_state_dict'])
-        filter=filter.cuda().eval()
+    # if keyword=='backdoor':
+    #     state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
+    #     filter = U_Net_tiny(img_ch=3,output_ch=3)
+    #     filter.load_state_dict(state_dict['model_state_dict'])
+    #     filter=filter.cuda().eval()
 
     with torch.no_grad():
         # generate feature bank
         for data, target in tqdm(data_loader, desc='Feature extracting'):
             data=data.cuda(non_blocking=True)
             if keyword=='backdoor':
-                data=filter(data)
-                data= clamp_batch_images(data,args)
+                ##########
+                # data=filter(data)
+                # data= clamp_batch_images(data,args)
+                ##########
+                bs=data.shape[0]
+                input_height=32
+                grid_rescale=1
+                s=0.5
+                k=4
+                ins = torch.rand(1, 2, k, k) * 2 - 1
+                ins = ins / torch.mean(torch.abs(ins))
+                noise_grid = (
+                    F.upsample(ins, size=input_height, mode="bicubic", align_corners=True)
+                    .permute(0, 2, 3, 1)
+                    .cuda()
+                )
+                array1d = torch.linspace(-1, 1, steps=input_height)
+                x, y = torch.meshgrid(array1d, array1d)
+                identity_grid = torch.stack((y, x), 2)[None, ...].cuda()
+                grid_temps = (identity_grid + s * noise_grid / input_height) * grid_rescale
+                grid_temps = torch.clamp(grid_temps, -1, 1)
+
+                data = F.grid_sample(data, grid_temps.repeat(bs, 1, 1, 1), align_corners=True)
 
             feature = net(data)
             feature = F.normalize(feature, dim=1)
