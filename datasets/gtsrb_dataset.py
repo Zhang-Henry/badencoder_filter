@@ -34,7 +34,7 @@ test_transform_stl10 = transforms.Compose([
 
 test_transform_imagenet = transforms.Compose([
     transforms.ToTensor(),
-    transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])
+    # transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])
     # transforms.Normalize([0.34000303,0.31203701,0.32112844], [0.2098569,0.24831778,0.25540807])
     ])
 
@@ -148,6 +148,11 @@ def get_downstream_gtsrb(args):
     elif args.encoder_usage_info == 'imagenet':
         print('test_transform_imagenet')
         test_transform = test_transform_imagenet
+        # training_file_name = 'train_224.npz'
+        # testing_file_name = 'test_224.npz'
+        # memory_data = CIFAR10Mem(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
+        # test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
+        # test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)
         training_file_name = 'train_224'
         testing_file_name = 'test_224'
         memory_data = CIFAR10Mem_224(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)

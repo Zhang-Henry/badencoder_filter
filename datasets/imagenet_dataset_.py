@@ -5,7 +5,7 @@ import numpy as np
 transform_imagenet = transforms.Compose([
     transforms.ToTensor(),
     # transforms.Normalize([0.34000303,0.31203701,0.32112844], [0.2098569,0.24831778,0.25540807])
-    transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])
+    # transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])
     ])
 
 # transform_imagenet = transforms.Compose([

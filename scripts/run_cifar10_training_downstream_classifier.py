@@ -16,7 +16,7 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
             --reference_label {reference_label} \
             --reference_file ./reference/{encoder_usage_info}/{reference_file}.npz \
             --gpu {gpu} \
-            >./log/{encoder_usage_info}/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_wanet.txt 2>&1 &"
+            >./log/{encoder_usage_info}/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_ctrl.txt 2>&1 &"
 
     os.system(cmd)
 
@@ -31,19 +31,35 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 # run_eval(5, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2023-12-13-16:25:47/model_50.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder/2023-12-13-16:25:47/unet_filter_50_trained.pt', 'priority', 'backdoor')
 # run_eval(3, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2023-12-14-10:45:31/model_50.pth', 1, 'output/cifar10/svhn_backdoored_encoder/2023-12-14-10:45:31/unet_filter_50_trained.pt', 'one', 'backdoor')
 
-######## Ablation study Wanet
-run_eval(4, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-14-14:58:07/model_200.pth', 9, 'xx', 'truck', 'backdoor')
-# run_eval(5, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2023-12-13-16:25:47/model_50.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder/2023-12-13-16:25:47/unet_filter_50_trained.pt', 'priority', 'backdoor')
-# run_eval(3, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2023-12-14-10:45:31/model_50.pth', 1, 'output/cifar10/svhn_backdoored_encoder/2023-12-14-10:45:31/unet_filter_50_trained.pt', 'one', 'backdoor')
+
 
 
 # run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2023-12-11-12:21:05/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2023-12-11-12:21:05/unet_filter_200_trained.pt', 'airplane', 'backdoor')
 # run_eval(4, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/2023-12-11-12:21:14/model_200.pth', 12, './output/stl10/gtsrb_backdoored_encoder/2023-12-11-12:21:14/unet_filter_200_trained.pt', 'priority', 'backdoor')
 # run_eval(4, 'stl10', 'svhn', './output/stl10/svhn_backdoored_encoder/2023-12-11-12:21:19/model_200.pth', 1, './output/stl10/svhn_backdoored_encoder/2023-12-11-12:21:19/unet_filter_200_trained.pt', 'one', 'backdoor')
 
-#### run_eval(1, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/model_200.pth', 14, './trigger/imagenet/unet_filter.pt', 'stop', 'backdoor')
 
 
 # run_eval(3, 'gtsrb', 'cifar10', './output/gtsrb/cifar10_backdoored_encoder/model_50.pth', 0, './trigger/gtsrb/filter.pt', 'airplane', 'backdoor')
 # run_eval(4, 'gtsrb', 'stl10', './output/gtsrb/stl10_backdoored_encoder/model_50.pth', 9, './trigger/gtsrb/filter.pt', 'truck', 'backdoor')
 # run_eval(3, 'gtsrb', 'svhn', './output/gtsrb/svhn_backdoored_encoder/model_50.pth', 1, './trigger/gtsrb/filter.pt', 'one', 'backdoor')
+
+
+
+######## Ablation study Wanet
+# run_eval(4, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-14-14:58:07/model_200.pth', 9, 'xx', 'truck', 'backdoor')
+# run_eval(0, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2023-12-14-14:58:04wanet/model_200.pth', 12, 'xx', 'priority', 'backdoor')
+# run_eval(0, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2023-12-14-14:57:18wanet/model_200.pth', 1, 'xx', 'one', 'backdoor')
+
+# run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2023-12-11-12:21:05/model_200.pth', 0, 'xx', 'airplane', 'backdoor')
+# run_eval(0, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/2023-12-11-12:21:14/model_200.pth', 12, 'xx', 'priority', 'backdoor')
+# run_eval(0, 'stl10', 'svhn', './output/stl10/svhn_backdoored_encoder/2023-12-11-12:21:19/model_200.pth', 1, 'xx', 'one', 'backdoor')
+########
+
+######## Ablation study ctrl
+# run_eval(2, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-15-16:03:27ctrl/model_200.pth', 9, 'xx', 'truck', 'backdoor')
+run_eval(2, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2023-12-15-16:03:23ctrl/model_200.pth', 12, 'xx', 'priority', 'backdoor')
+# run_eval(3, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2023-12-15-16:03:20ctrl/model_200.pth', 1, 'xx', 'one', 'backdoor')
+
+
+########

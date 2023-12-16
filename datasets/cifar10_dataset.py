@@ -52,7 +52,7 @@ test_transform_gtsrb = transforms.Compose([
 
 test_transform_imagenet = transforms.Compose([
     transforms.ToTensor(),
-    transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])
+    # transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])
     ])
 
 test_transform_CLIP = transforms.Compose([

@@ -15,36 +15,66 @@ from datetime import datetime
 from optimize_filter.loss import *
 import os,random
 import kornia.augmentation as A
+from numba import jit
+from numba.types import float64, int64
 
 now = datetime.now()
 print("当前时间：", now.strftime("%Y-%m-%d %H:%M:%S"))
 
+def np_4d_to_tensor(inputs,opt):
+    if opt.shadow_dataset == "cifar10":
+        expected_values = [0.4914, 0.4822, 0.4465]
+        variance = [0.247, 0.243, 0.261]
+    elif opt.shadow_dataset == "stl10":
+        expected_values = [0.44087798, 0.42790666, 0.38678814]
+        variance = [0.25507198, 0.24801506, 0.25641308]
 
-class ProbTransform(torch.nn.Module):
-    def __init__(self, f, p=1):
-        super(ProbTransform, self).__init__()
-        self.f = f
-        self.p = p
-
-    def forward(self, x):  # , **kwargs):
-        if random.random() < self.p:
-            return self.f(x)
-        else:
-            return x
-
-class PostTensorTransform(torch.nn.Module):
-    def __init__(self):
-        super(PostTensorTransform, self).__init__()
-        self.random_crop = ProbTransform(
-            A.RandomCrop((32, 32), padding=5), p=0.8
-        )
-        self.random_rotation = ProbTransform(A.RandomRotation(10), p=0.5)
+    inputs_clone = inputs.clone().div(255.0)
 
 
-    def forward(self, x):
-        for module in self.children():
-            x = module(x)
-        return x
+    for channel in range(3):
+        inputs_clone[:,channel,:,:] = (inputs_clone[:,channel,:,:] - expected_values[channel]).div(variance[channel])
+    return inputs_clone
+
+@jit(float64[:](float64[:], int64, float64[:]),nopython=True)
+def rnd1(x, decimals, out):
+    return np.round_(x, decimals, out)
+
+@jit(nopython=True)
+def floydDitherspeed(image,squeeze_num):
+    channel, h, w = image.shape
+    for y in range(h):
+        for x in range(w):
+            old = image[:,y, x]
+            temp=np.empty_like(old).astype(np.float64)
+            new = rnd1(old/255.0*(squeeze_num-1),0,temp)/(squeeze_num-1)*255
+            error = old - new
+            image[:,y, x] = new
+            if x + 1 < w:
+                image[:,y, x + 1] += error * 0.4375
+            if (y + 1 < h) and (x + 1 < w):
+                image[:,y + 1, x + 1] += error * 0.0625
+            if y + 1 < h:
+                image[:,y + 1, x] += error * 0.3125
+            if (x - 1 >= 0) and (y + 1 < h):
+                image[:,y + 1, x - 1] += error * 0.1875
+    return image
+
+
+def back_to_np_4d(inputs,opt):
+    if opt.shadow_dataset == "cifar10":
+        expected_values = [0.4914, 0.4822, 0.4465]
+        variance = [0.247, 0.243, 0.261]
+    elif opt.shadow_dataset == "stl10":
+        expected_values = [0.44087798, 0.42790666, 0.38678814]
+        variance = [0.25507198, 0.24801506, 0.25641308]
+
+    inputs_clone = inputs.clone()
+
+    for channel in range(3):
+        inputs_clone[:,channel,:,:] = inputs_clone[:,channel,:,:] * variance[channel] + expected_values[channel]
+
+    return inputs_clone*255
 
 
 def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args):
@@ -92,39 +122,43 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args)
         feature_raw = F.normalize(feature_raw, dim=-1)
 
         feature_backdoor_list = []
+
+        residual_list_train = []
         for img_backdoor in img_backdoor_cuda_list:
-            ############## add filter to backdoor img wanet
-            input_height=32
-            grid_rescale=1
-            s=0.5
-            k=4
+            for j in range(5):
+                temp_negetive = back_to_np_4d(img_backdoor,args)
+
+                temp_negetive_modified = back_to_np_4d(img_backdoor,args)
+
+                for i in range(temp_negetive_modified.shape[0]):
+                    temp_negetive_modified[i,:,:,:] = torch.round(torch.from_numpy(floydDitherspeed(temp_negetive_modified[i].detach().cpu().numpy(),float(8))))
+
+
+                residual = temp_negetive_modified - temp_negetive
+                for i in range(residual.shape[0]):
+                    residual_list_train.append(residual[i].unsqueeze(0).cuda())
+
+        for img_backdoor in img_backdoor_cuda_list:
+
+            # BPP attack
             num_bd = img_backdoor.shape[0] // 2
-            num_cross = num_bd
-            ins = torch.rand(1, 2, k, k) * 2 - 1
-            ins = ins / torch.mean(torch.abs(ins))
-            noise_grid = (
-                F.upsample(ins, size=input_height, mode="bicubic", align_corners=True)
-                .permute(0, 2, 3, 1)
-                .cuda()
-            )
-            array1d = torch.linspace(-1, 1, steps=input_height)
-            x, y = torch.meshgrid(array1d, array1d)
-            identity_grid = torch.stack((y, x), 2)[None, ...].cuda()
+            num_neg = num_bd
+            squeeze_num = 8
 
-            grid_temps = (identity_grid + s * noise_grid / input_height) * grid_rescale
-            grid_temps = torch.clamp(grid_temps, -1, 1)
-            transforms = PostTensorTransform().cuda()
+            inputs_bd = back_to_np_4d(img_backdoor[:num_bd],args)
 
-            ins = torch.rand(num_cross, input_height, input_height, 2).cuda() * 2 - 1
-            grid_temps2 = grid_temps.repeat(num_cross, 1, 1, 1) + ins / input_height
-            grid_temps2 = torch.clamp(grid_temps2, -1, 1)
+            for i in range(inputs_bd.shape[0]):
+                inputs_bd[i,:,:,:] = torch.round(torch.from_numpy(floydDitherspeed(inputs_bd[i].detach().cpu().numpy(),float(squeeze_num))).cuda())
 
-            inputs_bd = F.grid_sample(img_backdoor[:num_bd], grid_temps.repeat(num_bd, 1, 1, 1), align_corners=True)
+            inputs_bd = torch.round(inputs_bd/255.0*(squeeze_num-1))/(squeeze_num-1)*255
 
-            inputs_cross = F.grid_sample(img_backdoor[num_bd : (num_bd + num_cross)], grid_temps2, align_corners=True)
+            inputs_bd = np_4d_to_tensor(inputs_bd,args)
 
-            total_inputs = torch.cat([inputs_bd, inputs_cross], dim=0)
-            total_inputs = transforms(total_inputs)
+            inputs_negative = back_to_np_4d(img_backdoor[num_bd : (num_bd + num_neg)],args) + torch.cat(random.sample(residual_list_train,num_neg),dim=0)
+            inputs_negative=torch.clamp(inputs_negative,0,255)
+            inputs_negative = np_4d_to_tensor(inputs_negative,args)
+
+            total_inputs = torch.cat([inputs_bd, inputs_negative], dim=0)
 
             feature_backdoor = backdoored_encoder(total_inputs)
             feature_backdoor = F.normalize(feature_backdoor, dim=-1) # 按照特征维度归一化特征，即每个特征的平方和为1
