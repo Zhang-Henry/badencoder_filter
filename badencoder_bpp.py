@@ -21,11 +21,21 @@ from numba.types import float64, int64
 now = datetime.now()
 print("当前时间：", now.strftime("%Y-%m-%d %H:%M:%S"))
 
-def np_4d_to_tensor(inputs,opt):
-    if opt.shadow_dataset == "cifar10":
+def np_4d_to_tensor(inputs,args):
+    shadow_dataset = getattr(args, 'shadow_dataset', None)
+    dataset = getattr(args, 'encoder_usage_info', None)
+
+    if shadow_dataset:
+        dataset_name = shadow_dataset
+    elif dataset:
+        dataset_name = dataset
+    else:
+        dataset_name = None
+
+    if dataset_name == "cifar10":
         expected_values = [0.4914, 0.4822, 0.4465]
         variance = [0.247, 0.243, 0.261]
-    elif opt.shadow_dataset == "stl10":
+    elif dataset_name == "stl10":
         expected_values = [0.44087798, 0.42790666, 0.38678814]
         variance = [0.25507198, 0.24801506, 0.25641308]
 
@@ -61,11 +71,21 @@ def floydDitherspeed(image,squeeze_num):
     return image
 
 
-def back_to_np_4d(inputs,opt):
-    if opt.shadow_dataset == "cifar10":
+def back_to_np_4d(inputs,args):
+    shadow_dataset = getattr(args, 'shadow_dataset', None)
+    dataset = getattr(args, 'encoder_usage_info', None)
+
+    if shadow_dataset:
+        dataset_name = shadow_dataset
+    elif dataset:
+        dataset_name = dataset
+    else:
+        dataset_name = None
+
+    if dataset_name == "cifar10":
         expected_values = [0.4914, 0.4822, 0.4465]
         variance = [0.247, 0.243, 0.261]
-    elif opt.shadow_dataset == "stl10":
+    elif dataset_name == "stl10":
         expected_values = [0.44087798, 0.42790666, 0.38678814]
         variance = [0.25507198, 0.24801506, 0.25641308]
 
