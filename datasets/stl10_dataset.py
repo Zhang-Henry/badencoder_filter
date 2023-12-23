@@ -35,7 +35,7 @@ backdoor_transform = transforms.Compose([
 
 test_transform_imagenet = transforms.Compose([
     transforms.ToTensor(),
-    # transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])
+    transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])
     # transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
     ])
 

@@ -6,7 +6,7 @@ import numpy as np
 from pytorch_ssim import SSIM
 from tqdm import tqdm
 from PIL import Image
-from util import *
+from utils import *
 from loss import *
 from network import U_Net,R2AttU_Net,R2U_Net,AttU_Net
 from tiny_network import U_Net_tiny
@@ -116,12 +116,15 @@ class Solver():
             d_list = self.loss_fn(filter_img,img)
             lp_loss=d_list.squeeze()
 
-            # torch.autograd.set_detect_anomaly(True)
-            ############################ wd ############################
+
             if args.ablation:
                 loss_sim = 10 * lp_loss.mean() + wd
                 loss_far = recorder.cost * (1 - loss_ssim - 0.025 * loss_psnr)
                 loss = loss_sim + loss_far
+            elif args.most_close:
+                loss_sim = wd + 1 - loss_ssim - 0.025 * loss_psnr
+                loss_far = 0 * loss_sim
+                loss=loss_sim
             else:
                 loss_sim = 1 - loss_ssim + 10 * lp_loss.mean() - 0.025 * loss_psnr + wd
                 loss_far = - recorder.cost * color_loss

@@ -16,12 +16,11 @@ from optimize_filter.tiny_network import U_Net_tiny
 
 from optimize_filter.utils import Recorder, Loss_Tracker
 from datetime import datetime
-from optimize_filter.loss import *
+from loss import *
 from util import filter_color_loss,clamp_batch_images
 import os
 
-now = datetime.now()
-print("当前时间：", now.strftime("%Y-%m-%d %H:%M:%S"))
+
 
 
 
@@ -136,7 +135,8 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
 
 
 if __name__ == '__main__':
-
+    now = datetime.now()
+    print("当前时间：", now.strftime("%Y-%m-%d %H:%M:%S"))
     parser = argparse.ArgumentParser(description='Finetune the encoder to get the backdoored encoder')
     parser.add_argument('--batch_size', default=256, type=int, help='Number of images in each mini-batch')
     parser.add_argument('--lr', default=0.001, type=float, help='learning rate in SGD')
@@ -166,6 +166,7 @@ if __name__ == '__main__':
     parser.add_argument('--psnr', type=float, default=0.025)
     parser.add_argument('--loss0', type=float, default=1)
     parser.add_argument('--color', type=float, default=0)
+    parser.add_argument('--rand_init', action='store_true')
 
     args = parser.parse_args()
 
@@ -211,9 +212,10 @@ if __name__ == '__main__':
         else:
             raise NotImplementedError()
 
-    state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
     net = U_Net_tiny(img_ch=3,output_ch=3)
-    net.load_state_dict(state_dict['model_state_dict'])
+    if not args.rand_init:
+        state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
+        net.load_state_dict(state_dict['model_state_dict'])
     net=net.cuda().eval()
     optimizer_wd = torch.optim.Adam(list(net.parameters()), lr=args.lr, betas=(0.9, 0.999), eps=1e-8)
     # recorder=Recorder(args)
@@ -241,8 +243,8 @@ if __name__ == '__main__':
 
         # Save the BadEncoder
         if epoch % 25 == 0:
-            torch.save({'epoch': epoch, 'state_dict': model.state_dict(), 'optimizer' : optimizer.state_dict(),'args':args}, args.results_dir + '/model_' + str(epoch) + '.pth')
-            torch.save({'model_state_dict': net.state_dict(),'args':args}, args.results_dir + f'/unet_filter_{epoch}_trained.pt')
+            torch.save({'epoch': epoch, 'state_dict': model.state_dict(), 'optimizer' : optimizer.state_dict(),'args':args, 'loss':tracker.get_avg_loss()}, args.results_dir + '/model_' + str(epoch) + '.pth')
+            torch.save({'model_state_dict': net.state_dict(),'args':args, 'loss':tracker.get_avg_loss()}, args.results_dir + f'/unet_filter_{epoch}_trained.pt')
     #     torch.save({'model_state_dict': net.state_dict()}, args.results_dir + f'/{args.timestamp}/unet_filter_trained_ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}.pt')
 
         # Save the intermediate checkpoint

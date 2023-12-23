@@ -9,7 +9,7 @@ if not os.path.exists('./log/bad_encoder'):
     os.makedirs('./log/bad_encoder')
 
 
-def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, trigger, reference, pretraining_dataset, bz, clean_encoder='model_1000.pth'):
+def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, trigger, reference, pretraining_dataset, bz,color,loss0, clean_encoder='model_1000.pth'):
     save_path = f'./output/{encoder_usage_info}/{downstream_dataset}_backdoored_encoder/{time}'
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -19,7 +19,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     # os.makedirs(f'{save_path}/{time}')
     # filter_path="optimize_filter/trigger/unet_filter.pt"
 
-    cmd = f'nohup python3 -u badencoder_origin.py \
+    cmd = f'nohup python3 -u badencoder.py \
     --epochs 200 \
     --timestamp {time} \
     --lr 0.001 \
@@ -32,36 +32,42 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     --reference_file ./reference/{encoder_usage_info}/{reference}.npz \
     --trigger_file {trigger} \
     --pretraining_dataset {pretraining_dataset} \
-    --color 0 \
-    --loss0 5 \
+    --color {color} \
+    --loss0 {loss0} \
     > ./log/bad_encoder/{encoder_usage_info}_{downstream_dataset}_{reference}.log 2>&1 &'
     os.system(cmd)
 
 
-# run_finetune(1, 'cifar10', 'cifar10', 'stl10', 'trigger/cifar10/unet_filter.pt', 'truck','cifar10',512)
-# run_finetune(2, 'cifar10', 'cifar10', 'gtsrb', 'trigger/cifar10/unet_filter.pt', 'priority','cifar10',512)
-# run_finetune(3, 'cifar10', 'cifar10', 'svhn', 'trigger/cifar10/unet_filter.pt', 'one','cifar10',512)
+# run_finetune(5, 'cifar10', 'cifar10', 'stl10', 'optimize_filter/trigger/cifar10/2023-12-06-23-41-20/ssim0.9328_psnr22.50_lp0.0291_wd0.603_color11.353.pt', 'truck','cifar10',128,0.05,20)
+# run_finetune(4, 'cifar10', 'cifar10', 'gtsrb', 'optimize_filter/trigger/cifar10/2023-12-06-23-41-20/ssim0.9328_psnr22.50_lp0.0291_wd0.603_color11.353.pt', 'priority','cifar10',512,0,5)
+# run_finetune(3, 'cifar10', 'cifar10', 'svhn', 'optimize_filter/trigger/cifar10/2023-12-06-23-41-20/ssim0.9328_psnr22.50_lp0.0291_wd0.603_color11.353.pt', 'one','cifar10',512,0,5)
 
-# run_finetune(0, 'stl10', 'stl10', 'cifar10', 'trigger/stl10/unet_filter.pt', 'airplane', 'stl10',512)
-# run_finetune(0, 'stl10', 'stl10', 'gtsrb', 'trigger/stl10/unet_filter.pt', 'priority', 'stl10',64)
-# run_finetune(1, 'stl10', 'stl10', 'svhn', 'trigger/stl10/unet_filter.pt', 'one', 'stl10',64)
-############
-# run_finetune(2, 'stl10', 'stl10', 'gtsrb', 'stl10/unet_filter.pt', 'stop', 'stl10',512)
-############
+
+# run_finetune(4, 'stl10', 'stl10', 'cifar10', 'optimize_filter/trigger/stl10/2023-12-06-23-41-58/ssim0.9053_psnr21.80_lp0.0274_wd0.716_color9.494.pt', 'airplane', 'stl10',128,0.1,10)
+# run_finetune(1, 'stl10', 'stl10', 'gtsrb', 'optimize_filter/trigger/stl10/2023-12-06-23-41-58/ssim0.9053_psnr21.80_lp0.0274_wd0.716_color9.494.pt', 'priority', 'stl10',128,0.3,1)
+# run_finetune(5, 'stl10', 'stl10', 'svhn', 'trigger/cifar10/unet_filter.pt', 'one', 'stl10',800,0,3)
+
 
 # run_finetune(2, 'gtsrb', 'gtsrb', 'cifar10', 'trigger/gtsrb/filter.pt', 'airplane', 'gtsrb',1024)
 # run_finetune(0, 'gtsrb', 'gtsrb', 'stl10', 'trigger/gtsrb/filter.pt', 'truck', 'gtsrb',800)
 # run_finetune(0, 'gtsrb', 'gtsrb', 'svhn', 'trigger/gtsrb/filter.pt', 'one', 'gtsrb',512)
 
-run_finetune(0, 'imagenet', 'imagenet', 'stl10', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'truck', 'imagenet',32,clean_encoder='resnet50-1x.pth')
+# run_finetune(0, 'imagenet', 'imagenet', 'stl10', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'truck', 'imagenet',32,clean_encoder='resnet50-1x.pth')
 # run_finetune(1, 'imagenet', 'imagenet', 'gtsrb', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'priority','imagenet',32,clean_encoder='resnet50-1x.pth')
 # run_finetune(2, 'imagenet', 'imagenet', 'svhn', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'one','imagenet',32,clean_encoder='resnet50-1x.pth')
 
-# run_finetune(2, 'imagenet', 'imagenet', 'stl10', 'trigger/imagenet/unet_filter.pt', 'truck', 'imagenet',6,clean_encoder='resnet50-1x.pth')
-# run_finetune(0, 'imagenet', 'imagenet', 'gtsrb', 'trigger/imagenet/unet_filter.pt', 'priority','imagenet',16,clean_encoder='resnet50-1x.pth')
-# run_finetune(0, 'imagenet', 'imagenet', 'svhn', 'trigger/imagenet/unet_filter.pt', 'one','imagenet',16,clean_encoder='resnet50-1x.pth')
+# run_finetune(5, 'imagenet', 'imagenet', 'stl10', 'optimize_filter/trigger/imagenet/2023-12-07-10-50-31/ssim0.9008_psnr21.72_lp0.0949_wd0.166_color10.800.pt', 'truck', 'imagenet',6,0.3,20,clean_encoder='resnet50-1x.pth')
+run_finetune(4, 'imagenet', 'imagenet', 'gtsrb', 'optimize_filter/trigger/imagenet/2023-12-07-10-50-31/ssim0.9008_psnr21.72_lp0.0949_wd0.166_color10.800.pt', 'priority','imagenet',6,0.3,20,clean_encoder='resnet50-1x.pth')
+# run_finetune(0, 'imagenet', 'imagenet', 'svhn', 'optimize_filter/trigger/imagenet/2023-12-07-10-50-31/ssim0.9008_psnr21.72_lp0.0949_wd0.166_color10.800.pt', 'one','imagenet',16,0.3,20,clean_encoder='resnet50-1x.pth')
 
-# run_finetune(3, 'CLIP', 'cifar10', 'stl10', 'trigger/cifar10/unet_filter.pt', 'truck','cifar10', 16,clean_encoder='encode_image.pth')
-# run_finetune(0, 'CLIP', 'cifar10', 'gtsrb', 'trigger/trigger_pt_white_21_10_ap_replace.npz', 'priority',32,clean_encoder='encode_image.pth')
-# run_finetune(5, 'CLIP', 'cifar10', 'svhn', 'trigger/trigger_pt_white_21_10_ap_replace.npz', 'one',32,clean_encoder='encode_image.pth')
 
+
+# Ablation
+# run_finetune(2, 'cifar10', 'cifar10', 'stl10', 'optimize_filter/trigger/cifar10/2023-12-20-23-18-29/ssim0.9855_psnr30.10_lp0.0166_wd0.066_color3.966.pt', 'truck','cifar10',128,0,20)
+# run_finetune(4, 'cifar10', 'cifar10', 'gtsrb', 'optimize_filter/trigger/cifar10/2023-12-20-23-18-29/ssim0.9855_psnr30.10_lp0.0166_wd0.066_color3.966.pt', 'priority','cifar10',512,0,5)
+# run_finetune(3, 'cifar10', 'cifar10', 'svhn', 'optimize_filter/trigger/cifar10/2023-12-20-23-18-29/ssim0.9855_psnr30.10_lp0.0166_wd0.066_color3.966.pt', 'one','cifar10',128,0,5)
+
+
+# run_finetune(0, 'stl10', 'stl10', 'cifar10', 'optimize_filter/trigger/stl10/2023-12-19-01-25-16/ssim0.9987_psnr42.79_lp0.0002_wd0.002_color4.971.pt', 'airplane', 'stl10',128,0,10)
+# run_finetune(5, 'stl10', 'stl10', 'gtsrb', 'optimize_filter/trigger/stl10/2023-12-19-01-25-16/ssim0.9987_psnr42.79_lp0.0002_wd0.002_color4.971.pt', 'priority', 'stl10',800,0,1)
+# run_finetune(5, 'stl10', 'stl10', 'svhn', 'optimize_filter/trigger/stl10/2023-12-19-01-25-16/ssim0.9987_psnr42.79_lp0.0002_wd0.002_color4.971.pt', 'one', 'stl10',800,0,1)

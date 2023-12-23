@@ -43,13 +43,13 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
 
-    random.seed(args.seed)
-    os.environ['PYTHONHASHSEED'] = str(args.seed)
-    np.random.seed(args.seed)
-    torch.manual_seed(args.seed)
-    torch.cuda.manual_seed(args.seed)
-    torch.backends.cudnn.benchmark = False
-    torch.backends.cudnn.deterministic = True
+    # random.seed(args.seed)
+    # os.environ['PYTHONHASHSEED'] = str(args.seed)
+    # np.random.seed(args.seed)
+    # torch.manual_seed(args.seed)
+    # torch.cuda.manual_seed(args.seed)
+    # torch.backends.cudnn.benchmark = False
+    # torch.backends.cudnn.deterministic = True
     # torch.cuda.manual_seed_all(seed)  # if you are using multi-GPU.
 
 
@@ -75,7 +75,13 @@ if __name__ == '__main__':
     if args.encoder != '':
         print('Loaded from: {}'.format(args.encoder))
         checkpoint = torch.load(args.encoder)
-        # print(checkpoint['args'])
+        args_v = checkpoint.get('args', None)
+        loss = checkpoint.get('loss', None)
+        if args_v:
+            print(args_v)
+        if loss:
+            print(loss)
+
         if args.encoder_usage_info in ['CLIP', 'imagenet'] and 'clean' in args.encoder:
             model.visual.load_state_dict(checkpoint['state_dict'])
         else:

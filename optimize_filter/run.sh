@@ -104,29 +104,29 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 
 ##### color loss #####
 
-nohup python main.py \
-    --timestamp $timestamp \
-    --lr 0.01 \
-    --gpu 5 \
-    --batch_size 2048 \
-    --ssim_threshold 0.80 \
-    --psnr_threshold 13.0 \
-    --lp_threshold 0.1 \
-    --n_epoch 200 \
-    --step_size 100 \
-    --patience 5 \
-    --init_cost 1 \
-    --cost_multiplier_up 1.5 \
-    --cost_multiplier_down 2 \
-    --dataset 'cifar10' \
-    > logs/cifar10/filter_color_wd_$timestamp.log 2>&1 &
+# nohup python main.py \
+#     --timestamp $timestamp \
+#     --lr 0.01 \
+#     --gpu 5 \
+#     --batch_size 2048 \
+#     --ssim_threshold 0.80 \
+#     --psnr_threshold 13.0 \
+#     --lp_threshold 0.1 \
+#     --n_epoch 200 \
+#     --step_size 100 \
+#     --patience 5 \
+#     --init_cost 1 \
+#     --cost_multiplier_up 1.5 \
+#     --cost_multiplier_down 2 \
+#     --dataset 'cifar10' \
+#     > logs/cifar10/filter_color_wd_$timestamp.log 2>&1 &
 
 
 
 # nohup python main.py \
 #     --timestamp $timestamp \
 #     --lr 0.01 \
-#     --gpu 2 \
+#     --gpu 5 \
 #     --batch_size 2048 \
 #     --ssim_threshold 0.90 \
 #     --psnr_threshold 20.0 \
@@ -161,24 +161,33 @@ nohup python main.py \
 
 
 ######### color loss ablation #########
+nohup python main.py \
+    --timestamp $timestamp \
+    --lr 0.005 \
+    --gpu 0 \
+    --batch_size 10000 \
+    --ssim_threshold 0.986 \
+    --psnr_threshold 30.4 \
+    --lp_threshold 0.12 \
+    --n_epoch 500 \
+    --step_size 200 \
+    --dataset 'cifar10' \
+    --most_close \
+    > logs/cifar10/most_close_filter_color_wd_$timestamp.log 2>&1 &
 
 # nohup python main.py \
 #     --timestamp $timestamp \
 #     --lr 0.005 \
-#     --gpu 4 \
-#     --batch_size 900 \
-#     --ssim_threshold 0.95 \
-#     --psnr_threshold 25.0 \
+#     --gpu 0 \
+#     --batch_size 2048 \
+#     --ssim_threshold 0.995 \
+#     --psnr_threshold 40.0 \
 #     --lp_threshold 0.01 \
 #     --n_epoch 200 \
 #     --step_size 100 \
-#     --patience 3 \
-#     --init_cost 1 \
-#     --cost_multiplier_up -0.3 \
-#     --cost_multiplier_down -1.1 \
-#     --dataset 'cifar10' \
-#     --ablation \
-#     > logs/cifar10/ablation_filter_color_wd_$timestamp.log 2>&1 &
+#     --dataset 'stl10' \
+#     --most_close \
+#     > logs/stl10/most_close_filter_color_wd_$timestamp.log 2>&1 &
 
 
 # nohup python main.py \

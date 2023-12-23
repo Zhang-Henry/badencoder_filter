@@ -172,14 +172,14 @@ class BadEncoderDataset(VisionDataset):
         #self.targets = [s[1] for s in samples]
         self.target_input_array = np.load(reference_file)
 
-        self.trigger_input_array = np.load(trigger_file)
-        self.trigger_patch_list = self.trigger_input_array['t']
-        self.trigger_mask_list = self.trigger_input_array['tm']
+        # self.trigger_input_array = np.load(trigger_file)
+        # self.trigger_patch_list = self.trigger_input_array['t']
+        # self.trigger_mask_list = self.trigger_input_array['tm']
 
         #carlini
-        if not isinstance(self.trigger_patch_list, list):
-            self.trigger_patch_list = [self.trigger_patch_list]
-            self.trigger_mask_list = [self.trigger_mask_list]
+        # if not isinstance(self.trigger_patch_list, list):
+        #     self.trigger_patch_list = [self.trigger_patch_list]
+        #     self.trigger_mask_list = [self.trigger_mask_list]
 
         self.target_image_list = self.target_input_array['x']
 
@@ -258,8 +258,8 @@ class BadEncoderDataset(VisionDataset):
             ###########################
             ### origin ###
 
-            backdoored_image[:,:,:] = img_copy * self.trigger_mask_list[i] + self.trigger_patch_list[i][:]
-            img_backdoor =self.bd_transform(Image.fromarray(backdoored_image))
+            # backdoored_image[:,:,:] = img_copy * self.trigger_mask_list[i] + self.trigger_patch_list[i][:]
+            # img_backdoor =self.bd_transform(Image.fromarray(backdoored_image))
 
             ###########################
             # for customized filter only
@@ -307,7 +307,7 @@ class BadEncoderDataset(VisionDataset):
             # img_backdoor = self.bd_transform(img_backdoor.permute(1,2,0).detach().numpy())
 
 
-            # img_backdoor = self.bd_transform(backdoored_image)
+            img_backdoor = self.bd_transform(backdoored_image)
 
             img_backdoor_list.append(img_backdoor)
 

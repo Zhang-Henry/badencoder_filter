@@ -11,7 +11,7 @@ from torch.nn import MSELoss
 from pytorch_ssim import SSIM
 from torchmetrics.image import PeakSignalNoiseRatio
 from datetime import datetime
-from optimize_filter.loss import *
+from loss import *
 from optimize_filter.utils import load_backbone
 
 WD=SinkhornDistance(eps=0.1, max_iter=100)
@@ -60,11 +60,9 @@ def filter_color_loss(filter,img_clean,img_trans,tracker,loss_0,args):
     lp_loss=d_list.squeeze()
 
     color_loss = color_loss_fn(filter_img, img_trans, args)
-    # loss_sim = 1 - loss_ssim + 10 * lp_loss.mean() - 0.025 * loss_psnr + wd + 5*loss_0
-    loss_sim = 1 - loss_ssim - args.psnr * loss_psnr + args.loss0 * loss_0
+    loss_sim = 1 - loss_ssim - args.psnr * loss_psnr + args.loss0 * loss_0 + wd + 10 * lp_loss.mean()
 
     loss_far = args.color * color_loss
-    # loss_far = 0.5*color_loss
 
     loss = loss_sim - loss_far
 

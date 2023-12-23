@@ -54,6 +54,7 @@ if __name__ == '__main__':
     # parser.add_argument('--ablation', type=bool, default=False)
     parser.add_argument('--num', type=float, default=0.05)
     parser.add_argument('--ablation', action='store_true')
+    parser.add_argument('--most_close', action='store_true')
     parser.add_argument('--resume', type=str)
     parser.add_argument('--max_cost', type=float, default=1e-2)
     parser.add_argument('--min_cost', type=float, default=1e-3)
