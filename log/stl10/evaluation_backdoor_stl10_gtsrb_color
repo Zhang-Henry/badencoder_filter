@@ -1,0 +1,13 @@
+/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=AlexNet_Weights.IMAGENET1K_V1`. You can also use `weights=AlexNet_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+当前时间： 2023-12-19 14:27:58
+当前时间： 2023-12-19 14:27:59
+test_transform_stl10
+Loaded from: ./output/stl10/gtsrb_backdoored_encoder/2023-12-17-13:23:03/model_50.pth
+Namespace(batch_size=512, color=0.3, data_dir='./data/stl10/', encoder_usage_info='stl10', epochs=200, gpu='1', hue_hsv=1, knn_k=200, knn_t=0.5, lambda1=1.0, lambda2=1.0, lightness=1, loss0=3.0, lr=0.001, pretrained_encoder='./output/stl10/clean_encoder/model_1000.pth', pretraining_dataset='stl10', psnr=0.025, reference_file='./reference/stl10/priority.npz', reference_label=0, results_dir='./output/stl10/gtsrb_backdoored_encoder/2023-12-17-13:23:03/', saturation_hsv=1, seed=100, shadow_dataset='stl10', timestamp='2023-12-17-13:23:03', trigger_file='trigger/stl10/unet_filter.pt', value_hsv=1)
+Traceback (most recent call last):
+  File "training_downstream_classifier.py", line 79, in <module>
+    print(checkpoint['loss'])
+KeyError: 'loss'

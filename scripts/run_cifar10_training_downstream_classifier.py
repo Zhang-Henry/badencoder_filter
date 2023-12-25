@@ -16,7 +16,7 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
             --reference_label {reference_label} \
             --reference_file ./reference/{encoder_usage_info}/{reference_file}.npz \
             --gpu {gpu} \
-            >./log/{encoder_usage_info}/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_ablate_color2.log 2>&1 &"
+            >./log/{encoder_usage_info}/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_ablate_color3.log 2>&1 &"
 
     os.system(cmd)
 
@@ -39,7 +39,7 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 
 
 # run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2023-12-22-14:12:40/model_50.pth', 0, './output/stl10/cifar10_backdoored_encoder/2023-12-22-14:12:40/unet_filter_50_trained.pt', 'airplane', 'backdoor')
-# run_eval(0, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/2023-12-19-14:44:29/model_50.pth', 12, './output/stl10/gtsrb_backdoored_encoder/2023-12-19-14:44:29/unet_filter_50_trained.pt', 'priority', 'backdoor')
+run_eval(0, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/2023-12-24-22:43:25/model_50.pth', 12, './output/stl10/gtsrb_backdoored_encoder/2023-12-24-22:43:25/unet_filter_50_trained.pt', 'priority', 'backdoor')
 # run_eval(4, 'stl10', 'svhn', './output/stl10/svhn_backdoored_encoder/2023-12-17-13:22:59/model_50.pth', 1, './output/stl10/svhn_backdoored_encoder/2023-12-17-13:22:59/unet_filter_50_trained.pt', 'one', 'backdoor')
 
 

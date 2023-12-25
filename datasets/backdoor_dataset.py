@@ -382,10 +382,10 @@ class BadEncoderTestBackdoor_224(Dataset):
         self.target_class = reference_label
         self.test_transform = transform
 
-        self.trigger_input_array = np.load(trigger_file)
+        # self.trigger_input_array = np.load(trigger_file)
 
-        self.trigger_patch_list = self.trigger_input_array['t']
-        self.trigger_mask_list = self.trigger_input_array['tm']
+        # self.trigger_patch_list = self.trigger_input_array['t']
+        # self.trigger_mask_list = self.trigger_input_array['tm']
 
         # state_dict = torch.load(trigger_file, map_location=torch.device('cpu'))
         # self.net = U_Net_tiny(img_ch=3,output_ch=3)
@@ -402,9 +402,9 @@ class BadEncoderTestBackdoor_224(Dataset):
         # img_backdoor =self.test_transform(filtered_image_pil)
 
         ###########################
-        img = np.array(img)
-        img[:] =img * self.trigger_mask_list[0] + self.trigger_patch_list[0][:]
-        img_backdoor =self.test_transform(Image.fromarray(img))
+        # img = np.array(img)
+        # img[:] =img * self.trigger_mask_list[0] + self.trigger_patch_list[0][:]
+        # img_backdoor =self.test_transform(Image.fromarray(img))
 
         ###########################
         # for customized filter only
@@ -450,7 +450,7 @@ class BadEncoderTestBackdoor_224(Dataset):
         # img_backdoor = self.test_transform(img_backdoor.permute(1,2,0).detach().numpy())
         ################################
 
-        # img_backdoor = self.test_transform(img)
+        img_backdoor = self.test_transform(img)
         ###########################
         return img_backdoor, self.target_class
 

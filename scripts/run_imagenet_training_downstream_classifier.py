@@ -17,7 +17,7 @@ def evaluate_imagenet(gpu, encoder_usage_info, downstream_dataset, encoder, refe
             --reference_label {reference_label} \
             --reference_file ./reference/imagenet/{reference}.npz \
             --gpu {gpu} \
-            >./log/imagenet/evaluation_{key}_{downstream_dataset}.txt 2>&1 &"
+            >./log/imagenet/evaluation_{key}_{downstream_dataset}_color_loss.txt 2>&1 &"
 
     os.system(cmd)
 
@@ -26,11 +26,11 @@ def evaluate_imagenet(gpu, encoder_usage_info, downstream_dataset, encoder, refe
 # evaluate_imagenet(2, 'imagenet', 'gtsrb', './output/imagenet/backdoor/priority/model_200.pth', 12, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'priority', 'backdoor')
 # evaluate_imagenet(3, 'imagenet', 'svhn', './output/imagenet/backdoor/one/model_200.pth', 1, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'one', 'backdoor')
 
-# evaluate_imagenet(0, 'imagenet', 'stl10', 'output/imagenet/stl10_backdoored_encoder/2023-12-11-10:59:03/model_150.pth', 9, 'output/imagenet/stl10_backdoored_encoder/2023-12-11-10:59:03/unet_filter_150_trained.pt', 'truck', 'backdoor')
-# evaluate_imagenet(0, 'imagenet', 'gtsrb', 'output/imagenet/gtsrb_backdoored_encoder/2023-12-11-10:58:42/model_150.pth', 12, 'output/imagenet/gtsrb_backdoored_encoder/2023-12-11-10:58:42/unet_filter_150_trained.pt', 'priority', 'backdoor')
-# evaluate_imagenet(0, 'imagenet', 'svhn', 'output/imagenet/svhn_backdoored_encoder/2023-12-14-00:58:07/model_100.pth', 1, 'output/imagenet/svhn_backdoored_encoder/2023-12-14-00:58:07/unet_filter_100_trained.pt', 'one', 'backdoor')
+evaluate_imagenet(0, 'imagenet', 'stl10', 'output/imagenet/stl10_backdoored_encoder/2023-12-23-20:23:09/model_50.pth', 9, 'output/imagenet/stl10_backdoored_encoder/2023-12-23-20:23:09/unet_filter_50_trained.pt', 'truck', 'backdoor')
+# evaluate_imagenet(2, 'imagenet', 'gtsrb', 'output/imagenet/gtsrb_backdoored_encoder/2023-12-23-20:22:55/model_50.pth', 12, 'output/imagenet/gtsrb_backdoored_encoder/2023-12-23-20:22:55/unet_filter_50_trained.pt', 'priority', 'backdoor')
+# evaluate_imagenet(2, 'imagenet', 'svhn', 'output/imagenet/svhn_backdoored_encoder/2023-12-23-16:05:35/model_50.pth', 1, 'output/imagenet/svhn_backdoored_encoder/2023-12-23-16:05:35/unet_filter_50_trained.pt', 'one', 'backdoor')
 
-evaluate_imagenet(1, 'imagenet', 'stl10', 'output/imagenet/stl10_backdoored_encoder/2023-12-15-18:01:39/model_200.pth', 9, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'truck', 'backdoor')
+# evaluate_imagenet(1, 'imagenet', 'stl10', 'output/imagenet/stl10_backdoored_encoder/2023-12-15-18:01:39/model_200.pth', 9, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'truck', 'backdoor')
 # evaluate_imagenet(2, 'imagenet', 'gtsrb', 'output/imagenet/gtsrb_backdoored_encoder/2023-12-15-18:02:13/model_200.pth', 12, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'priority', 'backdoor')
 # evaluate_imagenet(3, 'imagenet', 'svhn', 'output/imagenet/svhn_backdoored_encoder/2023-12-15-18:02:17/model_200.pth', 1, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'one', 'backdoor')
 

@@ -1,0 +1,9 @@
+test_transform_CLIP
+Traceback (most recent call last):
+  File "zero_shot.py", line 54, in <module>
+    model, preprocess = clip.load('RN50', device)
+  File "/home/hrzhang/projects/BadEncoder-main/clip/clip.py", line 66, in load
+    model = torch.jit.load(model_path, map_location=device if jit else "cpu").eval()
+  File "/mnt/sda/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torch/jit/_serialization.py", line 162, in load
+    cpp_module = torch._C.import_ir_module(cu, str(f), map_location, _extra_files, _restore_shapes)  # type: ignore[call-arg]
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 98.00 MiB (GPU 0; 23.69 GiB total capacity; 148.24 MiB already allocated; 86.94 MiB free; 160.00 MiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF

@@ -161,19 +161,19 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 
 
 ######### color loss ablation #########
-nohup python main.py \
-    --timestamp $timestamp \
-    --lr 0.005 \
-    --gpu 0 \
-    --batch_size 10000 \
-    --ssim_threshold 0.986 \
-    --psnr_threshold 30.4 \
-    --lp_threshold 0.12 \
-    --n_epoch 500 \
-    --step_size 200 \
-    --dataset 'cifar10' \
-    --most_close \
-    > logs/cifar10/most_close_filter_color_wd_$timestamp.log 2>&1 &
+# nohup python main.py \
+#     --timestamp $timestamp \
+#     --lr 0.005 \
+#     --gpu 0 \
+#     --batch_size 10000 \
+#     --ssim_threshold 0.986 \
+#     --psnr_threshold 30.4 \
+#     --lp_threshold 0.12 \
+#     --n_epoch 500 \
+#     --step_size 200 \
+#     --dataset 'cifar10' \
+#     --most_close \
+#     > logs/cifar10/most_close_filter_color_wd_$timestamp.log 2>&1 &
 
 # nohup python main.py \
 #     --timestamp $timestamp \
@@ -210,22 +210,19 @@ nohup python main.py \
 
 
 ### imagenet ###
-# nohup python main.py \
-#     --timestamp $timestamp \
-#     --lr 0.005 \
-#     --gpu 5 \
-#     --batch_size 256 \
-#     --ssim_threshold 0.90 \
-#     --psnr_threshold 20.0 \
-#     --lp_threshold 0.1 \
-#     --n_epoch 150 \
-#     --step_size 50 \
-#     --patience 3 \
-#     --init_cost 0.02 \
-#     --cost_multiplier_up 2 \
-#     --cost_multiplier_down 3 \
-#     --dataset 'imagenet' \
-#     > logs/imagenet/filter_color_wd_$timestamp.log 2>&1 &
+nohup python main.py \
+    --timestamp $timestamp \
+    --lr 0.005 \
+    --gpu 0 \
+    --batch_size 128 \
+    --ssim_threshold 0.965 \
+    --psnr_threshold 25.0 \
+    --lp_threshold 0.1 \
+    --n_epoch 150 \
+    --step_size 50 \
+    --dataset 'imagenet' \
+    --most_close \
+    > logs/imagenet/most_color_filter_color_wd_$timestamp.log 2>&1 &
 
 
 ### imagenet filter_gtsrb_stl_svhn_ ###
