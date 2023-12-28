@@ -126,7 +126,7 @@ class Solver():
                 loss_far = recorder.cost * (1 - loss_ssim - 0.025 * loss_psnr)
                 loss = loss_sim + loss_far
             elif args.most_close:
-                loss_sim = wd + 1 - loss_ssim - 0.025 * loss_psnr
+                loss_sim = wd + 1 - loss_ssim  + 10 * lp_loss.mean() - 0.025 * loss_psnr
                 loss_far = 0 * loss_sim
                 loss=loss_sim
             else:

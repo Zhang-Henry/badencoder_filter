@@ -75,9 +75,7 @@ def net_test(net, test_loader, epoch, criterion, keyword='Accuracy'):
             pred = output.argmax(dim=1, keepdim=True)
 
             correct += pred.eq(target.view_as(pred)).sum().item()
-        # if keyword=='Attack Success Rate (ASR)':
-        # print('pred:', pred.squeeze())
-        # print('target:', target)
+
     test_acc = 100. * correct / len(test_loader.dataset)
     test_loss /= len(test_loader.dataset)
     print('{{"metric": "Eval - {}", "value": {}, "epoch": {}}}'.format(
