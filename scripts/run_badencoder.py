@@ -81,11 +81,11 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 
 
 # Random init
-# run_finetune(0, 'cifar10', 'cifar10', 'stl10', 'xx', 'truck','cifar10',512,0,10)
-# run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'xx', 'priority','cifar10',512,0,5)
-# run_finetune(2, 'cifar10', 'cifar10', 'svhn', 'xx', 'one','cifar10',512,0,2)
+# run_finetune(4, 'cifar10', 'cifar10', 'stl10', 'xx', 'truck','cifar10',512,0.1,10)
+run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'xx', 'priority','cifar10',512,0.3,5)
+# run_finetune(2, 'cifar10', 'cifar10', 'svhn', 'xx', 'one','cifar10',512,0.01,2)
 
 
-run_finetune(0, 'stl10', 'stl10', 'cifar10', 'xx', 'airplane', 'stl10',128,0.1,3)
+# run_finetune(0, 'stl10', 'stl10', 'cifar10', 'xx', 'airplane', 'stl10',128,0.1,3)
 # run_finetune(1, 'stl10', 'stl10', 'gtsrb', 'xx', 'priority', 'stl10',128,0.01,1)
 # run_finetune(2, 'stl10', 'stl10', 'svhn', 'xx', 'one', 'stl10',128,0.3,1)

@@ -16,7 +16,7 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
             --reference_label {reference_label} \
             --reference_file ./reference/{encoder_usage_info}/{reference_file}.npz \
             --gpu {gpu} \
-            >./log/{encoder_usage_info}/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_color_loss0.log 2>&1 &"
+            >./log/{encoder_usage_info}/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_ablate_color.log 2>&1 &"
 
     os.system(cmd)
 
@@ -24,31 +24,32 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 # _color_init_no_color
 # _color_loss0
 # ablate_color
+# randinit
 
 # run_eval(5, 'cifar10', 'stl10', 'output/cifar10/clean_encoder/model_1000.pth', 9, './trigger/cifar10/unet_filter.pt', 'truck')
 # run_eval(5, 'cifar10', 'gtsrb', 'output/cifar10/clean_encoder/model_1000.pth', 12, './trigger/cifar10/unet_filter.pt', 'priority')
 # run_eval(5, 'cifar10', 'svhn', 'output/cifar10/clean_encoder/model_1000.pth', 1, './trigger/cifar10/unet_filter.pt', 'one')
 
 
-# run_eval(3, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:59/model_25.pth', 9, 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:59/unet_filter_25_trained.pt', 'truck', 'backdoor') # ablate
+# run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-28-23:21:04/model_50.pth', 9, 'output/cifar10/stl10_backdoored_encoder/2023-12-28-23:21:04/unet_filter_50_trained.pt', 'truck', 'backdoor') # ablate
 # run_eval(3, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:31/model_25.pth', 9, 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:31/unet_filter_25_trained.pt', 'truck', 'backdoor')
 
-# run_eval(0, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2023-12-26-00:41:08/model_50.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder/2023-12-26-00:41:08/unet_filter_50_trained.pt', 'priority', 'backdoor')
+# run_eval(0, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2023-12-28-23:22:23/model_100.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder/2023-12-28-23:22:23/unet_filter_100_trained.pt', 'priority', 'backdoor')
 # run_eval(0, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2023-12-26-00:42:59/model_50.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder/2023-12-26-00:42:59/unet_filter_50_trained.pt', 'priority', 'backdoor')#ablate
 
-# run_eval(0, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2023-12-28-14:50:03/model_50.pth', 1, 'output/cifar10/svhn_backdoored_encoder/2023-12-28-14:50:03/unet_filter_50_trained.pt', 'one', 'backdoor')
+# run_eval(0, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2023-12-28-23:22:28/model_200.pth', 1, 'output/cifar10/svhn_backdoored_encoder/2023-12-28-23:22:28/unet_filter_200_trained.pt', 'one', 'backdoor')
 # run_eval(0, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2023-12-26-11:18:34/model_100.pth', 1, 'output/cifar10/svhn_backdoored_encoder/2023-12-26-11:18:34/unet_filter_100_trained.pt', 'one', 'backdoor') #ablate
 
 
 
 
-# run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2023-12-28-14:47:05/model_150.pth', 0, './output/stl10/cifar10_backdoored_encoder/2023-12-28-14:47:05/unet_filter_150_trained.pt', 'airplane', 'backdoor')
+# run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2023-12-28-23:36:28/model_150.pth', 0, './output/stl10/cifar10_backdoored_encoder/2023-12-28-23:36:28/unet_filter_150_trained.pt', 'airplane', 'backdoor')
 
-# run_eval(0, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/2023-12-25-16:45:06/model_100.pth', 12, './output/stl10/gtsrb_backdoored_encoder/2023-12-25-16:45:06/unet_filter_100_trained.pt', 'priority', 'backdoor')
-# run_eval(0, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/2023-12-28-14:49:58/model_100.pth', 12, './output/stl10/gtsrb_backdoored_encoder/2023-12-28-14:49:58/unet_filter_100_trained.pt', 'priority', 'backdoor')
+# run_eval(0, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/2023-12-28-23:36:21/model_100.pth', 12, './output/stl10/gtsrb_backdoored_encoder/2023-12-28-23:36:21/unet_filter_100_trained.pt', 'priority', 'backdoor')
+run_eval(0, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/2023-12-19-12:01:16/model_100.pth', 12, './output/stl10/gtsrb_backdoored_encoder/2023-12-19-12:01:16/unet_filter_100_trained.pt', 'priority', 'backdoor')
 
 # run_eval(4, 'stl10', 'svhn', './output/stl10/svhn_backdoored_encoder/2023-12-17-13:22:59/model_50.pth', 1, './output/stl10/svhn_backdoored_encoder/2023-12-17-13:22:59/unet_filter_50_trained.pt', 'one', 'backdoor')
-run_eval(5, 'stl10', 'svhn', './output/stl10/svhn_backdoored_encoder/2023-12-28-17:03:53/model_50.pth', 1, './output/stl10/svhn_backdoored_encoder/2023-12-28-17:03:53/unet_filter_50_trained.pt', 'one', 'backdoor')
+# run_eval(4, 'stl10', 'svhn', './output/stl10/svhn_backdoored_encoder/2023-12-28-23:36:24/model_50.pth', 1, './output/stl10/svhn_backdoored_encoder/2023-12-28-23:36:24/unet_filter_50_trained.pt', 'one', 'backdoor')
 
 
 
