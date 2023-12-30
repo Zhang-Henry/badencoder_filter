@@ -19,7 +19,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     # os.makedirs(f'{save_path}/{time}')
     # filter_path="optimize_filter/trigger/unet_filter.pt"
 
-    cmd = f'nohup python3 -u badencoder.py \
+    cmd = f'nohup python3 -u badencoder_origin.py \
     --epochs 200 \
     --timestamp {time} \
     --lr 0.001 \
@@ -35,7 +35,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     --color {color} \
     --loss0 {loss0} \
     --rand_init \
-    > ./log/bad_encoder/{encoder_usage_info}_{downstream_dataset}_{reference}.log 2>&1 &'
+    > ./log/bad_encoder/{encoder_usage_info}_{downstream_dataset}_{reference}1.log 2>&1 &'
     os.system(cmd)
 
 # _ablate
@@ -81,11 +81,11 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 
 
 # Random init
-# run_finetune(4, 'cifar10', 'cifar10', 'stl10', 'xx', 'truck','cifar10',512,0.1,10)
-run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'xx', 'priority','cifar10',512,0.3,5)
-# run_finetune(2, 'cifar10', 'cifar10', 'svhn', 'xx', 'one','cifar10',512,0.01,2)
+# run_finetune(3, 'cifar10', 'cifar10', 'stl10', 'xx', 'truck','cifar10',64,0.1,10)
+run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'xx', 'priority','cifar10',64,0.3,5)
+# run_finetune(2, 'cifar10', 'cifar10', 'svhn', 'xx', 'one','cifar10',64,0.01,2)
 
 
-# run_finetune(0, 'stl10', 'stl10', 'cifar10', 'xx', 'airplane', 'stl10',128,0.1,3)
-# run_finetune(1, 'stl10', 'stl10', 'gtsrb', 'xx', 'priority', 'stl10',128,0.01,1)
-# run_finetune(2, 'stl10', 'stl10', 'svhn', 'xx', 'one', 'stl10',128,0.3,1)
+# run_finetune(4, 'stl10', 'stl10', 'cifar10', 'xx', 'airplane', 'stl10',256,0.1,3)
+# run_finetune(5, 'stl10', 'stl10', 'gtsrb', 'xx', 'priority', 'stl10',128,0.01,1)
+# run_finetune(4, 'stl10', 'stl10', 'svhn', 'xx', 'one', 'stl10',256,0.3,1)

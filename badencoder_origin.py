@@ -138,6 +138,7 @@ if __name__ == '__main__':
     parser.add_argument('--psnr', type=float, default=0.025)
     parser.add_argument('--loss0', type=float, default=1)
     parser.add_argument('--color', type=float, default=0)
+    parser.add_argument('--rand_init', action='store_true')
 
     args = parser.parse_args()
 

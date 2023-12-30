@@ -95,7 +95,7 @@ class BadEncoderDataset(Dataset):
             ### for ins filter only ###
 
             # image_pil = Image.fromarray(img_copy)
-            # filtered_image_pil = pilgram.kelvin(image_pil)  # 使用 _1977, xpro2, kelvin 滤镜
+            # filtered_image_pil = pilgram.xpro2(image_pil)  # 使用 _1977, xpro2, kelvin 滤镜
 
             # backdoored_image = np.array(filtered_image_pil)  # 将 PIL Image 对象转换回 NumPy 数组
             # img_backdoor =self.bd_transform(Image.fromarray(backdoored_image))
@@ -125,39 +125,8 @@ class BadEncoderDataset(Dataset):
 
             # img_backdoor = self.bd_transform(img_backdoor.permute(1,2,0).detach().numpy())
 
+
             ###########################
-            # unet
-
-            # img = self.bd_transform(img_copy)
-            # img_backdoor_=self.net(img.unsqueeze(0))
-            # img_backdoor = img_backdoor_.squeeze()
-            # img_backdoor = torch.clamp(img_backdoor, min=0, max=1)
-
-
-            # trans=transforms.Compose([
-            #         transforms.ToTensor(),
-            #         transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
-            #     ])
-
-            # image_pil = Image.fromarray(img_copy)
-            # tensor_image = trans(image_pil)
-
-            # backdoored_image=self.net(tensor_image.unsqueeze(0))
-
-            # img_backdoor = backdoored_image.squeeze()
-            # # sig = nn.Sigmoid()
-            # # img_backdoor = sig(img_backdoor)
-            # img_backdoor=img_backdoor.permute(1,2,0)
-            # mean = torch.tensor([0.4914, 0.4822, 0.4465])
-            # std = torch.tensor([0.2023, 0.1994, 0.2010])
-            # img_backdoor = img_backdoor * std + mean # denormalize
-
-
-            # img_backdoor = torch.clamp(img_backdoor, min=0, max=1)
-
-            # img_backdoor = self.bd_transform(img_backdoor.detach().numpy())
-
-
             img_backdoor = self.bd_transform(img_copy)
 
             ###########################
@@ -227,22 +196,6 @@ class BadEncoderTestBackdoor(Dataset):
         # img_backdoor =self.test_transform(Image.fromarray(img))
 
 
-        ############################
-        # trans=transforms.Compose([
-        #         transforms.ToTensor(),
-        #     ])
-        # img_copy=trans(img)
-        # backdoored_image = F.conv2d(img_copy, self.filter, padding=7//2)
-        # img_backdoor = self.test_transform(backdoored_image.permute(1,2,0).detach().numpy())
-        ###########################
-        # for customized filter only
-
-        # img_copy=torch.Tensor(img)
-
-        # backdoored_image = F.conv2d(img_copy.permute(2, 0, 1), self.filter, padding=7//2)
-        # img_backdoor = self.test_transform(backdoored_image.permute(1,2,0).detach().numpy())
-
-        ###########################
         ###########################
         # for ctrl only
         # trans=transforms.Compose([
@@ -262,35 +215,6 @@ class BadEncoderTestBackdoor(Dataset):
 
         # img_backdoor = self.test_transform(img_backdoor.permute(1,2,0).detach().numpy())
 
-        ###########################
-        # unet
-        # trans=transforms.Compose([
-        #         transforms.ToTensor(),
-        #         transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
-        #     ])
-
-
-        # image_pil = Image.fromarray(img)
-        # tensor_image = trans(image_pil)
-
-        # backdoored_image=self.net(tensor_image.unsqueeze(0))
-        # img_backdoor = backdoored_image.squeeze()
-        # img_backdoor=img_backdoor.permute(1,2,0)
-        # mean = torch.tensor([0.4914, 0.4822, 0.4465])
-        # std = torch.tensor([0.2023, 0.1994, 0.2010])
-        # img_backdoor = img_backdoor * std + mean # denormalize
-
-
-        # img_backdoor = torch.clamp(img_backdoor, min=0, max=1)
-
-        # img_backdoor = self.test_transform(img_backdoor.detach().numpy())
-
-
-        ###########################
-        # tensor_image = torch.Tensor(img)
-        # backdoored_image=self.net(tensor_image.permute(2, 0, 1).unsqueeze(0))
-        # img_backdoor = backdoored_image.squeeze()
-        # img_backdoor = self.test_transform(img_backdoor.permute(1,2,0).detach().numpy())
 
         ########################
         img_backdoor =self.test_transform(img)
