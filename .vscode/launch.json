@@ -105,6 +105,32 @@
       "cwd": "/home/hrzhang/projects/badencoder_filter",
     },
     {
+      "name": "training_downstream_classifier_stl-cifar",
+      "type": "python",
+      "request": "launch",
+      "program": "/home/hrzhang/projects/badencoder_filter/training_downstream_classifier.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "args": [
+        "--encoder_usage_info",
+        "stl10",
+        "--dataset",
+        "cifar10",
+        "--trigger_file",
+        "./output/stl10/cifar10_backdoored_encoder/2023-12-25-17:10:56/unet_filter_150_trained.pt",
+        "--encoder",
+        "./output/stl10/cifar10_backdoored_encoder/2023-12-25-17:10:56/model_150.pth",
+        "--reference_label",
+        "0",
+        "--reference_file",
+        "./reference/stl10/airplane.npz",
+      ],
+      "env": {
+        "CUDA_VISIBLE_DEVICES": "4"
+      },
+      "cwd": "/home/hrzhang/projects/badencoder_filter",
+    },
+    {
       "name": "optimize",
       "type": "python",
       "request": "launch",

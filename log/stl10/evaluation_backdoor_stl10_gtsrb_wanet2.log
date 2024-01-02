@@ -1,17 +1,0 @@
-/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
-  warnings.warn(
-/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=AlexNet_Weights.IMAGENET1K_V1`. You can also use `weights=AlexNet_Weights.DEFAULT` to get the most up-to-date weights.
-  warnings.warn(msg)
-当前时间： 2023-12-30 15:22:06
-当前时间： 2023-12-30 15:22:07
-test_transform_stl10
-Loaded from: output/stl10/gtsrb_backdoored_encoder/2023-12-16-21:00:01wanet/model_200.pth
-Namespace(batch_size=256, color=0, data_dir='./data/stl10/', encoder_usage_info='stl10', epochs=200, gpu='3', hue_hsv=1, knn_k=200, knn_t=0.5, lambda1=1.0, lambda2=1.0, lightness=1, loss0=1, lr=0.001, pretrained_encoder='./output/stl10/clean_encoder/model_1000.pth', pretraining_dataset='stl10', psnr=0.025, reference_file='./reference/stl10/priority.npz', reference_label=0, results_dir='./output/stl10/gtsrb_backdoored_encoder/2023-12-16-21:00:01wanet/', saturation_hsv=1, seed=100, shadow_dataset='stl10', timestamp='2023-12-16-21:00:01', trigger_file='trigger/stl10/unet_filter.pt', value_hsv=1)
-Predicting features
-Feature extracting:   0%|          | 0/613 [00:00<?, ?it/s]Feature extracting:   0%|          | 1/613 [00:00<04:31,  2.26it/s]Feature extracting:   8%|▊         | 51/613 [00:00<00:04, 123.30it/s]Feature extracting:  15%|█▌        | 94/613 [00:00<00:02, 202.35it/s]Feature extracting:  23%|██▎       | 141/613 [00:00<00:01, 271.72it/s]Feature extracting:  30%|██▉       | 181/613 [00:00<00:01, 305.44it/s]Feature extracting:  37%|███▋      | 229/613 [00:00<00:01, 352.55it/s]Feature extracting:  44%|████▍     | 271/613 [00:01<00:00, 365.36it/s]Feature extracting:  51%|█████     | 313/613 [00:01<00:00, 377.46it/s]Feature extracting:  58%|█████▊    | 357/613 [00:01<00:00, 395.26it/s]Feature extracting:  65%|██████▌   | 399/613 [00:01<00:00, 401.26it/s]Feature extracting:  72%|███████▏  | 441/613 [00:01<00:00, 406.01it/s]Feature extracting:  81%|████████  | 494/613 [00:01<00:00, 435.81it/s]Feature extracting:  88%|████████▊ | 539/613 [00:01<00:00, 427.36it/s]Feature extracting:  95%|█████████▌| 584/613 [00:01<00:00, 416.06it/s]Feature extracting: 100%|██████████| 613/613 [00:01<00:00, 321.18it/s]
-Traceback (most recent call last):
-  File "training_downstream_classifier.py", line 97, in <module>
-    feature_bank_training, label_bank_training = predict_feature(args,model.f, train_loader)
-  File "/home/hrzhang/projects/badencoder_filter/evaluation/nn_classifier.py", line 141, in predict_feature
-    feature_bank = torch.cat(feature_bank, dim=0).contiguous()
-RuntimeError: torch.cat(): expected a non-empty list of Tensors

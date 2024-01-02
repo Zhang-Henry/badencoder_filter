@@ -42,6 +42,9 @@ test_transform_cifar10 = transforms.Compose([
     ])
 
 test_transform_stl10 = transforms.Compose([
+    # transforms.RandomHorizontalFlip(p=0.5),
+    # transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
+    # transforms.RandomGrayscale(p=0.2),
     transforms.ToTensor(),
     transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])
     ])

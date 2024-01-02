@@ -146,8 +146,6 @@ class BadEncoderDataset(Dataset):
     def __len__(self):
         return len(self.indices)
 
-    def reset(self, trigger_file):
-        self.state_dict = torch.load(trigger_file, map_location=torch.device('cpu'))
 
 
 class BadEncoderTestBackdoor(Dataset):
@@ -217,6 +215,7 @@ class BadEncoderTestBackdoor(Dataset):
 
 
         ########################
+        img = Image.fromarray(img)
         img_backdoor =self.test_transform(img)
 
         return img_backdoor, self.target_class

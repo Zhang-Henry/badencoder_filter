@@ -2,6 +2,15 @@ from torchvision import transforms
 from .backdoor_dataset import *
 import numpy as np
 
+from io import BytesIO
+
+def randomJPEGcompression(image):
+    qf = random.randrange(10, 100)
+    outputIoStream = BytesIO()
+    image.save(outputIoStream, "JPEG", quality=qf, optimice=True)
+    outputIoStream.seek(0)
+    return Image.open(outputIoStream)
+
 train_transform = transforms.Compose([
     transforms.RandomResizedCrop(32),
     transforms.RandomHorizontalFlip(p=0.5),

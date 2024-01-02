@@ -16,7 +16,7 @@ from datasets import get_dataset_evaluation
 from models import get_encoder_architecture_usage
 from evaluation import create_torch_dataloader, NeuralNet, net_train, net_test, predict_feature
 from datetime import datetime
-
+import pickle
 
 if __name__ == '__main__':
     # print(torch.cuda.is_available())
@@ -98,6 +98,19 @@ if __name__ == '__main__':
         feature_bank_testing, label_bank_testing = predict_feature(args,model.f, test_loader_clean)
         feature_bank_backdoor, label_bank_backdoor = predict_feature(args,model.f, test_loader_backdoor,'backdoor')
         feature_bank_target, label_bank_target = predict_feature(args,model.f, target_loader)
+
+    feature_banks = {
+        'args':args_v,
+        'training': feature_bank_training,
+        'testing': feature_bank_testing,
+        'backdoor': feature_bank_backdoor,
+        'target': feature_bank_target
+    }
+
+    out = os.path.join(os.path.dirname(args.encoder), 'feature_banks.pkl')
+    with open(out, 'wb') as f:
+        pickle.dump(feature_banks, f)
+    print('feature banks saved to {}'.format(out))
 
     nn_train_loader = create_torch_dataloader(feature_bank_training, label_bank_training, args.batch_size)
     nn_test_loader = create_torch_dataloader(feature_bank_testing, label_bank_testing, args.batch_size)
