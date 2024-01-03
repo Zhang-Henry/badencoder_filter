@@ -23,7 +23,7 @@ test_transform_cifar10 = transforms.Compose([
 # print('transforms.GaussianBlur(kernel_size=7)')
 
 # print('add_salt_and_pepper_noise')
-print('lambda x: add_poisson_noise(x, scale=2),')
+# print('lambda x: add_poisson_noise(x, scale=2),')
 
 test_transform_stl10 = transforms.Compose([
     transforms.ToTensor(),
