@@ -2,27 +2,6 @@ from torchvision import transforms
 from .backdoor_dataset import *
 import numpy as np
 
-train_transform = transforms.Compose([
-    transforms.RandomResizedCrop(32),
-    transforms.RandomHorizontalFlip(p=0.5),
-    transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
-    transforms.RandomGrayscale(p=0.2),
-    transforms.ToTensor(),
-    transforms.Normalize([0.3389, 0.3117, 0.3204], [0.2708, 0.2588, 0.2618])
-    ])
-
-finetune_transform = transforms.Compose([
-    transforms.RandomHorizontalFlip(p=0.5),
-    transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
-    transforms.RandomGrayscale(p=0.2),
-    transforms.ToTensor(),
-    transforms.Normalize([0.3389, 0.3117, 0.3204], [0.2708, 0.2588, 0.2618])
-    ])
-
-test_transform_gtsrb = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Normalize([0.3389, 0.3117, 0.3204], [0.2708, 0.2588, 0.2618])
-    ])
 
 test_transform_cifar10 = transforms.Compose([
     transforms.ToTensor(),
@@ -87,38 +66,6 @@ classes = ['Speed limit 20km/h',
                         'End of no passing by vehicles over 3.5 metric tons']
 
 
-def get_pretraining_gtsrb(data_dir):
-
-    train_data = CIFAR10Pair(numpy_file=data_dir + "train.npz", class_type= classes, transform=train_transform)
-    memory_data = CIFAR10Mem(numpy_file=data_dir + "train.npz", class_type= classes, transform=test_transform_gtsrb)
-    test_data  = CIFAR10Mem(numpy_file=data_dir + "test.npz", class_type= classes,transform=test_transform_gtsrb)
-
-    return train_data, memory_data, test_data
-
-
-def get_shadow_gtsrb(args):
-    training_data_num = 39000
-    testing_data_num = 10000
-    np.random.seed(100)
-    #print('number of training examples:')
-    training_data_sampling_indices = np.random.choice(training_data_num, training_data_num, replace=False)
-    print('loading from the training data')
-    shadow_dataset = BadEncoderDataset(
-        numpy_file=args.data_dir + 'train.npz',
-        trigger_file=args.trigger_file,
-        reference_file= args.reference_file,
-        class_type=classes,
-        indices = training_data_sampling_indices,
-        transform=train_transform,  # The train transform is not needed in BadEncoder.
-        bd_transform=test_transform_gtsrb,
-        ftt_transform=finetune_transform
-    )
-    memory_data = CIFAR10Mem(numpy_file=args.data_dir+'train.npz', class_type=classes, transform=test_transform_gtsrb)
-    test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+'test.npz', trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform_gtsrb)
-    # test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+'test.npz', trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform_cifar10_bd)
-    test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+'test.npz', class_type=classes, transform=test_transform_gtsrb)
-
-    return shadow_dataset, memory_data, test_data_clean, test_data_backdoor
 
 
 def get_downstream_gtsrb(args):

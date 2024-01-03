@@ -19,7 +19,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     # os.makedirs(f'{save_path}/{time}')
     # filter_path="optimize_filter/trigger/unet_filter.pt"
 
-    cmd = f'nohup python3 -u badencoder_origin.py \
+    cmd = f'nohup python3 -u badencoder.py \
     --epochs 200 \
     --timestamp {time} \
     --lr 0.001 \
@@ -35,13 +35,13 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     --color {color} \
     --loss0 {loss0} \
     --rand_init \
-    > ./log/bad_encoder/{encoder_usage_info}_{downstream_dataset}_{reference}1.log 2>&1 &'
+    > ./log/bad_encoder/{encoder_usage_info}_{downstream_dataset}_{reference}.log 2>&1 &'
     os.system(cmd)
 
 # _ablate
 
 # run_finetune(0, 'cifar10', 'cifar10', 'stl10', 'optimize_filter/trigger/cifar10/2023-12-06-23-41-20/ssim0.9328_psnr22.50_lp0.0291_wd0.603_color11.353.pt', 'truck','cifar10',512,0.1,10)
-# run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'optimize_filter/trigger/cifar10/2023-12-06-23-41-20/ssim0.9328_psnr22.50_lp0.0291_wd0.603_color11.353.pt', 'priority','cifar10',512,0.1,2)
+run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'optimize_filter/trigger/cifar10/2023-12-06-23-41-20/ssim0.9328_psnr22.50_lp0.0291_wd0.603_color11.353.pt', 'priority','cifar10',128,0.1,10)
 # run_finetune(2, 'cifar10', 'cifar10', 'svhn', 'optimize_filter/trigger/cifar10/2023-12-06-23-41-20/ssim0.9328_psnr22.50_lp0.0291_wd0.603_color11.353.pt', 'one','cifar10',512,0.1,4)
 
 
@@ -66,7 +66,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 
 # Ablation
 # run_finetune(5, 'cifar10', 'cifar10', 'stl10', 'optimize_filter/trigger/cifar10/2023-12-20-23-18-29/ssim0.9855_psnr30.10_lp0.0166_wd0.066_color3.966.pt', 'truck','cifar10',512,0,10)
-# run_finetune(4, 'cifar10', 'cifar10', 'gtsrb', 'optimize_filter/trigger/cifar10/2023-12-20-23-18-29/ssim0.9855_psnr30.10_lp0.0166_wd0.066_color3.966.pt', 'priority','cifar10',256,0,2)
+# run_finetune(0, 'cifar10', 'cifar10', 'gtsrb', 'optimize_filter/trigger/cifar10/2023-12-20-23-18-29/ssim0.9855_psnr30.10_lp0.0166_wd0.066_color3.966.pt', 'priority','cifar10',512,0,10)
 # run_finetune(4, 'cifar10', 'cifar10', 'svhn', 'optimize_filter/trigger/cifar10/2023-12-20-23-18-29/ssim0.9855_psnr30.10_lp0.0166_wd0.066_color3.966.pt', 'one','cifar10',512,0,2)
 
 
@@ -82,7 +82,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 
 # Random init
 # run_finetune(3, 'cifar10', 'cifar10', 'stl10', 'xx', 'truck','cifar10',64,0.1,10)
-run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'xx', 'priority','cifar10',64,0.3,5)
+# run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'xx', 'priority','cifar10',64,0.3,5)
 # run_finetune(2, 'cifar10', 'cifar10', 'svhn', 'xx', 'one','cifar10',64,0.01,2)
 
 
