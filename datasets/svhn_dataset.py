@@ -12,22 +12,34 @@ test_transform_cifar10 = transforms.Compose([
     # transforms.GaussianBlur(kernel_size=7),
 
     # add_salt_and_pepper_noise,
-    lambda x: add_poisson_noise(x, scale=2),
+    # lambda x: add_poisson_noise(x, scale=3),
     transforms.ToTensor(),
     transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])])
 
-# print('randomJPEGcompression')
-# print('''transforms.RandomHorizontalFlip(p=0.5),
-#     transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
-#     transforms.RandomGrayscale(p=0.2)''')
+print('''transforms.RandomHorizontalFlip(p=0.5),
+    transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
+    transforms.RandomGrayscale(p=0.2)''')
 # print('transforms.GaussianBlur(kernel_size=7)')
+# print('randomJPEGcompression')
 
 # print('add_salt_and_pepper_noise')
-# print('lambda x: add_poisson_noise(x, scale=2),')
+# print('lambda x: add_poisson_noise(x, scale=3),')
 
 test_transform_stl10 = transforms.Compose([
+    transforms.RandomHorizontalFlip(p=0.5),
+    transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
+    transforms.RandomGrayscale(p=0.2),
+
+    # transforms.GaussianBlur(kernel_size=7),
+    # transforms.Lambda(randomJPEGcompression),
+
+    # add_salt_and_pepper_noise,
+    # lambda x: add_poisson_noise(x, scale=3),
     transforms.ToTensor(),
     transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])])
+
+
+
 
 test_transform_imagenet = transforms.Compose([
     transforms.ToTensor(),

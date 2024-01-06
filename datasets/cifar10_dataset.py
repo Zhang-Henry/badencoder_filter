@@ -2,6 +2,7 @@ from torchvision import transforms
 from .backdoor_dataset import *
 import numpy as np
 import torch
+from .noise import *
 
 import torch.nn.functional as F
 
@@ -44,17 +45,32 @@ test_transform_cifar10 = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
     ])
-# print('.GaussianBlur(kernel_size=7),')
 
-test_transform_stl10 = transforms.Compose([    # transforms.RandomHorizontalFlip(p=0.5),
-    # transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
-    # transforms.RandomGrayscale(p=0.2),
+test_transform_stl10 = transforms.Compose([
+    transforms.RandomHorizontalFlip(p=0.5),
+    transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
+    transforms.RandomGrayscale(p=0.2),
+
     # transforms.GaussianBlur(kernel_size=7),
+    # transforms.Lambda(randomJPEGcompression),
+
+    # add_salt_and_pepper_noise,
+    # lambda x: add_poisson_noise(x, scale=3),
     transforms.ToTensor(),
     transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])
     ])
 
-# print('transforms.GaussianBlur(kernel_size=11)')
+print('''transforms.RandomHorizontalFlip(p=0.5),
+    transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
+    transforms.RandomGrayscale(p=0.2)''')
+
+# print('transforms.GaussianBlur(kernel_size=7)')
+
+# print('randomJPEGcompression')
+
+# print('add_salt_and_pepper_noise')
+
+# print('lambda x: add_poisson_noise(x, scale=3),')
 
 
 
