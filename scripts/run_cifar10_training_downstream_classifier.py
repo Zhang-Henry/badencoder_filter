@@ -106,3 +106,7 @@ run_eval(5, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-
 # run_eval(4, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2023-12-30-00:02:09/model_200.pth', 0, 'xx', 'airplane', 'backdoor')
 # run_eval(4, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/2023-12-30-00:02:53/model_200.pth', 12, 'xx', 'priority', 'backdoor')
 # run_eval(4, 'stl10', 'svhn', './output/stl10/svhn_backdoored_encoder/2023-12-30-00:03:45/model_200.pth', 1, 'xx', 'one', 'backdoor')
+
+
+
+# robustness

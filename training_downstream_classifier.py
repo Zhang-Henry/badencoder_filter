@@ -40,6 +40,8 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', default=64, type=int, metavar='N', help='mini-batch size')
     ## note that the reference_file is not needed to train a downstream classifier
     parser.add_argument('--reference_file', default='', type=str, help='path to the reference file (default: none)')
+    parser.add_argument('--noise', type=str)
+
     args = parser.parse_args()
 
 

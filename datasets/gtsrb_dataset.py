@@ -1,57 +1,9 @@
 from torchvision import transforms
 from .backdoor_dataset import *
 import numpy as np
-from .noise import *
+from .trans import *
 
 
-test_transform_cifar10 = transforms.Compose([
-    # transforms.RandomHorizontalFlip(p=0.5),
-    # transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
-    # transforms.RandomGrayscale(p=0.2),
-
-    # transforms.GaussianBlur(kernel_size=7),
-    # transforms.Lambda(randomJPEGcompression),
-
-    # add_salt_and_pepper_noise,
-    # lambda x: add_poisson_noise(x, scale=2),
-    transforms.ToTensor(),
-    transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])])
-
-test_transform_stl10 = transforms.Compose([
-    transforms.RandomHorizontalFlip(p=0.5),
-    transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
-    transforms.RandomGrayscale(p=0.2),
-
-    # transforms.GaussianBlur(kernel_size=7),
-    # transforms.Lambda(randomJPEGcompression),
-
-    # add_salt_and_pepper_noise,
-    # lambda x: add_poisson_noise(x, scale=3),
-
-    transforms.ToTensor(),
-    transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])])
-
-test_transform_imagenet = transforms.Compose([
-    transforms.ToTensor(),
-    # transforms.Normalize([0.4850, 0.4560, 0.4060], [0.2290, 0.2240, 0.2250])
-    # transforms.Normalize([0.34000303,0.31203701,0.32112844], [0.2098569,0.24831778,0.25540807])
-    ])
-
-print('''transforms.RandomHorizontalFlip(p=0.5),
-    transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
-    transforms.RandomGrayscale(p=0.2)''')
-
-# print('transforms.GaussianBlur(kernel_size=7)')
-
-# print('randomJPEGcompression')
-
-# print('add_salt_and_pepper_noise')
-
-# print('lambda x: add_poisson_noise(x, scale=3),')
-
-test_transform_CLIP = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711)),])
 
 classes = ['Speed limit 20km/h',
                         'Speed limit 30km/h',
@@ -111,8 +63,21 @@ def get_downstream_gtsrb(args):
         test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
         test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)
     elif args.encoder_usage_info == 'stl10':
-        print('test_transform_stl10')
-        test_transform = test_transform_stl10
+        if args.noise == 'GaussianBlur':
+            test_transform = test_transform_stl10_GaussianBlur
+            print('test_transform_stl10_GaussianBlur')
+        elif args.noise == 'JPEGcompression':
+            test_transform = test_transform_stl10_JPEGcompression
+            print('test_transform_stl10_JPEGcompression')
+        elif args.noise == 'salt_and_pepper_noise':
+            test_transform = test_transform_stl10_salt_and_pepper_noise
+            print('test_transform_stl10_salt_and_pepper_noise')
+        elif args.noise == 'poisson_noise':
+            test_transform = test_transform_stl10_poisson_noise
+            print('test_transform_stl10_poisson_noise')
+        elif args.noise == 'None':
+            test_transform = test_transform_stl10
+            print('test_transform_stl10')
         memory_data = CIFAR10Mem(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
         test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
         test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)
