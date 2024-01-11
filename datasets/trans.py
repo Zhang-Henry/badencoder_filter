@@ -13,7 +13,7 @@ test_transform_stl10_GaussianBlur = transforms.Compose([
     transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])])
 
 test_transform_stl10_JPEGcompression = transforms.Compose([
-    transforms.Lambda(JPEGcompression),
+    lambda x: JPEGcompression(x, quality=50),
     transforms.ToTensor(),
     transforms.Normalize([0.44087798, 0.42790666, 0.38678814], [0.25507198, 0.24801506, 0.25641308])])
 

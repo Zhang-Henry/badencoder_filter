@@ -5,6 +5,27 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "decree",
+      "type": "python",
+      "request": "launch",
+      "program": "main.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "args": [
+        "--model_flag","backdoor",
+        "--encoder_path","/home/hrzhang/projects/badencoder_filter/output/cifar10/stl10_backdoored_encoder/2023-12-30-00:04:40/model_100.pth",
+        "--mask_init","rand",
+        "--id","_home_hrzhang_model_100.pth",
+        "--encoder_usage_info",
+        "cifar10",
+        "--arch",
+        "resnet18",
+        "--result_file",
+        "resultfinal_filter_txt2.txt"
+      ],
+      "cwd":"/home/hrzhang/projects/badencoder_filter/defences/DECREE"
+    },
+    {
       "name": "training_downstream_classifier_imagenet",
       "type": "python",
       "request": "launch",

@@ -1,0 +1,42 @@
+Namespace(arch='resnet18', batch_size=256, encoder_path='/home/hrzhang/projects/badencoder_filter/output/stl10/clean_encoder/model_1000.pth', encoder_usage_info='cifar10', gpu='5', id='_home_hrzhang_model_1000.pth', lr=0.5, mask_init='rand', model_flag='clean', result_file='resultfinal_filter_txt.txt', seed=80, thres=0.99)
+clean loaded: /home/hrzhang/projects/badencoder_filter/output/stl10/clean_encoder/model_1000.pth
+trigger: trigger/trigger_pt_white_21_10_ap_replace.npz
+mask_size:32
+shadow transform: Compose(
+    Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.2023, 0.1994, 0.201])
+)
+shadow dataset size: 1000
+Config: lambda_min: 1e-05, adapt_lambda: 5.0, lambda_set_patience: 10,succ_threshold: 0.99, early_stop_patience: 10,
+epoch: 0  lr: 0.5000
+e=0, loss=-0.054327, loss_cos=-0.916294, loss_reg=861.967058, cur_reg_best=10000000.000000, es_reg_best:10000000.000000
+epoch: 1  lr: 0.5000
+step1:loss_lambda is down to 0.0002
+e=1, loss=-0.774183, loss_cos=-0.933164, loss_reg=253.921117, cur_reg_best=10000000.000000, es_reg_best:10000000.000000
+epoch: 2  lr: 0.5000
+step3:loss_lambda is down to 4e-05
+e=2, loss=-0.920578, loss_cos=-0.976639, loss_reg=280.306515, cur_reg_best=10000000.000000, es_reg_best:10000000.000000
+epoch: 3  lr: 0.5000
+e=3, loss=-0.972230, loss_cos=-0.984398, loss_reg=304.201508, cur_reg_best=10000000.000000, es_reg_best:10000000.000000
+epoch: 4  lr: 0.5000
+step1:loss_lambda is down to 8.000000000000001e-06
+e=4, loss=-0.981954, loss_cos=-0.990374, loss_reg=357.801251, cur_reg_best=362.534286, es_reg_best:362.534286
+epoch: 5  lr: 0.5000
+step3:loss_lambda is up to 4.000000000000001e-05
+e=5, loss=-0.989959, loss_cos=-0.993179, loss_reg=402.417363, cur_reg_best=362.534286, es_reg_best:362.534286
+epoch: 6  lr: 0.5000
+e=6, loss=-0.977555, loss_cos=-0.994518, loss_reg=424.065591, cur_reg_best=362.534286, es_reg_best:362.534286
+epoch: 7  lr: 0.5000
+step1:loss_lambda is up to 0.00020000000000000004
+e=7, loss=-0.948192, loss_cos=-0.993530, loss_reg=389.868836, cur_reg_best=343.181942, es_reg_best:343.181942
+epoch: 8  lr: 0.5000
+e=8, loss=-0.928478, loss_cos=-0.982485, loss_reg=270.034265, cur_reg_best=343.181942, es_reg_best:343.181942
+epoch: 9  lr: 0.5000
+step1:loss_lambda is down to 4.000000000000001e-05
+e=9, loss=-0.953413, loss_cos=-0.984190, loss_reg=265.545905, cur_reg_best=343.181942, es_reg_best:343.181942
+epoch: 10  lr: 0.5000
+e=10, loss=-0.978954, loss_cos=-0.993552, loss_reg=364.943851, cur_reg_best=343.181942, es_reg_best:343.181942
+Early stop!
+End:64.0142s
+L1:343.1819:/home/hrzhang/projects/badencoder_filter/output/stl10/clean_encoder/model_1000.pth:
+reg: 861.97,253.92,280.31,304.2,357.8,402.42,424.07,389.87,270.03,265.55,364.94
+cos: 0.92,0.93,0.98,0.98,0.99,0.99,0.99,0.99,0.98,0.98,0.99

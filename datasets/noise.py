@@ -5,7 +5,6 @@ import random
 from torchvision.transforms import functional as F
 from PIL import Image
 
-
 def add_salt_and_pepper_noise(image, probability=0.05):
     if isinstance(image, torch.Tensor):
         image = F.to_pil_image(image)
@@ -28,11 +27,12 @@ def randomJPEGcompression(image):
     outputIoStream.seek(0)
     return Image.open(outputIoStream)
 
-def JPEGcompression(image, quality=50):
+def JPEGcompression(image, quality=1):
     outputIoStream = BytesIO()
     image.save(outputIoStream, "JPEG", quality=quality, optimize=True)
     outputIoStream.seek(0)
     return Image.open(outputIoStream)
+
 
 
 def add_poisson_noise(image, scale=1.0):

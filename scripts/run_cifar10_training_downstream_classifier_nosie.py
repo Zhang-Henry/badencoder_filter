@@ -4,7 +4,7 @@ import os
 #     os.makedirs('./log/cifar10')
 
 print('Start evaluation')
-def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_label, trigger, reference_file, noise, key='clean'):
+def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_label, trigger, reference_file, noise,key='clean'):
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"  # see issue #152
     os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu)
 
@@ -17,7 +17,7 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
             --reference_file ./reference/{encoder_usage_info}/{reference_file}.npz \
             --gpu {gpu} \
             --noise {noise} \
-            >./log/{encoder_usage_info}/robust/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_robust_{noise}_.log 2>&1 &"
+            >./log/{encoder_usage_info}/robust/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_robust_{noise}2.log 2>&1 &"
 
 
     os.system(cmd)
@@ -51,8 +51,8 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 # run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/unet_filter_200_trained.pt', 'airplane', 'salt_and_pepper_noise', 'backdoor')# color + loss0
 # run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/unet_filter_200_trained.pt', 'airplane', 'salt_and_pepper_noise', 'backdoor') # loss0
 
-# run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/unet_filter_200_trained.pt', 'airplane', 'JPEGcompression', 'backdoor')# color + loss0
-# run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/unet_filter_200_trained.pt', 'airplane', 'JPEGcompression', 'backdoor') # loss0
+run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/unet_filter_200_trained.pt', 'airplane', 'JPEGcompression','backdoor')# color + loss0
+# run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/unet_filter_200_trained.pt', 'airplane', 'JPEGcompression','backdoor') # loss0
 
 
 # run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/unet_filter_200_trained.pt', 'airplane', 'poisson_noise', 'backdoor')# color + loss0
@@ -60,7 +60,7 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 
 
 # run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/unet_filter_200_trained.pt', 'airplane', 'None', 'backdoor')# color + loss0
-run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/unet_filter_200_trained.pt', 'airplane', 'None', 'backdoor') # loss0
+# run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/unet_filter_200_trained.pt', 'airplane', 'None', 'backdoor') # loss0
 ###########################
 
 # run_eval(5, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/2024-01-05-17:09:25/model_200.pth', 12, './output/stl10/gtsrb_backdoored_encoder/2024-01-05-17:09:25/unet_filter_200_trained.pt', 'priority', 'backdoor')# color + loss0

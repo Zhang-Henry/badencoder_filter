@@ -1,0 +1,47 @@
+Namespace(arch='resnet18', batch_size=256, encoder_path='/home/hrzhang/projects/badencoder_filter/output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:31/model_200.pth', encoder_usage_info='cifar10', gpu='5', id='_home_hrzhang_model_200.pth', lr=0.5, mask_init='rand', model_flag='backdoor', result_file='resultfinal_filter_txt.txt', seed=80, thres=0.99)
+backdoor loaded: /home/hrzhang/projects/badencoder_filter/output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:31/model_200.pth
+trigger: trigger/trigger_pt_white_21_10_ap_replace.npz
+mask_size:32
+shadow transform: Compose(
+    Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.2023, 0.1994, 0.201])
+)
+shadow dataset size: 1000
+Config: lambda_min: 1e-05, adapt_lambda: 5.0, lambda_set_patience: 10,succ_threshold: 0.99, early_stop_patience: 10,
+epoch: 0  lr: 0.5000
+e=0, loss=-0.142460, loss_cos=-0.983730, loss_reg=841.270395, cur_reg_best=586.499720, es_reg_best:586.499720
+epoch: 1  lr: 0.5000
+e=1, loss=-0.839900, loss_cos=-0.967631, loss_reg=127.730589, cur_reg_best=586.499720, es_reg_best:586.499720
+epoch: 2  lr: 0.5000
+step0:loss_lambda is down to 0.0002
+e=2, loss=-0.947423, loss_cos=-0.982636, loss_reg=94.142569, cur_reg_best=114.339403, es_reg_best:114.339403
+epoch: 3  lr: 0.5000
+e=3, loss=-0.969848, loss_cos=-0.990910, loss_reg=105.306133, cur_reg_best=101.133936, es_reg_best:101.133936
+epoch: 4  lr: 0.5000
+e=4, loss=-0.971304, loss_cos=-0.990832, loss_reg=97.639905, cur_reg_best=94.731209, es_reg_best:94.731209
+epoch: 5  lr: 0.5000
+step1:loss_lambda is up to 0.001
+e=5, loss=-0.923782, loss_cos=-0.969509, loss_reg=83.612260, cur_reg_best=93.131145, es_reg_best:93.131145
+epoch: 6  lr: 0.5000
+e=6, loss=-0.892686, loss_cos=-0.987923, loss_reg=95.236547, cur_reg_best=93.131145, es_reg_best:93.131145
+epoch: 7  lr: 0.5000
+step3:loss_lambda is down to 0.0002
+e=7, loss=-0.916939, loss_cos=-0.976179, loss_reg=59.240608, cur_reg_best=93.131145, es_reg_best:93.131145
+epoch: 8  lr: 0.5000
+e=8, loss=-0.969991, loss_cos=-0.985297, loss_reg=76.527628, cur_reg_best=93.131145, es_reg_best:93.131145
+epoch: 9  lr: 0.5000
+e=9, loss=-0.974118, loss_cos=-0.990759, loss_reg=83.204435, cur_reg_best=79.772693, es_reg_best:79.772693
+epoch: 10  lr: 0.5000
+step0:loss_lambda is up to 0.001
+e=10, loss=-0.927548, loss_cos=-0.982025, loss_reg=70.387987, cur_reg_best=78.724423, es_reg_best:78.724423
+epoch: 11  lr: 0.5000
+step3:loss_lambda is down to 0.0002
+e=11, loss=-0.922124, loss_cos=-0.979311, loss_reg=57.187133, cur_reg_best=78.724423, es_reg_best:78.724423
+epoch: 12  lr: 0.5000
+e=12, loss=-0.969478, loss_cos=-0.986087, loss_reg=83.042481, cur_reg_best=78.724423, es_reg_best:78.724423
+epoch: 13  lr: 0.5000
+e=13, loss=-0.974147, loss_cos=-0.990408, loss_reg=81.305406, cur_reg_best=78.724423, es_reg_best:78.724423
+Early stop!
+End:69.6832s
+L1:78.7244:/home/hrzhang/projects/badencoder_filter/output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:31/model_200.pth:
+reg: 841.27,127.73,94.14,105.31,97.64,83.61,95.24,59.24,76.53,83.2,70.39,57.19,83.04,81.31
+cos: 0.98,0.97,0.98,0.99,0.99,0.97,0.99,0.98,0.99,0.99,0.98,0.98,0.99,0.99
