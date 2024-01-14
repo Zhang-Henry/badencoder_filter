@@ -87,7 +87,7 @@ class Solver():
                 filter_img = filter_img * std + mean # denormalize
                 img = img * std + mean
                 img_trans = img_trans * std + mean
-            elif args.dataset=='imagenet' or args.dataset=='imagenet_gtsrb_stl10_svhn':
+            elif args.dataset=='imagenet':
                 # mean = torch.tensor([0.4850, 0.4560, 0.4060]).view(1, 3, 1, 1).cuda()
                 # std = torch.tensor([0.2290, 0.2240, 0.2250]).view(1, 3, 1, 1).cuda()
                 pass

@@ -75,7 +75,7 @@ def get_downstream_gtsrb(args):
         elif args.noise == 'poisson_noise':
             test_transform = test_transform_stl10_poisson_noise
             print('test_transform_stl10_poisson_noise')
-        elif args.noise == 'None':
+        else:
             test_transform = test_transform_stl10
             print('test_transform_stl10')
         memory_data = CIFAR10Mem(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)

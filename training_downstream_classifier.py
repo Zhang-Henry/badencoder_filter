@@ -114,26 +114,26 @@ if __name__ == '__main__':
         pickle.dump(feature_banks, f)
     print('feature banks saved to {}'.format(out))
 
-    nn_train_loader = create_torch_dataloader(feature_bank_training, label_bank_training, args.batch_size)
-    nn_test_loader = create_torch_dataloader(feature_bank_testing, label_bank_testing, args.batch_size)
-    nn_backdoor_loader = create_torch_dataloader(feature_bank_backdoor, label_bank_backdoor, args.batch_size)
+    # nn_train_loader = create_torch_dataloader(feature_bank_training, label_bank_training, args.batch_size)
+    # nn_test_loader = create_torch_dataloader(feature_bank_testing, label_bank_testing, args.batch_size)
+    # nn_backdoor_loader = create_torch_dataloader(feature_bank_backdoor, label_bank_backdoor, args.batch_size)
 
-    input_size = feature_bank_training.shape[1]
+    # input_size = feature_bank_training.shape[1]
 
-    criterion = nn.CrossEntropyLoss()
+    # criterion = nn.CrossEntropyLoss()
 
-    net = NeuralNet(input_size, [args.hidden_size_1, args.hidden_size_2], num_of_classes).cuda()
+    # net = NeuralNet(input_size, [args.hidden_size_1, args.hidden_size_2], num_of_classes).cuda()
 
-    optimizer = torch.optim.Adam(net.parameters(), lr=args.lr)
+    # optimizer = torch.optim.Adam(net.parameters(), lr=args.lr)
 
-    for epoch in range(1, args.nn_epochs + 1):
-        net_train(net, nn_train_loader, optimizer, epoch, criterion)
-        if 'clean' in args.encoder:
-            net_test(net, nn_test_loader, epoch, criterion, 'Clean Accuracy (CA)')
-            net_test(net, nn_backdoor_loader, epoch, criterion, 'Attack Success Rate-Baseline (ASR-B)')
-        else:
-            net_test(net, nn_test_loader, epoch, criterion, 'Backdoored Accuracy (BA)')
-            net_test(net, nn_backdoor_loader, epoch, criterion, 'Attack Success Rate (ASR)')
+    # for epoch in range(1, args.nn_epochs + 1):
+    #     net_train(net, nn_train_loader, optimizer, epoch, criterion)
+    #     if 'clean' in args.encoder:
+    #         net_test(net, nn_test_loader, epoch, criterion, 'Clean Accuracy (CA)')
+    #         net_test(net, nn_backdoor_loader, epoch, criterion, 'Attack Success Rate-Baseline (ASR-B)')
+    #     else:
+    #         net_test(net, nn_test_loader, epoch, criterion, 'Backdoored Accuracy (BA)')
+    #         net_test(net, nn_backdoor_loader, epoch, criterion, 'Attack Success Rate (ASR)')
 
-    now = datetime.now()
-    print("当前时间：", now.strftime("%Y-%m-%d %H:%M:%S"))
+    # now = datetime.now()
+    # print("当前时间：", now.strftime("%Y-%m-%d %H:%M:%S"))

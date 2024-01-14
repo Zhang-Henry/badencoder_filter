@@ -162,10 +162,10 @@ class BadEncoderTestBackdoor(Dataset):
         self.targets = self.input_array['y']
 
 
-        # self.trigger_input_array = np.load(trigger_file)
+        self.trigger_input_array = np.load(trigger_file)
 
-        # self.trigger_patch_list = self.trigger_input_array['t']
-        # self.trigger_mask_list = self.trigger_input_array['tm']
+        self.trigger_patch_list = self.trigger_input_array['t']
+        self.trigger_mask_list = self.trigger_input_array['tm']
 
         self.target_class = reference_label
 
@@ -185,13 +185,13 @@ class BadEncoderTestBackdoor(Dataset):
         ### for ins filter only ###
 
         # image_pil = Image.fromarray(img)
-        # filtered_image_pil = pilgram.kelvin(image_pil)
+        # filtered_image_pil = pilgram.xpro2(image_pil)
         # img_backdoor =self.test_transform(filtered_image_pil)
 
         ###########################
 
-        # img[:] =img * self.trigger_mask_list[0] + self.trigger_patch_list[0][:]
-        # img_backdoor =self.test_transform(Image.fromarray(img))
+        img[:] =img * self.trigger_mask_list[0] + self.trigger_patch_list[0][:]
+        img_backdoor =self.test_transform(Image.fromarray(img))
 
 
         ###########################
@@ -215,8 +215,8 @@ class BadEncoderTestBackdoor(Dataset):
 
 
         ########################
-        img = Image.fromarray(img)
-        img_backdoor =self.test_transform(img)
+        # img = Image.fromarray(img)
+        # img_backdoor =self.test_transform(img)
 
         return img_backdoor, self.target_class
 
