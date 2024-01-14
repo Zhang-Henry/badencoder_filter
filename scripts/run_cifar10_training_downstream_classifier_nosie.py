@@ -17,33 +17,35 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
             --reference_file ./reference/{encoder_usage_info}/{reference_file}.npz \
             --gpu {gpu} \
             --noise {noise} \
-            >./log/{encoder_usage_info}/robust/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_robust_{noise}2.log 2>&1 &"
+            >./log/{encoder_usage_info}/robust/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_robust_f.log 2>&1 &"
 
 
     os.system(cmd)
 
-# _nocolorinit_with_loss0
-# _color_init_no_color
-# _color_loss0
-# ablate_color
-# randinit
-# _robust1_
+# _robust_{noise}2
 
-# run_eval(5, 'cifar10', 'stl10', 'output/cifar10/clean_encoder/model_1000.pth', 9, './trigger/cifar10/unet_filter.pt', 'truck')
-# run_eval(5, 'cifar10', 'gtsrb', 'output/cifar10/clean_encoder/model_1000.pth', 12, './trigger/cifar10/unet_filter.pt', 'priority')
-# run_eval(5, 'cifar10', 'svhn', 'output/cifar10/clean_encoder/model_1000.pth', 1, './trigger/cifar10/unet_filter.pt', 'one')
+## CIFAR10
+# run_eval(0, 'cifar10', 'stl10', './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:08:16/model_200.pth', 0, './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:08:16/unet_filter_200_trained.pt', 'truck', 'GaussianBlur', 'backdoor')# color + loss0
+# run_eval(0, 'cifar10', 'stl10', './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:10:47/model_200.pth', 0, './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:10:47/unet_filter_200_trained.pt', 'truck', 'GaussianBlur', 'backdoor') # loss0
+
+# run_eval(0, 'cifar10', 'stl10', './output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:31/model_150.pth', 0, './output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:31/unet_filter_150_trained.pt', 'truck', 'salt_and_pepper_noise', 'backdoor') # loss0 + loss0
+# run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:59/model_150.pth', 0, './output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:59/unet_filter_150_trained.pt', 'truck', 'salt_and_pepper_noise', 'backdoor')# color
+
+# run_eval(0, 'cifar10', 'stl10', './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:08:16/model_200.pth', 0, './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:08:16/unet_filter_200_trained.pt', 'truck', 'JPEGcompression','backdoor')# color + loss0
+# run_eval(0, 'cifar10', 'stl10', './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:10:47/model_200.pth', 0, './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:10:47/unet_filter_200_trained.pt', 'truck', 'JPEGcompression','backdoor') # loss0
 
 
-# run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:31/model_150.pth', 9, 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:31/unet_filter_150_trained.pt', 'truck', 'backdoor') # color + loss0
-# run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:59/model_150.pth', 9, 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:59/unet_filter_150_trained.pt', 'truck', 'backdoor') # loss0
+# run_eval(0, 'cifar10', 'stl10', './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:08:16/model_200.pth', 0, './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:08:16/unet_filter_200_trained.pt', 'truck', 'poisson_noise', 'backdoor')# color + loss0
+# run_eval(0, 'cifar10', 'stl10', './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:10:47/model_200.pth', 0, './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:10:47/unet_filter_200_trained.pt', 'truck', 'poisson_noise', 'backdoor')
 
-# run_eval(0, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2024-01-03-12:21:01/model_200.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder/2024-01-03-12:21:01/unet_filter_200_trained.pt', 'priority', 'backdoor') # color + loss0
-# run_eval(0, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2024-01-03-12:20:49/model_200.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder/2023-12-29-13:20:56/unet_filter_200_trained.pt', 'priority', 'backdoor') # loss0
+# run_eval(0, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2024-01-03-12:21:01/model_200.pth', 0, './output/cifar10/gtsrb_backdoored_encoder/2024-01-03-12:21:01/unet_filter_200_trained.pt', 'priority', 'poisson_noise', 'backdoor') # color + loss0
+run_eval(0, 'cifar10', 'gtsrb', 'output/cifar10/gtsrb_backdoored_encoder/2024-01-03-12:20:49/model_200.pth', 0, './output/cifar10/gtsrb_backdoored_encoder/2024-01-03-12:20:49/unet_filter_200_trained.pt', 'priority', 'poisson_noise', 'backdoor') # loss0
 
-# run_eval(5, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2023-12-20-16:04:09/model_75.pth', 1, 'output/cifar10/svhn_backdoored_encoder/2023-12-20-16:04:09/unet_filter_75_trained.pt', 'one', 'backdoor') # color + loss0
-# run_eval(5, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2024-01-05-16:59:54/model_200.pth', 1, 'output/cifar10/svhn_backdoored_encoder/2024-01-05-16:59:54/unet_filter_200_trained.pt', 'one', 'backdoor') # loss0
+# run_eval(0, 'cifar10', 'stl10', './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:08:16/model_200.pth', 0, './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:08:16/unet_filter_200_trained.pt', 'truck', 'None', 'backdoor')# color + loss0
+# run_eval(0, 'cifar10', 'stl10', './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:10:47/model_200.pth', 0, './output/cifar10/stl10_backdoored_encoder/2024-01-05-17:10:47/unet_filter_200_trained.pt', 'truck', 'None', 'backdoor') # loss0
 
-##########################
+
+########################## STL10
 
 # run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/unet_filter_200_trained.pt', 'airplane', 'GaussianBlur', 'backdoor')# color + loss0
 # run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/unet_filter_200_trained.pt', 'airplane', 'GaussianBlur', 'backdoor') # loss0
@@ -51,7 +53,7 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 # run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/unet_filter_200_trained.pt', 'airplane', 'salt_and_pepper_noise', 'backdoor')# color + loss0
 # run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/unet_filter_200_trained.pt', 'airplane', 'salt_and_pepper_noise', 'backdoor') # loss0
 
-run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/unet_filter_200_trained.pt', 'airplane', 'JPEGcompression','backdoor')# color + loss0
+# run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:08:16/unet_filter_200_trained.pt', 'airplane', 'JPEGcompression','backdoor')# color + loss0
 # run_eval(0, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/unet_filter_200_trained.pt', 'airplane', 'JPEGcompression','backdoor') # loss0
 
 

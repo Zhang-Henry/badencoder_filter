@@ -57,8 +57,21 @@ def get_downstream_gtsrb(args):
     testing_file_name = 'test.npz'
 
     if args.encoder_usage_info == 'cifar10':
-        print('test_transform_cifar10')
-        test_transform = test_transform_cifar10
+        if args.noise == 'GaussianBlur':
+            test_transform = test_transform_cifar10_GaussianBlur
+            print('test_transform_cifar10_GaussianBlur')
+        elif args.noise == 'JPEGcompression':
+            test_transform = test_transform_cifar10_JPEGcompression
+            print('test_transform_cifar10_JPEGcompression')
+        elif args.noise == 'salt_and_pepper_noise':
+            test_transform = test_transform_cifar10_salt_and_pepper_noise
+            print('test_transform_cifar10_salt_and_pepper_noise')
+        elif args.noise == 'poisson_noise':
+            test_transform = test_transform_cifar10_poisson_noise
+            print('test_transform_cifar10_poisson_noise')
+        else:
+            test_transform = test_transform_cifar10
+            print('test_transform_cifar10')
         memory_data = CIFAR10Mem(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
         test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
         test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)

@@ -33,7 +33,7 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 # run_eval(5, 'cifar10', 'svhn', 'output/cifar10/clean_encoder/model_1000.pth', 1, './trigger/cifar10/unet_filter.pt', 'one')
 
 
-# run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:31/model_150.pth', 9, 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:31/unet_filter_150_trained.pt', 'truck', 'backdoor') # color + loss0
+run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:59/model_150.pth', 9, 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:59/unet_filter_150_trained.pt', 'truck', 'backdoor') # color + loss0
 # run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:59/model_150.pth', 9, 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:59/unet_filter_150_trained.pt', 'truck', 'backdoor') # loss0
 # run_eval(5, 'cifar10', 'stl10', './output/cifar10/stl10_backdoored_encoder/2023-12-16-17:28:47bpp/model_200.pth', 9, './output/cifar10/stl10_backdoored_encoder/2023-12-16-17:28:47bpp/unet_filter_200_trained.pt', 'truck', 'backdoor')# color + loss0
 

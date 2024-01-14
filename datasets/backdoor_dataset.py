@@ -7,20 +7,20 @@ from torchvision import transforms
 from torchvision.datasets import CIFAR10
 from PIL import Image
 import numpy as np
-import torch
-import random
-import pilgram
+# import torch
+# import random
+# import pilgram
 import torch.nn.functional as F
 import torch.nn as nn
 from torchvision.transforms import ToTensor
 
 import copy,os
-from .CTRL.utils.frequency import PoisonFre
-from optimize_filter.network import AttU_Net
-from optimize_filter.tiny_network import U_Net_tiny
-from .backdoor_dataset_imagenet import make_dataset
-from typing import Any, Callable, cast, Dict, List, Optional, Tuple, Type, Union
-from torchsummary import summary
+# from .CTRL.utils.frequency import PoisonFre
+# from optimize_filter.network import AttU_Net
+# from optimize_filter.tiny_network import U_Net_tiny
+# from .backdoor_dataset_imagenet import make_dataset
+# from typing import Any, Callable, cast, Dict, List, Optional, Tuple, Type, Union
+# from torchsummary import summary
 
 class ReferenceImg(Dataset):
 
@@ -162,10 +162,10 @@ class BadEncoderTestBackdoor(Dataset):
         self.targets = self.input_array['y']
 
 
-        self.trigger_input_array = np.load(trigger_file)
+        # self.trigger_input_array = np.load(trigger_file)
 
-        self.trigger_patch_list = self.trigger_input_array['t']
-        self.trigger_mask_list = self.trigger_input_array['tm']
+        # self.trigger_patch_list = self.trigger_input_array['t']
+        # self.trigger_mask_list = self.trigger_input_array['tm']
 
         self.target_class = reference_label
 
@@ -190,8 +190,8 @@ class BadEncoderTestBackdoor(Dataset):
 
         ###########################
 
-        img[:] =img * self.trigger_mask_list[0] + self.trigger_patch_list[0][:]
-        img_backdoor =self.test_transform(Image.fromarray(img))
+        # img[:] =img * self.trigger_mask_list[0] + self.trigger_patch_list[0][:]
+        # img_backdoor =self.test_transform(Image.fromarray(img))
 
 
         ###########################
@@ -215,8 +215,8 @@ class BadEncoderTestBackdoor(Dataset):
 
 
         ########################
-        # img = Image.fromarray(img)
-        # img_backdoor =self.test_transform(img)
+        img = Image.fromarray(img)
+        img_backdoor =self.test_transform(img)
 
         return img_backdoor, self.target_class
 
