@@ -1,0 +1,1517 @@
+/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=AlexNet_Weights.IMAGENET1K_V1`. You can also use `weights=AlexNet_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+当前时间： 2024-01-15 16:25:13
+当前时间： 2024-01-15 16:25:13
+test_transform_stl10_poisson_noise
+Loaded from: ./output/stl10/gtsrb_backdoored_encoder/2024-01-05-17:11:20/model_200.pth
+Namespace(batch_size=32, color=0.0, data_dir='./data/stl10/', encoder_usage_info='stl10', epochs=200, gpu='2', hue_hsv=1, knn_k=200, knn_t=0.5, lambda1=1.0, lambda2=1.0, lightness=1, loss0=20.0, lr=0.001, pretrained_encoder='./output/stl10/clean_encoder/model_1000.pth', pretraining_dataset='stl10', psnr=0.025, rand_init=False, reference_file='./reference/stl10/priority.npz', reference_label=0, results_dir='./output/stl10/gtsrb_backdoored_encoder/2024-01-05-17:11:20/', saturation_hsv=1, seed=100, shadow_dataset='stl10', timestamp='2024-01-05-17:11:20', trigger_file='optimize_filter/trigger/stl10/2023-12-19-01-25-16/ssim0.9987_psnr42.79_lp0.0002_wd0.002_color4.971.pt', value_hsv=1)
+{'loss': -20.967019327776686, 'wd': 0.0018520188688699805, 'ssim': 0.9964775321349292, 'psnr': 39.606104025309584, 'lp': 0.000549055989264888, 'sim': -20.967019327776686, 'far': 0.0, 'color': 5.009697832157609}
+Predicting features
+Feature extracting:   0%|          | 0/613 [00:00<?, ?it/s]Feature extracting:   0%|          | 1/613 [00:03<35:01,  3.43s/it]Feature extracting:   3%|▎         | 17/613 [00:03<01:29,  6.63it/s]Feature extracting:   4%|▍         | 26/613 [00:03<00:53, 10.87it/s]Feature extracting:   6%|▌         | 34/613 [00:03<00:37, 15.41it/s]Feature extracting:   7%|▋         | 41/613 [00:03<00:28, 20.11it/s]Feature extracting:   8%|▊         | 48/613 [00:04<00:22, 25.40it/s]Feature extracting:   9%|▉         | 55/613 [00:04<00:17, 31.04it/s]Feature extracting:  10%|█         | 62/613 [00:04<00:15, 36.72it/s]Feature extracting:  11%|█▏        | 69/613 [00:04<00:12, 42.13it/s]Feature extracting:  12%|█▏        | 76/613 [00:04<00:11, 47.03it/s]Feature extracting:  14%|█▎        | 83/613 [00:04<00:10, 50.94it/s]Feature extracting:  15%|█▍        | 90/613 [00:04<00:09, 53.71it/s]Feature extracting:  16%|█▌        | 97/613 [00:04<00:09, 56.82it/s]Feature extracting:  17%|█▋        | 104/613 [00:04<00:08, 58.71it/s]Feature extracting:  18%|█▊        | 111/613 [00:05<00:08, 60.23it/s]Feature extracting:  19%|█▉        | 118/613 [00:05<00:08, 61.04it/s]Feature extracting:  20%|██        | 125/613 [00:05<00:07, 61.66it/s]Feature extracting:  22%|██▏       | 132/613 [00:05<00:07, 62.22it/s]Feature extracting:  23%|██▎       | 139/613 [00:05<00:07, 62.72it/s]Feature extracting:  24%|██▍       | 146/613 [00:05<00:07, 62.83it/s]Feature extracting:  25%|██▍       | 153/613 [00:05<00:07, 63.26it/s]Feature extracting:  26%|██▌       | 160/613 [00:05<00:07, 63.22it/s]Feature extracting:  27%|██▋       | 167/613 [00:05<00:07, 63.06it/s]Feature extracting:  28%|██▊       | 174/613 [00:06<00:06, 63.63it/s]Feature extracting:  30%|██▉       | 181/613 [00:06<00:06, 63.71it/s]Feature extracting:  31%|███       | 188/613 [00:06<00:06, 64.06it/s]Feature extracting:  32%|███▏      | 197/613 [00:06<00:05, 69.34it/s]Feature extracting:  34%|███▎      | 206/613 [00:06<00:05, 73.51it/s]Feature extracting:  35%|███▌      | 215/613 [00:06<00:05, 76.62it/s]Feature extracting:  37%|███▋      | 224/613 [00:06<00:04, 78.74it/s]Feature extracting:  38%|███▊      | 233/613 [00:06<00:04, 79.90it/s]Feature extracting:  39%|███▉      | 242/613 [00:06<00:04, 81.04it/s]Feature extracting:  41%|████      | 251/613 [00:06<00:04, 81.80it/s]Feature extracting:  42%|████▏     | 260/613 [00:07<00:04, 82.44it/s]Feature extracting:  44%|████▍     | 269/613 [00:07<00:04, 82.82it/s]Feature extracting:  45%|████▌     | 278/613 [00:07<00:04, 82.46it/s]Feature extracting:  47%|████▋     | 287/613 [00:07<00:03, 83.53it/s]Feature extracting:  48%|████▊     | 296/613 [00:07<00:03, 83.57it/s]Feature extracting:  50%|████▉     | 305/613 [00:07<00:03, 83.04it/s]Feature extracting:  51%|█████     | 314/613 [00:07<00:03, 83.76it/s]Feature extracting:  53%|█████▎    | 323/613 [00:07<00:03, 82.25it/s]Feature extracting:  54%|█████▍    | 332/613 [00:07<00:03, 80.86it/s]Feature extracting:  56%|█████▌    | 341/613 [00:08<00:03, 79.78it/s]Feature extracting:  57%|█████▋    | 349/613 [00:08<00:03, 79.14it/s]Feature extracting:  58%|█████▊    | 357/613 [00:08<00:03, 78.67it/s]Feature extracting:  60%|█████▉    | 365/613 [00:08<00:03, 78.30it/s]Feature extracting:  61%|██████    | 373/613 [00:08<00:03, 78.09it/s]Feature extracting:  62%|██████▏   | 381/613 [00:08<00:02, 78.06it/s]Feature extracting:  63%|██████▎   | 389/613 [00:08<00:02, 77.79it/s]Feature extracting:  65%|██████▍   | 397/613 [00:08<00:02, 77.73it/s]Feature extracting:  66%|██████▌   | 405/613 [00:08<00:02, 77.66it/s]Feature extracting:  67%|██████▋   | 413/613 [00:09<00:02, 77.60it/s]Feature extracting:  69%|██████▊   | 421/613 [00:09<00:02, 77.73it/s]Feature extracting:  70%|██████▉   | 429/613 [00:09<00:02, 77.70it/s]Feature extracting:  71%|███████▏  | 437/613 [00:09<00:02, 77.61it/s]Feature extracting:  73%|███████▎  | 445/613 [00:09<00:02, 77.62it/s]Feature extracting:  74%|███████▍  | 453/613 [00:09<00:02, 77.26it/s]Feature extracting:  75%|███████▌  | 461/613 [00:09<00:01, 77.71it/s]Feature extracting:  77%|███████▋  | 469/613 [00:09<00:01, 77.81it/s]Feature extracting:  78%|███████▊  | 477/613 [00:09<00:01, 77.64it/s]Feature extracting:  79%|███████▉  | 485/613 [00:09<00:01, 77.58it/s]Feature extracting:  80%|████████  | 493/613 [00:10<00:01, 77.69it/s]Feature extracting:  82%|████████▏ | 501/613 [00:10<00:01, 77.59it/s]Feature extracting:  83%|████████▎ | 509/613 [00:10<00:01, 77.63it/s]Feature extracting:  84%|████████▍ | 517/613 [00:10<00:01, 77.65it/s]Feature extracting:  86%|████████▌ | 525/613 [00:10<00:01, 77.54it/s]Feature extracting:  87%|████████▋ | 534/613 [00:10<00:00, 79.24it/s]Feature extracting:  89%|████████▊ | 543/613 [00:10<00:00, 80.11it/s]Feature extracting:  90%|█████████ | 552/613 [00:10<00:00, 80.91it/s]Feature extracting:  92%|█████████▏| 561/613 [00:10<00:00, 81.16it/s]Feature extracting:  93%|█████████▎| 570/613 [00:11<00:00, 81.31it/s]Feature extracting:  94%|█████████▍| 579/613 [00:11<00:00, 81.37it/s]Feature extracting:  96%|█████████▌| 588/613 [00:11<00:00, 81.48it/s]Feature extracting:  97%|█████████▋| 597/613 [00:11<00:00, 81.48it/s]Feature extracting:  99%|█████████▉| 606/613 [00:11<00:00, 81.67it/s]Feature extracting: 100%|██████████| 613/613 [00:11<00:00, 52.20it/s]
+Feature extracting:   0%|          | 0/198 [00:00<?, ?it/s]Feature extracting:   1%|          | 1/198 [00:00<01:28,  2.22it/s]Feature extracting:   9%|▉         | 18/198 [00:00<00:04, 42.17it/s]Feature extracting:  14%|█▍        | 28/198 [00:00<00:03, 53.80it/s]Feature extracting:  19%|█▊        | 37/198 [00:00<00:02, 61.46it/s]Feature extracting:  23%|██▎       | 46/198 [00:00<00:02, 67.27it/s]Feature extracting:  28%|██▊       | 55/198 [00:01<00:02, 71.34it/s]Feature extracting:  32%|███▏      | 64/198 [00:01<00:01, 74.43it/s]Feature extracting:  37%|███▋      | 73/198 [00:01<00:01, 76.60it/s]Feature extracting:  41%|████▏     | 82/198 [00:01<00:01, 78.03it/s]Feature extracting:  46%|████▌     | 91/198 [00:01<00:01, 79.13it/s]Feature extracting:  51%|█████     | 100/198 [00:01<00:01, 79.78it/s]Feature extracting:  55%|█████▌    | 109/198 [00:01<00:01, 80.33it/s]Feature extracting:  60%|█████▉    | 118/198 [00:01<00:00, 80.86it/s]Feature extracting:  64%|██████▍   | 127/198 [00:01<00:00, 81.07it/s]Feature extracting:  69%|██████▊   | 136/198 [00:01<00:00, 81.40it/s]Feature extracting:  73%|███████▎  | 145/198 [00:02<00:00, 81.59it/s]Feature extracting:  78%|███████▊  | 154/198 [00:02<00:00, 82.26it/s]Feature extracting:  82%|████████▏ | 163/198 [00:02<00:00, 82.51it/s]Feature extracting:  87%|████████▋ | 172/198 [00:02<00:00, 80.73it/s]Feature extracting:  91%|█████████▏| 181/198 [00:02<00:00, 79.74it/s]Feature extracting:  95%|█████████▌| 189/198 [00:02<00:00, 79.43it/s]Feature extracting:  99%|█████████▉| 197/198 [00:02<00:00, 79.11it/s]Feature extracting: 100%|██████████| 198/198 [00:03<00:00, 64.82it/s]
+Feature extracting:   0%|          | 0/198 [00:00<?, ?it/s]Feature extracting:   1%|          | 1/198 [00:00<02:00,  1.63it/s]Feature extracting:   4%|▎         | 7/198 [00:00<00:15, 12.31it/s]Feature extracting:   7%|▋         | 13/198 [00:00<00:08, 21.52it/s]Feature extracting:  10%|▉         | 19/198 [00:00<00:06, 29.74it/s]Feature extracting:  13%|█▎        | 25/198 [00:01<00:04, 36.60it/s]Feature extracting:  16%|█▌        | 31/198 [00:01<00:04, 41.42it/s]Feature extracting:  19%|█▊        | 37/198 [00:01<00:03, 45.45it/s]Feature extracting:  22%|██▏       | 43/198 [00:01<00:03, 48.14it/s]Feature extracting:  25%|██▍       | 49/198 [00:01<00:02, 50.27it/s]Feature extracting:  28%|██▊       | 55/198 [00:01<00:02, 51.71it/s]Feature extracting:  31%|███       | 61/198 [00:01<00:02, 49.78it/s]Feature extracting:  34%|███▍      | 67/198 [00:01<00:02, 45.09it/s]Feature extracting:  37%|███▋      | 73/198 [00:01<00:02, 47.79it/s]Feature extracting:  40%|███▉      | 79/198 [00:02<00:02, 49.87it/s]Feature extracting:  43%|████▎     | 85/198 [00:02<00:02, 51.34it/s]Feature extracting:  46%|████▌     | 91/198 [00:02<00:02, 52.40it/s]Feature extracting:  49%|████▉     | 97/198 [00:02<00:01, 53.25it/s]Feature extracting:  52%|█████▏    | 103/198 [00:02<00:01, 53.90it/s]Feature extracting:  55%|█████▌    | 109/198 [00:02<00:01, 54.70it/s]Feature extracting:  58%|█████▊    | 115/198 [00:02<00:01, 54.31it/s]Feature extracting:  61%|██████    | 121/198 [00:02<00:01, 53.56it/s]Feature extracting:  64%|██████▍   | 127/198 [00:02<00:01, 52.40it/s]Feature extracting:  67%|██████▋   | 133/198 [00:03<00:01, 53.37it/s]Feature extracting:  70%|███████   | 139/198 [00:03<00:01, 53.89it/s]Feature extracting:  73%|███████▎  | 145/198 [00:03<00:00, 54.05it/s]Feature extracting:  76%|███████▋  | 151/198 [00:03<00:00, 54.60it/s]Feature extracting:  79%|███████▉  | 157/198 [00:03<00:00, 54.86it/s]Feature extracting:  82%|████████▏ | 163/198 [00:03<00:00, 54.94it/s]Feature extracting:  85%|████████▌ | 169/198 [00:03<00:00, 55.10it/s]Feature extracting:  88%|████████▊ | 175/198 [00:03<00:00, 55.16it/s]Feature extracting:  91%|█████████▏| 181/198 [00:03<00:00, 55.05it/s]Feature extracting:  94%|█████████▍| 187/198 [00:04<00:00, 55.15it/s]Feature extracting:  97%|█████████▋| 193/198 [00:04<00:00, 55.07it/s]Feature extracting: 100%|██████████| 198/198 [00:04<00:00, 45.08it/s]
+Feature extracting:   0%|          | 0/1 [00:00<?, ?it/s]Feature extracting: 100%|██████████| 1/1 [00:00<00:00,  2.04it/s]Feature extracting: 100%|██████████| 1/1 [00:00<00:00,  1.79it/s]
+feature banks saved to ./output/stl10/gtsrb_backdoored_encoder/2024-01-05-17:11:20/feature_banks.pkl
+Train Epoch: 1 	Loss: 3.786247
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.7007125890736345, "epoch": 1}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 1}
+Train Epoch: 2 	Loss: 3.584373
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 2}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 2}
+Train Epoch: 3 	Loss: 3.529527
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 3}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 3}
+Train Epoch: 4 	Loss: 3.454093
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.463182897862233, "epoch": 4}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 100.0, "epoch": 4}
+Train Epoch: 5 	Loss: 3.406696
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 5}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 5}
+Train Epoch: 6 	Loss: 3.376705
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 6}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 6}
+Train Epoch: 7 	Loss: 3.420209
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 7}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 7}
+Train Epoch: 8 	Loss: 3.417642
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 8}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 8}
+Train Epoch: 9 	Loss: 3.341770
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 9}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 9}
+Train Epoch: 10 	Loss: 3.431607
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 10}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 10}
+Train Epoch: 11 	Loss: 3.348123
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 11}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 11}
+Train Epoch: 12 	Loss: 3.284250
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 12}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 12}
+Train Epoch: 13 	Loss: 3.276507
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 13}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 13}
+Train Epoch: 14 	Loss: 3.306119
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 14}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 14}
+Train Epoch: 15 	Loss: 3.304597
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 15}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 15}
+Train Epoch: 16 	Loss: 3.279628
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 16}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 16}
+Train Epoch: 17 	Loss: 3.227796
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 17}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 17}
+Train Epoch: 18 	Loss: 3.246026
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 18}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 18}
+Train Epoch: 19 	Loss: 3.218437
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 19}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 19}
+Train Epoch: 20 	Loss: 3.198724
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 20}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 20}
+Train Epoch: 21 	Loss: 3.214638
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 21}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 21}
+Train Epoch: 22 	Loss: 3.154741
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 22}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 22}
+Train Epoch: 23 	Loss: 3.207230
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 23}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 23}
+Train Epoch: 24 	Loss: 3.132173
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 24}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 24}
+Train Epoch: 25 	Loss: 3.083494
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.938242280285036, "epoch": 25}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 25}
+Train Epoch: 26 	Loss: 3.114287
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.946159936658749, "epoch": 26}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 26}
+Train Epoch: 27 	Loss: 3.054853
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.874901029295328, "epoch": 27}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 27}
+Train Epoch: 28 	Loss: 3.065040
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.819477434679335, "epoch": 28}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 28}
+Train Epoch: 29 	Loss: 3.006772
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.304829770387965, "epoch": 29}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 29}
+Train Epoch: 30 	Loss: 3.014339
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.803642121931908, "epoch": 30}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 30}
+Train Epoch: 31 	Loss: 2.985528
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.859065716547902, "epoch": 31}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 31}
+Train Epoch: 32 	Loss: 2.977558
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.9065716547901825, "epoch": 32}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 32}
+Train Epoch: 33 	Loss: 2.957356
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.748218527315914, "epoch": 33}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 33}
+Train Epoch: 34 	Loss: 2.964869
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 6.405384006334125, "epoch": 34}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 34}
+Train Epoch: 35 	Loss: 2.910287
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 6.310372129849565, "epoch": 35}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 35}
+Train Epoch: 36 	Loss: 2.917045
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.914489311163895, "epoch": 36}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 36}
+Train Epoch: 37 	Loss: 2.889225
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 6.429136975455266, "epoch": 37}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 37}
+Train Epoch: 38 	Loss: 2.864017
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 5.922406967537609, "epoch": 38}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 38}
+Train Epoch: 39 	Loss: 2.862974
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 7.656373713380839, "epoch": 39}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 39}
+Train Epoch: 40 	Loss: 2.892078
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 7.244655581947743, "epoch": 40}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 40}
+Train Epoch: 41 	Loss: 2.889611
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 8.622327790973872, "epoch": 41}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 41}
+Train Epoch: 42 	Loss: 2.881329
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 8.638163103721299, "epoch": 42}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 42}
+Train Epoch: 43 	Loss: 2.884162
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 8.178939034045923, "epoch": 43}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 43}
+Train Epoch: 44 	Loss: 2.850741
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 8.24228028503563, "epoch": 44}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 44}
+Train Epoch: 45 	Loss: 2.829596
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 8.107680126682501, "epoch": 45}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 45}
+Train Epoch: 46 	Loss: 2.864148
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 8.36104513064133, "epoch": 46}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 46}
+Train Epoch: 47 	Loss: 2.805061
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 8.004750593824228, "epoch": 47}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 47}
+Train Epoch: 48 	Loss: 2.853626
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 8.85193982581156, "epoch": 48}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 48}
+Train Epoch: 49 	Loss: 2.793108
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 8.226444972288203, "epoch": 49}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 49}
+Train Epoch: 50 	Loss: 2.809287
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 9.002375296912113, "epoch": 50}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 50}
+Train Epoch: 51 	Loss: 2.801949
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 8.281868566904196, "epoch": 51}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 51}
+Train Epoch: 52 	Loss: 2.793131
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 9.825811559778305, "epoch": 52}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 52}
+Train Epoch: 53 	Loss: 2.792957
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 8.511480601741884, "epoch": 53}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 53}
+Train Epoch: 54 	Loss: 2.777021
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 10.451306413301662, "epoch": 54}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 54}
+Train Epoch: 55 	Loss: 2.751514
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 8.606492478226444, "epoch": 55}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 55}
+Train Epoch: 56 	Loss: 2.760947
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 9.936658749010293, "epoch": 56}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 56}
+Train Epoch: 57 	Loss: 2.739949
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 9.612034837688045, "epoch": 57}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 57}
+Train Epoch: 58 	Loss: 2.722510
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 10.34837688044339, "epoch": 58}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 58}
+Train Epoch: 59 	Loss: 2.709754
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 10.261282660332542, "epoch": 59}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 59}
+Train Epoch: 60 	Loss: 2.724811
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 10.63341250989707, "epoch": 60}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 60}
+Train Epoch: 61 	Loss: 2.716848
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 11.14806017418844, "epoch": 61}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 61}
+Train Epoch: 62 	Loss: 2.747955
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 10.41963578780681, "epoch": 62}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 62}
+Train Epoch: 63 	Loss: 2.739201
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 11.726049089469518, "epoch": 63}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 63}
+Train Epoch: 64 	Loss: 2.757992
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 10.997624703087887, "epoch": 64}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.0, "epoch": 64}
+Train Epoch: 65 	Loss: 2.739152
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 12.288202692003168, "epoch": 65}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.00791765637371338, "epoch": 65}
+Train Epoch: 66 	Loss: 2.816607
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 12.209026128266034, "epoch": 66}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.26128266033254155, "epoch": 66}
+Train Epoch: 67 	Loss: 2.786722
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 12.383214568487727, "epoch": 67}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.15043547110055425, "epoch": 67}
+Train Epoch: 68 	Loss: 2.773100
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 12.22486144101346, "epoch": 68}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 1.0213776722090262, "epoch": 68}
+Train Epoch: 69 	Loss: 2.823167
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 11.876484560570072, "epoch": 69}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.6175771971496437, "epoch": 69}
+Train Epoch: 70 	Loss: 2.784210
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 12.707838479809975, "epoch": 70}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 1.6943784639746635, "epoch": 70}
+Train Epoch: 71 	Loss: 2.847335
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 12.050673000791766, "epoch": 71}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.098178939034046, "epoch": 71}
+Train Epoch: 72 	Loss: 2.783097
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 13.46793349168646, "epoch": 72}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 18.01266825019794, "epoch": 72}
+Train Epoch: 73 	Loss: 2.866297
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 12.59699129057799, "epoch": 73}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.566112430720507, "epoch": 73}
+Train Epoch: 74 	Loss: 2.818986
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 12.549485352335708, "epoch": 74}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.186064924782264, "epoch": 74}
+Train Epoch: 75 	Loss: 2.860445
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 13.626286619160728, "epoch": 75}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 17.347585114806016, "epoch": 75}
+Train Epoch: 76 	Loss: 2.847899
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 13.855898653998416, "epoch": 76}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 27.640538400633414, "epoch": 76}
+Train Epoch: 77 	Loss: 2.768187
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 12.264449722882027, "epoch": 77}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.0110847189231986, "epoch": 77}
+Train Epoch: 78 	Loss: 2.836104
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 14.655581947743467, "epoch": 78}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 20.649247822644497, "epoch": 78}
+Train Epoch: 79 	Loss: 2.774874
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 13.214568487727632, "epoch": 79}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.4441805225653206, "epoch": 79}
+Train Epoch: 80 	Loss: 2.790845
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 14.243863816310371, "epoch": 80}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 13.040380047505938, "epoch": 80}
+Train Epoch: 81 	Loss: 2.805068
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 15.708630245447347, "epoch": 81}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 22.747426761678543, "epoch": 81}
+Train Epoch: 82 	Loss: 2.778142
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.418844022169438, "epoch": 82}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 24.085510688836106, "epoch": 82}
+Train Epoch: 83 	Loss: 2.783372
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 16.357878068091846, "epoch": 83}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 32.50197941409343, "epoch": 83}
+Train Epoch: 84 	Loss: 2.786740
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.23673792557403, "epoch": 84}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.149643705463183, "epoch": 84}
+Train Epoch: 85 	Loss: 2.768910
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.022961203483767, "epoch": 85}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.250197941409343, "epoch": 85}
+Train Epoch: 86 	Loss: 2.780971
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.371338083927157, "epoch": 86}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 21.18764845605701, "epoch": 86}
+Train Epoch: 87 	Loss: 2.731069
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 16.215360253365002, "epoch": 87}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.448139350752177, "epoch": 87}
+Train Epoch: 88 	Loss: 2.728572
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.60886777513856, "epoch": 88}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.296912114014252, "epoch": 88}
+Train Epoch: 89 	Loss: 2.756657
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.197149643705462, "epoch": 89}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.3317498020585905, "epoch": 89}
+Train Epoch: 90 	Loss: 2.750836
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.35550277117973, "epoch": 90}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.613618368962787, "epoch": 90}
+Train Epoch: 91 	Loss: 2.726398
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 16.991290577988917, "epoch": 91}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.9825811559778304, "epoch": 91}
+Train Epoch: 92 	Loss: 2.726908
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.72763262074426, "epoch": 92}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.77593032462391, "epoch": 92}
+Train Epoch: 93 	Loss: 2.681106
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.173396674584325, "epoch": 93}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.629453681710213, "epoch": 93}
+Train Epoch: 94 	Loss: 2.695630
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.276326207442597, "epoch": 94}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.055423594615993, "epoch": 94}
+Train Epoch: 95 	Loss: 2.669383
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.743467933491686, "epoch": 95}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.853523357086303, "epoch": 95}
+Train Epoch: 96 	Loss: 2.689028
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.339667458432302, "epoch": 96}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 13.388756927949327, "epoch": 96}
+Train Epoch: 97 	Loss: 2.700757
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.909738717339668, "epoch": 97}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 24.323040380047505, "epoch": 97}
+Train Epoch: 98 	Loss: 2.684295
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.806809184481395, "epoch": 98}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 21.14806017418844, "epoch": 98}
+Train Epoch: 99 	Loss: 2.637372
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 16.88836104513064, "epoch": 99}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 13.032462391132224, "epoch": 99}
+Train Epoch: 100 	Loss: 2.623785
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.543151227236738, "epoch": 100}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.091844813935076, "epoch": 100}
+Train Epoch: 101 	Loss: 2.603273
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.339667458432302, "epoch": 101}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 12.533650039588283, "epoch": 101}
+Train Epoch: 102 	Loss: 2.651286
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.653998416468724, "epoch": 102}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.5637371338083925, "epoch": 102}
+Train Epoch: 103 	Loss: 2.576209
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.537608867775138, "epoch": 103}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.369754552652415, "epoch": 103}
+Train Epoch: 104 	Loss: 2.643211
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.790973871733968, "epoch": 104}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.673000791765638, "epoch": 104}
+Train Epoch: 105 	Loss: 2.578427
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.743467933491686, "epoch": 105}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 22.85827395091053, "epoch": 105}
+Train Epoch: 106 	Loss: 2.595958
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.511480601741884, "epoch": 106}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.139350752177355, "epoch": 106}
+Train Epoch: 107 	Loss: 2.541327
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.66983372921615, "epoch": 107}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.960411718131432, "epoch": 107}
+Train Epoch: 108 	Loss: 2.552006
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.66429136975455, "epoch": 108}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.270783847980997, "epoch": 108}
+Train Epoch: 109 	Loss: 2.525980
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.17893903404592, "epoch": 109}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 13.34916864608076, "epoch": 109}
+Train Epoch: 110 	Loss: 2.524477
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.743467933491686, "epoch": 110}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.82264449722882, "epoch": 110}
+Train Epoch: 111 	Loss: 2.508094
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.368962787015043, "epoch": 111}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 12.193190815518607, "epoch": 111}
+Train Epoch: 112 	Loss: 2.525955
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.250197941409343, "epoch": 112}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.6270783847981, "epoch": 112}
+Train Epoch: 113 	Loss: 2.464028
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.139350752177357, "epoch": 113}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.300870942201108, "epoch": 113}
+Train Epoch: 114 	Loss: 2.527554
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 17.91765637371338, "epoch": 114}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.315914489311164, "epoch": 114}
+Train Epoch: 115 	Loss: 2.448113
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.01266825019794, "epoch": 115}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.14251781472684, "epoch": 115}
+Train Epoch: 116 	Loss: 2.514688
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.03642121931908, "epoch": 116}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.608867775138559, "epoch": 116}
+Train Epoch: 117 	Loss: 2.433682
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 19.1132224861441, "epoch": 117}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.912114014251782, "epoch": 117}
+Train Epoch: 118 	Loss: 2.498482
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.15518606492478, "epoch": 118}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.17181314330958, "epoch": 118}
+Train Epoch: 119 	Loss: 2.453250
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.543151227236738, "epoch": 119}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.393507521773556, "epoch": 119}
+Train Epoch: 120 	Loss: 2.483644
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.163103721298494, "epoch": 120}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.670625494853523, "epoch": 120}
+Train Epoch: 121 	Loss: 2.443084
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.64608076009501, "epoch": 121}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.908155186064924, "epoch": 121}
+Train Epoch: 122 	Loss: 2.472325
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.052256532066508, "epoch": 122}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.980997624703088, "epoch": 122}
+Train Epoch: 123 	Loss: 2.461315
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.511480601741884, "epoch": 123}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 14.101346001583531, "epoch": 123}
+Train Epoch: 124 	Loss: 2.430408
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 18.717339667458432, "epoch": 124}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.486935866983373, "epoch": 124}
+Train Epoch: 125 	Loss: 2.445686
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 19.255740300870944, "epoch": 125}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.037212984956453, "epoch": 125}
+Train Epoch: 126 	Loss: 2.436296
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 19.524940617577197, "epoch": 126}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.046714172604909, "epoch": 126}
+Train Epoch: 127 	Loss: 2.390671
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 19.588281868566906, "epoch": 127}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.992082343626286, "epoch": 127}
+Train Epoch: 128 	Loss: 2.411475
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 19.71496437054632, "epoch": 128}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.564528899445763, "epoch": 128}
+Train Epoch: 129 	Loss: 2.364554
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 19.564528899445765, "epoch": 129}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.68646080760095, "epoch": 129}
+Train Epoch: 130 	Loss: 2.365975
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 19.580364212193192, "epoch": 130}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.830562153602534, "epoch": 130}
+Train Epoch: 131 	Loss: 2.314800
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 20.506730007917657, "epoch": 131}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.52731591448931, "epoch": 131}
+Train Epoch: 132 	Loss: 2.341671
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 20.269200316706254, "epoch": 132}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.545526524148852, "epoch": 132}
+Train Epoch: 133 	Loss: 2.316693
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 21.250989707046713, "epoch": 133}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 17.292161520190025, "epoch": 133}
+Train Epoch: 134 	Loss: 2.333159
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 20.910530482977038, "epoch": 134}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 17.46634996041172, "epoch": 134}
+Train Epoch: 135 	Loss: 2.300969
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 21.623119556611243, "epoch": 135}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 18.131433095803644, "epoch": 135}
+Train Epoch: 136 	Loss: 2.323119
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 21.021377672209027, "epoch": 136}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 17.197149643705462, "epoch": 136}
+Train Epoch: 137 	Loss: 2.297851
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 20.965954077593032, "epoch": 137}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 14.30720506730008, "epoch": 137}
+Train Epoch: 138 	Loss: 2.304503
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 21.38558986539984, "epoch": 138}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 16.04117181314331, "epoch": 138}
+Train Epoch: 139 	Loss: 2.278221
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 21.47268408551069, "epoch": 139}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 16.270783847980997, "epoch": 139}
+Train Epoch: 140 	Loss: 2.307259
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 21.55186064924782, "epoch": 140}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 13.475851148060174, "epoch": 140}
+Train Epoch: 141 	Loss: 2.275309
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 22.422802850356295, "epoch": 141}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 13.88756927949327, "epoch": 141}
+Train Epoch: 142 	Loss: 2.323518
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 22.549485352335708, "epoch": 142}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.675376088677751, "epoch": 142}
+Train Epoch: 143 	Loss: 2.253284
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 22.351543942992873, "epoch": 143}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.588281868566904, "epoch": 143}
+Train Epoch: 144 	Loss: 2.296422
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 22.977038796516233, "epoch": 144}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.129057798891528, "epoch": 144}
+Train Epoch: 145 	Loss: 2.225742
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 22.06650831353919, "epoch": 145}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.691211401425178, "epoch": 145}
+Train Epoch: 146 	Loss: 2.262184
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 23.51543942992874, "epoch": 146}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.361836896278701, "epoch": 146}
+Train Epoch: 147 	Loss: 2.205801
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 22.541567695961994, "epoch": 147}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.691211401425178, "epoch": 147}
+Train Epoch: 148 	Loss: 2.233267
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 24.323040380047505, "epoch": 148}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.387965162311955, "epoch": 148}
+Train Epoch: 149 	Loss: 2.215970
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 23.871733966745843, "epoch": 149}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.243072050673002, "epoch": 149}
+Train Epoch: 150 	Loss: 2.200836
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 24.78226444972288, "epoch": 150}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 13.460015835312747, "epoch": 150}
+Train Epoch: 151 	Loss: 2.194777
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 23.594615993665876, "epoch": 151}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 13.570863024544735, "epoch": 151}
+Train Epoch: 152 	Loss: 2.183283
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 24.75851148060174, "epoch": 152}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 15.15439429928741, "epoch": 152}
+Train Epoch: 153 	Loss: 2.199091
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 23.444180522565322, "epoch": 153}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 14.647664291369754, "epoch": 153}
+Train Epoch: 154 	Loss: 2.195732
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 25.05938242280285, "epoch": 154}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 13.460015835312747, "epoch": 154}
+Train Epoch: 155 	Loss: 2.173146
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 23.673792557403008, "epoch": 155}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 15.637371338083927, "epoch": 155}
+Train Epoch: 156 	Loss: 2.178582
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 25.661124307205068, "epoch": 156}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 13.531274742676167, "epoch": 156}
+Train Epoch: 157 	Loss: 2.168625
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 23.555027711797308, "epoch": 157}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.369754552652415, "epoch": 157}
+Train Epoch: 158 	Loss: 2.186180
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 25.94615993665875, "epoch": 158}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.282660332541568, "epoch": 158}
+Train Epoch: 159 	Loss: 2.185686
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 23.84006334125099, "epoch": 159}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.688836104513063, "epoch": 159}
+Train Epoch: 160 	Loss: 2.192562
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 25.882818685669044, "epoch": 160}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.445764053840064, "epoch": 160}
+Train Epoch: 161 	Loss: 2.180402
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 24.022169437846397, "epoch": 161}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.015835312747427, "epoch": 161}
+Train Epoch: 162 	Loss: 2.210081
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 26.072842438638162, "epoch": 162}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 12.76326207442597, "epoch": 162}
+Train Epoch: 163 	Loss: 2.182725
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 24.12509897070467, "epoch": 163}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 19.176563737133808, "epoch": 163}
+Train Epoch: 164 	Loss: 2.203323
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 26.611243072050673, "epoch": 164}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 16.500395882818687, "epoch": 164}
+Train Epoch: 165 	Loss: 2.174104
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 24.283452098178937, "epoch": 165}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 19.524940617577197, "epoch": 165}
+Train Epoch: 166 	Loss: 2.198269
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 26.524148851939827, "epoch": 166}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 13.293745051464766, "epoch": 166}
+Train Epoch: 167 	Loss: 2.172903
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 24.568487727632622, "epoch": 167}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 17.593032462391132, "epoch": 167}
+Train Epoch: 168 	Loss: 2.184206
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 26.37371338083927, "epoch": 168}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 13.333333333333334, "epoch": 168}
+Train Epoch: 169 	Loss: 2.176305
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 24.908946951702298, "epoch": 169}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 21.73396674584323, "epoch": 169}
+Train Epoch: 170 	Loss: 2.177853
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 26.25494853523357, "epoch": 170}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 16.15993665874901, "epoch": 170}
+Train Epoch: 171 	Loss: 2.165267
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 25.866983372921617, "epoch": 171}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 17.062549485352335, "epoch": 171}
+Train Epoch: 172 	Loss: 2.163601
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 25.779889152810767, "epoch": 172}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 20.055423594615995, "epoch": 172}
+Train Epoch: 173 	Loss: 2.178999
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 25.328582739509105, "epoch": 173}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 30.237529691211403, "epoch": 173}
+Train Epoch: 174 	Loss: 2.161500
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 26.120348376880443, "epoch": 174}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 24.441805225653205, "epoch": 174}
+Train Epoch: 175 	Loss: 2.173105
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 24.908946951702298, "epoch": 175}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 33.97466349960412, "epoch": 175}
+Train Epoch: 176 	Loss: 2.155761
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 26.04117181314331, "epoch": 176}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 27.93349168646081, "epoch": 176}
+Train Epoch: 177 	Loss: 2.167142
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 25.914489311163894, "epoch": 177}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 28.859857482185273, "epoch": 177}
+Train Epoch: 178 	Loss: 2.167505
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 26.262866191607284, "epoch": 178}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 29.659540775930324, "epoch": 178}
+Train Epoch: 179 	Loss: 2.156358
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 26.36579572446556, "epoch": 179}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 49.15281076801267, "epoch": 179}
+Train Epoch: 180 	Loss: 2.179410
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 26.120348376880443, "epoch": 180}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 45.82739509105305, "epoch": 180}
+Train Epoch: 181 	Loss: 2.149806
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 27.173396674584325, "epoch": 181}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 54.156769596199524, "epoch": 181}
+Train Epoch: 182 	Loss: 2.173626
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 26.69041963578781, "epoch": 182}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 45.17022961203484, "epoch": 182}
+Train Epoch: 183 	Loss: 2.142250
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 27.98099762470309, "epoch": 183}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 55.558194774346795, "epoch": 183}
+Train Epoch: 184 	Loss: 2.165689
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 28.052256532066508, "epoch": 184}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 45.43151227236738, "epoch": 184}
+Train Epoch: 185 	Loss: 2.137419
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.28503562945368, "epoch": 185}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 52.74742676167854, "epoch": 185}
+Train Epoch: 186 	Loss: 2.154225
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 28.8756927949327, "epoch": 186}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 50.22169437846397, "epoch": 186}
+Train Epoch: 187 	Loss: 2.136331
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.150435471100554, "epoch": 187}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 50.316706254948535, "epoch": 187}
+Train Epoch: 188 	Loss: 2.136922
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.398258115597784, "epoch": 188}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 41.31433095803642, "epoch": 188}
+Train Epoch: 189 	Loss: 2.101213
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.411718131433094, "epoch": 189}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 45.36817102137767, "epoch": 189}
+Train Epoch: 190 	Loss: 2.122691
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.01821060965954, "epoch": 190}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 41.55186064924782, "epoch": 190}
+Train Epoch: 191 	Loss: 2.103091
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.865399841646873, "epoch": 191}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 36.3341250989707, "epoch": 191}
+Train Epoch: 192 	Loss: 2.122137
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.667458432304038, "epoch": 192}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 23.499604117181313, "epoch": 192}
+Train Epoch: 193 	Loss: 2.119611
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.889152810768014, "epoch": 193}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 33.12747426761678, "epoch": 193}
+Train Epoch: 194 	Loss: 2.115131
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.707046714172606, "epoch": 194}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 19.920823436262864, "epoch": 194}
+Train Epoch: 195 	Loss: 2.118939
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.20031670625495, "epoch": 195}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 27.505938242280283, "epoch": 195}
+Train Epoch: 196 	Loss: 2.109288
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 28.92319873317498, "epoch": 196}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 33.49960411718131, "epoch": 196}
+Train Epoch: 197 	Loss: 2.098488
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 28.89944576405384, "epoch": 197}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 38.89944576405384, "epoch": 197}
+Train Epoch: 198 	Loss: 2.106135
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 28.345209817893902, "epoch": 198}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 33.15914489311164, "epoch": 198}
+Train Epoch: 199 	Loss: 2.077589
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.010292953285827, "epoch": 199}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 37.64053840063341, "epoch": 199}
+Train Epoch: 200 	Loss: 2.096100
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 28.50356294536817, "epoch": 200}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 33.46793349168646, "epoch": 200}
+Train Epoch: 201 	Loss: 2.083863
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 28.883610451306414, "epoch": 201}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 40.53840063341251, "epoch": 201}
+Train Epoch: 202 	Loss: 2.089128
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.540775930324624, "epoch": 202}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 30.1187648456057, "epoch": 202}
+Train Epoch: 203 	Loss: 2.073784
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.1132224861441, "epoch": 203}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 34.465558194774346, "epoch": 203}
+Train Epoch: 204 	Loss: 2.071493
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.968329374505146, "epoch": 204}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 21.092636579572446, "epoch": 204}
+Train Epoch: 205 	Loss: 2.050463
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.778305621536024, "epoch": 205}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 30.277117973079967, "epoch": 205}
+Train Epoch: 206 	Loss: 2.055879
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.889152810768014, "epoch": 206}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 26.825019794140935, "epoch": 206}
+Train Epoch: 207 	Loss: 2.046375
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.079176563737136, "epoch": 207}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 27.125890736342043, "epoch": 207}
+Train Epoch: 208 	Loss: 2.038859
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.1187648456057, "epoch": 208}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 27.806809184481395, "epoch": 208}
+Train Epoch: 209 	Loss: 2.046398
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.60411718131433, "epoch": 209}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 24.72684085510689, "epoch": 209}
+Train Epoch: 210 	Loss: 2.061240
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.77593032462391, "epoch": 210}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 22.375296912114013, "epoch": 210}
+Train Epoch: 211 	Loss: 2.055884
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.667458432304038, "epoch": 211}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 28.622327790973873, "epoch": 211}
+Train Epoch: 212 	Loss: 2.061416
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.358669833729216, "epoch": 212}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 30.387965162311957, "epoch": 212}
+Train Epoch: 213 	Loss: 2.066626
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.34283452098179, "epoch": 213}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 31.852731591448933, "epoch": 213}
+Train Epoch: 214 	Loss: 2.068251
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.239904988123516, "epoch": 214}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 32.31987331749802, "epoch": 214}
+Train Epoch: 215 	Loss: 2.059619
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.382422802850357, "epoch": 215}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 29.04196357878068, "epoch": 215}
+Train Epoch: 216 	Loss: 2.062000
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 28.85193982581156, "epoch": 216}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 28.820269200316705, "epoch": 216}
+Train Epoch: 217 	Loss: 2.058731
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.841646872525732, "epoch": 217}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 26.817102137767222, "epoch": 217}
+Train Epoch: 218 	Loss: 2.050496
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 28.495645288994456, "epoch": 218}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 26.349960411718133, "epoch": 218}
+Train Epoch: 219 	Loss: 2.030190
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.77038796516231, "epoch": 219}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 32.145684877276324, "epoch": 219}
+Train Epoch: 220 	Loss: 2.045536
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.36658749010293, "epoch": 220}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 17.23673792557403, "epoch": 220}
+Train Epoch: 221 	Loss: 2.024632
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.08155186064925, "epoch": 221}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 27.276326207442597, "epoch": 221}
+Train Epoch: 222 	Loss: 2.042772
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.387965162311957, "epoch": 222}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 19.635787806809184, "epoch": 222}
+Train Epoch: 223 	Loss: 2.021460
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.129057798891527, "epoch": 223}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 22.470308788598576, "epoch": 223}
+Train Epoch: 224 	Loss: 2.013983
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.712589073634206, "epoch": 224}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.14806017418844, "epoch": 224}
+Train Epoch: 225 	Loss: 2.017476
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.04196357878068, "epoch": 225}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 15.288994457640538, "epoch": 225}
+Train Epoch: 226 	Loss: 1.985949
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.32462391132225, "epoch": 226}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 14.28345209817894, "epoch": 226}
+Train Epoch: 227 	Loss: 2.025691
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.802058590657165, "epoch": 227}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 12.311955661124307, "epoch": 227}
+Train Epoch: 228 	Loss: 1.966793
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.530482977038798, "epoch": 228}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 13.18289786223278, "epoch": 228}
+Train Epoch: 229 	Loss: 2.018054
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.126682501979413, "epoch": 229}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.570071258907364, "epoch": 229}
+Train Epoch: 230 	Loss: 1.962619
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.09501187648456, "epoch": 230}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 12.78701504354711, "epoch": 230}
+Train Epoch: 231 	Loss: 2.017400
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.722882026920033, "epoch": 231}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.178939034045923, "epoch": 231}
+Train Epoch: 232 	Loss: 1.956251
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.849564528899446, "epoch": 232}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.796516231195566, "epoch": 232}
+Train Epoch: 233 	Loss: 2.018680
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.007917656373714, "epoch": 233}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.6880443388756925, "epoch": 233}
+Train Epoch: 234 	Loss: 1.965425
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.451306413301662, "epoch": 234}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.444972288202692, "epoch": 234}
+Train Epoch: 235 	Loss: 2.009229
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.912905779889154, "epoch": 235}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.841646872525732, "epoch": 235}
+Train Epoch: 236 	Loss: 1.963868
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.49089469517023, "epoch": 236}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.080760095011876, "epoch": 236}
+Train Epoch: 237 	Loss: 2.022354
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 29.746634996041173, "epoch": 237}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.84718923198733, "epoch": 237}
+Train Epoch: 238 	Loss: 1.968545
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.783847980997624, "epoch": 238}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.381631037212985, "epoch": 238}
+Train Epoch: 239 	Loss: 2.003899
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 30.522565320665084, "epoch": 239}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.702296120348377, "epoch": 239}
+Train Epoch: 240 	Loss: 1.969159
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 31.322248614410135, "epoch": 240}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.59778305621536, "epoch": 240}
+Train Epoch: 241 	Loss: 2.011546
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 31.49643705463183, "epoch": 241}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.825811559778305, "epoch": 241}
+Train Epoch: 242 	Loss: 1.953135
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 31.80522565320665, "epoch": 242}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.278701504354711, "epoch": 242}
+Train Epoch: 243 	Loss: 1.998357
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 31.49643705463183, "epoch": 243}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.7434679334916865, "epoch": 243}
+Train Epoch: 244 	Loss: 1.945364
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 31.908155186064924, "epoch": 244}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.046714172604909, "epoch": 244}
+Train Epoch: 245 	Loss: 1.988313
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 31.480601741884403, "epoch": 245}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.062549485352336, "epoch": 245}
+Train Epoch: 246 	Loss: 1.922411
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.25653206650831, "epoch": 246}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.608867775138559, "epoch": 246}
+Train Epoch: 247 	Loss: 1.974562
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 31.87648456057007, "epoch": 247}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.864608076009501, "epoch": 247}
+Train Epoch: 248 	Loss: 1.910636
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.63657957244656, "epoch": 248}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.683293745051465, "epoch": 248}
+Train Epoch: 249 	Loss: 1.961899
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 31.931908155186065, "epoch": 249}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.474267616785432, "epoch": 249}
+Train Epoch: 250 	Loss: 1.907227
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.1298495645289, "epoch": 250}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.508313539192399, "epoch": 250}
+Train Epoch: 251 	Loss: 1.953085
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.38321456848773, "epoch": 251}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.790973871733967, "epoch": 251}
+Train Epoch: 252 	Loss: 1.909871
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.565320665083135, "epoch": 252}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.862232779097387, "epoch": 252}
+Train Epoch: 253 	Loss: 1.932527
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.95328582739509, "epoch": 253}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.403008709422011, "epoch": 253}
+Train Epoch: 254 	Loss: 1.920103
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.21456848772763, "epoch": 254}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.790973871733967, "epoch": 254}
+Train Epoch: 255 	Loss: 1.923995
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.087885985748215, "epoch": 255}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.529691211401425, "epoch": 255}
+Train Epoch: 256 	Loss: 1.926393
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.15914489311164, "epoch": 256}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.653998416468726, "epoch": 256}
+Train Epoch: 257 	Loss: 1.917104
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.29374505146477, "epoch": 257}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.448931116389549, "epoch": 257}
+Train Epoch: 258 	Loss: 1.936980
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.198733174980205, "epoch": 258}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.909738717339668, "epoch": 258}
+Train Epoch: 259 	Loss: 1.930577
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.44418052256532, "epoch": 259}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.21377672209026, "epoch": 259}
+Train Epoch: 260 	Loss: 1.951480
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.63657957244656, "epoch": 260}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.353127474267616, "epoch": 260}
+Train Epoch: 261 	Loss: 1.918842
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.45209817893903, "epoch": 261}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.572446555819477, "epoch": 261}
+Train Epoch: 262 	Loss: 1.945272
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.391132224861444, "epoch": 262}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.004750593824228, "epoch": 262}
+Train Epoch: 263 	Loss: 1.924778
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.53127474267617, "epoch": 263}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.878859857482185, "epoch": 263}
+Train Epoch: 264 	Loss: 1.934622
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.589073634204276, "epoch": 264}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.835312747426761, "epoch": 264}
+Train Epoch: 265 	Loss: 1.920086
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.8978622327791, "epoch": 265}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.504354711005542, "epoch": 265}
+Train Epoch: 266 	Loss: 1.931835
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.802850356294535, "epoch": 266}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.447347585114806, "epoch": 266}
+Train Epoch: 267 	Loss: 1.906562
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.0166270783848, "epoch": 267}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 12.161520190023753, "epoch": 267}
+Train Epoch: 268 	Loss: 1.912871
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.20665083135392, "epoch": 268}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.4204275534441804, "epoch": 268}
+Train Epoch: 269 	Loss: 1.902455
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.05621536025337, "epoch": 269}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.21377672209026, "epoch": 269}
+Train Epoch: 270 	Loss: 1.920314
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.75534441805225, "epoch": 270}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.188440221694378, "epoch": 270}
+Train Epoch: 271 	Loss: 1.910391
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.570863024544735, "epoch": 271}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 12.644497228820269, "epoch": 271}
+Train Epoch: 272 	Loss: 1.908101
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.71575613618369, "epoch": 272}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.362628661916073, "epoch": 272}
+Train Epoch: 273 	Loss: 1.910627
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.174980205859065, "epoch": 273}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.163895486935868, "epoch": 273}
+Train Epoch: 274 	Loss: 1.896863
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.88202692003167, "epoch": 274}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.7007125890736345, "epoch": 274}
+Train Epoch: 275 	Loss: 1.912634
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.193190815518605, "epoch": 275}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.954869358669834, "epoch": 275}
+Train Epoch: 276 	Loss: 1.876730
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.1353919239905, "epoch": 276}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.991290577988916, "epoch": 276}
+Train Epoch: 277 	Loss: 1.894711
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.25653206650831, "epoch": 277}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.034045922406968, "epoch": 277}
+Train Epoch: 278 	Loss: 1.885637
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.34125098970705, "epoch": 278}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.009501187648456, "epoch": 278}
+Train Epoch: 279 	Loss: 1.886397
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.76326207442597, "epoch": 279}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.613618368962787, "epoch": 279}
+Train Epoch: 280 	Loss: 1.882930
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.49960411718131, "epoch": 280}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.253365003958828, "epoch": 280}
+Train Epoch: 281 	Loss: 1.876546
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 32.937450514647665, "epoch": 281}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.664291369754553, "epoch": 281}
+Train Epoch: 282 	Loss: 1.884191
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.43388756927949, "epoch": 282}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.561361836896278, "epoch": 282}
+Train Epoch: 283 	Loss: 1.871598
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.30166270783848, "epoch": 283}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.147268408551069, "epoch": 283}
+Train Epoch: 284 	Loss: 1.886182
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.11480601741884, "epoch": 284}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.84639746634996, "epoch": 284}
+Train Epoch: 285 	Loss: 1.849287
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.855898653998416, "epoch": 285}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.403800475059382, "epoch": 285}
+Train Epoch: 286 	Loss: 1.888673
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.027711797307994, "epoch": 286}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.355502771179731, "epoch": 286}
+Train Epoch: 287 	Loss: 1.839468
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.204275534441805, "epoch": 287}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.896278701504355, "epoch": 287}
+Train Epoch: 288 	Loss: 1.904392
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.47347585114806, "epoch": 288}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.696753760886777, "epoch": 288}
+Train Epoch: 289 	Loss: 1.847430
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.17260490894695, "epoch": 289}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.909738717339668, "epoch": 289}
+Train Epoch: 290 	Loss: 1.885256
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.093428345209816, "epoch": 290}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.116389548693586, "epoch": 290}
+Train Epoch: 291 	Loss: 1.847648
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.99049881235155, "epoch": 291}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.585114806017419, "epoch": 291}
+Train Epoch: 292 	Loss: 1.884176
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.07759303246239, "epoch": 292}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.702296120348377, "epoch": 292}
+Train Epoch: 293 	Loss: 1.854433
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.12509897070467, "epoch": 293}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.41409342834521, "epoch": 293}
+Train Epoch: 294 	Loss: 1.877922
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.86381631037213, "epoch": 294}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.882818685669042, "epoch": 294}
+Train Epoch: 295 	Loss: 1.864694
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.315122723673795, "epoch": 295}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.012668250197942, "epoch": 295}
+Train Epoch: 296 	Loss: 1.879075
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 33.71338083927157, "epoch": 296}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.476642913697545, "epoch": 296}
+Train Epoch: 297 	Loss: 1.874431
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.98812351543943, "epoch": 297}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.15993665874901, "epoch": 297}
+Train Epoch: 298 	Loss: 1.886712
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.006334125098974, "epoch": 298}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.616785431512272, "epoch": 298}
+Train Epoch: 299 	Loss: 1.891253
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.51860649247823, "epoch": 299}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.249406175771972, "epoch": 299}
+Train Epoch: 300 	Loss: 1.867712
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.65558194774347, "epoch": 300}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.993665874901029, "epoch": 300}
+Train Epoch: 301 	Loss: 1.898559
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.93824228028504, "epoch": 301}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.362628661916073, "epoch": 301}
+Train Epoch: 302 	Loss: 1.866248
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.663499604117185, "epoch": 302}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.1520190023752965, "epoch": 302}
+Train Epoch: 303 	Loss: 1.907957
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.24148851939826, "epoch": 303}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.687252573238322, "epoch": 303}
+Train Epoch: 304 	Loss: 1.868564
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.7347585114806, "epoch": 304}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.241488519398258, "epoch": 304}
+Train Epoch: 305 	Loss: 1.903733
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.63182897862233, "epoch": 305}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.740300870942201, "epoch": 305}
+Train Epoch: 306 	Loss: 1.871004
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.25732383214569, "epoch": 306}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.33095803642122, "epoch": 306}
+Train Epoch: 307 	Loss: 1.886695
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 34.88519398258116, "epoch": 307}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.500395882818686, "epoch": 307}
+Train Epoch: 308 	Loss: 1.862449
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.07284243863816, "epoch": 308}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.8638163103721297, "epoch": 308}
+Train Epoch: 309 	Loss: 1.881073
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.28107680126683, "epoch": 309}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.68012668250198, "epoch": 309}
+Train Epoch: 310 	Loss: 1.846769
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.34996041171813, "epoch": 310}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.085510688836105, "epoch": 310}
+Train Epoch: 311 	Loss: 1.871542
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.209817893903406, "epoch": 311}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.690419635787807, "epoch": 311}
+Train Epoch: 312 	Loss: 1.828561
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.02296120348377, "epoch": 312}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.2074425969912905, "epoch": 312}
+Train Epoch: 313 	Loss: 1.850783
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.62945368171022, "epoch": 313}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.17102137767221, "epoch": 313}
+Train Epoch: 314 	Loss: 1.828792
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.9200316706255, "epoch": 314}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.463974663499604, "epoch": 314}
+Train Epoch: 315 	Loss: 1.846853
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.6215360253365, "epoch": 315}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.777513855898654, "epoch": 315}
+Train Epoch: 316 	Loss: 1.822889
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.04908946951702, "epoch": 316}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.984164687252573, "epoch": 316}
+Train Epoch: 317 	Loss: 1.843565
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.94615993665875, "epoch": 317}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.78068091844814, "epoch": 317}
+Train Epoch: 318 	Loss: 1.839096
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.37371338083927, "epoch": 318}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.638163103721299, "epoch": 318}
+Train Epoch: 319 	Loss: 1.822364
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.26286619160729, "epoch": 319}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.102137767220903, "epoch": 319}
+Train Epoch: 320 	Loss: 1.844199
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.666666666666664, "epoch": 320}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.787806809184481, "epoch": 320}
+Train Epoch: 321 	Loss: 1.811241
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.12589073634204, "epoch": 321}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.286619160728424, "epoch": 321}
+Train Epoch: 322 	Loss: 1.845980
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.34996041171813, "epoch": 322}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.193982581155978, "epoch": 322}
+Train Epoch: 323 	Loss: 1.810161
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.96753760886777, "epoch": 323}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.133808392715756, "epoch": 323}
+Train Epoch: 324 	Loss: 1.828882
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.38163103721298, "epoch": 324}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.33095803642122, "epoch": 324}
+Train Epoch: 325 	Loss: 1.812326
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.13380839271576, "epoch": 325}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.06492478226445, "epoch": 325}
+Train Epoch: 326 	Loss: 1.823192
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.563737133808395, "epoch": 326}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.079968329374505, "epoch": 326}
+Train Epoch: 327 	Loss: 1.806651
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.888361045130644, "epoch": 327}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.146476642913697, "epoch": 327}
+Train Epoch: 328 	Loss: 1.821756
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.714172604908946, "epoch": 328}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.494061757719715, "epoch": 328}
+Train Epoch: 329 	Loss: 1.828229
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.29216152019002, "epoch": 329}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.183689627870151, "epoch": 329}
+Train Epoch: 330 	Loss: 1.810149
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.587490102929536, "epoch": 330}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.874109263657957, "epoch": 330}
+Train Epoch: 331 	Loss: 1.844159
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.1575613618369, "epoch": 331}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.279493269992082, "epoch": 331}
+Train Epoch: 332 	Loss: 1.812320
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.32620744259699, "epoch": 332}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.491686460807601, "epoch": 332}
+Train Epoch: 333 	Loss: 1.843380
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.76167854315123, "epoch": 333}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.34283452098179, "epoch": 333}
+Train Epoch: 334 	Loss: 1.806148
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.83531274742676, "epoch": 334}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.570863024544735, "epoch": 334}
+Train Epoch: 335 	Loss: 1.832554
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.26286619160729, "epoch": 335}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 12.399049881235154, "epoch": 335}
+Train Epoch: 336 	Loss: 1.797135
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.89073634204276, "epoch": 336}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.111638954869359, "epoch": 336}
+Train Epoch: 337 	Loss: 1.833997
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.6270783847981, "epoch": 337}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.654790182106096, "epoch": 337}
+Train Epoch: 338 	Loss: 1.798633
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.510688836104514, "epoch": 338}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.539192399049881, "epoch": 338}
+Train Epoch: 339 	Loss: 1.816478
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.038796516231194, "epoch": 339}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.935866983372922, "epoch": 339}
+Train Epoch: 340 	Loss: 1.796578
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.55027711797308, "epoch": 340}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.7688044338875692, "epoch": 340}
+Train Epoch: 341 	Loss: 1.820694
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.71179730799683, "epoch": 341}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.832937450514648, "epoch": 341}
+Train Epoch: 342 	Loss: 1.799233
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.0965954077593, "epoch": 342}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.5629453681710213, "epoch": 342}
+Train Epoch: 343 	Loss: 1.806465
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.13380839271576, "epoch": 343}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.051464766429137, "epoch": 343}
+Train Epoch: 344 	Loss: 1.812394
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.033254156769594, "epoch": 344}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.950910530482977, "epoch": 344}
+Train Epoch: 345 	Loss: 1.798193
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.65637371338084, "epoch": 345}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.220110847189232, "epoch": 345}
+Train Epoch: 346 	Loss: 1.806800
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.87490102929533, "epoch": 346}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.980205859065716, "epoch": 346}
+Train Epoch: 347 	Loss: 1.796813
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.77513855898654, "epoch": 347}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.742676167854315, "epoch": 347}
+Train Epoch: 348 	Loss: 1.807558
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.708630245447345, "epoch": 348}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.655581947743468, "epoch": 348}
+Train Epoch: 349 	Loss: 1.807197
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.65637371338084, "epoch": 349}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.162311955661124, "epoch": 349}
+Train Epoch: 350 	Loss: 1.811435
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.771971496437054, "epoch": 350}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.581947743467934, "epoch": 350}
+Train Epoch: 351 	Loss: 1.796122
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.69833729216152, "epoch": 351}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.077593032462391, "epoch": 351}
+Train Epoch: 352 	Loss: 1.814859
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.7403008709422, "epoch": 352}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.215360253365004, "epoch": 352}
+Train Epoch: 353 	Loss: 1.782958
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.07046714172605, "epoch": 353}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.96437054631829, "epoch": 353}
+Train Epoch: 354 	Loss: 1.804307
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.26286619160729, "epoch": 354}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.6270783847981, "epoch": 354}
+Train Epoch: 355 	Loss: 1.782285
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.93586698337292, "epoch": 355}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.874901029295328, "epoch": 355}
+Train Epoch: 356 	Loss: 1.801209
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.68250197941409, "epoch": 356}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.133808392715756, "epoch": 356}
+Train Epoch: 357 	Loss: 1.782930
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.52414885193983, "epoch": 357}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.7434679334916865, "epoch": 357}
+Train Epoch: 358 	Loss: 1.793712
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.220902612826606, "epoch": 358}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.460807600950119, "epoch": 358}
+Train Epoch: 359 	Loss: 1.784113
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.37371338083927, "epoch": 359}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.136975455265242, "epoch": 359}
+Train Epoch: 360 	Loss: 1.793112
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.65637371338084, "epoch": 360}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.803642121931908, "epoch": 360}
+Train Epoch: 361 	Loss: 1.802408
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.6270783847981, "epoch": 361}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.772763262074426, "epoch": 361}
+Train Epoch: 362 	Loss: 1.797251
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.08392715756136, "epoch": 362}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.734758511480602, "epoch": 362}
+Train Epoch: 363 	Loss: 1.789760
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.32620744259699, "epoch": 363}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.226444972288203, "epoch": 363}
+Train Epoch: 364 	Loss: 1.793828
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.96516231195566, "epoch": 364}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.362628661916073, "epoch": 364}
+Train Epoch: 365 	Loss: 1.788835
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.55581947743468, "epoch": 365}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.548693586698338, "epoch": 365}
+Train Epoch: 366 	Loss: 1.795011
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.65637371338084, "epoch": 366}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.423594615993665, "epoch": 366}
+Train Epoch: 367 	Loss: 1.760536
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.777513855898654, "epoch": 367}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.695961995249406, "epoch": 367}
+Train Epoch: 368 	Loss: 1.798186
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.49010292953286, "epoch": 368}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.300079176563737, "epoch": 368}
+Train Epoch: 369 	Loss: 1.743028
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.6270783847981, "epoch": 369}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.165479018210609, "epoch": 369}
+Train Epoch: 370 	Loss: 1.784616
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.79097387173397, "epoch": 370}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.217735550277118, "epoch": 370}
+Train Epoch: 371 	Loss: 1.732882
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.63499604117181, "epoch": 371}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.866983372921615, "epoch": 371}
+Train Epoch: 372 	Loss: 1.763193
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.608867775138556, "epoch": 372}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.811559778305622, "epoch": 372}
+Train Epoch: 373 	Loss: 1.732631
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.191607284243865, "epoch": 373}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.0570071258907365, "epoch": 373}
+Train Epoch: 374 	Loss: 1.743552
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.18131433095804, "epoch": 374}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.239113222486144, "epoch": 374}
+Train Epoch: 375 	Loss: 1.725678
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.732383214568486, "epoch": 375}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.328582739509105, "epoch": 375}
+Train Epoch: 376 	Loss: 1.736435
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.70625494853523, "epoch": 376}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.4133016627078385, "epoch": 376}
+Train Epoch: 377 	Loss: 1.724182
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.37608867775138, "epoch": 377}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.365795724465558, "epoch": 377}
+Train Epoch: 378 	Loss: 1.733097
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.52969121140143, "epoch": 378}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.73317498020586, "epoch": 378}
+Train Epoch: 379 	Loss: 1.725994
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.24940617577197, "epoch": 379}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.624703087885986, "epoch": 379}
+Train Epoch: 380 	Loss: 1.749972
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.92557403008709, "epoch": 380}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.517022961203484, "epoch": 380}
+Train Epoch: 381 	Loss: 1.736685
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.48693586698337, "epoch": 381}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.85748218527316, "epoch": 381}
+Train Epoch: 382 	Loss: 1.740799
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.60649247822644, "epoch": 382}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.332541567695962, "epoch": 382}
+Train Epoch: 383 	Loss: 1.729788
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 35.87490102929533, "epoch": 383}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.612034837688045, "epoch": 383}
+Train Epoch: 384 	Loss: 1.728275
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.40855106888361, "epoch": 384}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 11.694378463974664, "epoch": 384}
+Train Epoch: 385 	Loss: 1.736230
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.191607284243865, "epoch": 385}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.46159936658749, "epoch": 385}
+Train Epoch: 386 	Loss: 1.713884
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.62232779097387, "epoch": 386}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.308788598574822, "epoch": 386}
+Train Epoch: 387 	Loss: 1.735660
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.22882026920032, "epoch": 387}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.815518606492478, "epoch": 387}
+Train Epoch: 388 	Loss: 1.711508
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.27395091053048, "epoch": 388}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.418844022169438, "epoch": 388}
+Train Epoch: 389 	Loss: 1.730477
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.47426761678543, "epoch": 389}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 10.403800475059382, "epoch": 389}
+Train Epoch: 390 	Loss: 1.718812
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.82264449722882, "epoch": 390}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.060174188440222, "epoch": 390}
+Train Epoch: 391 	Loss: 1.737890
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.569279493269995, "epoch": 391}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.889152810768012, "epoch": 391}
+Train Epoch: 392 	Loss: 1.720359
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.66429136975455, "epoch": 392}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.197149643705464, "epoch": 392}
+Train Epoch: 393 	Loss: 1.742840
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.719714964370546, "epoch": 393}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.709422011084719, "epoch": 393}
+Train Epoch: 394 	Loss: 1.727903
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.41884402216944, "epoch": 394}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.965162311955661, "epoch": 394}
+Train Epoch: 395 	Loss: 1.736057
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.695961995249405, "epoch": 395}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.305621536025336, "epoch": 395}
+Train Epoch: 396 	Loss: 1.735952
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.53760886777514, "epoch": 396}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 7.854315122723674, "epoch": 396}
+Train Epoch: 397 	Loss: 1.753406
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.608867775138556, "epoch": 397}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 8.701504354711005, "epoch": 397}
+Train Epoch: 398 	Loss: 1.731329
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.72763262074426, "epoch": 398}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.492478226444972, "epoch": 398}
+Train Epoch: 399 	Loss: 1.757295
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.18131433095804, "epoch": 399}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.223277909738718, "epoch": 399}
+Train Epoch: 400 	Loss: 1.733319
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.84639746634996, "epoch": 400}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 9.026128266033254, "epoch": 400}
+Train Epoch: 401 	Loss: 1.766793
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.81710213776722, "epoch": 401}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.7957244655581945, "epoch": 401}
+Train Epoch: 402 	Loss: 1.729904
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.90182106096596, "epoch": 402}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.104513064133017, "epoch": 402}
+Train Epoch: 403 	Loss: 1.764333
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.73000791765637, "epoch": 403}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.0277117973079966, "epoch": 403}
+Train Epoch: 404 	Loss: 1.737749
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.81472684085511, "epoch": 404}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.576405384006335, "epoch": 404}
+Train Epoch: 405 	Loss: 1.759017
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.99920823436263, "epoch": 405}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.1385589865399846, "epoch": 405}
+Train Epoch: 406 	Loss: 1.722241
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.28978622327791, "epoch": 406}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.9746634996041172, "epoch": 406}
+Train Epoch: 407 	Loss: 1.751130
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.33174980205859, "epoch": 407}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.217735550277118, "epoch": 407}
+Train Epoch: 408 	Loss: 1.718883
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.17102137767221, "epoch": 408}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.76326207442597, "epoch": 408}
+Train Epoch: 409 	Loss: 1.760052
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.149643705463184, "epoch": 409}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.278701504354711, "epoch": 409}
+Train Epoch: 410 	Loss: 1.703571
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.09976247030879, "epoch": 410}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.913697545526524, "epoch": 410}
+Train Epoch: 411 	Loss: 1.743444
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 36.76959619952494, "epoch": 411}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.552652414885194, "epoch": 411}
+Train Epoch: 412 	Loss: 1.718997
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.07600950118765, "epoch": 412}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.038004750593824, "epoch": 412}
+Train Epoch: 413 	Loss: 1.727759
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 37.648456057007124, "epoch": 413}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.433887569279493, "epoch": 413}
+Train Epoch: 414 	Loss: 1.731984
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.37688044338876, "epoch": 414}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.9192399049881237, "epoch": 414}
+Train Epoch: 415 	Loss: 1.708942
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.463974663499606, "epoch": 415}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.5605700712589075, "epoch": 415}
+Train Epoch: 416 	Loss: 1.722322
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.27157561361837, "epoch": 416}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.637371338083927, "epoch": 416}
+Train Epoch: 417 	Loss: 1.693432
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.93111638954869, "epoch": 417}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.03562945368171, "epoch": 417}
+Train Epoch: 418 	Loss: 1.722234
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.200316706254945, "epoch": 418}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.038004750593824, "epoch": 418}
+Train Epoch: 419 	Loss: 1.693056
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.19239904988124, "epoch": 419}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.896278701504355, "epoch": 419}
+Train Epoch: 420 	Loss: 1.726265
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.897070467141724, "epoch": 420}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.370546318289787, "epoch": 420}
+Train Epoch: 421 	Loss: 1.690740
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.45368171021378, "epoch": 421}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.930324623911322, "epoch": 421}
+Train Epoch: 422 	Loss: 1.715154
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.334916864608076, "epoch": 422}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.8424386381631037, "epoch": 422}
+Train Epoch: 423 	Loss: 1.695349
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.00237529691211, "epoch": 423}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.302454473475851, "epoch": 423}
+Train Epoch: 424 	Loss: 1.718950
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.15281076801267, "epoch": 424}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.977038796516231, "epoch": 424}
+Train Epoch: 425 	Loss: 1.688651
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.70942201108472, "epoch": 425}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.01741884402217, "epoch": 425}
+Train Epoch: 426 	Loss: 1.714970
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.184481393507525, "epoch": 426}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.536817102137767, "epoch": 426}
+Train Epoch: 427 	Loss: 1.695112
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.84402216943785, "epoch": 427}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.447347585114806, "epoch": 427}
+Train Epoch: 428 	Loss: 1.717481
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.398258115597784, "epoch": 428}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.122723673792557, "epoch": 428}
+Train Epoch: 429 	Loss: 1.683438
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.55106888361045, "epoch": 429}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.45526524148852, "epoch": 429}
+Train Epoch: 430 	Loss: 1.726536
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.24782264449723, "epoch": 430}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.885193982581156, "epoch": 430}
+Train Epoch: 431 	Loss: 1.694303
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.05225653206651, "epoch": 431}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.33095803642122, "epoch": 431}
+Train Epoch: 432 	Loss: 1.715417
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.85985748218528, "epoch": 432}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.7315914489311166, "epoch": 432}
+Train Epoch: 433 	Loss: 1.686878
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.23436262866191, "epoch": 433}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.3966745843230406, "epoch": 433}
+Train Epoch: 434 	Loss: 1.717584
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.23990498812351, "epoch": 434}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.8186856690419635, "epoch": 434}
+Train Epoch: 435 	Loss: 1.672767
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.38479809976247, "epoch": 435}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.718923198733175, "epoch": 435}
+Train Epoch: 436 	Loss: 1.722085
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.136975455265244, "epoch": 436}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.491686460807601, "epoch": 436}
+Train Epoch: 437 	Loss: 1.679244
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.97070467141726, "epoch": 437}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.853523357086303, "epoch": 437}
+Train Epoch: 438 	Loss: 1.705600
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.097387173396676, "epoch": 438}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.5629453681710213, "epoch": 438}
+Train Epoch: 439 	Loss: 1.667483
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.14489311163896, "epoch": 439}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.594615993665875, "epoch": 439}
+Train Epoch: 440 	Loss: 1.699824
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.334916864608076, "epoch": 440}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.802850356294537, "epoch": 440}
+Train Epoch: 441 	Loss: 1.667237
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.48535233570863, "epoch": 441}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.2327790973871733, "epoch": 441}
+Train Epoch: 442 	Loss: 1.696381
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.469517022961206, "epoch": 442}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.5233570863024544, "epoch": 442}
+Train Epoch: 443 	Loss: 1.658307
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.43784639746635, "epoch": 443}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 1.417260490894695, "epoch": 443}
+Train Epoch: 444 	Loss: 1.702580
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.683293745051465, "epoch": 444}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.5019794140934284, "epoch": 444}
+Train Epoch: 445 	Loss: 1.655547
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.5882818685669, "epoch": 445}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.6096595407759303, "epoch": 445}
+Train Epoch: 446 	Loss: 1.692240
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.17418844022169, "epoch": 446}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 1.6785431512272366, "epoch": 446}
+Train Epoch: 447 	Loss: 1.660478
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.61995249406176, "epoch": 447}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.35629453681710216, "epoch": 447}
+Train Epoch: 448 	Loss: 1.691646
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.3562945368171, "epoch": 448}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 1.393507521773555, "epoch": 448}
+Train Epoch: 449 	Loss: 1.673103
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.079176563737136, "epoch": 449}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.6096595407759303, "epoch": 449}
+Train Epoch: 450 	Loss: 1.684763
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.57007125890736, "epoch": 450}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.9897070467141726, "epoch": 450}
+Train Epoch: 451 	Loss: 1.672041
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.2375296912114, "epoch": 451}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.9738717339667459, "epoch": 451}
+Train Epoch: 452 	Loss: 1.681842
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.74425969912906, "epoch": 452}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 0.9659540775930324, "epoch": 452}
+Train Epoch: 453 	Loss: 1.677652
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.87094220110847, "epoch": 453}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.161520190023753, "epoch": 453}
+Train Epoch: 454 	Loss: 1.671702
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.53840063341251, "epoch": 454}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 1.163895486935867, "epoch": 454}
+Train Epoch: 455 	Loss: 1.686616
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 41.037212984956454, "epoch": 455}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.0878859857482186, "epoch": 455}
+Train Epoch: 456 	Loss: 1.654671
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.2375296912114, "epoch": 456}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 1.2430720506730009, "epoch": 456}
+Train Epoch: 457 	Loss: 1.695166
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 41.02929532858274, "epoch": 457}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.214568487727633, "epoch": 457}
+Train Epoch: 458 	Loss: 1.647926
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.57007125890736, "epoch": 458}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 1.5122723673792557, "epoch": 458}
+Train Epoch: 459 	Loss: 1.688574
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 41.17181314330958, "epoch": 459}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.7133808392715757, "epoch": 459}
+Train Epoch: 460 	Loss: 1.643299
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.530482977038794, "epoch": 460}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 1.6072842438638164, "epoch": 460}
+Train Epoch: 461 	Loss: 1.689361
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 41.09263657957245, "epoch": 461}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.623911322248614, "epoch": 461}
+Train Epoch: 462 	Loss: 1.643498
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.22169437846397, "epoch": 462}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 1.852731591448931, "epoch": 462}
+Train Epoch: 463 	Loss: 1.695764
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.58590657165479, "epoch": 463}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.362628661916073, "epoch": 463}
+Train Epoch: 464 	Loss: 1.647262
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.554235946159935, "epoch": 464}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.311955661124307, "epoch": 464}
+Train Epoch: 465 	Loss: 1.695419
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.44338875692795, "epoch": 465}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.774346793349169, "epoch": 465}
+Train Epoch: 466 	Loss: 1.642272
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.055423594615995, "epoch": 466}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.311955661124307, "epoch": 466}
+Train Epoch: 467 	Loss: 1.699148
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.340459224069676, "epoch": 467}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.996041171813143, "epoch": 467}
+Train Epoch: 468 	Loss: 1.646979
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.02375296912114, "epoch": 468}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.699920823436263, "epoch": 468}
+Train Epoch: 469 	Loss: 1.693414
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.38796516231196, "epoch": 469}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.0831353919239906, "epoch": 469}
+Train Epoch: 470 	Loss: 1.651055
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.48535233570863, "epoch": 470}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.7949326999208233, "epoch": 470}
+Train Epoch: 471 	Loss: 1.698068
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.46714172604909, "epoch": 471}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.948535233570863, "epoch": 471}
+Train Epoch: 472 	Loss: 1.648199
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.1686460807601, "epoch": 472}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.6524148851939824, "epoch": 472}
+Train Epoch: 473 	Loss: 1.703139
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.490894695170226, "epoch": 473}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.041171813143309, "epoch": 473}
+Train Epoch: 474 	Loss: 1.639686
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.82026920031671, "epoch": 474}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.6524148851939824, "epoch": 474}
+Train Epoch: 475 	Loss: 1.699945
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.292953285827394, "epoch": 475}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.890736342042755, "epoch": 475}
+Train Epoch: 476 	Loss: 1.634105
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.68566904196358, "epoch": 476}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 2.8582739509105304, "epoch": 476}
+Train Epoch: 477 	Loss: 1.709669
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.102929532858276, "epoch": 477}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.938242280285036, "epoch": 477}
+Train Epoch: 478 	Loss: 1.625376
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.82026920031671, "epoch": 478}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 3.594615993665875, "epoch": 478}
+Train Epoch: 479 	Loss: 1.704101
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.51464766429137, "epoch": 479}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.476642913697545, "epoch": 479}
+Train Epoch: 480 	Loss: 1.609017
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.184481393507525, "epoch": 480}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.117181314330958, "epoch": 480}
+Train Epoch: 481 	Loss: 1.682306
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 40.72050673000792, "epoch": 481}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.748218527315914, "epoch": 481}
+Train Epoch: 482 	Loss: 1.598654
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.41409342834521, "epoch": 482}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.5605700712589075, "epoch": 482}
+Train Epoch: 483 	Loss: 1.672773
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.84164687252573, "epoch": 483}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.193982581155978, "epoch": 483}
+Train Epoch: 484 	Loss: 1.603224
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.95486935866983, "epoch": 484}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.489311163895487, "epoch": 484}
+Train Epoch: 485 	Loss: 1.663176
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.83372921615202, "epoch": 485}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.154394299287411, "epoch": 485}
+Train Epoch: 486 	Loss: 1.613258
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.756927949327, "epoch": 486}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.845605700712589, "epoch": 486}
+Train Epoch: 487 	Loss: 1.656621
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.6437054631829, "epoch": 487}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.806017418844022, "epoch": 487}
+Train Epoch: 488 	Loss: 1.617158
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.939034045922405, "epoch": 488}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 6.01741884402217, "epoch": 488}
+Train Epoch: 489 	Loss: 1.643886
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.049881235154395, "epoch": 489}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.225653206650831, "epoch": 489}
+Train Epoch: 490 	Loss: 1.621298
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 38.71733966745843, "epoch": 490}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.486935866983373, "epoch": 490}
+Train Epoch: 491 	Loss: 1.638055
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.27157561361837, "epoch": 491}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.829770387965162, "epoch": 491}
+Train Epoch: 492 	Loss: 1.622508
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.398258115597784, "epoch": 492}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.661124307205068, "epoch": 492}
+Train Epoch: 493 	Loss: 1.631935
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.61203483768804, "epoch": 493}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.930324623911322, "epoch": 493}
+Train Epoch: 494 	Loss: 1.615897
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.334916864608076, "epoch": 494}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.956452889944576, "epoch": 494}
+Train Epoch: 495 	Loss: 1.628558
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.51702296120348, "epoch": 495}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.66904196357878, "epoch": 495}
+Train Epoch: 496 	Loss: 1.618019
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.263657957244654, "epoch": 496}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.01187648456057, "epoch": 496}
+Train Epoch: 497 	Loss: 1.623730
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.572446555819475, "epoch": 497}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.47347585114806, "epoch": 497}
+Train Epoch: 498 	Loss: 1.619203
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.3507521773555, "epoch": 498}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 5.312747426761678, "epoch": 498}
+Train Epoch: 499 	Loss: 1.627892
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.65162311955661, "epoch": 499}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.251781472684086, "epoch": 499}
+Train Epoch: 500 	Loss: 1.621315
+{"metric": "Eval - Backdoored Accuracy (BA)", "value": 39.72288202692003, "epoch": 500}
+{"metric": "Eval - Attack Success Rate (ASR)", "value": 4.813935075217736, "epoch": 500}
+当前时间： 2024-01-15 17:23:00
