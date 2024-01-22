@@ -34,7 +34,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     --pretraining_dataset {pretraining_dataset} \
     --color {color} \
     --loss0 {loss0} \
-    > ./log/bad_encoder/{encoder_usage_info}_{downstream_dataset}_{reference}1.log 2>&1 &'
+    > ./log/bad_encoder/{encoder_usage_info}_{downstream_dataset}_{reference}1.log'
     os.system(cmd)
 
 # _ablate

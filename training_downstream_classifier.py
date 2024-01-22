@@ -101,6 +101,7 @@ if __name__ == '__main__':
         feature_bank_backdoor, label_bank_backdoor = predict_feature(args,model.f, test_loader_backdoor,'backdoor')
         feature_bank_target, label_bank_target = predict_feature(args,model.f, target_loader)
 
+    print(feature_bank_training.shape[1])
     feature_banks = {
         'args':args_v,
         'training': feature_bank_training,
@@ -108,6 +109,7 @@ if __name__ == '__main__':
         'backdoor': feature_bank_backdoor,
         'target': feature_bank_target
     }
+
 
     out = os.path.join(os.path.dirname(args.encoder), 'feature_banks.pkl')
     with open(out, 'wb') as f:
@@ -135,5 +137,9 @@ if __name__ == '__main__':
             net_test(net, nn_test_loader, epoch, criterion, 'Backdoored Accuracy (BA)')
             net_test(net, nn_backdoor_loader, epoch, criterion, 'Attack Success Rate (ASR)')
 
+    save_path= os.path.join(os.path.dirname(args.encoder), 'classifier.pkl')
+
+    torch.save(net.state_dict(), save_path)
+    print("save classifier to ", save_path)
     now = datetime.now()
     print("当前时间：", now.strftime("%Y-%m-%d %H:%M:%S"))

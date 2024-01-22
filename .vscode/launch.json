@@ -5,6 +5,20 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "nc",
+      "type": "python",
+      "request": "launch",
+      "program": "train2.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "args": ["--dataset","cifar10",
+      "--encoder_usage_info", "stl10",
+      "--encoder","../../output/stl10/svhn_backdoored_encoder/2023-12-28-17:03:53/model_50.pth",
+      "--classifier","../../output/stl10/svhn_backdoored_encoder/2023-12-28-17:03:53/classifier.pkl",
+      "--num_classes","10"],
+      "cwd":"/home/hrzhang/projects/badencoder_filter/defences/MyNeuralCleanse"
+    },
+    {
       "name": "decree",
       "type": "python",
       "request": "launch",
@@ -12,10 +26,14 @@
       "console": "integratedTerminal",
       "justMyCode": true,
       "args": [
-        "--model_flag","backdoor",
-        "--encoder_path","/home/hrzhang/projects/badencoder_filter/output/cifar10/stl10_backdoored_encoder/2023-12-30-00:04:40/model_100.pth",
-        "--mask_init","rand",
-        "--id","_home_hrzhang_model_100.pth",
+        "--model_flag",
+        "backdoor",
+        "--encoder_path",
+        "/home/hrzhang/projects/badencoder_filter/output/cifar10/stl10_backdoored_encoder/2023-12-30-00:04:40/model_100.pth",
+        "--mask_init",
+        "rand",
+        "--id",
+        "_home_hrzhang_model_100.pth",
         "--encoder_usage_info",
         "cifar10",
         "--arch",
@@ -23,7 +41,7 @@
         "--result_file",
         "resultfinal_filter_txt2.txt"
       ],
-      "cwd":"/home/hrzhang/projects/badencoder_filter/defences/DECREE"
+      "cwd": "/home/hrzhang/projects/badencoder_filter/defences/DECREE"
     },
     {
       "name": "training_downstream_classifier_imagenet",

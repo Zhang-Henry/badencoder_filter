@@ -12,7 +12,7 @@ test_transform_cifar10_GaussianBlur = transforms.Compose([
     transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])])
 
 test_transform_cifar10_JPEGcompression = transforms.Compose([
-    lambda x: JPEGcompression(x, quality=9),
+    lambda x: JPEGcompression(x, quality=20),
     transforms.ToTensor(),
     transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])])
 
@@ -23,7 +23,7 @@ test_transform_cifar10_salt_and_pepper_noise = transforms.Compose([
 
 
 test_transform_cifar10_poisson_noise = transforms.Compose([
-    lambda x: add_poisson_noise(x, scale=5),
+    lambda x: add_poisson_noise(x, scale=10),
     transforms.ToTensor(),
     transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])])
 
