@@ -90,12 +90,12 @@ def reverse_engineer(args,train_loader,encoder,classifier):
         trigger = np.transpose(trigger, (1,2,0))
         plt.axis("off")
         plt.imshow(trigger)
-        plt.savefig(f'mask/{args.dataset}/trigger_{label}.png', bbox_inches='tight', pad_inches=0.0)
+        plt.savefig(f'mask/{args.encoder_usage_info}/{args.dataset}/trigger_{label}.png', bbox_inches='tight', pad_inches=0.0)
 
         mask = mask.cpu().detach().numpy()
         plt.axis("off")
         plt.imshow(mask)
-        plt.savefig(f'mask/{args.dataset}/mask_{label}.png', bbox_inches='tight', pad_inches=0.0)
+        plt.savefig(f'mask/{args.encoder_usage_info}/{args.dataset}/mask_{label}.png', bbox_inches='tight', pad_inches=0.0)
 
     print(norm_list)
 
@@ -131,7 +131,7 @@ if __name__ == "__main__":
     test_loader_clean = DataLoader(test_data_clean, batch_size=args.batch_size, shuffle=False, num_workers=8,
                                    pin_memory=True)
 
-    args.num_classes = len(train_data.classes)
+    # args.num_classes = len(train_data.classes)
 
     encoder = get_encoder_architecture_usage(args).cuda()
 

@@ -19,7 +19,7 @@ from keras.preprocessing import image
 # RESULT_DIR = 'results'  # directory for storing results
 # IMG_FILENAME_TEMPLATE = 'gtsrb_visualize_%s_label_%d.png'  # image filename template for visualization results
 
-RESULT_DIR = '/home/hrzhang/projects/badencoder_filter/defences/MyNeuralCleanse/mask/cifar10'  # directory for storing results
+RESULT_DIR = '/home/hrzhang/projects/badencoder_filter/defences/MyNeuralCleanse/mask/cifar10/gtsrb'  # directory for storing results
 IMG_FILENAME_TEMPLATE = 'trigger_%d.png'  # image filename template for visualization results
 # input size
 IMG_ROWS = 32
@@ -27,7 +27,7 @@ IMG_COLS = 32
 IMG_COLOR = 3
 INPUT_SHAPE = (IMG_ROWS, IMG_COLS, IMG_COLOR)
 
-NUM_CLASSES = 10  # total number of classes in the model
+NUM_CLASSES = 43  # total number of classes in the model
 
 ##############################
 #      END PARAMETERS        #
