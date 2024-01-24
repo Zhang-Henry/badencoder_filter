@@ -5,6 +5,31 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "strip",
+      "type": "python",
+      "request": "launch",
+      "program": "STRIP.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "args": [
+        "--dataset",
+        "cifar10",
+        "--encoder_usage_info",
+        "stl10",
+        "--encoder",
+        "../../output/stl10/cifar10_backdoored_encoder/2023-12-25-17:10:56/model_150.pth",
+        "--classifier",
+        "../../output/stl10/cifar10_backdoored_encoder/2023-12-25-17:10:56/classifier.pkl",
+        "--num_classes",
+        "10",
+        "--attack_mode", "attack",
+        "--trigger_file", "/home/hrzhang/projects/badencoder_filter/output/stl10/cifar10_backdoored_encoder/2023-12-25-17:10:56/unet_filter_150_trained.pt",
+
+
+      ],
+      "cwd": "/home/hrzhang/projects/badencoder_filter/defences/STRIP"
+    },
+    {
       "name": "nc",
       "type": "python",
       "request": "launch",

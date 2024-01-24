@@ -1,0 +1,24 @@
+当前时间： 2024-01-23 20:34:10
+Loaded from: ../../output/stl10/svhn_backdoored_encoder/2023-12-28-17:03:53/model_50.pth
+Namespace(batch_size=128, color=0.3, data_dir='./data/stl10/', encoder_usage_info='stl10', epochs=200, gpu='1', hue_hsv=1, knn_k=200, knn_t=0.5, lambda1=1.0, lambda2=1.0, lightness=1, loss0=3.0, lr=0.001, pretrained_encoder='./output/stl10/clean_encoder/model_1000.pth', pretraining_dataset='stl10', psnr=0.025, rand_init=True, reference_file='./reference/stl10/one.npz', reference_label=0, results_dir='./output/stl10/svhn_backdoored_encoder/2023-12-28-17:03:53/', saturation_hsv=1, seed=100, shadow_dataset='stl10', timestamp='2023-12-28-17:03:53', trigger_file='optimize_filter/trigger/stl10/2023-12-07-00-21-52/ssim0.9182_psnr22.37_lp0.0263_wd0.702_color10.051.pt', value_hsv=1)
+{'loss': -5.99152179253407, 'wd': 0.06382641156132404, 'ssim': 0.9588132437987206, 'psnr': 25.651984606033718, 'lp': 0.009950490483345512, 'sim': -3.415027143405034, 'far': 2.576494649129036, 'color': 8.588315156789927}
+test_transform_stl10
+Testing with bd data !!!!
+/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=AlexNet_Weights.IMAGENET1K_V1`. You can also use `weights=AlexNet_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+Traceback (most recent call last):
+  File "STRIP.py", line 273, in <module>
+    main()
+  File "STRIP.py", line 232, in main
+    list_entropy_trojan, list_entropy_benign = strip(opt, mode)
+  File "STRIP.py", line 183, in strip
+    state_dict = torch.load(opt.trigger_file, map_location=torch.device('cuda:0'))
+  File "/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torch/serialization.py", line 791, in load
+    with _open_file_like(f, 'rb') as opened_file:
+  File "/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torch/serialization.py", line 271, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torch/serialization.py", line 252, in __init__
+    super().__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/hrzhang/projects/badencoder_filter/optimize_filter/trigger/stl10/2023-12-28-17:03:53/unet_filter_50_trained.pt'
