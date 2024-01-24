@@ -263,14 +263,14 @@ def main():
         lists_entropy_benign += list_entropy_benign
 
     # Save result to file
-    result_dir = os.path.join(opt.results, opt.dataset)
+    result_dir = os.path.join(opt.results, opt.encoder_usage_info)
     if not os.path.exists(result_dir):
         os.makedirs(result_dir)
     result_path = os.path.join(result_dir, opt.attack_mode)
     if not os.path.exists(result_path):
         os.makedirs(result_path)
-    result_path_trojan = os.path.join(result_path,"{}_{}_output_trojan.txt".format(opt.dataset, opt.attack_mode))
-    result_path_clean = os.path.join(result_path,"{}_{}_output_clean.txt".format(opt.dataset, opt.attack_mode))
+    result_path_trojan = os.path.join(result_path,"{}_{}_{}_output_trojan.txt".format(opt.encoder_usage_info,opt.dataset, opt.attack_mode))
+    result_path_clean = os.path.join(result_path,"{}_{}_{}_output_clean.txt".format(opt.encoder_usage_info,opt.dataset, opt.attack_mode))
 
     with open(result_path_trojan, "w+") as f:
         for index in range(len(lists_entropy_trojan)):

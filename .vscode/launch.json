@@ -24,8 +24,31 @@
         "10",
         "--attack_mode", "attack",
         "--trigger_file", "/home/hrzhang/projects/badencoder_filter/output/stl10/cifar10_backdoored_encoder/2023-12-25-17:10:56/unet_filter_150_trained.pt",
-
-
+      ],
+      "cwd": "/home/hrzhang/projects/badencoder_filter/defences/STRIP"
+    },
+    {
+      "name": "strip-gtsrb",
+      "type": "python",
+      "request": "launch",
+      "program": "STRIP.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "args": [
+        "--dataset",
+        "gtsrb",
+        "--encoder_usage_info",
+        "cifar10",
+        "--encoder",
+        "../../output/cifar10/gtsrb_backdoored_encoder/2023-12-20-16:03:49/model_100.pth",
+        "--classifier",
+        "../../output/cifar10/gtsrb_backdoored_encoder/2023-12-20-16:03:49/classifier.pkl",
+        "--num_classes",
+        "43",
+        "--attack_mode",
+        "attack",
+        "--trigger_file",
+        "/home/hrzhang/projects/badencoder_filter/output/cifar10/gtsrb_backdoored_encoder/2023-12-20-16:03:49/unet_filter_100_trained.pt",
       ],
       "cwd": "/home/hrzhang/projects/badencoder_filter/defences/STRIP"
     },
