@@ -175,12 +175,6 @@ def strip(opt, mode="clean"):
     if opt.encoder != '':
         print('Loaded from: {}'.format(opt.encoder))
         checkpoint = torch.load(opt.encoder)
-        # args_v = checkpoint.get('args', None)
-        # loss = checkpoint.get('loss', None)
-        # if args_v:
-        #     print(args_v)
-        # if loss:
-        #     print(loss)
 
         encoder.load_state_dict(checkpoint['state_dict'])
 
@@ -208,7 +202,8 @@ def strip(opt, mode="clean"):
     if mode == "attack":
         # Testing with perturbed data
         print("Testing with bd data !!!!")
-        inputs, targets = next(iter(test_dataloader))
+        # inputs, targets = next(iter(test_dataloader))
+        inputs, targets = list(test_dataloader)[2]
         inputs = inputs.to(opt.device)
 
 
