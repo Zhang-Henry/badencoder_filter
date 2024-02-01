@@ -23,9 +23,9 @@ def run(gpu, model_flag, mask_init, enc_path, arch, result_file,
     print('cmd: ', cmd)
     os.system(cmd)
 
-gpu = 5
+gpu = 3
 dir_list = [
-        '/home/hrzhang/projects/badencoder_filter/output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:31',
+        '/home/hrzhang/projects/badencoder_filter/output/stl10/svhn_backdoored_encoder/2024-01-04-20:26:54/',
         ]
 
 for dir in dir_list:
@@ -39,5 +39,5 @@ for dir in dir_list:
         ### run CLIP_text
         result_file = 'resultfinal_filter_txt.txt'
         arch= 'resnet18'
-        run(gpu, flag, 'rand', lr=0.5, batch_size = 256, encoder_usage_info='cifar10',
+        run(gpu, flag, 'rand', lr=0.5, batch_size = 64, encoder_usage_info='cifar10',
             enc_path=enc_path, arch=arch, result_file=result_file, id=id)

@@ -4,6 +4,7 @@ import numpy as np
 import random
 from torchvision.transforms import functional as F
 from PIL import Image
+from torchvision import transforms
 
 def add_salt_and_pepper_noise(image, probability=0.05):
     if isinstance(image, torch.Tensor):
@@ -27,11 +28,11 @@ def randomJPEGcompression(image):
     outputIoStream.seek(0)
     return Image.open(outputIoStream)
 
-def JPEGcompression(image, quality=1):
-    outputIoStream = BytesIO()
-    image.save(outputIoStream, "JPEG", quality=quality, optimize=True)
-    outputIoStream.seek(0)
-    return Image.open(outputIoStream)
+# def JPEGcompression(image, quality=1):
+#     outputIoStream = BytesIO()
+#     image.save(outputIoStream, "JPEG", quality=quality, optimize=True)
+#     outputIoStream.seek(0)
+#     return Image.open(outputIoStream)
 
 
 
@@ -61,3 +62,17 @@ def add_quantization_noise(image, levels=64):
     max_val = 255
     quantized = np.floor(output / (max_val / levels)) * (max_val / levels)
     return quantized
+
+
+# def bit_depth_red(X_before,depth):
+#     r=256/(2**depth)
+#     x_quan=torch.round(X_before*255/r)*r/255
+#     return x_quan
+
+# def JPEGcompression(X_before,quality):
+#         X_after=torch.zeros_like(X_before)
+#         for j in range(X_after.size(0)):
+#             x_np=transforms.ToPILImage()(X_before[j].detach().cpu())
+#             x_np.save('./'+'j.jpg',quality=quality)
+#             X_after[j]=Image.open('./'+'j.jpg')
+#         return X_after

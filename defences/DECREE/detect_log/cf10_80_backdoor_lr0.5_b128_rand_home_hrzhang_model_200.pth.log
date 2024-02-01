@@ -1,0 +1,40 @@
+Namespace(arch='resnet18', batch_size=128, encoder_path='/home/hrzhang/projects/badencoder_filter/output/cifar10/gtsrb_backdoored_encoder/2024-01-03-12:21:01/model_200.pth', encoder_usage_info='cifar10', gpu='5', id='_home_hrzhang_model_200.pth', lr=0.5, mask_init='rand', model_flag='backdoor', result_file='resultfinal_filter_txt.txt', seed=80, thres=0.99)
+backdoor loaded: /home/hrzhang/projects/badencoder_filter/output/cifar10/gtsrb_backdoored_encoder/2024-01-03-12:21:01/model_200.pth
+trigger: trigger/trigger_pt_white_21_10_ap_replace.npz
+mask_size:32
+shadow transform: Compose(
+    Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.2023, 0.1994, 0.201])
+)
+shadow dataset size: 1000
+Config: lambda_min: 1e-05, adapt_lambda: 5.0, lambda_set_patience: 10,succ_threshold: 0.99, early_stop_patience: 10,
+epoch: 0  lr: 0.5000
+e=0, loss=-0.458096, loss_cos=-0.972576, loss_reg=514.479785, cur_reg_best=116.400588, es_reg_best:116.400588
+epoch: 1  lr: 0.5000
+step5:loss_lambda is down to 0.0002
+e=1, loss=-0.919524, loss_cos=-0.985072, loss_reg=83.867080, cur_reg_best=105.810770, es_reg_best:105.810770
+epoch: 2  lr: 0.5000
+step4:loss_lambda is up to 0.001
+e=2, loss=-0.948526, loss_cos=-0.990640, loss_reg=91.999531, cur_reg_best=85.598495, es_reg_best:85.598495
+epoch: 3  lr: 0.5000
+e=3, loss=-0.916739, loss_cos=-0.983852, loss_reg=67.112124, cur_reg_best=76.781559, es_reg_best:76.781559
+alert ###alert ###alert ###alert ###alert ###alert ###alert ###alert ###alert ###alert ###
+val=[3.201600702595897e-05, 0.2301970273256302], [-0.0001, 1.0001, r=0.7]
+epoch: 4  lr: 0.5000
+e=4, loss=-0.918895, loss_cos=-0.983429, loss_reg=64.533882, cur_reg_best=76.781559, es_reg_best:76.781559
+epoch: 5  lr: 0.5000
+e=5, loss=-0.922482, loss_cos=-0.981918, loss_reg=59.436070, cur_reg_best=68.160458, es_reg_best:68.160458
+alert ###alert ###alert ###alert ###alert ###alert ###alert ###alert ###alert ###alert ###
+val=[7.039126103336457e-06, 0.2800752520561218], [-0.0001, 1.0001, r=0.7]
+epoch: 6  lr: 0.5000
+e=6, loss=-0.927439, loss_cos=-0.982932, loss_reg=55.492570, cur_reg_best=61.755023, es_reg_best:61.755023
+epoch: 7  lr: 0.5000
+step7:loss_lambda is down to 0.0002
+e=7, loss=-0.931679, loss_cos=-0.983566, loss_reg=51.886741, cur_reg_best=61.755023, es_reg_best:61.755023
+epoch: 8  lr: 0.5000
+step6:loss_lambda is up to 0.001
+e=8, loss=-0.970924, loss_cos=-0.993605, loss_reg=76.341129, cur_reg_best=61.755023, es_reg_best:61.755023
+Early stop!
+End:57.1697s
+L1:61.7550:/home/hrzhang/projects/badencoder_filter/output/cifar10/gtsrb_backdoored_encoder/2024-01-03-12:21:01/model_200.pth:
+reg: 514.48,83.87,92.0,67.11,64.53,59.44,55.49,51.89,76.34
+cos: 0.97,0.99,0.99,0.98,0.98,0.98,0.98,0.98,0.99

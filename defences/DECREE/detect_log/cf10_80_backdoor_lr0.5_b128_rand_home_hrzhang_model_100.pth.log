@@ -1,5 +1,5 @@
-Namespace(arch='resnet18', batch_size=256, encoder_path='/home/hrzhang/projects/badencoder_filter/output/cifar10/svhn_backdoored_encoder/2023-12-20-16:04:09/model_75.pth', encoder_usage_info='cifar10', gpu='5', id='_home_hrzhang_model_75.pth', lr=0.5, mask_init='rand', model_flag='backdoor', result_file='resultfinal_filter_txt.txt', seed=80, thres=0.99)
-backdoor loaded: /home/hrzhang/projects/badencoder_filter/output/cifar10/svhn_backdoored_encoder/2023-12-20-16:04:09/model_75.pth
+Namespace(arch='resnet18', batch_size=128, encoder_path='/home/hrzhang/projects/badencoder_filter/output/cifar10/gtsrb_backdoored_encoder/2024-01-03-12:21:01/model_100.pth', encoder_usage_info='cifar10', gpu='5', id='_home_hrzhang_model_100.pth', lr=0.5, mask_init='rand', model_flag='backdoor', result_file='resultfinal_filter_txt.txt', seed=80, thres=0.99)
+backdoor loaded: /home/hrzhang/projects/badencoder_filter/output/cifar10/gtsrb_backdoored_encoder/2024-01-03-12:21:01/model_100.pth
 trigger: trigger/trigger_pt_white_21_10_ap_replace.npz
 mask_size:32
 shadow transform: Compose(
@@ -27,16 +27,12 @@ Traceback (most recent call last):
     input = module(input)
   File "/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
     return forward_call(*args, **kwargs)
-  File "/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torchvision/models/resnet.py", line 100, in forward
-    identity = self.downsample(x)
-  File "/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torch/nn/modules/container.py", line 217, in forward
-    input = module(input)
+  File "/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torchvision/models/resnet.py", line 97, in forward
+    out = self.bn2(out)
   File "/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1501, in _call_impl
     return forward_call(*args, **kwargs)
   File "/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torch/nn/modules/batchnorm.py", line 171, in forward
     return F.batch_norm(
   File "/home/hrzhang/anaconda3/envs/badencoder/lib/python3.8/site-packages/torch/nn/functional.py", line 2450, in batch_norm
     return torch.batch_norm(
-torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB (GPU 5; 23.69 GiB total capacity; 1.23 GiB already allocated; 4.94 MiB free; 1.29 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 20.00 MiB (GPU 5; 23.69 GiB total capacity; 771.40 MiB already allocated; 4.94 MiB free; 810.00 MiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
