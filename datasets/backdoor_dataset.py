@@ -7,20 +7,12 @@ from torchvision import transforms
 from torchvision.datasets import CIFAR10
 from PIL import Image
 import numpy as np
-# import torch
-# import random
-# import pilgram
+
 import torch.nn.functional as F
 import torch.nn as nn
 from torchvision.transforms import ToTensor
 
 import copy,os
-# from .CTRL.utils.frequency import PoisonFre
-# from optimize_filter.network import AttU_Net
-# from optimize_filter.tiny_network import U_Net_tiny
-# from .backdoor_dataset_imagenet import make_dataset
-# from typing import Any, Callable, cast, Dict, List, Optional, Tuple, Type, Union
-# from torchsummary import summary
 
 class ReferenceImg(Dataset):
 

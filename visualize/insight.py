@@ -22,7 +22,7 @@ torch.cuda.set_device(1)
 args=argparse.Namespace(
     pretrained_encoder='../output/cifar10/clean_encoder/model_1000.pth',
     encoder_usage_info='cifar10',
-    filter='../output/cifar10/svhn_backdoored_encoder/2023-12-26-13:50:32/unet_filter_200_trained.pt',
+    filter='../output/cifar10/svhn_backdoored_encoder/2023-12-26-13:50:32',
 )
 
 test_transform_cifar10 = transforms.Compose([
@@ -183,7 +183,7 @@ def main(num):
 
 
     # %%
-    transformed_aug = features_tsne[:-2]
+    transformed_aug = features_tsne[:-4]
     transformed_clean = features_tsne[-4:-3]
     transformed_filter = features_tsne[-3:-2]
     transformed_wanet = features_tsne[-2:-1]

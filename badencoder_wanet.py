@@ -168,7 +168,7 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args)
         train_bar.set_description('Train Epoch: [{}/{}], lr: {:.6f}, Loss: {:.6f}, Loss0: {:.6f}, Loss1: {:.6f},  Loss2: {:.6f}'.format(epoch, args.epochs, train_optimizer.param_groups[0]['lr'], total_loss / total_num,  total_loss_0 / total_num , total_loss_1 / total_num,  total_loss_2 / total_num))
 
 
-    return total_loss / total_num
+    return total_loss / total_num, clean_feature_raw, feature_backdoor, feature_reference
 
 
 if __name__ == '__main__':
@@ -262,7 +262,7 @@ if __name__ == '__main__':
         train_loader = DataLoader(shadow_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True, drop_last=True)
 
         if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10':
-            train_loss = train(model.f, clean_model.f, train_loader, optimizer, args)
+            train_loss, clean_feature_raw, feature_backdoor, feature_reference = train(model.f, clean_model.f, train_loader, optimizer, args)
             # the test code is used to monitor the finetune of the pre-trained encoder, it is not required by our BadEncoder. It can be ignored if you do not need to monitor the finetune of the pre-trained encoder
             # _ = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor, epoch, args,net)
         elif args.encoder_usage_info == 'imagenet' or args.encoder_usage_info == 'CLIP':
@@ -273,8 +273,8 @@ if __name__ == '__main__':
         # Save the BadEncoder
         if epoch % 25 == 0:
             torch.save({'epoch': epoch, 'state_dict': model.state_dict(), 'optimizer' : optimizer.state_dict(),'args':args}, args.results_dir + '/model_' + str(epoch) + '.pth')
-    #     torch.save({'model_state_dict': net.state_dict()}, args.results_dir + f'/{args.timestamp}/unet_filter_trained_ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}.pt')
-
+        if epoch % 5 == 0:
+            torch.save({'clean_feature_raw': clean_feature_raw,'feature_backdoor':feature_backdoor, 'feature_reference': feature_reference,'epoch':epoch}, args.results_dir + f'/features_{epoch}.pth')
         # Save the intermediate checkpoint
         # torch.save({'epoch': epoch, 'state_dict': model.state_dict(), 'optimizer' : optimizer.state_dict(),}, args.results_dir + '/model_last.pth')
 

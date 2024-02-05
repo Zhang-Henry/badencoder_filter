@@ -21,6 +21,11 @@ from optimize_filter.tiny_network import U_Net_tiny
 
 import copy
 
+import bchlib
+
+import tensorflow as tf
+from tensorflow.python.saved_model import tag_constants
+from tensorflow.python.saved_model import signature_constants
 # from .CTRL.utils.frequency import PoisonFre
 
 
@@ -196,6 +201,8 @@ class BadEncoderDataset(VisionDataset):
         # self.net.load_state_dict(state_dict['model_state_dict'])
         # self.net=self.net.eval()
 
+
+
     @staticmethod
     def make_dataset(
         directory: str,
@@ -305,6 +312,53 @@ class BadEncoderDataset(VisionDataset):
             # backdoored_image=self.net(tensor_image.permute(2, 0, 1).unsqueeze(0))
             # img_backdoor = backdoored_image.squeeze()
             # img_backdoor = self.bd_transform(img_backdoor.permute(1,2,0).detach().numpy())
+
+            ########################### ISSBA
+            # secret = 'a'
+            # secret_size = 100
+            # model_path = 'datasets/ISSBA/ckpt/encoder_imagenet'
+
+            # sess = tf.compat.v1.InteractiveSession(graph=tf.Graph())
+            # model = tf.compat.v1.saved_model.loader.load(sess, [tag_constants.SERVING], model_path)
+
+            # input_secret_name = model.signature_def[signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY].inputs['secret'].name
+            # input_image_name = model.signature_def[signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY].inputs['image'].name
+            # input_secret =  tf.compat.v1.get_default_graph().get_tensor_by_name(input_secret_name)
+            # input_image =  tf.compat.v1.get_default_graph().get_tensor_by_name(input_image_name)
+
+            # output_stegastamp_name = model.signature_def[signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY].outputs['stegastamp'].name
+            # output_residual_name = model.signature_def[signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY].outputs['residual'].name
+            # output_stegastamp =  tf.compat.v1.get_default_graph().get_tensor_by_name(output_stegastamp_name)
+            # output_residual =  tf.compat.v1.get_default_graph().get_tensor_by_name(output_residual_name)
+            # width = 224
+            # height = 224
+
+            # BCH_POLYNOMIAL = 137
+            # BCH_BITS = 5
+            # bch = bchlib.BCH(BCH_POLYNOMIAL, BCH_BITS)
+
+            # data = bytearray(secret + ' '*(7-len(secret)), 'utf-8')
+            # ecc = bch.encode(data)
+            # packet = data + ecc
+
+            # packet_binary = ''.join(format(x, '08b') for x in packet)
+            # secret = [int(x) for x in packet_binary]
+            # secret.extend([0, 0, 0, 0])
+            # image = np.array(img_copy, dtype=np.float32) / 255.
+
+            # feed_dict = {
+            #     input_secret:[secret],
+            #     input_image:[image]
+            #     }
+
+            # hidden_img, residual = sess.run([output_stegastamp, output_residual],feed_dict=feed_dict)
+
+            # hidden_img = (hidden_img[0] * 255).astype(np.uint8)
+            # im = Image.fromarray(np.array(hidden_img))
+
+            # img_backdoor = self.bd_transform(im)
+
+            ###################
 
 
             img_backdoor = self.bd_transform(backdoored_image)
