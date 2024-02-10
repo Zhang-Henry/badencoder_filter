@@ -19,7 +19,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     # os.makedirs(f'{save_path}/{time}')
     # filter_path="optimize_filter/trigger/unet_filter.pt"
 
-    cmd = f'nohup python3 -u badencoder_tsne.py \
+    cmd = f'nohup python3 -u badencoder.py \
     --epochs 200 \
     --timestamp {time} \
     --lr 0.001 \
@@ -58,8 +58,8 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 # run_finetune(2, 'imagenet', 'imagenet', 'svhn', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'one','imagenet',32,clean_encoder='resnet50-1x.pth')
 
 # run_finetune(5, 'imagenet', 'imagenet', 'stl10', 'optimize_filter/trigger/imagenet/2023-12-23-15-24-09/ssim0.9008_psnr21.72_lp0.0964_wd0.023_color8.563.pt', 'truck', 'imagenet',6,0.3,20,clean_encoder='resnet50-1x.pth')
-# run_finetune(4, 'imagenet', 'imagenet', 'gtsrb', 'optimize_filter/trigger/imagenet/2023-12-23-15-24-09/ssim0.9008_psnr21.72_lp0.0964_wd0.023_color8.563.pt', 'priority','imagenet',6,0.3,20,clean_encoder='resnet50-1x.pth')
-# run_finetune(0, 'imagenet', 'imagenet', 'svhn', 'optimize_filter/trigger/imagenet/2023-12-23-15-24-09/ssim0.9008_psnr21.72_lp0.0964_wd0.023_color8.563.pt', 'one','imagenet',32,0.3,20,clean_encoder='resnet50-1x.pth')
+run_finetune(4, 'imagenet', 'imagenet', 'gtsrb', 'optimize_filter/trigger/imagenet/2023-12-23-15-24-09/ssim0.9008_psnr21.72_lp0.0964_wd0.023_color8.563.pt', 'priority','imagenet',8,0.3,20,clean_encoder='resnet50-1x.pth')
+# run_finetune(4, 'imagenet', 'imagenet', 'svhn', 'optimize_filter/trigger/imagenet/2023-12-23-15-24-09/ssim0.9008_psnr21.72_lp0.0964_wd0.023_color8.563.pt', 'one','imagenet',32,0.3,10,clean_encoder='resnet50-1x.pth')
 
 
 

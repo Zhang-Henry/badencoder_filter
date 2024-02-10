@@ -87,21 +87,21 @@ def net_test(net, test_loader, epoch, criterion, keyword='Accuracy'):
 def predict_feature(args,net, data_loader,keyword='clean'):
     net.eval()
     feature_bank, target_bank = [], []
-    # if keyword=='backdoor':
-    #     state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
-    #     filter = U_Net_tiny(img_ch=3,output_ch=3)
-    #     filter.load_state_dict(state_dict['model_state_dict'])
-    #     filter=filter.cuda().eval()
+    if keyword=='backdoor':
+        state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
+        filter = U_Net_tiny(img_ch=3,output_ch=3)
+        filter.load_state_dict(state_dict['model_state_dict'])
+        filter=filter.cuda().eval()
 
     with torch.no_grad():
         # generate feature bank
         for data, target in tqdm(data_loader, desc='Feature extracting'):
             data=data.cuda(non_blocking=True)
             ########## ours unet ########
-            # if keyword=='backdoor':
-            #     #########
-            #     data=filter(data)
-            #     data= clamp_batch_images(data,args)
+            if keyword=='backdoor':
+                #########
+                data=filter(data)
+                data= clamp_batch_images(data,args)
 
             ########## wanet #######
             # if keyword=='backdoor':

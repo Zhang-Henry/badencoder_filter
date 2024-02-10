@@ -53,13 +53,13 @@ finetune_transform = transform_imagenet
 
 
 def get_shadow_imagenet(args):
-    training_data_num = 50000
+    training_data_num = 100000
     # np.random.seed(100)
     #training_data_sampling_indices = np.random.choice(training_data_num, training_data_num, replace=False)
-    training_data_sampling_indices = np.random.choice(training_data_num, int(training_data_num*0.2), replace=False)
+    training_data_sampling_indices = np.random.choice(training_data_num, int(training_data_num*0.01), replace=False)
 
     shadow_dataset = BadEncoderDataset(
-        root = "data/imagenet/train_issba",
+        root = "data/imagenet/train",
         trigger_file=args.trigger_file,
         reference_file= args.reference_file,
         class_type=classes,indices = training_data_sampling_indices,
