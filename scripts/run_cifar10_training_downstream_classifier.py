@@ -16,35 +16,27 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
             --reference_label {reference_label} \
             --reference_file ./reference/{encoder_usage_info}/{reference_file}.npz \
             --gpu {gpu} \
-            >./log/{encoder_usage_info}/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_f2.log 2>&1 &"
+            >./log/{encoder_usage_info}/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_sensitive5.log 2>&1 &"
 
 
     os.system(cmd)
 
-# _nocolorinit_with_loss0
-# _color_init_no_color
-# _color_loss0
-# ablate_color
-# randinit
-# _robust1_
 
 # run_eval(5, 'cifar10', 'stl10', 'output/cifar10/clean_encoder/model_1000.pth', 9, './trigger/cifar10/unet_filter.pt', 'truck')
 # run_eval(5, 'cifar10', 'gtsrb', 'output/cifar10/clean_encoder/model_1000.pth', 12, './trigger/cifar10/unet_filter.pt', 'priority')
 # run_eval(5, 'cifar10', 'svhn', 'output/cifar10/clean_encoder/model_1000.pth', 1, './trigger/cifar10/unet_filter.pt', 'one')
 
 
-# run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:31/model_50.pth', 9, 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:31/unet_filter_50_trained.pt', 'truck', 'backdoor') # color + loss0
-# run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:59/model_150.pth', 9, 'output/cifar10/stl10_backdoored_encoder/2023-12-25-20:38:59/unet_filter_150_trained.pt', 'truck', 'backdoor') # loss0
+# run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2024-02-22-21:09:53/model_200.pth', 9, 'output/cifar10/stl10_backdoored_encoder/2024-02-22-21:09:53/unet_filter_200_trained.pt', 'truck', 'backdoor') # color + loss0
 
 # run_eval(1, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2024-01-28-13:17:00/model_100.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder//2024-01-28-13:17:00/unet_filter_100_trained.pt', 'priority', 'backdoor') # color + loss0
 # run_eval(0, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2024-01-03-12:20:49/model_200.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder/2023-12-29-13:20:56/unet_filter_200_trained.pt', 'priority', 'backdoor') # loss0
 
-# run_eval(5, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2023-12-26-13:50:32/model_200.pth', 1, 'output/cifar10/svhn_backdoored_encoder/2023-12-26-13:50:32/unet_filter_200_trained.pt', 'one', 'backdoor') # color + loss0
+# run_eval(1, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2024-02-22-21:10:23/model_200.pth', 1, 'output/cifar10/svhn_backdoored_encoder/2024-02-22-21:10:23/unet_filter_200_trained.pt', 'one', 'backdoor') # color + loss0
 # run_eval(5, 'cifar10', 'svhn', './output/cifar10/svhn_backdoored_encoder/2024-01-05-16:59:54/model_200.pth', 1, 'output/cifar10/svhn_backdoored_encoder/2024-01-05-16:59:54/unet_filter_200_trained.pt', 'one', 'backdoor') # loss0
 
 
-run_eval(1, 'stl10', 'cifar10', ' ./output/stl10/cifar10_backdoored_encoder/2024-02-02-12:45:30/model_100.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-02-02-12:45:30/unet_filter_100_trained.pt', 'airplane', 'backdoor')# color + loss0
-# run_eval(5, 'stl10', 'cifar10', './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-01-05-17:10:47/unet_filter_200_trained.pt', 'airplane', 'backdoor') # loss0
+run_eval(1, 'stl10', 'cifar10', ' ./output/stl10/cifar10_backdoored_encoder/2024-02-24-22:52:09/model_200.pth', 0, './output/stl10/cifar10_backdoored_encoder/2024-02-24-22:52:09/unet_filter_100_trained.pt', 'airplane', 'backdoor')# color + loss0
 
 # run_eval(2, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/2024-01-31-09:39:19/model_100.pth', 12, './output/stl10/gtsrb_backdoored_encoder/2024-01-31-09:39:19/unet_filter_100_trained.pt', 'priority', 'backdoor')# color + loss0
 # run_eval(5, 'stl10', 'gtsrb', './output/stl10/gtsrb_backdoored_encoder/2024-01-05-17:11:20/model_200.pth', 12, './output/stl10/gtsrb_backdoored_encoder/2024-01-05-17:11:20/unet_filter_200_trained.pt', 'priority', 'backdoor') # loss0

@@ -32,14 +32,14 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     --reference_file ./reference/{encoder_usage_info}/{reference}.npz \
     --trigger_file {trigger} \
     --pretraining_dataset {pretraining_dataset} \
-    > ./log/bad_encoder/{encoder_usage_info}_{downstream_dataset}_{reference}.log 2>&1 &'
+    > ./log/bad_encoder/{encoder_usage_info}_{downstream_dataset}_{reference}_ctrl.log 2>&1 &'
     os.system(cmd)
 
 # _ablate
 
-# run_finetune(0, 'cifar10', 'cifar10', 'stl10', 'optimize_filter/trigger/cifar10/2023-12-06-23-41-20/ssim0.9328_psnr22.50_lp0.0291_wd0.603_color11.353.pt', 'truck','cifar10',512,0.1,10)
-# run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'optimize_filter/trigger/cifar10/2023-12-06-23-41-20/ssim0.9328_psnr22.50_lp0.0291_wd0.603_color11.353.pt', 'priority','cifar10',256,0,10)
-# run_finetune(5, 'cifar10', 'cifar10', 'svhn', 'optimize_filter/trigger/cifar10/2023-12-06-23-41-20/ssim0.9328_psnr22.50_lp0.0291_wd0.603_color11.353.pt', 'one','cifar10',64,0.1,10)
+# run_finetune(1, 'cifar10', 'cifar10', 'stl10', 'x', 'truck','cifar10',512)
+# run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'x', 'priority','cifar10',256)
+run_finetune(2, 'cifar10', 'cifar10', 'svhn', 'x', 'one','cifar10',512)
 
 
 # run_finetune(5, 'stl10', 'stl10', 'cifar10', 'optimize_filter/trigger/stl10/2023-12-06-23-41-58/ssim0.9053_psnr21.80_lp0.0274_wd0.716_color9.494.pt', 'airplane', 'stl10',256,0.1,3)
@@ -62,4 +62,4 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 ###### ISSBA
 # run_finetune(0, 'imagenet', 'imagenet', 'stl10', 'XX', 'truck', 'imagenet', 8,clean_encoder='resnet50-1x.pth')
 # run_finetune(3, 'imagenet', 'imagenet', 'gtsrb', 'XX', 'priority','imagenet',16,clean_encoder='resnet50-1x.pth')
-run_finetune(0, 'imagenet', 'imagenet', 'svhn', 'X', 'one','imagenet',16,clean_encoder='resnet50-1x.pth')
+# run_finetune(0, 'imagenet', 'imagenet', 'svhn', 'X', 'one','imagenet',16,clean_encoder='resnet50-1x.pth')

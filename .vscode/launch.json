@@ -5,6 +5,20 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Beatrix",
+      "type": "python",
+      "request": "launch",
+      "program": "Beatrix_ours.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "args": [
+        "--dataset",
+        "cifar10",
+        "--target_label","1"
+      ],
+      "cwd": "/home/hrzhang/projects/badencoder_filter/defences/Beatrix/defenses/Beatrix"
+    },
+    {
       "name": "strip",
       "type": "python",
       "request": "launch",
@@ -22,8 +36,10 @@
         "../../output/stl10/cifar10_backdoored_encoder/2023-12-25-17:10:56/classifier.pkl",
         "--num_classes",
         "10",
-        "--attack_mode", "attack",
-        "--trigger_file", "/home/hrzhang/projects/badencoder_filter/output/stl10/cifar10_backdoored_encoder/2023-12-25-17:10:56/unet_filter_150_trained.pt",
+        "--attack_mode",
+        "attack",
+        "--trigger_file",
+        "/home/hrzhang/projects/badencoder_filter/output/stl10/cifar10_backdoored_encoder/2023-12-25-17:10:56/unet_filter_150_trained.pt",
       ],
       "cwd": "/home/hrzhang/projects/badencoder_filter/defences/STRIP"
     },
@@ -59,12 +75,19 @@
       "program": "train2.py",
       "console": "integratedTerminal",
       "justMyCode": true,
-      "args": ["--dataset","cifar10",
-      "--encoder_usage_info", "stl10",
-      "--encoder","../../output/stl10/svhn_backdoored_encoder/2023-12-28-17:03:53/model_50.pth",
-      "--classifier","../../output/stl10/svhn_backdoored_encoder/2023-12-28-17:03:53/classifier.pkl",
-      "--num_classes","10"],
-      "cwd":"/home/hrzhang/projects/badencoder_filter/defences/MyNeuralCleanse"
+      "args": [
+        "--dataset",
+        "cifar10",
+        "--encoder_usage_info",
+        "stl10",
+        "--encoder",
+        "../../output/stl10/svhn_backdoored_encoder/2023-12-28-17:03:53/model_50.pth",
+        "--classifier",
+        "../../output/stl10/svhn_backdoored_encoder/2023-12-28-17:03:53/classifier.pkl",
+        "--num_classes",
+        "10"
+      ],
+      "cwd": "/home/hrzhang/projects/badencoder_filter/defences/MyNeuralCleanse"
     },
     {
       "name": "decree",
@@ -188,7 +211,8 @@
         "./reference/stl10/priority.npz",
         "--gpu",
         "2",
-        "--noise","JPEGcompression"
+        "--noise",
+        "JPEGcompression"
       ],
       "cwd": "/home/hrzhang/projects/badencoder_filter",
     },

@@ -64,6 +64,7 @@ def filter_color_loss(filter,img_clean,img_trans,tracker,loss_0,args):
 
     loss_far = args.color * color_loss
 
+    # loss = - loss_far
     loss = loss_sim - loss_far
 
     # print(f'\nloss:{loss},loss_sim:{loss_sim}, loss_far:{loss_far}, wd:{wd},ssim:{loss_ssim},lp:{lp_loss.mean()},psnr:{loss_psnr},color:{color_loss},cost:{recorder.cost}')

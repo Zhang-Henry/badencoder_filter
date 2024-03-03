@@ -213,7 +213,7 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 nohup python main.py \
     --timestamp $timestamp \
     --lr 0.005 \
-    --gpu 0 \
+    --gpu 1 \
     --batch_size 128 \
     --ssim_threshold 0.965 \
     --psnr_threshold 25.0 \

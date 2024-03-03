@@ -1,4 +1,4 @@
-import argparse
+ty import argparse
 
 import numpy as np
 from torch.utils.data import DataLoader
