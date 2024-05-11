@@ -66,4 +66,4 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 
 
 ###CLIP
-run_finetune(0, 'CLIP', 'cifar10', 'stl10', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'truck', 'cifar10', 64, clean_encoder='encode_image.pth')
+run_finetune(0, 'CLIP', 'cifar10_224', 'stl10', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'truck', 'cifar10_224', 64, clean_encoder='encode_image.pth')
