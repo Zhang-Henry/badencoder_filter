@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     # Load the model
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    model, preprocess = clip.load('RN50', device)
+    model, preprocess = clip.load('RN50', device, jit=False)
     if 'clean' not in args.encoder:
         backdoor_model = get_encoder_architecture_usage(args).cuda()
         checkpoint_backdoor = torch.load(args.encoder)
@@ -84,8 +84,13 @@ if __name__ == '__main__':
 
     hit = 0
     total_num = test_data_backdoor.data.shape[0]
+    # total_num = test_data_backdoor.__len__()
+
     for i in tqdm(range(total_num)):
         # Prepare the inputs
+        # image, class_id = test_data_backdoor[i]
+        # image = image.permute(1,2,0)
+
         image, class_id = test_data_backdoor.data[i], test_data_backdoor.targets[i]
         image[:,:,:] = image * test_data_backdoor.trigger_mask_list[0] + test_data_backdoor.trigger_patch_list[0]
         image = Image.fromarray(image)
