@@ -4,7 +4,7 @@ import numpy as np
 import torch
 from .trans import *
 import torch.nn.functional as F
-
+from lightly.transforms import MoCoV2Transform, utils
 
 
 train_transform = transforms.Compose([
@@ -50,6 +50,13 @@ def get_pretraining_cifar10(data_dir):
 
 
 def get_shadow_cifar10(args):
+    if args.encoder_usage_info == 'cifar10':
+        train_transform = train_transform
+    elif args.encoder_usage_info == 'MOCO':
+        train_transform = MoCoV2Transform(
+            input_size=32,
+            gaussian_blur=0.0,
+        )
     training_data_num = 50000
     testing_data_num = 10000
     np.random.seed(100)
@@ -62,7 +69,7 @@ def get_shadow_cifar10(args):
         reference_file= args.reference_file,
         class_type=classes,
         indices = training_data_sampling_indices,
-        transform=train_transform,  # The train transform is not needed in BadEncoder.
+        transform=train_transform,
         bd_transform=test_transform_cifar10,
         ftt_transform=finetune_transform_cifar10
     )
@@ -142,9 +149,9 @@ def get_downstream_cifar10(args):
         test_transform = test_transform_CLIP
         training_file_name = 'train_224.npz'
         testing_file_name = 'test_224.npz'
-        memory_data = CIFAR10Mem_224(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
-        test_data_backdoor = BadEncoderTestBackdoor_224(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
-        test_data_clean = CIFAR10Mem_224(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)
+        memory_data = CIFAR10Mem(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
+        test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
+        test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)
     elif args.encoder_usage_info == 'imagenet':
         print('test_transform_imagenet')
         test_transform = test_transform_imagenet

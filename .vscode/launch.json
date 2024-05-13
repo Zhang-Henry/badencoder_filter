@@ -5,6 +5,7 @@
   "version": "0.2.0",
   "configurations": [
 
+
     {
       "name": "Beatrix",
       "type": "python",
@@ -397,6 +398,31 @@
       "justMyCode": true,
       "cwd": "/home/jianzhang/hrzhang/badencoder_filter"
     },
+      {
+        "name": "badencoder:moco",
+        "type": "python",
+        "request": "launch",
+        "program": "/home/jianzhang/hrzhang/badencoder_filter/badencoder_moco.py",
+        "console": "integratedTerminal",
+        "args": [
+          "--batch_size",
+          "32",
+          "--results_dir",
+          "./output/cifar10/svhn_backdoored_encoder",
+          "--shadow_dataset",
+          "cifar10",
+          "--pretrained_encoder",
+          "output/cifar10-moco/clean_encoder/moco-model.pth",
+          "--encoder_usage_info",
+          "MOCO",
+          "--reference_file",
+          "reference/cifar10/one.npz",
+          "--trigger_file",
+          "xx","--rand_init"
+        ],
+        "justMyCode": true,
+        "cwd": "/home/jianzhang/hrzhang/badencoder_filter"
+      },
     {
       "name": "badencoder:wanet",
       "type": "python",

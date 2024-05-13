@@ -13,6 +13,7 @@ from torchmetrics.image import PeakSignalNoiseRatio
 from datetime import datetime
 from loss import *
 from optimize_filter.utils import load_backbone
+from lightly.transforms import utils
 
 WD=SinkhornDistance(eps=0.1, max_iter=100)
 ssim = SSIM()
@@ -43,6 +44,11 @@ def filter_color_loss(filter,img_clean,img_trans,tracker,loss_0,args):
     elif args.shadow_dataset=='cifar10_224':
         mean = torch.tensor([0.48145466, 0.4578275, 0.40821073]).view(1, 3, 1, 1).cuda()
         std = torch.tensor([0.26862954, 0.26130258, 0.27577711]).view(1, 3, 1, 1).cuda()
+
+    if args.encoder_usage_info == 'MOCO':
+        mean=torch.tensor(utils.IMAGENET_NORMALIZE["mean"]).view(1, 3, 1, 1).cuda()
+        std=torch.tensor(utils.IMAGENET_NORMALIZE["std"]).view(1, 3, 1, 1).cuda()
+
 
     filter_img = filter_img * std + mean # denormalize
     img_clean = img_clean * std + mean
@@ -115,6 +121,10 @@ def clamp_batch_images(batch_images, args):
     if dataset_name=='cifar10_224' or dataset_name=='CLIP' or dataset=='CLIP':
         mean = torch.tensor([0.48145466, 0.4578275, 0.40821073]).cuda()
         std = torch.tensor([0.26862954, 0.26130258, 0.27577711]).cuda()
+
+    if args.encoder_usage_info == 'MOCO':
+        mean=utils.IMAGENET_NORMALIZE["mean"]
+        std=utils.IMAGENET_NORMALIZE["std"]
 
     # 确保均值和标准差列表长度与通道数匹配
     num_channels =batch_images.shape[1]
