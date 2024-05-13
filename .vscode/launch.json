@@ -4,6 +4,7 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+
     {
       "name": "Beatrix",
       "type": "python",
@@ -16,7 +17,7 @@
         "cifar10",
         "--target_label","1"
       ],
-      "cwd": "/home/hrzhang/projects/badencoder_filter/defences/Beatrix/defenses/Beatrix"
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter/defences/Beatrix/defenses/Beatrix"
     },
     {
       "name": "strip",
@@ -39,9 +40,9 @@
         "--attack_mode",
         "attack",
         "--trigger_file",
-        "/home/hrzhang/projects/badencoder_filter/output/stl10/cifar10_backdoored_encoder/2023-12-25-17:10:56/unet_filter_150_trained.pt",
+        "/home/jianzhang/hrzhang/badencoder_filter/output/stl10/cifar10_backdoored_encoder/2023-12-25-17:10:56/unet_filter_150_trained.pt",
       ],
-      "cwd": "/home/hrzhang/projects/badencoder_filter/defences/STRIP"
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter/defences/STRIP"
     },
     {
       "name": "strip-gtsrb",
@@ -64,9 +65,9 @@
         "--attack_mode",
         "attack",
         "--trigger_file",
-        "/home/hrzhang/projects/badencoder_filter/output/cifar10/gtsrb_backdoored_encoder/2023-12-20-16:03:49/unet_filter_100_trained.pt",
+        "/home/jianzhang/hrzhang/badencoder_filter/output/cifar10/gtsrb_backdoored_encoder/2023-12-20-16:03:49/unet_filter_100_trained.pt",
       ],
-      "cwd": "/home/hrzhang/projects/badencoder_filter/defences/STRIP"
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter/defences/STRIP"
     },
     {
       "name": "nc",
@@ -87,7 +88,7 @@
         "--num_classes",
         "10"
       ],
-      "cwd": "/home/hrzhang/projects/badencoder_filter/defences/MyNeuralCleanse"
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter/defences/MyNeuralCleanse"
     },
     {
       "name": "decree",
@@ -100,7 +101,7 @@
         "--model_flag",
         "backdoor",
         "--encoder_path",
-        "/home/hrzhang/projects/badencoder_filter/output/cifar10/stl10_backdoored_encoder/2023-12-30-00:04:40/model_100.pth",
+        "/home/jianzhang/hrzhang/badencoder_filter/output/cifar10/stl10_backdoored_encoder/2023-12-30-00:04:40/model_100.pth",
         "--mask_init",
         "rand",
         "--id",
@@ -112,13 +113,13 @@
         "--result_file",
         "resultfinal_filter_txt2.txt"
       ],
-      "cwd": "/home/hrzhang/projects/badencoder_filter/defences/DECREE"
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter/defences/DECREE"
     },
     {
       "name": "training_downstream_classifier_imagenet",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/training_downstream_classifier.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/training_downstream_classifier.py",
       "console": "integratedTerminal",
       "justMyCode": true,
       "args": [
@@ -137,13 +138,13 @@
         "--gpu",
         "3",
       ],
-      "cwd": "/home/hrzhang/projects/badencoder_filter",
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter",
     },
     {
       "name": "training_downstream_classifier_imagenet_origin",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/training_downstream_classifier.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/training_downstream_classifier.py",
       "console": "integratedTerminal",
       "justMyCode": true,
       "args": [
@@ -162,13 +163,13 @@
         "--gpu",
         "2",
       ],
-      "cwd": "/home/hrzhang/projects/badencoder_filter",
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter",
     },
     {
       "name": "training_downstream_classifier_ctrl",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/training_downstream_classifier.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/training_downstream_classifier.py",
       "console": "integratedTerminal",
       "justMyCode": true,
       "args": [
@@ -187,13 +188,13 @@
         "--gpu",
         "2",
       ],
-      "cwd": "/home/hrzhang/projects/badencoder_filter",
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter",
     },
     {
       "name": "training_downstream_classifier",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/training_downstream_classifier.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/training_downstream_classifier.py",
       "console": "integratedTerminal",
       "justMyCode": true,
       "args": [
@@ -214,13 +215,13 @@
         "--noise",
         "JPEGcompression"
       ],
-      "cwd": "/home/hrzhang/projects/badencoder_filter",
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter",
     },
     {
       "name": "training_downstream_classifier_stl-cifar",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/training_downstream_classifier.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/training_downstream_classifier.py",
       "console": "integratedTerminal",
       "justMyCode": true,
       "args": [
@@ -240,13 +241,13 @@
       "env": {
         "CUDA_VISIBLE_DEVICES": "4"
       },
-      "cwd": "/home/hrzhang/projects/badencoder_filter",
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter",
     },
     {
       "name": "optimize",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/optimize_filter/main.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/optimize_filter/main.py",
       "console": "integratedTerminal",
       "args": [
         // "--use_feature",
@@ -273,7 +274,7 @@
       "name": "optimize_filter_stl",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/optimize_filter_stl.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/optimize_filter_stl.py",
       "console": "integratedTerminal",
       "justMyCode": true,
       "env": {
@@ -284,7 +285,7 @@
       "name": "optimize_filter",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/optimize_filter.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/optimize_filter.py",
       "console": "integratedTerminal",
       "justMyCode": true,
       "env": {
@@ -295,7 +296,7 @@
       "name": "badencoder:cifar10",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/badencoder.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/badencoder.py",
       "console": "integratedTerminal",
       "args": [
         "--lr",
@@ -318,42 +319,39 @@
         "trigger/cifar10/unet_filter.pt"
       ],
       "justMyCode": true,
-      "cwd": "/home/hrzhang/projects/badencoder_filter"
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter"
     },
     {
-      "name": "badencoder:clip",
+      "name": "imperative:clip",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/badencoder_origin.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/badencoder.py",
       "console": "integratedTerminal",
       "args": [
         "--lr",
-        "0.001",
+        "0.000001",
         "--batch_size",
-        "256",
+        "16",
         "--results_dir",
-        "./output/cifar10/stl10_backdoored_encoder",
+        "./output/cifar10_224/svhn_backdoored_encoder",
         "--shadow_dataset",
-        "cifar10",
+        "cifar10_224",
         "--pretrained_encoder",
         "./output/CLIP/clean_encoder/encode_image.pth",
         "--encoder_usage_info",
         "CLIP",
-        "--gpu",
-        "5",
         "--reference_file",
-        "reference/cifar10/truck.npz",
-        "--trigger_file",
-        "trigger/cifar10/unet_filter.pt"
+        "reference/CLIP/one.npz",
+        "--rand_init",
       ],
       "justMyCode": true,
-      "cwd": "/home/hrzhang/projects/badencoder_filter"
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter"
     },
     {
       "name": "zero-shot",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/zero_shot.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/zero_shot.py",
       "console": "integratedTerminal",
       "args": [
         "--dataset",
@@ -372,42 +370,38 @@
         "9"
       ],
       "justMyCode": true,
-      "cwd": "/home/hrzhang/projects/badencoder_filter"
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter"
     },
     {
       "name": "badencoder:clip",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/badencoder_origin.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/badencoder_origin.py",
       "console": "integratedTerminal",
       "args": [
-        "--lr",
-        "0.001",
         "--batch_size",
-        "256",
+        "32",
         "--results_dir",
-        "./output/cifar10/stl10_backdoored_encoder",
+        "./output/cifar10/svhn_backdoored_encoder",
         "--shadow_dataset",
-        "cifar10",
+        "cifar10_224",
         "--pretrained_encoder",
         "./output/CLIP/clean_encoder/encode_image.pth",
         "--encoder_usage_info",
         "CLIP",
-        "--gpu",
-        "5",
         "--reference_file",
-        "reference/cifar10/truck.npz",
+        "reference/CLIP/one.npz",
         "--trigger_file",
-        "trigger/cifar10/unet_filter.pt"
+        "trigger/trigger_pt_white_173_50_ap_replace.npz"
       ],
       "justMyCode": true,
-      "cwd": "/home/hrzhang/projects/badencoder_filter"
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter"
     },
     {
       "name": "badencoder:wanet",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/badencoder_wanet.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/badencoder_wanet.py",
       "console": "integratedTerminal",
       "args": [
         "--lr",
@@ -430,13 +424,13 @@
         "trigger/cifar10/unet_filter.pt"
       ],
       "justMyCode": true,
-      "cwd": "/home/hrzhang/projects/badencoder_filter"
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter"
     },
     {
       "name": "badencoder:bpp",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/badencoder_bpp.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/badencoder_bpp.py",
       "console": "integratedTerminal",
       "args": [
         "--lr",
@@ -459,13 +453,13 @@
         "trigger/cifar10/unet_filter.pt"
       ],
       "justMyCode": true,
-      "cwd": "/home/hrzhang/projects/badencoder_filter"
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter"
     },
     {
       "name": "badencoder:gtsrb",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/badencoder.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/badencoder.py",
       "console": "integratedTerminal",
       "args": [
         "--lr",
@@ -490,13 +484,13 @@
         "gtsrb"
       ],
       "justMyCode": true,
-      "cwd": "/home/hrzhang/projects/badencoder_filter"
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter"
     },
     {
       "name": "badencoder:stl",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/badencoder.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/badencoder.py",
       "console": "integratedTerminal",
       "args": [
         "--lr",
@@ -519,7 +513,7 @@
         "trigger/stl10/unet_filter.pt"
       ],
       "justMyCode": true,
-      "cwd": "/home/hrzhang/projects/badencoder_filter",
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter",
       "env": {
         "CUDA_VISIBLE_DEVICES": "5"
       }
@@ -528,7 +522,7 @@
       "name": "badencoder:imagenet",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/badencoder_origin.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/badencoder_origin.py",
       "console": "integratedTerminal",
       "args": [
         "--lr",
@@ -556,7 +550,7 @@
       "name": "pretrain:imagenet",
       "type": "python",
       "request": "launch",
-      "program": "/home/hrzhang/projects/badencoder_filter/pretraining_encoder.py",
+      "program": "/home/jianzhang/hrzhang/badencoder_filter/pretraining_encoder.py",
       "console": "integratedTerminal",
       "args": [
         "--pretraining_dataset",
@@ -569,7 +563,7 @@
         "4",
       ],
       "justMyCode": true,
-      "cwd": "/home/hrzhang/projects/badencoder_filter"
+      "cwd": "/home/jianzhang/hrzhang/badencoder_filter"
     },
   ]
 }

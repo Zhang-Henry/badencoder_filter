@@ -210,19 +210,19 @@ timestamp=$(date +"%Y-%m-%d-%H-%M-%S")
 
 
 ### imagenet ###
-nohup python main.py \
-    --timestamp $timestamp \
-    --lr 0.005 \
-    --gpu 1 \
-    --batch_size 128 \
-    --ssim_threshold 0.965 \
-    --psnr_threshold 25.0 \
-    --lp_threshold 0.1 \
-    --n_epoch 150 \
-    --step_size 50 \
-    --dataset 'imagenet' \
-    --most_close \
-    > logs/imagenet/most_color_filter_color_wd_$timestamp.log 2>&1 &
+# nohup python main.py \
+#     --timestamp $timestamp \
+#     --lr 0.005 \
+#     --gpu 1 \
+#     --batch_size 128 \
+#     --ssim_threshold 0.965 \
+#     --psnr_threshold 25.0 \
+#     --lp_threshold 0.1 \
+#     --n_epoch 150 \
+#     --step_size 50 \
+#     --dataset 'imagenet' \
+#     --most_close \
+#     > logs/imagenet/most_color_filter_color_wd_$timestamp.log 2>&1 &
 
 
 ### imagenet filter_gtsrb_stl_svhn_ ###
@@ -243,3 +243,16 @@ nohup python main.py \
 #     --dataset 'imagenet_gtsrb_stl10_svhn' \
 #     > logs/imagenet/filter_gtsrb_stl_svhn_all_$timestamp.log 2>&1 &
 
+## cifar10_224
+nohup python main.py \
+    --timestamp $timestamp \
+    --lr 0.005 \
+    --gpu 3 \
+    --batch_size 8 \
+    --ssim_threshold 0.95 \
+    --psnr_threshold 25.0 \
+    --lp_threshold 0.1 \
+    --n_epoch 150 \
+    --step_size 50 \
+    --dataset 'cifar10_224' \
+    > logs/cifar10_224/$timestamp.log 2>&1 &

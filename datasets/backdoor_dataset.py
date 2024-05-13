@@ -49,12 +49,13 @@ class BadEncoderDataset(Dataset):
         self.input_array = np.load(numpy_file)
         self.data = self.input_array['x']
 
-        # self.trigger_input_array = np.load(trigger_file)
         self.target_input_array = np.load(reference_file)
+        self.target_image_list = self.target_input_array['x']
 
+        # self.trigger_input_array = np.load(trigger_file)
         # self.trigger_patch_list = self.trigger_input_array['t']
         # self.trigger_mask_list = self.trigger_input_array['tm']
-        self.target_image_list = self.target_input_array['x']
+
 
         self.classes = class_type
         self.indices = indices
@@ -155,10 +156,10 @@ class BadEncoderTestBackdoor(Dataset):
         self.targets = self.input_array['y']
 
 
-        self.trigger_input_array = np.load(trigger_file)
+        # self.trigger_input_array = np.load(trigger_file)
 
-        self.trigger_patch_list = self.trigger_input_array['t']
-        self.trigger_mask_list = self.trigger_input_array['tm']
+        # self.trigger_patch_list = self.trigger_input_array['t']
+        # self.trigger_mask_list = self.trigger_input_array['tm']
 
         self.target_class = reference_label
 

@@ -23,7 +23,6 @@ import os
 
 
 
-
 def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args ,filter,optimizer_wd, tracker):
     tracker.reset()
 
@@ -227,6 +226,8 @@ if __name__ == '__main__':
     #     print('initial test acc: {}'.format(test_acc_1))
 
     # training loop
+    # torch.autograd.set_detect_anomaly(True)
+
     for epoch in range(1, args.epochs + 1):
         print("=================================================")
 
@@ -242,7 +243,7 @@ if __name__ == '__main__':
             raise NotImplementedError()
 
         # Save the BadEncoder
-        if epoch % 25 == 0:
+        if epoch % 20 == 0:
             torch.save({'epoch': epoch, 'state_dict': model.state_dict(), 'optimizer' : optimizer.state_dict(),'args':args, 'loss':tracker.get_avg_loss()}, args.results_dir + '/model_' + str(epoch) + '.pth')
             torch.save({'model_state_dict': net.state_dict(),'args':args, 'loss':tracker.get_avg_loss()}, args.results_dir + f'/unet_filter_{epoch}_trained.pt')
     #     torch.save({'model_state_dict': net.state_dict()}, args.results_dir + f'/{args.timestamp}/unet_filter_trained_ssim{ssim:.4f}_psnr{psnr:.2f}_lp{lp:.4f}_wd{wd:.3f}.pt')

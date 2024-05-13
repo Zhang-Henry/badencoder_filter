@@ -86,9 +86,9 @@ if __name__ == '__main__':
     elif args.dataset == 'imagenet':
         train_loader = imagenet_dataloader(args)
         solver.train(args,train_loader)
-    elif args.dataset == 'imagenet_gtsrb_stl10_svhn':
-        train_loader = imagenet_all_dataloader(args)
-        solver.train(args,train_loader)
+    elif args.dataset == 'cifar10_224':
+        train_loader,test_loader = cifar10_224_dataloader(args)
+        solver.train(args,train_loader,test_loader)
 
 
 

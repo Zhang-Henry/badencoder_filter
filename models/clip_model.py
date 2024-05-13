@@ -179,7 +179,7 @@ class CLIP(nn.Module):
     def forward(self, image, text):
         image_features = self.encode_image(image)
 
-    
+
         # normalized features
         image_features = image_features / image_features.norm(dim=-1, keepdim=True)
 

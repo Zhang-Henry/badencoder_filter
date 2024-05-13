@@ -36,9 +36,13 @@ def filter_color_loss(filter,img_clean,img_trans,tracker,loss_0,args):
         mean = torch.tensor([0.44087798, 0.42790666, 0.38678814]).view(1, 3, 1, 1).cuda()
         std = torch.tensor([0.25507198, 0.24801506, 0.25641308]).view(1, 3, 1, 1).cuda()
 
-    elif args.shadow_dataset=='imagenet' or args.shadow_dataset=='imagenet_gtsrb_stl10_svhn':
+    elif args.shadow_dataset=='imagenet':
         mean = torch.tensor([0.4850, 0.4560, 0.4060]).view(1, 3, 1, 1).cuda()
         std = torch.tensor([0.2290, 0.2240, 0.2250]).view(1, 3, 1, 1).cuda()
+
+    elif args.shadow_dataset=='cifar10_224':
+        mean = torch.tensor([0.48145466, 0.4578275, 0.40821073]).view(1, 3, 1, 1).cuda()
+        std = torch.tensor([0.26862954, 0.26130258, 0.27577711]).view(1, 3, 1, 1).cuda()
 
     filter_img = filter_img * std + mean # denormalize
     img_clean = img_clean * std + mean
@@ -108,6 +112,9 @@ def clamp_batch_images(batch_images, args):
     elif dataset_name=='imagenet':
         mean = torch.tensor([0.4850, 0.4560, 0.4060]).cuda()
         std = torch.tensor([0.2290, 0.2240, 0.2250]).cuda()
+    elif dataset_name=='cifar10_224':
+        mean = torch.tensor([0.48145466, 0.4578275, 0.40821073]).cuda()
+        std = torch.tensor([0.26862954, 0.26130258, 0.27577711]).cuda()
 
     # 确保均值和标准差列表长度与通道数匹配
     num_channels =batch_images.shape[1]

@@ -9,7 +9,7 @@ if not os.path.exists('./log/bad_encoder'):
     os.makedirs('./log/bad_encoder')
 
 
-def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, trigger, reference, pretraining_dataset, bz,color,loss0, clean_encoder='model_1000.pth'):
+def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, trigger, reference, pretraining_dataset, bz,color,loss0, lr, clean_encoder='model_1000.pth'):
     save_path = f'./output/{encoder_usage_info}/{downstream_dataset}_backdoored_encoder/{time}'
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -22,7 +22,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     cmd = f'nohup python3 -u badencoder.py \
     --epochs 200 \
     --timestamp {time} \
-    --lr 0.001 \
+    --lr {lr} \
     --batch_size {bz}   \
     --results_dir {save_path}/ \
     --shadow_dataset {shadow_dataset} \
@@ -34,6 +34,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     --pretraining_dataset {pretraining_dataset} \
     --color {color} \
     --loss0 {loss0} \
+    --rand_init \
     > ./log/bad_encoder/{encoder_usage_info}_{downstream_dataset}_{reference}.log 2>&1 &'
     os.system(cmd)
 
@@ -80,11 +81,15 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 
 
 # Random init
-# run_finetune(3, 'cifar10', 'cifar10', 'stl10', 'xx', 'truck','cifar10',64,0.1,10)
+# run_finetune(3, 'cifar10', 'cifar10', 'stl10', 'xx', 'truck','cifar10',64,0.1,10,0.001)
 # run_finetune(1, 'cifar10', 'cifar10', 'gtsrb', 'xx', 'priority','cifar10',64,0.3,5)
-# run_finetune(2, 'cifar10', 'cifar10', 'svhn', 'xx', 'one','cifar10',64,0.01,2)
+# run_finetune(2, 'cifar10', 'cifar10', 'svhn', 'xx', 'one','cifar10',512,0.01,2,0.001)
 
 
 # run_finetune(4, 'stl10', 'stl10', 'cifar10', 'xx', 'airplane', 'stl10',256,0.1,3)
 # run_finetune(5, 'stl10', 'stl10', 'gtsrb', 'xx', 'priority', 'stl10',128,0.01,1)
 # run_finetune(4, 'stl10', 'stl10', 'svhn', 'xx', 'one', 'stl10',256,0.3,1)
+
+
+# Random init
+run_finetune(2, 'CLIP', 'cifar10_224', 'svhn', 'xx', 'one', 'cifar10_224', 16, 0.1, 10, 0.000001, clean_encoder='encode_image.pth')

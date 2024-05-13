@@ -33,6 +33,28 @@ def cifar10_dataloader(args):
 
     return train_loader,test_loader
 
+def cifar10_224_dataloader(args):
+    classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+    train_transform = transforms.Compose([
+            transforms.RandomHorizontalFlip(p=0.5),
+            transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
+            transforms.RandomGrayscale(p=0.2),
+            transforms.ToTensor(),
+            transforms.Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711))
+        ])
+
+    clean_transform=transforms.Compose([
+                transforms.ToTensor(),
+                transforms.Normalize((0.48145466, 0.4578275, 0.40821073), (0.26862954, 0.26130258, 0.27577711))
+                ])
+
+    memory_data = CIFAR10M(numpy_file='../data/cifar10/train_224.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
+    train_loader = DataLoader(memory_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
+
+    test_data = CIFAR10M(numpy_file='../data/cifar10/test_224.npz', class_type=classes, transform=train_transform,transform2=clean_transform)
+    test_loader = DataLoader(test_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
+
+    return train_loader,test_loader
 
 def stl10_dataloader(args):
     classes = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
@@ -198,62 +220,3 @@ def imagenet_dataloader(args):
     train_loader = DataLoader(shadow_dataset, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
     return train_loader
 
-
-def imagenet_all_dataloader(args):
-    class ConvertToRGB:
-        def __call__(self, image):
-            if image.mode != 'RGB':
-                return image.convert('RGB')
-            return image
-
-    train_transform = transforms.Compose([
-        transforms.RandomResizedCrop(256),
-        transforms.CenterCrop(size=(224, 224)),
-        ConvertToRGB(), # 将单通道的转换为3通道的
-        transforms.RandomHorizontalFlip(p=0.5),
-        transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
-        transforms.RandomGrayscale(p=0.2),
-        transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-        ])
-
-    # train_transform2 = transforms.Compose([
-    #     ConvertToRGB(),
-    #     transforms.RandomHorizontalFlip(p=0.5),
-    #     transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
-    #     transforms.RandomGrayscale(p=0.2),
-    #     transforms.ToTensor(),
-    #     # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-    #     ])
-
-    clean_transform = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
-    ])
-
-    classes = [str(i) for i in range(1000)]
-
-
-    training_data_num = 1000000
-    np.random.seed(3047)
-    training_data_sampling_indices = np.random.choice(training_data_num, int(training_data_num*0.01), replace=False)
-
-    imagenet_dataset = BadEncoderDataset(
-        root = "../data/imagenet/train",
-        class_type=classes,indices = training_data_sampling_indices,
-        transform=clean_transform,
-        bd_transform=train_transform,
-    )
-
-
-    gtsrb_data = CustomDataset_224(directory='../data/gtsrb/selected_train_224', transform1=clean_transform,transform2=train_transform)
-    stl10_data = CustomDataset_224(directory='../data/stl10/selected_train_224', transform1=clean_transform,transform2=train_transform)
-    svhn_data = CustomDataset_224(directory='../data/svhn/selected_train_224', transform1=clean_transform,transform2=train_transform)
-
-    train_dataset = ConcatDataset([imagenet_dataset, gtsrb_data,stl10_data,svhn_data])
-
-    # gtsrb_data = CustomDataset_224(directory='../data/gtsrb/train_224', transform1=clean_transform,transform2=train_transform)
-    # train_dataset = ConcatDataset([imagenet_dataset, gtsrb_data])
-
-    train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True)
-    return train_loader

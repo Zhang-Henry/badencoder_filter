@@ -25,21 +25,21 @@
 # cp  -r data/imagenet/test ../IMPERATIVE/data/imagenet/
 
 
-# mkdir -p ../DRUPE/data/cifar10
-# mkdir -p ../DRUPE/data/stl10
-# mkdir -p ../DRUPE/data/gtsrb
-# mkdir -p ../DRUPE/data/svhn
-# cp -r data/cifar10/*.npz ../DRUPE/data/cifar10
-# cp -r data/stl10/*.npz ../DRUPE/data/stl10
-# cp -r data/gtsrb/*.npz ../DRUPE/data/gtsrb
-# cp -r data/svhn/*.npz ../DRUPE/data/svhn
+# mkdir -p ../BadEncoder/data/cifar10
+# mkdir -p ../BadEncoder/data/stl10
+# mkdir -p ../BadEncoder/data/gtsrb
+mkdir -p ../BadEncoder/data/svhn
+# cp -r data/cifar10/*.npz ../BadEncoder/data/cifar10
+# cp -r data/stl10/*.npz ../BadEncoder/data/stl10
+# cp -r data/gtsrb/*.npz ../BadEncoder/data/gtsrb
+cp -r data/svhn/*.npz ../BadEncoder/data/svhn
 
 
-mkdir -p ../DRUPE/output/cifar10/clean_encoder
-mkdir -p ../DRUPE/output/stl10/clean_encoder
-mkdir -p ../DRUPE/output/imagenet/clean_encoder
-mkdir -p ../DRUPE/output/CLIP/clean_encoder
-cp -r output/cifar10/clean_encoder ../DRUPE/output/cifar10/
-cp -r output/stl10/clean_encoder ../DRUPE/output/stl10/
-cp -r output/imagenet/clean_encoder ../DRUPE/output/imagenet/
-cp -r output/CLIP/clean_encoder ../DRUPE/output/CLIP/
+# mkdir -p ../BadEncoder/output/cifar10/
+# mkdir -p ../BadEncoder/output/stl10/
+# mkdir -p ../BadEncoder/output/imagenet/
+# mkdir -p ../BadEncoder/output/CLIP/
+# cp -r output/cifar10/clean_encoder ../BadEncoder/output/cifar10/
+# cp -r output/stl10/clean_encoder ../BadEncoder/output/stl10/
+# cp -r output/imagenet/clean_encoder ../BadEncoder/output/imagenet/
+# cp -r output/CLIP/clean_encoder ../BadEncoder/output/CLIP/

@@ -16,6 +16,7 @@ train_transform = transforms.Compose([
     transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
     ])
 
+
 finetune_transform_cifar10 = transforms.Compose([
     transforms.RandomHorizontalFlip(p=0.5),
     transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
@@ -86,7 +87,7 @@ def get_shadow_cifar10_224(args):
         reference_file= args.reference_file,
         class_type=classes,
         indices = training_data_sampling_indices,
-        transform=None,
+        transform=finetune_transform_CLIP,
         bd_transform=test_transform_CLIP,
         ftt_transform=finetune_transform_CLIP
     )

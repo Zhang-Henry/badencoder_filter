@@ -9,7 +9,7 @@ if not os.path.exists('./log/bad_encoder'):
     os.makedirs('./log/bad_encoder')
 
 
-def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, trigger, reference, pretraining_dataset, bz, clean_encoder='model_1000.pth'):
+def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, trigger, reference, pretraining_dataset, bz, lr, clean_encoder='model_1000.pth'):
     save_path = f'./output/{encoder_usage_info}/{downstream_dataset}_backdoored_encoder/{time}'
     if not os.path.exists(save_path):
         os.makedirs(save_path)
@@ -22,7 +22,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     cmd = f'nohup python3 -u badencoder_origin.py \
     --epochs 200 \
     --timestamp {time} \
-    --lr 0.001 \
+    --lr {lr} \
     --batch_size {bz}   \
     --results_dir {save_path}/ \
     --shadow_dataset {shadow_dataset} \
@@ -66,4 +66,4 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 
 
 ###CLIP
-run_finetune(0, 'CLIP', 'cifar10', 'stl10', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'truck', 'cifar10', 64, clean_encoder='encode_image.pth')
+run_finetune(0, 'CLIP', 'cifar10_224', 'svhn', 'trigger/trigger_pt_white_173_50_ap_replace.npz', 'one', 'cifar10_224', 32, 0.000001, clean_encoder='encode_image.pth')

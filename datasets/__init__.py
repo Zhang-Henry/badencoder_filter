@@ -19,6 +19,8 @@ def get_pretraining_dataset(args):
 def get_shadow_dataset(args):
     if args.shadow_dataset =='cifar10':
         return get_shadow_cifar10(args)
+    elif args.shadow_dataset == 'cifar10_224':
+        return get_shadow_cifar10_224(args)
     elif args.shadow_dataset == 'stl10':
         return get_shadow_stl10(args)
     elif args.shadow_dataset == 'imagenet':
