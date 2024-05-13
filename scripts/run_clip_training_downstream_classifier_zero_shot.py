@@ -47,4 +47,4 @@ def eval_zero_shot_clean(gpu, encoder_usage_info, shadow_dataset, downstream_dat
 # eval_zero_shot_clean(7, 'CLIP', 'cifar10', 'svhn', 'zero', 0, 'trigger_pt_white_173_50_ap_replace.npz')
 
 
-eval_zero_shot(4, 'CLIP', 'cifar10', 'stl10', 'truck', 9, 'output/CLIP/svhn_backdoored_encoder/2024-05-13-00:01:32/unet_filter_25_trained.pt','output/CLIP/svhn_backdoored_encoder/2024-05-13-00:01:32/model_25.pth')
+eval_zero_shot(4, 'CLIP', 'cifar10', 'svhn', 'zero', 0, 'output/CLIP/svhn_backdoored_encoder/2024-05-13-00:01:32/unet_filter_25_trained.pt','output/CLIP/svhn_backdoored_encoder/2024-05-13-00:01:32/model_25.pth')

@@ -167,7 +167,6 @@ class CLIP(nn.Module):
                 heads=vision_heads,
                 input_resolution=image_resolution,
                 width=vision_width)
-        visual_model_path = '/home/jj290//project2020/backdoorself/CLIP/pretrainedmodel/encode_image.pth'
 
     @property
     def dtype(self):
