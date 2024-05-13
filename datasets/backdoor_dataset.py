@@ -97,8 +97,8 @@ class BadEncoderDataset(Dataset):
             ###########################
             ### origin ###
 
-            # backdoored_image[:,:,:] = img_copy * self.trigger_mask_list[i] + self.trigger_patch_list[i][:]
-            # img_backdoor =self.bd_transform(Image.fromarray(backdoored_image))
+            backdoored_image[:,:,:] = img_copy * self.trigger_mask_list[i] + self.trigger_patch_list[i][:]
+            img_backdoor =self.bd_transform(Image.fromarray(backdoored_image))
 
             ###########################
             # for ctrl only
@@ -121,7 +121,7 @@ class BadEncoderDataset(Dataset):
 
 
             ###########################
-            img_backdoor = self.bd_transform(img_copy)
+            # img_backdoor = self.bd_transform(img_copy)
 
             ###########################
             img_backdoor_list.append(img_backdoor)
