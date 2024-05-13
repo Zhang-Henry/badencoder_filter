@@ -69,10 +69,10 @@ def add_quantization_noise(image, levels=64):
 #     x_quan=torch.round(X_before*255/r)*r/255
 #     return x_quan
 
-# def JPEGcompression(X_before,quality):
-#         X_after=torch.zeros_like(X_before)
-#         for j in range(X_after.size(0)):
-#             x_np=transforms.ToPILImage()(X_before[j].detach().cpu())
-#             x_np.save('./'+'j.jpg',quality=quality)
-#             X_after[j]=Image.open('./'+'j.jpg')
-#         return X_after
+def JPEGcompression(X_before,quality):
+        X_after=torch.zeros_like(X_before)
+        for j in range(X_after.size(0)):
+            x_np=transforms.ToPILImage()(X_before[j].detach().cpu())
+            x_np.save('./'+'j.jpg',quality=quality)
+            X_after[j]=Image.open('./'+'j.jpg')
+        return X_after

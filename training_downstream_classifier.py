@@ -86,6 +86,8 @@ if __name__ == '__main__':
 
         if args.encoder_usage_info in ['CLIP', 'imagenet'] and 'clean' in args.encoder:
             model.visual.load_state_dict(checkpoint['state_dict'])
+        elif args.encoder_usage_info in 'MOCO':
+            model = torch.load(args.pretrained_encoder)
         else:
             model.load_state_dict(checkpoint['state_dict'])
 
@@ -95,6 +97,11 @@ if __name__ == '__main__':
         feature_bank_testing, label_bank_testing = predict_feature(args,model.visual, test_loader_clean)
         feature_bank_backdoor, label_bank_backdoor = predict_feature(args,model.visual, test_loader_backdoor,'backdoor')
         feature_bank_target, label_bank_target = predict_feature(args,model.visual, target_loader)
+    elif args.encoder_usage_info in 'MOCO':
+        feature_bank_training, label_bank_training = predict_feature(args,model, train_loader)
+        feature_bank_testing, label_bank_testing = predict_feature(args,model, test_loader_clean)
+        feature_bank_backdoor, label_bank_backdoor = predict_feature(args,model, test_loader_backdoor,'backdoor')
+        feature_bank_target, label_bank_target = predict_feature(args,model, target_loader)
     else:
         feature_bank_training, label_bank_training = predict_feature(args,model.f, train_loader)
         feature_bank_testing, label_bank_testing = predict_feature(args,model.f, test_loader_clean)

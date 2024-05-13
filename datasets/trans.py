@@ -1,10 +1,15 @@
 from torchvision import transforms
 from .noise import *
+from lightly.transforms import utils
 
 
 test_transform_cifar10 = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])])
+
+test_transform_cifar10_MOCO = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize(utils.IMAGENET_NORMALIZE["mean"], utils.IMAGENET_NORMALIZE["std"])])
 
 test_transform_cifar10_GaussianBlur = transforms.Compose([
     transforms.GaussianBlur(kernel_size=7),
