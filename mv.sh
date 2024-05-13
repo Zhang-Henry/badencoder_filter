@@ -28,12 +28,13 @@
 # mkdir -p ../BadEncoder/data/cifar10
 # mkdir -p ../BadEncoder/data/stl10
 # mkdir -p ../BadEncoder/data/gtsrb
-mkdir -p ../BadEncoder/data/svhn
+# mkdir -p ../BadEncoder/data/svhn
+mkdir -p ../BadEncoder/output/CLIP/backdoor
 # cp -r data/cifar10/*.npz ../BadEncoder/data/cifar10
 # cp -r data/stl10/*.npz ../BadEncoder/data/stl10
 # cp -r data/gtsrb/*.npz ../BadEncoder/data/gtsrb
-cp -r data/svhn/*.npz ../BadEncoder/data/svhn
-
+# cp -r data/svhn/*.npz ../BadEncoder/data/svhn
+cp -r output/CLIP/backdoor ../BadEncoder/output/CLIP/
 
 # mkdir -p ../BadEncoder/output/cifar10/
 # mkdir -p ../BadEncoder/output/stl10/

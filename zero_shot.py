@@ -16,6 +16,8 @@ import torch.nn.functional as F
 
 from models import get_encoder_architecture_usage
 from datasets import get_dataset_evaluation
+from optimize_filter.tiny_network import U_Net_tiny
+from util import clamp_batch_images
 
 
 
@@ -86,15 +88,23 @@ if __name__ == '__main__':
     total_num = test_data_backdoor.data.shape[0]
     # total_num = test_data_backdoor.__len__()
 
+    state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
+    filter = U_Net_tiny(img_ch=3,output_ch=3)
+    filter.load_state_dict(state_dict['model_state_dict'])
+    filter=filter.cuda().eval()
+
     for i in tqdm(range(total_num)):
         # Prepare the inputs
         # image, class_id = test_data_backdoor[i]
         # image = image.permute(1,2,0)
 
         image, class_id = test_data_backdoor.data[i], test_data_backdoor.targets[i]
-        image[:,:,:] = image * test_data_backdoor.trigger_mask_list[0] + test_data_backdoor.trigger_patch_list[0]
+
+        # image[:,:,:] = image * test_data_backdoor.trigger_mask_list[0] + test_data_backdoor.trigger_patch_list[0]
         image = Image.fromarray(image)
         image_input = preprocess(image).unsqueeze(0).to(device)
+        image_input=filter(image_input)
+        image_input= clamp_batch_images(image_input,args)
 
         # Calculate features
         with torch.no_grad():

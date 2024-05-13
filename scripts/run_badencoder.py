@@ -34,7 +34,6 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     --pretraining_dataset {pretraining_dataset} \
     --color {color} \
     --loss0 {loss0} \
-    --rand_init \
     > ./log/bad_encoder/{encoder_usage_info}_{downstream_dataset}_{reference}.log 2>&1 &'
     os.system(cmd)
 
@@ -91,5 +90,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 # run_finetune(4, 'stl10', 'stl10', 'svhn', 'xx', 'one', 'stl10',256,0.3,1)
 
 
-# Random init
-run_finetune(2, 'CLIP', 'cifar10_224', 'svhn', 'xx', 'one', 'cifar10_224', 16, 0.1, 10, 0.000001, clean_encoder='encode_image.pth')
+# CLIP
+run_finetune(2, 'CLIP', 'cifar10_224', 'svhn', 'optimize_filter/trigger/cifar10_224/2024-05-13-00-47-02/ssim0.9666_psnr27.88_lp0.0245_wd0.002_color4.879.pt', 'one', 'cifar10_224', 16, 0.1, 10, 0.000001, clean_encoder='encode_image.pth')
+# run_finetune(3, 'CLIP', 'cifar10_224', 'stl10', 'optimize_filter/trigger/cifar10_224/2024-05-13-00-47-02/ssim0.9666_psnr27.88_lp0.0245_wd0.002_color4.879.pt', 'truck', 'cifar10_224', 16, 0.1, 10, 0.000001, clean_encoder='encode_image.pth')
+# run_finetune(5, 'CLIP', 'cifar10_224', 'gtsrb', 'optimize_filter/trigger/cifar10_224/2024-05-13-00-47-02/ssim0.9666_psnr27.88_lp0.0245_wd0.002_color4.879.pt', 'priority', 'cifar10_224', 16, 0.1, 10, 0.000001, clean_encoder='encode_image.pth')

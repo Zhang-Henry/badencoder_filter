@@ -112,7 +112,7 @@ def clamp_batch_images(batch_images, args):
     elif dataset_name=='imagenet':
         mean = torch.tensor([0.4850, 0.4560, 0.4060]).cuda()
         std = torch.tensor([0.2290, 0.2240, 0.2250]).cuda()
-    elif dataset_name=='cifar10_224':
+    if dataset_name=='cifar10_224' or dataset_name=='CLIP' or dataset=='CLIP':
         mean = torch.tensor([0.48145466, 0.4578275, 0.40821073]).cuda()
         std = torch.tensor([0.26862954, 0.26130258, 0.27577711]).cuda()
 
