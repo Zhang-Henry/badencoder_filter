@@ -115,9 +115,9 @@ def get_downstream_gtsrb(args):
         memory_data = CIFAR10Mem_224(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
         test_data_backdoor = BadEncoderTestBackdoor_224(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
         test_data_clean = CIFAR10Mem_224(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)
-    elif args.encoder_usage_info == 'MOCO':
-        test_transform = test_transform_cifar10_MOCO
-        print('test_transform_cifar10_MOCO')
+    elif args.encoder_usage_info in ['MOCO','simsiam','swav']:
+        test_transform = test_transform_cifar10_SSL
+        print('test_transform_cifar10_SSL')
         memory_data = CIFAR10Mem(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
         test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
         test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)

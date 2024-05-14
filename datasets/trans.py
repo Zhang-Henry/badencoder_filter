@@ -7,7 +7,7 @@ test_transform_cifar10 = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])])
 
-test_transform_cifar10_MOCO = transforms.Compose([
+test_transform_cifar10_SSL = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize(utils.IMAGENET_NORMALIZE["mean"], utils.IMAGENET_NORMALIZE["std"])])
 

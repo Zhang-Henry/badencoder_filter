@@ -33,8 +33,15 @@ def get_encoder_architecture_usage(args):
         return ImageNetResNet()
     elif args.encoder_usage_info == 'CLIP':
         return CLIP(1024, 224, vision_layers=(3, 4, 6, 3), vision_width=64)
-    elif args.encoder_usage_info == 'MOCO':
+    elif args.encoder_usage_info in ['MOCO']:
         resnet = ResNetGenerator("resnet-18", 1, num_splits=8)
+        backbone = nn.Sequential(
+            *list(resnet.children())[:-1],
+            nn.AdaptiveAvgPool2d(1),
+        )
+        return backbone
+    elif args.encoder_usage_info in ['simsiam', 'swav']:
+        resnet = ResNetGenerator("resnet-18")
         backbone = nn.Sequential(
             *list(resnet.children())[:-1],
             nn.AdaptiveAvgPool2d(1),

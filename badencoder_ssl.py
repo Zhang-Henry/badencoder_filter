@@ -22,7 +22,6 @@ import os
 
 
 
-
 def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args ,filter,optimizer_wd, tracker):
     tracker.reset()
     backdoored_encoder = backdoored_encoder.cuda()
@@ -43,7 +42,7 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
     total_loss, total_num, train_bar = 0.0, 0, tqdm(data_loader)
     total_loss_0, total_loss_1, total_loss_2 = 0.0, 0.0, 0.0
 
-    for img_clean, img_backdoor_list, reference_list,reference_aug_list, img_trans in train_bar:
+    for img_clean, img_backdoor_list, reference_list, reference_aug_list, img_trans in train_bar:
         img_clean = img_clean.cuda(non_blocking=True)
         img_trans = img_trans[0].cuda(non_blocking=True)
 
@@ -188,14 +187,20 @@ if __name__ == '__main__':
     # memory_data, test_data_clean, and test_data_backdoor are used to monitor the finetuning process. They are not reqruied by our BadEncoder
     shadow_data, memory_data, test_data_clean, test_data_backdoor = get_shadow_dataset(args)
 
-    # clean_model = get_encoder_architecture_usage(args).cuda()
-    # model = get_encoder_architecture_usage(args).cuda()
+    clean_model = get_encoder_architecture_usage(args).cuda()
+    model = get_encoder_architecture_usage(args).cuda()
 
     # Initialize the BadEncoder and load the pretrained encoder
-    if args.pretrained_encoder != '':
+    if args.encoder_usage_info in ['MOCO']:
         print(f'load the clean model from {args.pretrained_encoder}')
         clean_model = torch.load(args.pretrained_encoder)
         model = torch.load(args.pretrained_encoder)
+    elif args.encoder_usage_info in ['simsiam', 'swav']:
+        checkpoint = torch.load(args.pretrained_encoder)
+        state_dict = {k.replace('backbone.', ''): v for k, v in checkpoint['state_dict'].items()}
+        new_state_dict = {k: v for k, v in state_dict.items() if 'head' not in k}
+        model.load_state_dict(new_state_dict)
+        clean_model.load_state_dict(new_state_dict)
 
     # Create the extra data loaders for testing purpose and define the optimizer
     print("Optimizer: SGD")

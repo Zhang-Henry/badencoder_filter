@@ -4,8 +4,18 @@ import numpy as np
 import torch
 from .trans import *
 import torch.nn.functional as F
-from lightly.transforms import MoCoV2Transform, utils
-
+from lightly.transforms import (
+    BYOLTransform,
+    BYOLView1Transform,
+    BYOLView2Transform,
+    DINOTransform,
+    FastSiamTransform,
+    SimCLRTransform,
+    SimSiamTransform,
+    SMoGTransform,
+    SwaVTransform,
+    MoCoV2Transform
+)
 
 train_transform = transforms.Compose([
     transforms.RandomResizedCrop(32),
@@ -57,6 +67,21 @@ def get_shadow_cifar10(args):
             input_size=32,
             gaussian_blur=0.0,
         )
+    elif args.encoder_usage_info == 'simsiam':
+        train_transform = SimSiamTransform(
+            input_size=32,
+            gaussian_blur=0.0,
+        )
+    elif args.encoder_usage_info == 'swav':
+        train_transform = SwaVTransform(
+            crop_sizes=[32],
+            crop_max_scales=[32],
+            crop_counts=[2],  # 2 crops @ 32x32px
+            crop_min_scales=[0.14],
+            cj_strength=0.5,
+            gaussian_blur=0,
+        )
+
     training_data_num = 50000
     testing_data_num = 10000
     np.random.seed(100)

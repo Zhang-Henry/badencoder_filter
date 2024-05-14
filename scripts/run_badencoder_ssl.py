@@ -19,7 +19,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     # os.makedirs(f'{save_path}/{time}')
     # filter_path="optimize_filter/trigger/unet_filter.pt"
 
-    cmd = f'nohup python3 -u badencoder_moco.py \
+    cmd = f'nohup python3 -u badencoder_ssl.py \
     --epochs 200 \
     --timestamp {time} \
     --lr {lr} \
@@ -42,5 +42,15 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 
 # MOCO
 # run_finetune(2, 'MOCO', 'cifar10', 'svhn', 'xx', 'one', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='output/cifar10-moco/clean_encoder/moco-model.pth')
-run_finetune(3, 'MOCO', 'cifar10', 'stl10', 'xx', 'truck', 'cifar10', 64, 0.1, 20, 0.001, clean_encoder='output/cifar10-moco/clean_encoder/moco-model.pth')
+# run_finetune(3, 'MOCO', 'cifar10', 'stl10', 'xx', 'truck', 'cifar10', 64, 0.1, 20, 0.001, clean_encoder='output/cifar10-moco/clean_encoder/moco-model.pth')
 # run_finetune(5, 'MOCO', 'cifar10', 'gtsrb', 'xx', 'priority', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='output/cifar10-moco/clean_encoder/moco-model.pth')
+
+
+# run_finetune(2, 'simsiam', 'cifar10', 'svhn', 'xx', 'one', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt')
+# run_finetune(0, 'simsiam', 'cifar10', 'stl10', 'xx', 'truck', 'cifar10', 32, 0.1, 20, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt')
+# run_finetune(5, 'simsiam', 'cifar10', 'gtsrb', 'xx', 'priority', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt')
+
+
+run_finetune(5, 'swav', 'cifar10', 'svhn', 'xx', 'one', 'cifar10', 32, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SwaV/checkpoints/epoch=799-step=19200.ckpt')
+# run_finetune(0, 'swav', 'cifar10', 'stl10', 'xx', 'truck', 'cifar10', 32, 0.1, 20, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SwaV/checkpoints/epoch=799-step=19200.ckpt')
+# run_finetune(5, 'swav', 'cifar10', 'gtsrb', 'xx', 'priority', 'cifar10', 32, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SwaV/checkpoints/epoch=799-step=19200.ckpt')
