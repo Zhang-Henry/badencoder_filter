@@ -96,14 +96,15 @@ from lightly.transforms import (
 from lightly.transforms.utils import IMAGENET_NORMALIZE
 from lightly.utils.benchmarking import BenchmarkModule
 
-logs_root_dir = os.path.join(os.getcwd(), "benchmark_logs")
+logs_root_dir = os.path.join(os.getcwd(), "log/benchmark_logs")
 
 # set max_epochs to 800 for long run (takes around 10h on a single V100)
-max_epochs = 200
+max_epochs = 800
 num_workers = 8
 knn_k = 200
 knn_t = 0.1
 classes = 10
+os.environ["CUDA_VISIBLE_DEVICES"]= '0'
 
 # Set to True to enable Distributed Data Parallel training.
 distributed = False
@@ -121,7 +122,7 @@ gather_distributed = False
 
 # benchmark
 n_runs = 1  # optional, increase to create multiple runs and report mean + std
-batch_size = 128
+batch_size = 2048
 lr_factor = batch_size / 128  # scales the learning rate linearly with batch size
 
 # Number of devices and hardware to use for training.
@@ -160,8 +161,8 @@ else:
 #  L horse/
 #  L ship/
 #  L truck/
-path_to_train = "cifar10/train/"
-path_to_test = "cifar10/test/"
+path_to_train = "pretrain_ssl/cifar10/train/"
+path_to_test = "pretrain_ssl/cifar10/test/"
 
 # Use BYOL augmentations
 byol_transform = BYOLTransform(
@@ -188,6 +189,7 @@ fast_siam_transform = FastSiamTransform(input_size=32, gaussian_blur=0.0)
 # Multi crop augmentation for SwAV, additionally, disable blur for cifar10
 swav_transform = SwaVTransform(
     crop_sizes=[32],
+    crop_max_scales=[32],
     crop_counts=[2],  # 2 crops @ 32x32px
     crop_min_scales=[0.14],
     cj_strength=0.5,
@@ -890,8 +892,12 @@ models = [
     NNCLRModel,
     SimCLRModel,
     SimSiamModel,
-    SwaVModel,
     SMoGModel,
+]
+
+models = [
+    SimSiamModel,
+    SwaVModel,
 ]
 bench_results = dict()
 
@@ -928,10 +934,9 @@ for BenchmarkModel in models:
             devices=devices,
             accelerator=accelerator,
             default_root_dir=logs_root_dir,
-            strategy=strategy,
+            strategy='auto',
             sync_batchnorm=sync_batchnorm,
-            logger=logger,
-            callbacks=[checkpoint_callback],
+             callbacks=[checkpoint_callback],
         )
         start = time.time()
         trainer.fit(

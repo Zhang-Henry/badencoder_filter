@@ -204,7 +204,7 @@ if __name__ == '__main__':
             checkpoint = torch.load(args.pretrained_encoder)
             clean_model.load_state_dict(checkpoint['state_dict'])
             model.load_state_dict(checkpoint['state_dict'])
-        elif args.encoder_usage_info == 'MOCO':
+        elif args.encoder_usage_info == 'imagenet' or args.encoder_usage_info == 'CLIP':
             checkpoint = torch.load(args.pretrained_encoder)
             clean_model.visual.load_state_dict(checkpoint['state_dict'])
             model.visual.load_state_dict(checkpoint['state_dict'])

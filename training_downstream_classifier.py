@@ -86,8 +86,8 @@ if __name__ == '__main__':
 
         if args.encoder_usage_info in ['CLIP', 'imagenet'] and 'clean' in args.encoder:
             model.visual.load_state_dict(checkpoint['state_dict'])
-        elif args.encoder_usage_info in 'MOCO':
-            model = torch.load(args.pretrained_encoder)
+        # elif args.encoder_usage_info in 'MOCO':
+        #     model.load_state_dict(checkpoint['state_dict'])
         else:
             model.load_state_dict(checkpoint['state_dict'])
 
