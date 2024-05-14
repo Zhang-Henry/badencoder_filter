@@ -1,3 +1,6 @@
+import sys
+sys.path.append('..')
+
 import os
 import argparse
 import random
@@ -15,21 +18,23 @@ from models import get_encoder_architecture_usage
 from datasets import get_shadow_dataset
 from evaluation import test
 
-from Beatrix.defenses.Beatrix.Beatrix import Feature_Correlations
+from defenses.Beatrix.Beatrix import Feature_Correlations
 
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 
 import matplotlib as mpl
 from matplotlib.ticker import FuncFormatter
+from util import filter_color_loss,clamp_batch_images
+from optimize_filter.tiny_network import U_Net_tiny
 
 import matplotlib
 matplotlib.use('AGG')
 
 
-def eval_beatrix(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args):
+def eval_beatrix(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args,filter):
     backdoored_encoder.eval()
-    
+
     train_bar = tqdm(data_loader)
 
     for module in backdoored_encoder.modules():
@@ -43,10 +48,10 @@ def eval_beatrix(backdoored_encoder, clean_encoder, data_loader, train_optimizer
 
     clean_encoder.eval()
 
-    for img_clean, img_backdoor_list, reference_list,reference_aug_list in train_bar:
+    for img_clean, img_backdoor_list, reference_list,reference_aug_list, _ in train_bar:
         img_clean = img_clean.cuda(non_blocking=True)
         img_backdoor_cuda_list = []
-        
+
         for img_backdoor in img_backdoor_list:
             img_backdoor_cuda_list.append(img_backdoor.cuda(non_blocking=True))
 
@@ -59,6 +64,10 @@ def eval_beatrix(backdoored_encoder, clean_encoder, data_loader, train_optimizer
 
         feature_backdoor_list = []
         for img_backdoor in img_backdoor_cuda_list:
+
+            # img_backdoor=filter(img_backdoor)
+            # img_backdoor= clamp_batch_images(img_backdoor,args)
+
             feature_backdoor = backdoored_encoder(img_backdoor)
             #feature_backdoor = F.normalize(feature_backdoor, dim=-1)
 
@@ -67,7 +76,7 @@ def eval_beatrix(backdoored_encoder, clean_encoder, data_loader, train_optimizer
 
     ood_detection = Feature_Correlations(POWER_list=np.arange(1,9),mode='mad')
     ood_detection.train(in_data=[feature_raw])
-    
+
     print(ood_detection.get_deviations_([feature_raw]))
     print(ood_detection.get_deviations_([feature_backdoor]))
 
@@ -117,7 +126,7 @@ def eval_beatrix(backdoored_encoder, clean_encoder, data_loader, train_optimizer
     print(len(avg_score_diff_clean_list))
     print(len(avg_score_diff_trojan_list))
 
-    bins_clean = 5
+    bins_clean = 28
     bins_trojan = 28
     plt.hist(avg_score_diff_clean_list, bins_clean, weights=np.ones(len(avg_score_diff_clean_list)) / len(avg_score_diff_clean_list), alpha=0.5, label='Clean')
     plt.hist(avg_score_diff_trojan_list, bins_trojan, weights=np.ones(len(avg_score_diff_trojan_list)) / len(avg_score_diff_trojan_list), alpha=0.5, label='Backdoor')
@@ -140,7 +149,7 @@ def eval_beatrix(backdoored_encoder, clean_encoder, data_loader, train_optimizer
     plt.tight_layout()
     plt.savefig(args.save_name, dpi=600)
     plt.close('all')
-        
+
 
 if __name__ == '__main__':
 
@@ -161,6 +170,7 @@ if __name__ == '__main__':
     parser.add_argument('--save_name', default='./beatrix.png', type=str, metavar='PATH', help='path to save the backdoored encoder')
 
     parser.add_argument('--results_dir', default='', type=str, metavar='PATH', help='path to save the backdoored encoder')
+    parser.add_argument('--rand_init', action='store_true')
 
     parser.add_argument('--seed', default=100, type=int, help='which seed the code runs on')
     parser.add_argument('--gpu', default='0', type=str, help='which gpu the code runs on')
@@ -221,13 +231,19 @@ if __name__ == '__main__':
         else:
             raise NotImplementedError()
 
-    if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10':
-        # check whether the pre-trained encoder is loaded successfully or not
-        test_acc_1 = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor,0, args)
-        print('initial test acc: {}'.format(test_acc_1))
+    # if args.encoder_usage_info == 'cifar10' or args.encoder_usage_info == 'stl10':
+    #     # check whether the pre-trained encoder is loaded successfully or not
+    #     test_acc_1 = test(model.f, memory_loader, test_loader_clean, test_loader_backdoor,0, args)
+    #     print('initial test acc: {}'.format(test_acc_1))
 
-    eval_beatrix(model.f, clean_model.f, train_loader, optimizer, args)
-    
+    net = U_Net_tiny(img_ch=3,output_ch=3)
+    # if not args.rand_init:
+    #     state_dict = torch.load(args.trigger_file, map_location=torch.device('cuda:0'))
+    #     net.load_state_dict(state_dict['model_state_dict'])
+    # net=net.cuda().eval()
+
+    eval_beatrix(model.f, clean_model.f, train_loader, optimizer, args, net)
+
 
     '''# training loop
     for epoch in range(1, args.epochs + 1):

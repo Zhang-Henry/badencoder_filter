@@ -60,6 +60,14 @@ def get_pretraining_cifar10(data_dir):
 
 
 def get_shadow_cifar10(args):
+    train_transform = transforms.Compose([
+        transforms.RandomResizedCrop(32),
+        transforms.RandomHorizontalFlip(p=0.5),
+        transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
+        transforms.RandomGrayscale(p=0.2),
+        transforms.ToTensor(),
+        transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
+        ])
     if args.encoder_usage_info == 'cifar10':
         train_transform = train_transform
     elif args.encoder_usage_info == 'MOCO':
