@@ -122,7 +122,7 @@ gather_distributed = False
 
 # benchmark
 n_runs = 1  # optional, increase to create multiple runs and report mean + std
-batch_size = 2048
+batch_size = 512
 lr_factor = batch_size / 128  # scales the learning rate linearly with batch size
 
 # Number of devices and hardware to use for training.
@@ -896,9 +896,11 @@ models = [
 ]
 
 models = [
-    SimSiamModel,
-    SwaVModel,
+    BYOLModel,
+    SMoGModel,
+    NNCLRModel
 ]
+
 bench_results = dict()
 
 experiment_version = None

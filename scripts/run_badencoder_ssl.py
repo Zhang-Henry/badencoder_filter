@@ -34,7 +34,6 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
     --pretraining_dataset {pretraining_dataset} \
     --color {color} \
     --loss0 {loss0} \
-    --rand_init \
     > ./log/bad_encoder/{encoder_usage_info}_{downstream_dataset}_{reference}.log 2>&1 &'
     os.system(cmd)
 
@@ -51,6 +50,6 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 # run_finetune(5, 'simsiam', 'cifar10', 'gtsrb', 'xx', 'priority', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt')
 
 
-run_finetune(5, 'swav', 'cifar10', 'svhn', 'xx', 'one', 'cifar10', 32, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SwaV/checkpoints/epoch=799-step=19200.ckpt')
-# run_finetune(0, 'swav', 'cifar10', 'stl10', 'xx', 'truck', 'cifar10', 32, 0.1, 20, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SwaV/checkpoints/epoch=799-step=19200.ckpt')
+# run_finetune(5, 'swav', 'cifar10', 'svhn', 'xx', 'one', 'cifar10', 32, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SwaV/checkpoints/epoch=799-step=19200.ckpt')
+run_finetune(0, 'swav', 'cifar10', 'stl10', 'optimize_filter/trigger/cifar10/2023-12-06-23-41-20/ssim0.9328_psnr22.50_lp0.0291_wd0.603_color11.353.pt', 'truck', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SwaV/checkpoints/epoch=799-step=19200.ckpt')
 # run_finetune(5, 'swav', 'cifar10', 'gtsrb', 'xx', 'priority', 'cifar10', 32, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SwaV/checkpoints/epoch=799-step=19200.ckpt')

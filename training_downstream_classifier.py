@@ -77,17 +77,22 @@ if __name__ == '__main__':
     if args.encoder != '':
         print('Loaded from: {}'.format(args.encoder))
         checkpoint = torch.load(args.encoder)
-        args_v = checkpoint.get('args', None)
-        loss = checkpoint.get('loss', None)
-        if args_v:
-            print(args_v)
-        if loss:
-            print(loss)
+        if 'clean' not in args.encoder:
+            args_v = checkpoint.get('args', None)
+            loss = checkpoint.get('loss', None)
+            if args_v:
+                print(args_v)
+            if loss:
+                print(loss)
 
         if args.encoder_usage_info in ['CLIP', 'imagenet'] and 'clean' in args.encoder:
             model.visual.load_state_dict(checkpoint['state_dict'])
-        # elif args.encoder_usage_info in 'MOCO':
-        #     model.load_state_dict(checkpoint['state_dict'])
+        elif args.encoder_usage_info in 'MOCO':
+            model = checkpoint.cuda()
+        elif args.encoder_usage_info in ['simsiam','swav']:
+            state_dict = {k.replace('backbone.', ''): v for k, v in checkpoint['state_dict'].items()}
+            new_state_dict = {k: v for k, v in state_dict.items() if 'head' not in k}
+            model.load_state_dict(new_state_dict)
         else:
             model.load_state_dict(checkpoint['state_dict'])
 
@@ -108,20 +113,20 @@ if __name__ == '__main__':
         feature_bank_backdoor, label_bank_backdoor = predict_feature(args,model.f, test_loader_backdoor,'backdoor')
         feature_bank_target, label_bank_target = predict_feature(args,model.f, target_loader)
 
-    print(feature_bank_training.shape[1])
-    feature_banks = {
-        'args':args_v,
-        'training': feature_bank_training,
-        'testing': feature_bank_testing,
-        'backdoor': feature_bank_backdoor,
-        'target': feature_bank_target
-    }
+    # print(feature_bank_training.shape[1])
+    # feature_banks = {
+    #     'args':args_v,
+    #     'training': feature_bank_training,
+    #     'testing': feature_bank_testing,
+    #     'backdoor': feature_bank_backdoor,
+    #     'target': feature_bank_target
+    # }
 
 
-    out = os.path.join(os.path.dirname(args.encoder), 'feature_banks.pkl')
-    with open(out, 'wb') as f:
-        pickle.dump(feature_banks, f)
-    print('feature banks saved to {}'.format(out))
+    # out = os.path.join(os.path.dirname(args.encoder), 'feature_banks.pkl')
+    # with open(out, 'wb') as f:
+    #     pickle.dump(feature_banks, f)
+    # print('feature banks saved to {}'.format(out))
 
     nn_train_loader = create_torch_dataloader(feature_bank_training, label_bank_training, args.batch_size)
     nn_test_loader = create_torch_dataloader(feature_bank_testing, label_bank_testing, args.batch_size)
