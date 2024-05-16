@@ -16,7 +16,7 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
             --reference_label {reference_label} \
             --reference_file ./reference/{encoder_usage_info}/{reference_file}.npz \
             --gpu {gpu} \
-            >./log/{encoder_usage_info}/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}.log 2>&1 &"
+            >./log/{encoder_usage_info}/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_100.log 2>&1 &"
 
 
     os.system(cmd)
@@ -146,12 +146,12 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 
 
 ## NNCLR
-# run_eval(2, 'NNCLR', 'stl10', 'output/NNCLR/stl10_backdoored_encoder/2024-05-15-23:22:13/model_200.pth', 9, 'output/NNCLR/stl10_backdoored_encoder/2024-05-15-23:22:13/unet_filter_200_trained.pt', 'truck', 'backdoor')
-# run_eval(2, 'NNCLR', 'gtsrb', 'output/NNCLR/gtsrb_backdoored_encoder/2024-05-15-23:22:20/model_200.pth', 12, 'output/NNCLR/gtsrb_backdoored_encoder/2024-05-15-23:22:20/unet_filter_200_trained.pt', 'priority', 'backdoor')
+# run_eval(2, 'NNCLR', 'stl10', 'output/NNCLR/stl10_backdoored_encoder/2024-05-15-23:22:13/model_100.pth', 9, 'output/NNCLR/stl10_backdoored_encoder/2024-05-15-23:22:13/unet_filter_100_trained.pt', 'truck', 'backdoor')
+run_eval(2, 'NNCLR', 'gtsrb', 'output/NNCLR/gtsrb_backdoored_encoder/2024-05-15-23:22:20/model_100.pth', 12, 'output/NNCLR/gtsrb_backdoored_encoder/2024-05-15-23:22:20/unet_filter_100_trained.pt', 'priority', 'backdoor')
 # run_eval(2, 'NNCLR', 'svhn', 'output/NNCLR/svhn_backdoored_encoder/2024-05-15-23:21:12/model_200.pth', 1, 'output/NNCLR/svhn_backdoored_encoder/2024-05-15-23:21:12/unet_filter_200_trained.pt', 'one', 'backdoor')
 
 
 ## DINO
 # run_eval(5, 'DINO', 'stl10', 'output/DINO/stl10_backdoored_encoder/2024-05-16-08:41:02/model_140.pth', 9, 'output/DINO/stl10_backdoored_encoder/2024-05-16-08:41:02/unet_filter_140_trained.pt', 'truck', 'backdoor')
 # run_eval(5, 'DINO', 'gtsrb', 'output/DINO/gtsrb_backdoored_encoder/2024-05-16-08:41:06/model_120.pth', 12, 'output/DINO/gtsrb_backdoored_encoder/2024-05-16-08:41:06/unet_filter_120_trained.pt', 'priority', 'backdoor')
-run_eval(5, 'DINO', 'svhn', 'output/DINO/svhn_backdoored_encoder/2024-05-16-08:40:30/model_60.pth', 1, 'output/DINO/svhn_backdoored_encoder/2024-05-16-08:40:30/unet_filter_60_trained.pt', 'one', 'backdoor')
+# run_eval(5, 'DINO', 'svhn', 'output/DINO/svhn_backdoored_encoder/2024-05-16-08:40:30/model_60.pth', 1, 'output/DINO/svhn_backdoored_encoder/2024-05-16-08:40:30/unet_filter_60_trained.pt', 'one', 'backdoor')

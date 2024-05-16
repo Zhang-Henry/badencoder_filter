@@ -78,7 +78,7 @@
 #     --trigger_file trigger/trigger_pt_white_21_10_ap_replace.npz \
 #     --lr 0.1 --epochs 60 \
 #     --cut_threshold 8000 \
-#     --save_name defences/Beatrix/imgs/beatrix_badencoder_$shadow_dataset.png > defences/Beatrix/logs/beatrix_badencoder_$shadow_dataset.log 2>&1 &
+#     --save_name defences/Beatrix/imgs/beatrix_badencoder_$shadow_dataset.png > defences/Beatrix/logs/beatrix_badencoder_$shadow_dataset-cifar10.log 2>&1 &
 
 # shadow_dataset=stl10
 # CUDA_VISIBLE_DEVICES=2 nohup python3 -u defences/Beatrix/eval_beatrix.py \
@@ -91,7 +91,7 @@
 #     --trigger_file trigger/trigger_pt_white_21_10_ap_replace.npz \
 #     --lr 0.1 --epochs 60 \
 #     --cut_threshold 8000 \
-#     --save_name defences/Beatrix/imgs/beatrix_badencoder_$shadow_dataset.png > defences/Beatrix/logs/beatrix_badencoder_$shadow_dataset.log 2>&1 &
+#     --save_name defences/Beatrix/imgs/beatrix_badencoder_$shadow_dataset.png > defences/Beatrix/logs/beatrix_badencoder_$shadow_dataset-svhn.log 2>&1 &
 
 
 shadow_dataset=stl10
@@ -105,4 +105,4 @@ CUDA_VISIBLE_DEVICES=2 nohup python3 -u defences/Beatrix/eval_beatrix.py \
     --trigger_file trigger/trigger_pt_white_21_10_ap_replace.npz \
     --lr 0.1 --epochs 60 \
     --cut_threshold 8000 \
-    --save_name defences/Beatrix/imgs/beatrix_badencoder_$shadow_dataset.png > defences/Beatrix/logs/beatrix_badencoder_$shadow_dataset.log 2>&1 &
+    --save_name defences/Beatrix/imgs/beatrix_badencoder_$shadow_dataset.png > defences/Beatrix/logs/beatrix_badencoder_$shadow_dataset-gtsrb.log 2>&1 &
