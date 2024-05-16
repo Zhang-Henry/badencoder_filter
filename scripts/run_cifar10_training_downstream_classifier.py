@@ -116,14 +116,14 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 # run_eval(1, 'MOCO', 'svhn', 'output/cifar10-moco/clean_encoder/moco-model.pth', 1, 'output/MOCO/svhn_backdoored_encoder/2024-05-13-23:21:27/unet_filter_200_trained.pt', 'one', 'clean')
 
 ## CLIP
-run_eval(0, 'CLIP', 'stl10', 'output/CLIP/stl10_backdoored_encoder/2024-05-14-14:06:55/model_40.pth', 9, 'output/CLIP/stl10_backdoored_encoder/2024-05-14-14:06:55/unet_filter_40_trained.pt', 'truck', 'backdoor')
+# run_eval(0, 'CLIP', 'stl10', 'output/CLIP/stl10_backdoored_encoder/2024-05-14-14:06:55/model_40.pth', 9, 'output/CLIP/stl10_backdoored_encoder/2024-05-14-14:06:55/unet_filter_40_trained.pt', 'truck', 'backdoor')
 # run_eval(7, 'CLIP', 'gtsrb', 'output/CLIP/gtsrb_backdoored_encoder/2024-05-13-13:21:30/model_40.pth', 12, 'output/CLIP/gtsrb_backdoored_encoder/2024-05-13-13:21:30/unet_filter_40_trained.pt', 'priority', 'backdoor')
 # run_eval(4, 'CLIP', 'svhn', 'output/CLIP/svhn_backdoored_encoder/2024-05-14-17:08:40/model_20.pth', 1, 'output/CLIP/svhn_backdoored_encoder/2024-05-14-17:08:40/unet_filter_20_trained.pt', 'one', 'backdoor')
 
 
 ## SWAV
-# run_eval(7, 'swav', 'stl10', 'output/MOCO/stl10_backdoored_encoder/2024-05-14-13:28:11/model_140.pth', 9, 'output/MOCO/stl10_backdoored_encoder/2024-05-14-13:28:11/unet_filter_140_trained.pt', 'truck', 'backdoor')
-# run_eval(7, 'swav', 'gtsrb', 'output/swav/gtsrb_backdoored_encoder/2024-05-14-16:11:44/model_140.pth', 12, 'output/swav/gtsrb_backdoored_encoder/2024-05-14-16:11:44/unet_filter_140_trained.pt', 'priority', 'backdoor')
+# run_eval(7, 'swav', 'stl10', 'output/swav/stl10_backdoored_encoder/2024-05-15-15:27:39/model_160.pth', 9, 'output/swav/stl10_backdoored_encoder/2024-05-15-15:27:39/unet_filter_160_trained.pt', 'truck', 'backdoor')
+# run_eval(4, 'swav', 'gtsrb', 'output/swav/gtsrb_backdoored_encoder/2024-05-14-16:11:44/model_160.pth', 12, 'output/swav/gtsrb_backdoored_encoder/2024-05-14-16:11:44/unet_filter_160_trained.pt', 'priority', 'backdoor')
 # run_eval(6, 'swav', 'svhn', 'output/swav/svhn_backdoored_encoder/2024-05-14-16:12:53/model_140.pth', 1, 'output/swav/svhn_backdoored_encoder/2024-05-14-16:12:53/unet_filter_140_trained.pt', 'one', 'backdoor')
 
 # run_eval(1, 'swav', 'svhn', 'log/benchmark_logs/cifar10/version_0/SwaV/checkpoints/epoch=799-step=19200.ckpt', 1, 'output/simsiam/svhn_backdoored_encoder/2024-05-14-15:36:33/unet_filter_100_trained.pt', 'one', 'clean')
@@ -138,3 +138,14 @@ run_eval(0, 'CLIP', 'stl10', 'output/CLIP/stl10_backdoored_encoder/2024-05-14-14
 # run_eval(4, 'simsiam', 'svhn', 'log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt', 1, 'output/simsiam/svhn_backdoored_encoder/2024-05-14-15:36:33/unet_filter_100_trained.pt', 'one', 'clean')
 # run_eval(5, 'simsiam', 'gtsrb', 'log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt', 12, 'output/simsiam/gtsrb_backdoored_encoder/2024-05-14-15:38:13/unet_filter_80_trained.pt', 'priority', 'clean')
 # run_eval(6, 'simsiam', 'stl10', 'log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt', 9, 'output/simsiam/stl10_backdoored_encoder/2024-05-14-15:39:35/unet_filter_100_trained.pt', 'truck', 'clean')
+
+## byol
+# run_eval(2, 'byol', 'stl10', 'output/byol/stl10_backdoored_encoder/2024-05-15-16:38:57/model_200.pth', 9, 'output/byol/stl10_backdoored_encoder/2024-05-15-16:38:57/unet_filter_200_trained.pt', 'truck', 'backdoor')
+# run_eval(2, 'byol', 'gtsrb', 'output/byol/svhn_backdoored_encoder/2024-05-15-16:38:06/model_200.pth', 12, 'output/byol/svhn_backdoored_encoder/2024-05-15-16:38:06/unet_filter_200_trained.pt', 'priority', 'backdoor')
+# run_eval(2, 'byol', 'svhn', 'output/byol/svhn_backdoored_encoder/2024-05-15-16:38:06/model_200.pth', 1, 'output/byol/svhn_backdoored_encoder/2024-05-15-16:38:06/unet_filter_200_trained.pt', 'one', 'backdoor')
+
+
+## NNCLR
+# run_eval(7, 'NNCLR', 'stl10', 'output/byol/stl10_backdoored_encoder/2024-05-15-16:38:57/model_200.pth', 9, 'output/byol/stl10_backdoored_encoder/2024-05-15-16:38:57/unet_filter_200_trained.pt', 'truck', 'backdoor')
+# run_eval(7, 'NNCLR', 'gtsrb', 'output/byol/svhn_backdoored_encoder/2024-05-15-16:38:06/model_200.pth', 12, 'output/byol/svhn_backdoored_encoder/2024-05-15-16:38:06/unet_filter_200_trained.pt', 'priority', 'backdoor')
+run_eval(2, 'NNCLR', 'svhn', 'output/NNCLR/svhn_backdoored_encoder/2024-05-15-23:21:12/model_200.pth', 1, 'output/NNCLR/svhn_backdoored_encoder/2024-05-15-23:21:12/unet_filter_200_trained.pt', 'one', 'backdoor')

@@ -99,18 +99,17 @@ from lightly.utils.benchmarking import BenchmarkModule
 logs_root_dir = os.path.join(os.getcwd(), "log/benchmark_logs")
 
 # set max_epochs to 800 for long run (takes around 10h on a single V100)
-max_epochs = 800
+max_epochs = 500
 num_workers = 8
 knn_k = 200
 knn_t = 0.1
 classes = 10
-os.environ["CUDA_VISIBLE_DEVICES"]= '0'
 
 # Set to True to enable Distributed Data Parallel training.
 distributed = False
 
 # Set to True to enable Synchronized Batch Norm (requires distributed=True).
-# If enabled the batch norm is calculated over all gpus, otherwise the batch
+# If enabled the batch norm is calculated over all gpus, otherwise the batch 
 # norm is only calculated from samples on the same gpu.
 sync_batchnorm = False
 
@@ -122,7 +121,7 @@ gather_distributed = False
 
 # benchmark
 n_runs = 1  # optional, increase to create multiple runs and report mean + std
-batch_size = 512
+batch_size = 1024
 lr_factor = batch_size / 128  # scales the learning rate linearly with batch size
 
 # Number of devices and hardware to use for training.
@@ -896,9 +895,8 @@ models = [
 ]
 
 models = [
-    BYOLModel,
-    SMoGModel,
-    NNCLRModel
+    NNCLRModel,
+    DINOModel
 ]
 
 bench_results = dict()

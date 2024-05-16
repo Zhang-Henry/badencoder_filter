@@ -60,14 +60,7 @@ def get_pretraining_cifar10(data_dir):
 
 
 def get_shadow_cifar10(args):
-    train_transform = transforms.Compose([
-        transforms.RandomResizedCrop(32),
-        transforms.RandomHorizontalFlip(p=0.5),
-        transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8),
-        transforms.RandomGrayscale(p=0.2),
-        transforms.ToTensor(),
-        transforms.Normalize([0.4914, 0.4822, 0.4465], [0.2023, 0.1994, 0.2010])
-        ])
+
     if args.encoder_usage_info == 'cifar10':
         train_transform = train_transform
     elif args.encoder_usage_info == 'MOCO':
@@ -89,7 +82,25 @@ def get_shadow_cifar10(args):
             cj_strength=0.5,
             gaussian_blur=0,
         )
-
+    elif args.encoder_usage_info == 'byol':
+        train_transform = BYOLTransform(
+            view_1_transform=BYOLView1Transform(input_size=32, gaussian_blur=0.0),
+            view_2_transform=BYOLView2Transform(input_size=32, gaussian_blur=0.0),
+        )
+    elif args.encoder_usage_info == 'NNCLR':
+        train_transform = SimCLRTransform(
+            input_size=32,
+            cj_strength=0.5,
+            gaussian_blur=0.0,
+        )
+    elif args.encoder_usage_info == 'DINO':
+        train_transform = DINOTransform(
+            global_crop_size=32,
+            n_local_views=0,
+            cj_strength=0.5,
+            gaussian_blur=(0, 0, 0),
+        )
+        
     training_data_num = 50000
     testing_data_num = 10000
     np.random.seed(100)

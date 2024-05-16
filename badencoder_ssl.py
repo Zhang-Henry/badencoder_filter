@@ -197,8 +197,8 @@ if __name__ == '__main__':
         model = torch.load(args.pretrained_encoder)
     elif args.encoder_usage_info in ['simsiam', 'swav']:
         checkpoint = torch.load(args.pretrained_encoder)
-        state_dict = {k.replace('backbone.', ''): v for k, v in checkpoint['state_dict'].items()}
-        new_state_dict = {k: v for k, v in state_dict.items() if 'head' not in k}
+        state_dict = {k: v for k, v in checkpoint['state_dict'].items() if 'backbone.' in k}
+        new_state_dict = {k.replace('backbone.', ''): v for k, v in state_dict.items()}
         model.load_state_dict(new_state_dict)
         clean_model.load_state_dict(new_state_dict)
 

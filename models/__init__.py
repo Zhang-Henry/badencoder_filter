@@ -40,7 +40,7 @@ def get_encoder_architecture_usage(args):
             nn.AdaptiveAvgPool2d(1),
         )
         return backbone
-    elif args.encoder_usage_info in ['simsiam', 'swav']:
+    elif args.encoder_usage_info in ['simsiam','swav','byol','NNCLR','DINO']:
         resnet = ResNetGenerator("resnet-18")
         backbone = nn.Sequential(
             *list(resnet.children())[:-1],

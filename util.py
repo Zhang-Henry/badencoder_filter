@@ -45,7 +45,7 @@ def filter_color_loss(filter,img_clean,img_trans,tracker,loss_0,args):
         mean = torch.tensor([0.48145466, 0.4578275, 0.40821073]).view(1, 3, 1, 1).cuda()
         std = torch.tensor([0.26862954, 0.26130258, 0.27577711]).view(1, 3, 1, 1).cuda()
 
-    if args.encoder_usage_info in ['MOCO', 'simsiam','swav']:
+    if args.encoder_usage_info in ['MOCO', 'simsiam','swav','byol','NNCLR','DINO']:
         mean=torch.tensor(utils.IMAGENET_NORMALIZE["mean"]).view(1, 3, 1, 1).cuda()
         std=torch.tensor(utils.IMAGENET_NORMALIZE["std"]).view(1, 3, 1, 1).cuda()
 
@@ -122,7 +122,7 @@ def clamp_batch_images(batch_images, args):
         mean = torch.tensor([0.48145466, 0.4578275, 0.40821073]).cuda()
         std = torch.tensor([0.26862954, 0.26130258, 0.27577711]).cuda()
 
-    if args.encoder_usage_info in ['MOCO','simsiam','swav']:
+    if args.encoder_usage_info in ['MOCO','simsiam','swav','byol','NNCLR','DINO']:
         mean=utils.IMAGENET_NORMALIZE["mean"]
         std=utils.IMAGENET_NORMALIZE["std"]
 

@@ -87,12 +87,12 @@ if __name__ == '__main__':
 
         if args.encoder_usage_info in ['CLIP', 'imagenet'] and 'clean' in args.encoder:
             model.visual.load_state_dict(checkpoint['state_dict'])
-        elif args.encoder_usage_info in 'MOCO':
-            model = checkpoint.cuda()
-        elif args.encoder_usage_info in ['simsiam','swav']:
-            state_dict = {k.replace('backbone.', ''): v for k, v in checkpoint['state_dict'].items()}
-            new_state_dict = {k: v for k, v in state_dict.items() if 'head' not in k}
-            model.load_state_dict(new_state_dict)
+        # elif args.encoder_usage_info in 'MOCO':
+        #     model = checkpoint.cuda()
+        # elif args.encoder_usage_info in ['simsiam','swav','byol','NNCLR','DINO']:
+        #     state_dict = {k: v for k, v in checkpoint['state_dict'].items() if 'backbone.' in k}
+        #     new_state_dict = {k.replace('backbone.', ''): v for k, v in state_dict.items()}
+        #     model.load_state_dict(new_state_dict)
         else:
             model.load_state_dict(checkpoint['state_dict'])
 
@@ -102,7 +102,7 @@ if __name__ == '__main__':
         feature_bank_testing, label_bank_testing = predict_feature(args,model.visual, test_loader_clean)
         feature_bank_backdoor, label_bank_backdoor = predict_feature(args,model.visual, test_loader_backdoor,'backdoor')
         feature_bank_target, label_bank_target = predict_feature(args,model.visual, target_loader)
-    elif args.encoder_usage_info in ['MOCO','simsiam','swav']:
+    elif args.encoder_usage_info in ['MOCO','simsiam','swav','byol','NNCLR','DINO']:
         feature_bank_training, label_bank_training = predict_feature(args,model, train_loader)
         feature_bank_testing, label_bank_testing = predict_feature(args,model, test_loader_clean)
         feature_bank_backdoor, label_bank_backdoor = predict_feature(args,model, test_loader_backdoor,'backdoor')
