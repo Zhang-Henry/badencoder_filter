@@ -26,18 +26,31 @@
 #     --cut_threshold 8000 \
 #     --save_name defences/Beatrix/imgs/beatrix_badencoder_$shadow_dataset.png > defences/Beatrix/logs/beatrix_badencoder_$shadow_dataset-stl10.log
 
-shadow_dataset=cifar10
-CUDA_VISIBLE_DEVICES=2 nohup python3 -u defences/Beatrix/eval_beatrix.py \
-    --batch_size 500 \
-    --shadow_dataset $shadow_dataset \
-    --pretrained_encoder output/$shadow_dataset/svhn_backdoored_encoder/model_200.pth \
-    --encoder_usage_info $shadow_dataset \
-    --reference_file reference/$shadow_dataset/one.npz \
-    --gpu 5 \
-    --trigger_file trigger/trigger_pt_white_21_10_ap_replace.npz \
-    --lr 0.1 --epochs 60 \
-    --cut_threshold 8000 \
-    --save_name defences/Beatrix/imgs/beatrix_badencoder_$shadow_dataset.png > defences/Beatrix/logs/beatrix_badencoder_$shadow_dataset-svhn.log
+# shadow_dataset=cifar10
+# CUDA_VISIBLE_DEVICES=2 nohup python3 -u defences/Beatrix/eval_beatrix.py \
+#     --batch_size 500 \
+#     --shadow_dataset $shadow_dataset \
+#     --pretrained_encoder output/$shadow_dataset/svhn_backdoored_encoder/model_200.pth \
+#     --encoder_usage_info $shadow_dataset \
+#     --reference_file reference/$shadow_dataset/one.npz \
+#     --gpu 5 \
+#     --trigger_file trigger/trigger_pt_white_21_10_ap_replace.npz \
+#     --lr 0.1 --epochs 60 \
+#     --cut_threshold 8000 \
+#     --save_name defences/Beatrix/imgs/beatrix_badencoder_$shadow_dataset.png > defences/Beatrix/logs/beatrix_badencoder_$shadow_dataset-svhn.log
+
+# shadow_dataset=cifar10
+# CUDA_VISIBLE_DEVICES=2 nohup python3 -u defences/Beatrix/eval_beatrix.py \
+#     --batch_size 500 \
+#     --shadow_dataset $shadow_dataset \
+#     --pretrained_encoder output/$shadow_dataset/gtsrb_backdoored_encoder/model_200.pth \
+#     --encoder_usage_info $shadow_dataset \
+#     --reference_file reference/$shadow_dataset/priority.npz \
+#     --gpu 5 \
+#     --trigger_file trigger/trigger_pt_white_21_10_ap_replace.npz \
+#     --lr 0.1 --epochs 60 \
+#     --cut_threshold 8000 \
+#     --save_name defences/Beatrix/imgs/beatrix_badencoder_$shadow_dataset.png > defences/Beatrix/logs/beatrix_badencoder_$shadow_dataset-gtsrb.log
 
 # shadow_dataset=stl10
 # nohup python3 -u defences/Beatrix/eval_beatrix.py \
@@ -105,15 +118,15 @@ CUDA_VISIBLE_DEVICES=2 nohup python3 -u defences/Beatrix/eval_beatrix.py \
 #     --save_name defences/Beatrix/imgs/beatrix_badencoder_$shadow_dataset.png > defences/Beatrix/logs/beatrix_badencoder_$shadow_dataset-svhn.log 2>&1 &
 
 
-# shadow_dataset=stl10
-# CUDA_VISIBLE_DEVICES=2 nohup python3 -u defences/Beatrix/eval_beatrix.py \
-#     --batch_size 500 \
-#     --shadow_dataset $shadow_dataset \
-#     --pretrained_encoder output/$shadow_dataset/gtsrb_backdoored_encoder/model_200_badencoder.pth \
-#     --encoder_usage_info $shadow_dataset \
-#     --reference_file reference/$shadow_dataset/priority.npz \
-#     --gpu 2 \
-#     --trigger_file trigger/trigger_pt_white_21_10_ap_replace.npz \
-#     --lr 0.1 --epochs 60 \
-#     --cut_threshold 8000 \
-#     --save_name defences/Beatrix/imgs/beatrix_badencoder_$shadow_dataset.png > defences/Beatrix/logs/beatrix_badencoder_$shadow_dataset-gtsrb.log 2>&1 &
+shadow_dataset=stl10
+CUDA_VISIBLE_DEVICES=2 nohup python3 -u defences/Beatrix/eval_beatrix.py \
+    --batch_size 500 \
+    --shadow_dataset $shadow_dataset \
+    --pretrained_encoder output/$shadow_dataset/gtsrb_backdoored_encoder/model_200_badencoder.pth \
+    --encoder_usage_info $shadow_dataset \
+    --reference_file reference/$shadow_dataset/priority.npz \
+    --gpu 2 \
+    --trigger_file trigger/trigger_pt_white_21_10_ap_replace.npz \
+    --lr 0.1 --epochs 60 \
+    --cut_threshold 8000 \
+    --save_name defences/Beatrix/imgs/beatrix_badencoder_$shadow_dataset.png > defences/Beatrix/logs/beatrix_badencoder_$shadow_dataset-gtsrb.log 2>&1 &
