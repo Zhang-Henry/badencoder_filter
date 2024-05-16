@@ -62,7 +62,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 
 
 # run_finetune(7, 'NNCLR', 'cifar10', 'svhn', 'xx', 'one', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_2/NNCLR/checkpoints/epoch=499-step=24000.ckpt')
-run_finetune(3, 'NNCLR', 'cifar10', 'stl10', 'xx', 'truck', 'cifar10', 64, 0.1, 20, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_2/NNCLR/checkpoints/epoch=499-step=24000.ckpt')
+# run_finetune(3, 'NNCLR', 'cifar10', 'stl10', 'xx', 'truck', 'cifar10', 64, 0.1, 20, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_2/NNCLR/checkpoints/epoch=499-step=24000.ckpt')
 # run_finetune(5, 'NNCLR', 'cifar10', 'gtsrb', 'xx', 'priority', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_2/NNCLR/checkpoints/epoch=499-step=24000.ckpt')
 
 
