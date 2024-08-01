@@ -16,7 +16,7 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
             --reference_label {reference_label} \
             --reference_file ./reference/{encoder_usage_info}/{reference_file}.npz \
             --gpu {gpu} \
-            >./log/{encoder_usage_info}/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}_100.log 2>&1 &"
+            >./log/{encoder_usage_info}/evaluation_{key}_{encoder_usage_info}_{downstream_dataset}.log 2>&1 &"
 
 
     os.system(cmd)
@@ -116,9 +116,10 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 # run_eval(1, 'MOCO', 'svhn', 'output/cifar10-moco/clean_encoder/moco-model.pth', 1, 'output/MOCO/svhn_backdoored_encoder/2024-05-13-23:21:27/unet_filter_200_trained.pt', 'one', 'clean')
 
 ## CLIP
-# run_eval(0, 'CLIP', 'stl10', 'output/CLIP/stl10_backdoored_encoder/2024-05-14-14:06:55/model_40.pth', 9, 'output/CLIP/stl10_backdoored_encoder/2024-05-14-14:06:55/unet_filter_40_trained.pt', 'truck', 'backdoor')
+run_eval(2, 'CLIP', 'stl10', 'output/CLIP/stl10_backdoored_encoder/2024-05-18-16:03:38/model_200.pth', 9, 'output/CLIP/stl10_backdoored_encoder/2024-05-18-16:03:38/unet_filter_200_trained.pt', 'truck', 'backdoor')
+# run_eval(2, 'CLIP', 'stl10', 'output/CLIP/stl10_backdoored_encoder/2024-05-18-13:52:16/model_120.pth', 9, 'output/CLIP/stl10_backdoored_encoder/2024-05-18-13:52:16/unet_filter_120_trained.pt', 'truck', 'backdoor')
 # run_eval(7, 'CLIP', 'gtsrb', 'output/CLIP/gtsrb_backdoored_encoder/2024-05-13-13:21:30/model_40.pth', 12, 'output/CLIP/gtsrb_backdoored_encoder/2024-05-13-13:21:30/unet_filter_40_trained.pt', 'priority', 'backdoor')
-# run_eval(4, 'CLIP', 'svhn', 'output/CLIP/svhn_backdoored_encoder/2024-05-14-17:08:40/model_20.pth', 1, 'output/CLIP/svhn_backdoored_encoder/2024-05-14-17:08:40/unet_filter_20_trained.pt', 'one', 'backdoor')
+# run_eval(4, 'CLIP', 'svhn', 'output/CLIP/svhn_backdoored_encoder/2024-05-16-08:35:00/model_80.pth', 1, 'output/CLIP/svhn_backdoored_encoder/2024-05-16-08:35:00/unet_filter_80_trained.pt', 'one', 'backdoor')
 
 
 ## SWAV
@@ -146,7 +147,7 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 
 
 ## NNCLR
-run_eval(2, 'NNCLR', 'stl10', 'output/NNCLR/stl10_backdoored_encoder/2024-05-16-15:08:41/model_120.pth', 9, 'output/NNCLR/stl10_backdoored_encoder/2024-05-16-15:08:41/unet_filter_120_trained.pt', 'truck', 'backdoor')
+# run_eval(2, 'NNCLR', 'stl10', 'output/NNCLR/stl10_backdoored_encoder/2024-05-16-15:08:41/model_200.pth', 9, 'output/NNCLR/stl10_backdoored_encoder/2024-05-16-15:08:41/unet_filter_200_trained.pt', 'truck', 'backdoor')
 # run_eval(2, 'NNCLR', 'gtsrb', 'output/NNCLR/gtsrb_backdoored_encoder/2024-05-15-23:22:20/model_100.pth', 12, 'output/NNCLR/gtsrb_backdoored_encoder/2024-05-15-23:22:20/unet_filter_100_trained.pt', 'priority', 'backdoor')
 # run_eval(2, 'NNCLR', 'svhn', 'output/NNCLR/svhn_backdoored_encoder/2024-05-15-23:21:12/model_200.pth', 1, 'output/NNCLR/svhn_backdoored_encoder/2024-05-15-23:21:12/unet_filter_200_trained.pt', 'one', 'backdoor')
 
@@ -155,4 +156,4 @@ run_eval(2, 'NNCLR', 'stl10', 'output/NNCLR/stl10_backdoored_encoder/2024-05-16-
 
 # run_eval(5, 'DINO', 'stl10', 'output/DINO/stl10_backdoored_encoder/2024-05-16-08:41:02/model_100.pth', 9, 'output/DINO/stl10_backdoored_encoder/2024-05-16-08:41:02/unet_filter_100_trained.pt', 'truck', 'backdoor')
 # run_eval(5, 'DINO', 'gtsrb', 'output/DINO/gtsrb_backdoored_encoder/2024-05-16-08:41:06/model_200.pth', 12, 'output/DINO/gtsrb_backdoored_encoder/2024-05-16-08:41:06/unet_filter_200_trained.pt', 'priority', 'backdoor')
-# run_eval(5, 'DINO', 'svhn', 'output/DINO/svhn_backdoored_encoder/2024-05-16-08:40:30/model_120.pth', 1, 'output/DINO/svhn_backdoored_encoder/2024-05-16-08:40:30/unet_filter_120_trained.pt', 'one', 'backdoor')
+# run_eval(5, 'DINO', 'svhn', 'output/DINO/svhn_backdoored_encoder/2024-05-16-08:40:30/model_200.pth', 1, 'output/DINO/svhn_backdoored_encoder/2024-05-16-08:40:30/unet_filter_200_trained.pt', 'one', 'backdoor')

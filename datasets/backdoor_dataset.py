@@ -52,9 +52,9 @@ class BadEncoderDataset(Dataset):
         self.target_input_array = np.load(reference_file)
         self.target_image_list = self.target_input_array['x']
 
-        self.trigger_input_array = np.load(trigger_file)
-        self.trigger_patch_list = self.trigger_input_array['t']
-        self.trigger_mask_list = self.trigger_input_array['tm']
+        # self.trigger_input_array = np.load(trigger_file)
+        # self.trigger_patch_list = self.trigger_input_array['t']
+        # self.trigger_mask_list = self.trigger_input_array['tm']
 
 
         self.classes = class_type
@@ -97,8 +97,8 @@ class BadEncoderDataset(Dataset):
             ###########################
             ### origin ###
 
-            backdoored_image[:,:,:] = img_copy * self.trigger_mask_list[i] + self.trigger_patch_list[i][:]
-            img_backdoor =self.bd_transform(Image.fromarray(backdoored_image))
+            # backdoored_image[:,:,:] = img_copy * self.trigger_mask_list[i] + self.trigger_patch_list[i][:]
+            # img_backdoor =self.bd_transform(Image.fromarray(backdoored_image))
 
             ###########################
             # for ctrl only
@@ -121,7 +121,7 @@ class BadEncoderDataset(Dataset):
 
 
             ###########################
-            # img_backdoor = self.bd_transform(img_copy)
+            img_backdoor = self.bd_transform(img_copy)
 
             ###########################
             img_backdoor_list.append(img_backdoor)
