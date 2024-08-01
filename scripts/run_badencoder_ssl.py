@@ -69,3 +69,8 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 # run_finetune(7, 'DINO', 'cifar10', 'svhn', 'xx', 'one', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_2/DINO/checkpoints/epoch=499-step=24000.ckpt')
 # run_finetune(3, 'DINO', 'cifar10', 'stl10', 'xx', 'truck', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_2/DINO/checkpoints/epoch=499-step=24000.ckpt')
 # run_finetune(5, 'DINO', 'cifar10', 'gtsrb', 'xx', 'priority', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_2/DINO/checkpoints/epoch=499-step=24000.ckpt')
+
+
+# run_finetune(3, 'mae', 'imagenet', 'stl10', 'xx', 'truck', 'imagenet',16,0.3,20, 0.0001,clean_encoder='output/mae/clean_encoder/vit.ckpt')
+# run_finetune(2, 'mae', 'imagenet', 'gtsrb', 'xx', 'priority','imagenet',16,0.3,20, 0.0001,clean_encoder='output/mae/clean_encoder/vit.ckpt')
+run_finetune(1, 'mae', 'imagenet', 'svhn', 'xx', 'one','imagenet',16,0.3,20, 0.0001,clean_encoder='output/mae/clean_encoder/vit.ckpt')

@@ -3,6 +3,8 @@ from .clip_model import CLIP
 from .imagenet_model import ImageNetResNet
 from lightly.models import ResNetGenerator
 import torch.nn as nn
+from timm.models.vision_transformer import vit_base_patch16_224
+from lightly.models.modules import MaskedVisionTransformerTIMM
 
 
 def get_encoder_architecture(args):
@@ -46,6 +48,10 @@ def get_encoder_architecture_usage(args):
             *list(resnet.children())[:-1],
             nn.AdaptiveAvgPool2d(1),
         )
+        return backbone
+    elif args.encoder_usage_info in ['mae']:
+        vit = vit_base_patch16_224()
+        backbone = MaskedVisionTransformerTIMM(vit=vit)
         return backbone
     else:
         raise ValueError('Unknown pretraining dataset: {}'.format(args.pretraining_dataset))

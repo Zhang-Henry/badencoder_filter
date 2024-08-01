@@ -44,7 +44,7 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
 
     for img_clean, img_backdoor_list, reference_list, reference_aug_list, img_trans in train_bar:
         img_clean = img_clean.cuda(non_blocking=True)
-        img_trans = img_trans[0].cuda(non_blocking=True)
+        img_trans = img_trans.cuda(non_blocking=True)
 
         reference_cuda_list, reference_aug_cuda_list, img_backdoor_cuda_list = [], [], []
         for reference in reference_list:
@@ -195,7 +195,7 @@ if __name__ == '__main__':
         print(f'load the clean model from {args.pretrained_encoder}')
         clean_model = torch.load(args.pretrained_encoder)
         model = torch.load(args.pretrained_encoder)
-    elif args.encoder_usage_info in ['simsiam', 'swav']:
+    elif args.encoder_usage_info in ['simsiam', 'swav', 'vit']:
         checkpoint = torch.load(args.pretrained_encoder)
         state_dict = {k: v for k, v in checkpoint['state_dict'].items() if 'backbone.' in k}
         new_state_dict = {k.replace('backbone.', ''): v for k, v in state_dict.items()}

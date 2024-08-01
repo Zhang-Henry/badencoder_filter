@@ -102,7 +102,7 @@ if __name__ == '__main__':
         feature_bank_testing, label_bank_testing = predict_feature(args,model.visual, test_loader_clean)
         feature_bank_backdoor, label_bank_backdoor = predict_feature(args,model.visual, test_loader_backdoor,'backdoor')
         feature_bank_target, label_bank_target = predict_feature(args,model.visual, target_loader)
-    elif args.encoder_usage_info in ['MOCO','simsiam','swav','byol','NNCLR','DINO']:
+    elif args.encoder_usage_info in ['MOCO','simsiam','swav','byol','NNCLR','DINO','mae']:
         feature_bank_training, label_bank_training = predict_feature(args,model, train_loader)
         feature_bank_testing, label_bank_testing = predict_feature(args,model, test_loader_clean)
         feature_bank_backdoor, label_bank_backdoor = predict_feature(args,model, test_loader_backdoor,'backdoor')

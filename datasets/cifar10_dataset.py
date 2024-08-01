@@ -14,7 +14,8 @@ from lightly.transforms import (
     SimSiamTransform,
     SMoGTransform,
     SwaVTransform,
-    MoCoV2Transform
+    MoCoV2Transform,
+    MAETransform
 )
 
 train_transform = transforms.Compose([
@@ -108,6 +109,7 @@ def get_shadow_cifar10(args):
             gaussian_blur=(0, 0, 0),
         )
 
+
     training_data_num = 50000
     testing_data_num = 10000
     np.random.seed(100)
@@ -139,13 +141,19 @@ def get_shadow_cifar10_224(args):
     training_data_sampling_indices = np.random.choice(training_data_num, training_data_num, replace=False)
     print('loading from the training data')
 
+    if args.encoder_usage_info == 'imagenet':
+        train_transform = finetune_transform_CLIP
+    elif args.encoder_usage_info == 'mae':
+        train_transform = MAETransform()
+
+
     shadow_dataset = BadEncoderDataset(
         numpy_file=args.data_dir+'train_224.npz',
         trigger_file=args.trigger_file,
         reference_file= args.reference_file,
         class_type=classes,
         indices = training_data_sampling_indices,
-        transform=finetune_transform_CLIP,
+        transform=train_transform,
         bd_transform=test_transform_CLIP,
         ftt_transform=finetune_transform_CLIP
     )
