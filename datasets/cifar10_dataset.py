@@ -148,7 +148,7 @@ def get_shadow_cifar10_224(args):
         reference_file= args.reference_file,
         class_type=classes,
         indices = training_data_sampling_indices,
-        transform=finetune_transform_CLIP,
+        transform=train_transform,
         bd_transform=test_transform_CLIP,
         ftt_transform=finetune_transform_CLIP
     )

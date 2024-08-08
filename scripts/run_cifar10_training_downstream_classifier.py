@@ -116,7 +116,11 @@ run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2024-08
 # run_eval(1, 'MOCO', 'svhn', 'output/cifar10-moco/clean_encoder/moco-model.pth', 1, 'output/MOCO/svhn_backdoored_encoder/2024-05-13-23:21:27/unet_filter_200_trained.pt', 'one', 'clean')
 
 ## CLIP
+<<<<<<< HEAD
 # run_eval(2, 'CLIP', 'stl10', 'output/CLIP/stl10_backdoored_encoder/2024-05-18-16:03:38/model_200.pth', 9, 'output/CLIP/stl10_backdoored_encoder/2024-05-18-16:03:38/unet_filter_200_trained.pt', 'truck', 'backdoor')
+=======
+run_eval(2, 'CLIP', 'stl10', 'output/CLIP/stl10_backdoored_encoder/2024-05-18-16:03:38/model_200.pth', 9, 'output/CLIP/stl10_backdoored_encoder/2024-05-18-16:03:38/unet_filter_200_trained.pt', 'truck', 'backdoor')
+>>>>>>> 219129c3e859d7ede02d6af117f8c821f7e09374
 # run_eval(2, 'CLIP', 'stl10', 'output/CLIP/stl10_backdoored_encoder/2024-05-18-13:52:16/model_120.pth', 9, 'output/CLIP/stl10_backdoored_encoder/2024-05-18-13:52:16/unet_filter_120_trained.pt', 'truck', 'backdoor')
 # run_eval(7, 'CLIP', 'gtsrb', 'output/CLIP/gtsrb_backdoored_encoder/2024-05-13-13:21:30/model_40.pth', 12, 'output/CLIP/gtsrb_backdoored_encoder/2024-05-13-13:21:30/unet_filter_40_trained.pt', 'priority', 'backdoor')
 # run_eval(4, 'CLIP', 'svhn', 'output/CLIP/svhn_backdoored_encoder/2024-05-16-08:35:00/model_80.pth', 1, 'output/CLIP/svhn_backdoored_encoder/2024-05-16-08:35:00/unet_filter_80_trained.pt', 'one', 'backdoor')

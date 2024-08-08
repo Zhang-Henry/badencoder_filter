@@ -44,7 +44,7 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
 
     for img_clean, img_backdoor_list, reference_list, reference_aug_list, img_trans in train_bar:
         img_clean = img_clean.cuda(non_blocking=True)
-        img_trans = img_trans[0].cuda(non_blocking=True)
+        img_trans = img_trans.cuda(non_blocking=True)
 
         reference_cuda_list, reference_aug_cuda_list, img_backdoor_cuda_list = [], [], []
         for reference in reference_list:
