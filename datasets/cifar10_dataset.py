@@ -14,7 +14,8 @@ from lightly.transforms import (
     SimSiamTransform,
     SMoGTransform,
     SwaVTransform,
-    MoCoV2Transform
+    MoCoV2Transform,
+    MAETransform
 )
 
 train_transform = transforms.Compose([
@@ -108,6 +109,7 @@ def get_shadow_cifar10(args):
             gaussian_blur=(0, 0, 0),
         )
 
+
     training_data_num = 50000
     testing_data_num = 10000
     np.random.seed(100)
@@ -139,6 +141,7 @@ def get_shadow_cifar10_224(args):
     training_data_sampling_indices = np.random.choice(training_data_num, training_data_num, replace=False)
     print('loading from the training data')
 
+
     shadow_dataset = BadEncoderDataset(
         numpy_file=args.data_dir+'train_224.npz',
         trigger_file=args.trigger_file,
@@ -157,7 +160,7 @@ def get_downstream_cifar10(args):
     training_file_name = 'train.npz'
     testing_file_name = 'test.npz'
 
-    if args.encoder_usage_info == 'cifar10':
+    if args.encoder_usage_info in ['cifar10','byol','simsiam']:
         if args.noise == 'GaussianBlur':
             test_transform = test_transform_cifar10_GaussianBlur
             print('test_transform_cifar10_GaussianBlur')

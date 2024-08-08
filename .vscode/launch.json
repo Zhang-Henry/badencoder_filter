@@ -591,5 +591,182 @@
       "justMyCode": true,
       "cwd": "/home/jianzhang/hrzhang/badencoder_filter"
     },
+    {
+      "name": "MAE",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/badencoder_ssl.py",
+      "console": "integratedTerminal",
+      "args": [
+        "--epochs",
+        "200",
+        "--timestamp",
+        "test", // Replace ${time} with the actual timestamp or variable
+        "--lr",
+        "0.0001",
+        "--batch_size",
+        "16",
+        "--results_dir",
+        "./output/mae/stl10_backdoored_encoder/test", // Replace ${time} with the actual timestamp or variable
+        "--shadow_dataset",
+        "imagenet",
+        "--pretrained_encoder",
+        "output/mae/clean_encoder/vit.ckpt",
+        "--encoder_usage_info",
+        "mae",
+        "--gpu",
+        "4",
+        "--reference_file",
+        "./reference/imagenet/truck.npz",
+        "--trigger_file",
+        "xx",
+        "--pretraining_dataset",
+        "imagenet",
+        "--color",
+        "0.3",
+        "--loss0",
+        "20",
+        "--rand_init"
+      ],
+      "env": {
+        "CUDA_VISIBLE_DEVICES": "4"
+      }
+      },
+      {
+        "name": "moco_imagenet",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/badencoder_ssl.py",
+        "args": [
+          "--epochs",
+          "200",
+          "--lr",
+          "0.0001",
+          "--batch_size",
+          "16",
+          "--shadow_dataset",
+          "imagenet",
+          "--pretrained_encoder",
+          "output/imagenet/clean_encoder/moco.ckpt",
+          "--encoder_usage_info",
+          "mocov2",
+          "--gpu",
+          "1",
+          "--reference_file",
+          "./reference/imagenet/rottweiler.npz",
+          "--trigger_file",
+          "xx",
+          "--pretraining_dataset",
+          "imagenet",
+          "--color",
+          "0.3",
+          "--loss0",
+          "30",
+          "--rand_init"
+        ],
+        "env": {
+          "CUDA_VISIBLE_DEVICES": "1"
+        },
+        "console": "integratedTerminal"
+      },
+      {
+        "name": "downsteam_moco_imagenet",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/training_downstream_classifier.py",
+        "console": "integratedTerminal",
+        "args": [
+          "--batch_size",
+          "64",
+          "--encoder_usage_info",
+          "mocov2",
+          "--dataset",
+          "imagenet",
+          "--trigger_file",
+          "output/mocov2/imagenet_backdoored_encoder/2024-08-03-20:23:41/unet_filter_200_trained.pt",
+          "--encoder",
+          "output/mocov2/imagenet_backdoored_encoder/2024-08-03-20:23:41/model_200.pth",
+          "--reference_label",
+          "234",
+          "--reference_file",
+          "./reference/imagenet/rottweiler.npz",
+          "--gpu",
+          "0"
+        ],
+        "env": {
+          "CUDA_VISIBLE_DEVICES": "0"
+        },
+        "cwd": "${workspaceFolder}"
+      },
+        {
+          "name": "Evaluate ImageNet100",
+          "type": "python",
+          "request": "launch",
+          "program": "${workspaceFolder}/training_downstream_classifier.py",
+          "console": "integratedTerminal",
+          "args": [
+            "--batch_size",
+            "64",
+            "--encoder_usage_info",
+            "byol",
+            "--dataset",
+            "imagenet_100",
+            "--trigger_file",
+            "output/imagenet_100/imagenet_100_backdoored_encoder/2024-08-05-13:34:55/unet_filter_200_trained.pt",
+            "--encoder",
+            "output/imagenet_100/imagenet_100_backdoored_encoder/2024-08-05-13:34:55/model_200.pth",
+            "--reference_label",
+            "234",
+            "--reference_file",
+            "./reference/imagenet/rottweiler.npz",
+            "--gpu",
+            "1"
+          ],
+          "cwd": "${workspaceFolder}",
+          "env": {
+            "PYTHONUNBUFFERED": "1"
+          },
+        },
+        {
+          "name": "byol run_badencoder_ssl.py",
+          "type": "python",
+          "request": "launch",
+          "program": "${workspaceFolder}/badencoder_ssl.py",
+          "args": [
+            "--epochs",
+            "200",
+            "--timestamp",
+            "${time}",
+            "--lr",
+            "0.001",
+            "--batch_size",
+            "64",
+            "--results_dir",
+            "./output/byol/cifar10_backdoored_encoder/${time}/",
+            "--shadow_dataset",
+            "cifar10",
+            "--pretrained_encoder",
+            "log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt",
+            "--encoder_usage_info",
+            "byol",
+            "--gpu",
+            "6",
+            "--reference_file",
+            "./reference/cifar10/airplane.npz",
+            "--trigger_file",
+            "xx",
+            "--pretraining_dataset",
+            "cifar10",
+            "--color",
+            "0.1",
+            "--loss0",
+            "10",
+            "--rand_init"
+          ],
+          "env": {
+            "CUDA_VISIBLE_DEVICES": "0"
+          },
+          "console": "integratedTerminal"
+        }
   ]
 }

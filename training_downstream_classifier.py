@@ -86,6 +86,7 @@ if __name__ == '__main__':
                 print(loss)
 
         if args.encoder_usage_info in ['CLIP', 'imagenet'] and 'clean' in args.encoder:
+            print(f'Successfully load model from {args.encoder}.')
             model.visual.load_state_dict(checkpoint['state_dict'])
         # elif args.encoder_usage_info in 'MOCO':
         #     model = checkpoint.cuda()
@@ -94,6 +95,7 @@ if __name__ == '__main__':
         #     new_state_dict = {k.replace('backbone.', ''): v for k, v in state_dict.items()}
         #     model.load_state_dict(new_state_dict)
         else:
+            print(f'Successfully load model from {args.encoder}.')
             model.load_state_dict(checkpoint['state_dict'])
 
     print('Predicting features')
@@ -102,7 +104,7 @@ if __name__ == '__main__':
         feature_bank_testing, label_bank_testing = predict_feature(args,model.visual, test_loader_clean)
         feature_bank_backdoor, label_bank_backdoor = predict_feature(args,model.visual, test_loader_backdoor,'backdoor')
         feature_bank_target, label_bank_target = predict_feature(args,model.visual, target_loader)
-    elif args.encoder_usage_info in ['MOCO','simsiam','swav','byol','NNCLR','DINO']:
+    elif args.encoder_usage_info in ['MOCO','simsiam','swav','byol','NNCLR','DINO','mae','mocov2','imagenet_100']:
         feature_bank_training, label_bank_training = predict_feature(args,model, train_loader)
         feature_bank_testing, label_bank_testing = predict_feature(args,model, test_loader_clean)
         feature_bank_backdoor, label_bank_backdoor = predict_feature(args,model, test_loader_backdoor,'backdoor')

@@ -62,6 +62,8 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args 
             clean_feature_raw = F.normalize(clean_feature_raw, dim=-1)
             for img_reference in reference_cuda_list:
                 clean_feature_reference = clean_encoder(img_reference)
+                if args.encoder_usage_info in ['MOCO','simsiam','swav','byol','NNCLR','DINO','mae','imagenet_100']:
+                    clean_feature_reference = clean_feature_reference.flatten(start_dim=1)
                 clean_feature_reference = F.normalize(clean_feature_reference, dim=-1)
                 clean_feature_reference_list.append(clean_feature_reference)
 
@@ -195,15 +197,23 @@ if __name__ == '__main__':
         print(f'load the clean model from {args.pretrained_encoder}')
         clean_model = torch.load(args.pretrained_encoder)
         model = torch.load(args.pretrained_encoder)
-    elif args.encoder_usage_info in ['simsiam', 'swav']:
+    elif args.encoder_usage_info in ['simsiam', 'swav', 'byol', 'mae', 'mocov2', 'imagenet_100']:
+        print(f'load the clean model from {args.pretrained_encoder}')
         checkpoint = torch.load(args.pretrained_encoder)
         state_dict = {k: v for k, v in checkpoint['state_dict'].items() if 'backbone.' in k}
         new_state_dict = {k.replace('backbone.', ''): v for k, v in state_dict.items()}
         model.load_state_dict(new_state_dict)
         clean_model.load_state_dict(new_state_dict)
-
-    # Create the extra data loaders for testing purpose and define the optimizer
-    print("Optimizer: SGD")
+    elif args.encoder_usage_info in ['DINO']:
+        print(f'load the clean model from {args.pretrained_encoder}')
+        checkpoint = torch.load(args.pretrained_encoder)
+        state_dict = {k: v for k, v in checkpoint['state_dict'].items() if 'backbone.' in k}
+        new_state_dict = {k.replace('backbone.', ''): v for k, v in state_dict.items()}
+        new_state_dict = {k: v for k, v in new_state_dict.items() if not any(teacher in k for teacher in ['teacher_0', 'teacher_1', 'teacher_2', 'teacher_3', 'teacher_4', 'teacher_5'])}
+        model.load_state_dict(new_state_dict)
+        clean_model.load_state_dict(new_state_dict)
+    else:
+        print('No checkpoint loaded.')
 
     optimizer = torch.optim.SGD(model.parameters(), lr=args.lr, weight_decay=5e-4, momentum=0.9)
 
@@ -223,7 +233,7 @@ if __name__ == '__main__':
 
         train_loader = DataLoader(shadow_data, batch_size=args.batch_size, shuffle=True, num_workers=2, pin_memory=True, drop_last=True)
 
-        train_loss = train(model, clean_model, train_loader, optimizer, args,net,optimizer_wd, tracker)
+        train_loss = train(model, clean_model, train_loader, optimizer, args, net, optimizer_wd, tracker)
 
         if epoch % 20 == 0:
             torch.save({'epoch': epoch, 'state_dict': model.state_dict(), 'optimizer' : optimizer.state_dict(),'args':args, 'loss':tracker.get_avg_loss()}, args.results_dir + '/model_' + str(epoch) + '.pth')

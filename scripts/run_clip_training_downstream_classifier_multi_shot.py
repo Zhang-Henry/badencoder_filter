@@ -36,8 +36,8 @@ def eval_clean_model(gpu, encoder_usage_info, downstream_dataset, encoder, refer
 
 
 # evaluate_clip_finetune(6, 'CLIP', 'gtsrb', './output/CLIP/backdoor/priority/model_200.pth', 12, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'priority')
-# evaluate_clip_finetune(1, 'CLIP', 'stl10', './output/CLIP/backdoor/truck/model_200.pth', 9, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'truck')
-evaluate_clip_finetune(4, 'CLIP', 'svhn', 'output/CLIP/svhn_backdoored_encoder/2024-05-13-00:01:32/model_25.pth', 1, 'output/CLIP/svhn_backdoored_encoder/2024-05-13-00:01:32/unet_filter_25_trained.pt', 'one')
+evaluate_clip_finetune(1, 'CLIP', 'stl10', './output/CLIP/backdoor/truck/model_200.pth', 9, './trigger/trigger_pt_white_173_50_ap_replace.npz', 'truck')
+# evaluate_clip_finetune(4, 'CLIP', 'svhn', 'output/CLIP/svhn_backdoored_encoder/2024-05-13-00:01:32/model_25.pth', 1, 'output/CLIP/svhn_backdoored_encoder/2024-05-13-00:01:32/unet_filter_25_trained.pt', 'one')
 
 # eval_clean_model(1, 'CLIP', 'gtsrb', './output/CLIP/clean_encoder/encode_image.pth', 12, reference='priority')
 # eval_clean_model(3, 'CLIP', 'stl10', './output/CLIP/clean_encoder/encode_image.pth', 9, reference='truck')

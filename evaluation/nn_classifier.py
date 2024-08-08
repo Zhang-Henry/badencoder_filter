@@ -134,7 +134,7 @@ def predict_feature(args,net, data_loader,keyword='clean'):
             #     data = np_4d_to_tensor(inputs_bd,args)
             ########################################
             feature = net(data)
-            if args.encoder_usage_info in ['MOCO','simsiam','swav','byol','NNCLR','DINO']:
+            if args.encoder_usage_info in ['MOCO','simsiam','swav','byol','NNCLR','DINO','mae','imagenet_100']:
                 feature = feature.flatten(start_dim=1)
             feature = F.normalize(feature, dim=1)
             feature_bank.append(feature)

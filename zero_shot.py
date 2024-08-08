@@ -104,7 +104,22 @@ if __name__ == '__main__':
         image = Image.fromarray(image)
         image_input = preprocess(image).unsqueeze(0).to(device)
         image_input=filter(image_input)
-        image_input= clamp_batch_images(image_input,args)
+        num_channels =image_input.shape[1]
+
+        mean = torch.tensor([0.48145466, 0.4578275, 0.40821073]).cuda()
+        std = torch.tensor([0.26862954, 0.26130258, 0.27577711]).cuda()
+        if len(mean) != num_channels or len(std) != num_channels:
+            raise ValueError("The length of mean and std must match the number of channels")
+
+        # 创建一个相同形状的张量用于存放裁剪后的图像
+
+        clamped_images = torch.empty_like(image_input)
+
+        # 对每个通道分别进行裁剪
+        for channel in range(image_input.shape[1]):
+            min_val = (0 - mean[channel]) / std[channel]
+            max_val = (1 - mean[channel]) / std[channel]
+            clamped_images[:, channel, :, :] = torch.clamp(image_input[:, channel, :, :], min=min_val, max=max_val)
 
         # Calculate features
         with torch.no_grad():
@@ -115,7 +130,7 @@ if __name__ == '__main__':
 
         similarity = (100.0 * image_features @ text_features.T).softmax(dim=-1)
         values, indices = similarity[0].topk(1)
-
+        print(int(indices.item()))
         if int(args.reference_label) == int(indices.item()):
             hit += 1
     sucess_rate = float(hit) / total_num

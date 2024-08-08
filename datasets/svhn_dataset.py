@@ -60,7 +60,7 @@ def get_downstream_svhn(args):
         memory_data = CIFAR10Mem(numpy_file=args.data_dir+training_file_name, class_type=classes, transform=test_transform)
         test_data_backdoor = BadEncoderTestBackdoor(numpy_file=args.data_dir+testing_file_name, trigger_file=args.trigger_file, reference_label= args.reference_label,  transform=test_transform)
         test_data_clean = CIFAR10Mem(numpy_file=args.data_dir+testing_file_name, class_type=classes, transform=test_transform)
-    elif args.encoder_usage_info == 'imagenet':
+    elif args.encoder_usage_info in ['imagenet','mae']:
         print('test_transform_imagenet')
         test_transform = test_transform_imagenet
         training_file_name = 'train_224'

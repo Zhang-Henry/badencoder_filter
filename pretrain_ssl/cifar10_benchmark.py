@@ -109,7 +109,7 @@ classes = 10
 distributed = False
 
 # Set to True to enable Synchronized Batch Norm (requires distributed=True).
-# If enabled the batch norm is calculated over all gpus, otherwise the batch 
+# If enabled the batch norm is calculated over all gpus, otherwise the batch
 # norm is only calculated from samples on the same gpu.
 sync_batchnorm = False
 

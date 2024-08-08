@@ -5,7 +5,7 @@ from .cifar10_dataset import get_pretraining_cifar10, get_shadow_cifar10, get_do
 from .gtsrb_dataset import  get_downstream_gtsrb
 from .svhn_dataset import get_downstream_svhn
 from .stl10_dataset import get_pretraining_stl10, get_shadow_stl10, get_downstream_stl10
-from .imagenet_dataset_ import get_shadow_imagenet
+from .imagenet_dataset_ import get_shadow_imagenet, get_downstream_imagenet,get_shadow_imagenet_100,get_downstream_imagenet_100
 
 def get_pretraining_dataset(args):
     if args.pretraining_dataset == 'cifar10':
@@ -25,6 +25,8 @@ def get_shadow_dataset(args):
         return get_shadow_stl10(args)
     elif args.shadow_dataset == 'imagenet':
         return get_shadow_imagenet(args)
+    elif args.shadow_dataset == 'imagenet_100':
+        return get_shadow_imagenet_100(args)
     else:
         raise NotImplementedError
 
@@ -38,5 +40,9 @@ def get_dataset_evaluation(args):
         return get_downstream_svhn(args)
     elif args.dataset == 'stl10':
         return get_downstream_stl10(args)
+    elif args.dataset == 'imagenet':
+        return get_downstream_imagenet(args)
+    elif args.dataset == 'imagenet_100':
+        return get_downstream_imagenet_100(args)
     else:
         raise NotImplementedError

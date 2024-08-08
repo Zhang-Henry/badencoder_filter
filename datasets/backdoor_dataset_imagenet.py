@@ -120,6 +120,7 @@ def default_loader(path: str) -> Any:
 
 
 is_valid_file = None
+
 class BadEncoderDataset(VisionDataset):
     """A generic data loader where the samples are arranged in this way: ::
         root/class_x/xxx.ext
@@ -380,3 +381,145 @@ class BadEncoderDataset(VisionDataset):
 
     def __len__(self):
         return len(self.indices)
+
+
+
+
+class ImageNetMem(Dataset):
+    def __init__(self, original_dataset, class_type):
+        self.original_dataset = original_dataset
+        self.classes = class_type
+
+    def __getitem__(self, index):
+        img, label = self.original_dataset[index]
+        return img, label
+
+
+    def __len__(self):
+        return len(self.original_dataset)
+
+
+
+class BadEncoderImageNetBackdoor(Dataset):
+    def __init__(self, original_dataset, reference_label=0):
+        """
+        Args:
+            original_dataset (Dataset): The original ImageNet dataset.
+            reference_label (int): The label to be used for backdoor samples.
+            transform (callable, optional): Optional transform to be applied on a sample.
+        """
+        self.original_dataset = original_dataset
+        self.target_class = reference_label
+
+    def __getitem__(self, index):
+        img, _ = self.original_dataset[index]
+        return img, self.target_class
+
+    def __len__(self):
+        return len(self.original_dataset)
+
+
+
+# class ImageNetMem(VisionDataset):
+#     """A generic data loader where the samples are arranged in this way: ::
+#         root/class_x/xxx.ext
+#         root/class_x/xxy.ext
+#         root/class_x/[...]/xxz.ext
+#         root/class_y/123.ext
+#         root/class_y/nsdf3.ext
+#         root/class_y/[...]/asd932_.ext
+#     Args:
+#         root (string): Root directory path.
+#         loader (callable): A function to load a sample given its path.
+#         extensions (tuple[string]): A list of allowed extensions.
+#             both extensions and is_valid_file should not be passed.
+#         transform (callable, optional): A function/transform that takes in
+#             a sample and returns a transformed version.
+#             E.g, ``transforms.RandomCrop`` for images.
+#         target_transform (callable, optional): A function/transform that takes
+#             in the target and transforms it.
+#         is_valid_file (callable, optional): A function that takes path of a file
+#             and check if the file is a valid file (used to check of corrupt files)
+#             both extensions and is_valid_file should not be passed.
+#      Attributes:
+#         classes (list): List of the class names sorted alphabetically.
+#         class_to_idx (dict): Dict with items (class_name, class_index).
+#         samples (list): List of (sample path, class_index) tuples
+#         targets (list): The class_index value for each image in the dataset
+#     """
+
+#     def __init__(
+#             self,
+#             root: str,
+#             indices, class_type,
+#             loader: Callable[[str], Any] = default_loader,
+#             transform=None,
+#             extensions: Optional[Tuple[str, ...]] = IMG_EXTENSIONS if is_valid_file is None else None,
+#             target_transform: Optional[Callable] = None,
+#             is_valid_file: Optional[Callable[[str], bool]] = None,
+#     ) -> None:
+#         super(ImageNetMem, self).__init__(root, transform=transform,
+#                                             target_transform=target_transform)
+#         classes, class_to_idx = self._find_classes(self.root)
+#         samples = self.make_dataset(self.root, class_to_idx, extensions, is_valid_file)
+#         if len(samples) == 0:
+#             msg = "Found 0 files in subfolders of: {}\n".format(self.root)
+#             if extensions is not None:
+#                 msg += "Supported extensions are: {}".format(",".join(extensions))
+#             raise RuntimeError(msg)
+
+#         self.loader = loader
+#         self.extensions = extensions
+
+#         self.classes = classes
+#         self.class_to_idx = class_to_idx
+#         self.samples = samples
+
+#         self.classes = class_type
+#         self.indices = indices
+#         self.transform = transform
+
+#     @staticmethod
+#     def make_dataset(
+#         directory: str,
+#         class_to_idx: Dict[str, int],
+#         extensions: Optional[Tuple[str, ...]] = None,
+#         is_valid_file: Optional[Callable[[str], bool]] = None,
+#     ) -> List[Tuple[str, int]]:
+#         return make_dataset(directory, class_to_idx, extensions=extensions, is_valid_file=is_valid_file)
+
+#     def _find_classes(self, dir: str) -> Tuple[List[str], Dict[str, int]]:
+#         """
+#         Finds the class folders in a dataset.
+#         Args:
+#             dir (string): Root directory path.
+#         Returns:
+#             tuple: (classes, class_to_idx) where classes are relative to (dir), and class_to_idx is a dictionary.
+#         Ensures:
+#             No class is a subdirectory of another.
+#         """
+#         classes = [d.name for d in os.scandir(dir) if d.is_dir()]
+#         classes.sort()
+#         class_to_idx = {cls_name: i for i, cls_name in enumerate(classes)}
+#         return classes, class_to_idx
+
+#     def __getitem__(self, index: int) -> Tuple[Any, Any]:
+#         """
+#         Args:
+#             index (int): Index
+#         Returns:
+#             tuple: (sample, target) where target is class_index of the target class.
+#         """
+#         path, target = self.samples[self.indices[index]]
+#         sample = self.loader(path)
+
+#         sample = transforms.Resize((224, 224))(sample)
+#         img = sample
+
+#         img_ = self.transform(img)
+
+#         return img_, target
+
+#     def __len__(self):
+#         return len(self.indices)
+
