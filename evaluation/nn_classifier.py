@@ -124,15 +124,7 @@ def predict_feature(args,net, data_loader,keyword='clean'):
             #     grid_temps = torch.clamp(grid_temps, -1, 1)
 
             #     data = F.grid_sample(data, grid_temps.repeat(bs, 1, 1, 1), align_corners=True)
-                ########## bpp ##########
-            # if keyword=='backdoor':
-            #     inputs_bd = back_to_np_4d(data,args)
 
-            #     for i in range(inputs_bd.shape[0]):
-            #         inputs_bd[i,:,:,:] = torch.round(torch.from_numpy(floydDitherspeed(inputs_bd[i].detach().cpu().numpy(),float(8))).cuda())
-
-            #     data = np_4d_to_tensor(inputs_bd,args)
-            ########################################
             feature = net(data)
             if args.encoder_usage_info in ['MOCO','simsiam','swav','byol','NNCLR','DINO','mae','imagenet_100']:
                 feature = feature.flatten(start_dim=1)

@@ -15,9 +15,20 @@ from datetime import datetime
 from optimize_filter.loss import *
 import os,random
 import kornia.augmentation as A
+from pytorch_ssim import SSIM
+from torchmetrics.image import PeakSignalNoiseRatio
+from optimize_filter.utils import Recorder, Loss_Tracker
 
 now = datetime.now()
 print("当前时间：", now.strftime("%Y-%m-%d %H:%M:%S"))
+# ssim = SSIM()
+# psnr = PeakSignalNoiseRatio().cuda()
+
+def denormalize(tensor, mean, std):
+    for t, m, s in zip(tensor, mean, std):
+        t.mul_(s).add_(m)
+    return tensor
+
 
 
 class ProbTransform(torch.nn.Module):
@@ -59,6 +70,8 @@ def train(backdoored_encoder, clean_encoder, data_loader, train_optimizer, args)
             if hasattr(module, 'bias'):
                 module.bias.requires_grad_(False)
             module.eval()
+
+    tracker=Loss_Tracker(['ssim', 'psnr', 'lp'])
 
     clean_encoder.eval()
 
