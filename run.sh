@@ -1,0 +1,1 @@
+CUDA_VISIBLE_DEVICES=2 nohup python stealty.py > log/stealth.log 2>&1 &
