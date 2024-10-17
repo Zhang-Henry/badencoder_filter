@@ -27,7 +27,7 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 # run_eval(5, 'cifar10', 'svhn', 'output/cifar10/clean_encoder/model_1000.pth', 1, './trigger/cifar10/unet_filter.pt', 'one')
 
 
-run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2024-08-07-14:11:37/model_200.pth', 9, 'output/cifar10/stl10_backdoored_encoder/2024-08-07-14:11:37/unet_filter_200_trained.pt', 'truck', 'backdoor') # color + loss0
+# run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2024-08-07-14:11:37/model_200.pth', 9, 'output/cifar10/stl10_backdoored_encoder/2024-08-07-14:11:37/unet_filter_200_trained.pt', 'truck', 'backdoor') # color + loss0
 
 # run_eval(1, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2024-01-28-13:17:00/model_100.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder//2024-01-28-13:17:00/unet_filter_100_trained.pt', 'priority', 'backdoor') # color + loss0
 # run_eval(0, 'cifar10', 'gtsrb', './output/cifar10/gtsrb_backdoored_encoder/2024-01-03-12:20:49/model_200.pth', 12, 'output/cifar10/gtsrb_backdoored_encoder/2023-12-29-13:20:56/unet_filter_200_trained.pt', 'priority', 'backdoor') # loss0
@@ -135,7 +135,7 @@ run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2024-08
 # run_eval(6, 'simsiam', 'stl10', 'output/simsiam/stl10_backdoored_encoder/2024-08-06-01:17:13/model_200.pth', 9, 'output/simsiam/stl10_backdoored_encoder/2024-08-06-01:17:13/unet_filter_200_trained.pt', 'truck', 'backdoor')
 # run_eval(5, 'simsiam', 'gtsrb', 'output/simsiam/gtsrb_backdoored_encoder/2024-08-06-01:15:29/model_200.pth', 12, 'output/simsiam/gtsrb_backdoored_encoder/2024-08-06-01:15:29/unet_filter_200_trained.pt', 'priority', 'backdoor')
 # run_eval(0, 'simsiam', 'svhn', 'output/simsiam/svhn_backdoored_encoder/2024-08-06-01:17:13/model_200.pth', 1, 'output/simsiam/svhn_backdoored_encoder/2024-08-06-01:17:13/unet_filter_200_trained.pt', 'one', 'backdoor')
-# run_eval(0, 'simsiam', 'cifar10', 'output/simsiam/cifar10_backdoored_encoder/2024-08-06-01:15:29/model_200.pth', 0, 'output/simsiam/cifar10_backdoored_encoder/2024-08-06-01:15:29/unet_filter_200_trained.pt', 'airplane', 'backdoor') # loss0
+run_eval(0, 'simsiam', 'cifar10', 'output/simsiam/cifar10_backdoored_encoder/2024-10-17-10:49:36/model_200.pth', 0, 'output/simsiam/cifar10_backdoored_encoder/2024-10-17-10:49:36/unet_filter_200_trained.pt', 'airplane', 'backdoor') # loss0
 
 # run_eval(4, 'simsiam', 'svhn', 'log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt', 1, 'output/simsiam/svhn_backdoored_encoder/2024-05-14-15:36:33/unet_filter_100_trained.pt', 'one', 'clean')
 # run_eval(5, 'simsiam', 'gtsrb', 'log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt', 12, 'output/simsiam/gtsrb_backdoored_encoder/2024-05-14-15:38:13/unet_filter_80_trained.pt', 'priority', 'clean')
@@ -145,7 +145,7 @@ run_eval(0, 'cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2024-08
 # run_eval(1, 'byol', 'stl10', 'output/byol/stl10_backdoored_encoder/2024-08-06-01:15:29/model_200.pth', 9, 'output/byol/stl10_backdoored_encoder/2024-08-06-01:15:29/unet_filter_200_trained.pt', 'truck', 'backdoor')
 # run_eval(1, 'byol', 'gtsrb', 'output/byol/gtsrb_backdoored_encoder/2024-08-06-13:38:35/model_200.pth', 12, 'output/byol/gtsrb_backdoored_encoder/2024-08-06-13:38:35/unet_filter_200_trained.pt', 'priority', 'backdoor')
 # run_eval(2, 'byol', 'svhn', 'output/byol/svhn_backdoored_encoder/2024-08-06-01:15:29/model_200.pth', 1, 'output/byol/svhn_backdoored_encoder/2024-08-06-01:15:29/unet_filter_200_trained.pt', 'one', 'backdoor')
-# run_eval(3, 'byol', 'cifar10', 'output/byol/cifar10_backdoored_encoder/2024-08-06-01:15:29/model_200.pth', 0, 'output/byol/cifar10_backdoored_encoder/2024-08-06-01:15:29/unet_filter_200_trained.pt', 'airplane', 'backdoor') # loss0
+run_eval(3, 'byol', 'cifar10', 'output/byol/cifar10_backdoored_encoder/2024-10-17-10:49:36/model_200.pth', 0, 'output/byol/cifar10_backdoored_encoder/2024-10-17-10:49:36/unet_filter_200_trained.pt', 'airplane', 'backdoor') # loss0
 
 
 ## NNCLR

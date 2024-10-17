@@ -99,7 +99,7 @@ from lightly.utils.benchmarking import BenchmarkModule
 logs_root_dir = os.path.join(os.getcwd(), "log/benchmark_logs")
 
 # set max_epochs to 800 for long run (takes around 10h on a single V100)
-max_epochs = 500
+max_epochs = 800
 num_workers = 8
 knn_k = 200
 knn_t = 0.1
@@ -121,7 +121,7 @@ gather_distributed = False
 
 # benchmark
 n_runs = 1  # optional, increase to create multiple runs and report mean + std
-batch_size = 1024
+batch_size = 512
 lr_factor = batch_size / 128  # scales the learning rate linearly with batch size
 
 # Number of devices and hardware to use for training.
@@ -895,8 +895,8 @@ models = [
 ]
 
 models = [
-    NNCLRModel,
-    DINOModel
+    # BYOLModel,
+    SimSiamModel
 ]
 
 bench_results = dict()
