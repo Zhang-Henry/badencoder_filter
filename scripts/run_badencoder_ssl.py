@@ -49,7 +49,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 # run_finetune(3, 'simsiam', 'cifar10', 'svhn', 'xx', 'one', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt')
 # run_finetune(6, 'simsiam', 'cifar10', 'stl10', 'xx', 'truck', 'cifar10', 64, 0.1, 20, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt')
 # run_finetune(5, 'simsiam', 'cifar10', 'gtsrb', 'xx', 'priority', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt')
-run_finetune(4, 'simsiam', 'cifar10', 'cifar10', 'xx', 'airplane', 'cifar10', 512, 0.1, 15, 0.0001, clean_encoder='log/benchmark_logs/cifar10/version_3/SimSiam/checkpoints/epoch=799-step=77600.ckpt')
+run_finetune(4, 'simsiam', 'cifar10', 'cifar10', 'xx', 'airplane', 'cifar10', 512, 0.15, 25, 0.0001, clean_encoder='log/benchmark_logs/cifar10/version_3/SimSiam/checkpoints/epoch=799-step=77600.ckpt')
 
 
 # run_finetune(5, 'swav', 'cifar10', 'svhn', 'xx', 'one', 'cifar10', 32, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SwaV/checkpoints/epoch=799-step=19200.ckpt')
@@ -60,7 +60,7 @@ run_finetune(4, 'simsiam', 'cifar10', 'cifar10', 'xx', 'airplane', 'cifar10', 51
 # run_finetune(7, 'byol', 'cifar10', 'svhn', 'xx', 'one', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_1/BYOL/checkpoints/epoch=799-step=77600.ckpt')
 # run_finetune(7, 'byol', 'cifar10', 'stl10', 'xx', 'truck', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_1/BYOL/checkpoints/epoch=799-step=77600.ckpt')
 # run_finetune(5, 'byol', 'cifar10', 'gtsrb', 'xx', 'priority', 'cifar10', 512, 0.1, 20, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_1/BYOL/checkpoints/epoch=799-step=77600.ckpt')
-run_finetune(6, 'byol', 'cifar10', 'cifar10', 'xx', 'airplane', 'cifar10', 512, 0.1, 15, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_3/BYOL/checkpoints/epoch=799-step=77600.ckpt')
+# run_finetune(6, 'byol', 'cifar10', 'cifar10', 'xx', 'airplane', 'cifar10', 512, 0.1, 15, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_3/BYOL/checkpoints/epoch=799-step=77600.ckpt')
 
 
 # run_finetune(6, 'NNCLR', 'cifar10', 'svhn', 'xx', 'one', 'cifar10', 512, 0.1, 40, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_2/NNCLR/checkpoints/epoch=499-step=24000.ckpt')
