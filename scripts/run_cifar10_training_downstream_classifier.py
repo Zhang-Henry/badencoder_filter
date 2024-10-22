@@ -135,7 +135,7 @@ def run_eval(gpu, encoder_usage_info, downstream_dataset, encoder, reference_lab
 # run_eval(6, 'simsiam', 'stl10', 'output/simsiam/stl10_backdoored_encoder/2024-08-06-01:17:13/model_200.pth', 9, 'output/simsiam/stl10_backdoored_encoder/2024-08-06-01:17:13/unet_filter_200_trained.pt', 'truck', 'backdoor')
 # run_eval(5, 'simsiam', 'gtsrb', 'output/simsiam/gtsrb_backdoored_encoder/2024-08-06-01:15:29/model_200.pth', 12, 'output/simsiam/gtsrb_backdoored_encoder/2024-08-06-01:15:29/unet_filter_200_trained.pt', 'priority', 'backdoor')
 # run_eval(0, 'simsiam', 'svhn', 'output/simsiam/svhn_backdoored_encoder/2024-08-06-01:17:13/model_200.pth', 1, 'output/simsiam/svhn_backdoored_encoder/2024-08-06-01:17:13/unet_filter_200_trained.pt', 'one', 'backdoor')
-run_eval(0, 'simsiam', 'cifar10', 'output/simsiam/cifar10_backdoored_encoder/2024-10-18-02:07:38/model_200.pth', 0, 'output/simsiam/cifar10_backdoored_encoder/2024-10-18-02:07:38/unet_filter_200_trained.pt', 'airplane', 'backdoor') # loss0
+run_eval(0, 'simsiam', 'cifar10', 'output/simsiam/cifar10_backdoored_encoder/2024-10-18-19:50:15/model_200.pth', 0, 'output/simsiam/cifar10_backdoored_encoder/2024-10-18-19:50:15/unet_filter_200_trained.pt', 'airplane', 'backdoor') # loss0
 
 # run_eval(4, 'simsiam', 'svhn', 'log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt', 1, 'output/simsiam/svhn_backdoored_encoder/2024-05-14-15:36:33/unet_filter_100_trained.pt', 'one', 'clean')
 # run_eval(5, 'simsiam', 'gtsrb', 'log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt', 12, 'output/simsiam/gtsrb_backdoored_encoder/2024-05-14-15:38:13/unet_filter_80_trained.pt', 'priority', 'clean')
