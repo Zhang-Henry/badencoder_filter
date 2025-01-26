@@ -71,7 +71,7 @@ if __name__ == '__main__':
     target_loader = DataLoader(target_dataset, batch_size=args.batch_size, shuffle=False, num_workers=8, pin_memory=True)
 
     num_of_classes = len(train_data.classes)
-
+    print('Number of classes: {}'.format(num_of_classes))
     model = get_encoder_architecture_usage(args).cuda()
 
     if args.encoder != '':

@@ -122,6 +122,7 @@ def get_downstream_imagenet(args):
 
 
 def get_shadow_imagenet_100(args):
+    classes = [str(i) for i in range(100)]
     training_data_num = 100000
     # np.random.seed(100)
     #training_data_sampling_indices = np.random.choice(training_data_num, training_data_num, replace=False)
@@ -153,6 +154,7 @@ def get_shadow_imagenet_100(args):
 def get_downstream_imagenet_100(args):
     imagenet_train_dataset = datasets.ImageNet(root='data/imagenet_100',split='train', transform=test_transform)
     imagenet_val_dataset = datasets.ImageNet(root='data/imagenet_100',split='val', transform=test_transform)
+    classes = [str(i) for i in range(100)]
 
     if args.encoder_usage_info in ['mocov2','imagenet_100','simsiam','byol']:
         print('test_transform_imagenet')

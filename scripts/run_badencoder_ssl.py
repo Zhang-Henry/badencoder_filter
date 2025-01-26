@@ -49,7 +49,7 @@ def run_finetune(gpu, encoder_usage_info, shadow_dataset, downstream_dataset, tr
 # run_finetune(3, 'simsiam', 'cifar10', 'svhn', 'xx', 'one', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt')
 # run_finetune(6, 'simsiam', 'cifar10', 'stl10', 'xx', 'truck', 'cifar10', 64, 0.1, 20, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt')
 # run_finetune(5, 'simsiam', 'cifar10', 'gtsrb', 'xx', 'priority', 'cifar10', 64, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SimSiam/checkpoints/epoch=799-step=19200.ckpt')
-run_finetune(4, 'simsiam', 'cifar10', 'cifar10', 'xx', 'airplane', 'cifar10', 512, 0.12, 30, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_3/SimSiam/checkpoints/epoch=799-step=77600.ckpt') # 0.15, 25
+# run_finetune(4, 'simsiam', 'cifar10', 'cifar10', 'xx', 'airplane', 'cifar10', 512, 0.12, 30, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_3/SimSiam/checkpoints/epoch=799-step=77600.ckpt') # 0.15, 25
 
 
 # run_finetune(5, 'swav', 'cifar10', 'svhn', 'xx', 'one', 'cifar10', 32, 0.1, 10, 0.001, clean_encoder='log/benchmark_logs/cifar10/version_0/SwaV/checkpoints/epoch=799-step=19200.ckpt')
@@ -79,6 +79,6 @@ run_finetune(4, 'simsiam', 'cifar10', 'cifar10', 'xx', 'airplane', 'cifar10', 51
 
 # run_finetune(2, 'mocov2', 'imagenet', 'imagenet', 'xx', 'rottweiler', 'imagenet', 32, 0.3, 30, 0.0001, clean_encoder='output/imagenet/clean_encoder/moco.ckpt')
 
-# run_finetune(0, 'imagenet_100', 'imagenet_100', 'imagenet_100', 'xx', 'rottweiler', 'imagenet_100',12,0.3,20, 0.0001,clean_encoder='log/benchmark_logs/imagenet/version_1/SimCLR/checkpoints/epoch=199-step=98800.ckpt')
-# run_finetune(1, 'simsiam', 'imagenet_100', 'imagenet_100', 'xx', 'rottweiler', 'imagenet_100',12,0.3,20, 0.0001,clean_encoder='log/benchmark_logs/imagenet/version_2/SimSiam/checkpoints/epoch=199-step=98800.ckpt')
-# run_finetune(2, 'byol', 'imagenet_100', 'imagenet_100', 'xx', 'rottweiler', 'imagenet_100',12,0.3,20, 0.0001,clean_encoder='log/benchmark_logs/imagenet/version_0/BYOL/checkpoints/epoch=199-step=98800.ckpt')
+# run_finetune(3, 'imagenet_100', 'imagenet_100', 'imagenet_100', 'xx', 'rottweiler', 'imagenet_100',12,0.3,20, 0.0001,clean_encoder='log/benchmark_logs/imagenet/version_1/SimCLR/checkpoints/epoch=199-step=98800.ckpt')
+run_finetune(1, 'simsiam', 'imagenet_100', 'imagenet_100', 'xx', 'rottweiler', 'imagenet_100',12,0.3,20, 0.0001,clean_encoder='log/benchmark_logs/imagenet/version_2/SimSiam/checkpoints/epoch=199-step=98800.ckpt')
+run_finetune(2, 'byol', 'imagenet_100', 'imagenet_100', 'xx', 'rottweiler', 'imagenet_100',12,0.3,20, 0.0001,clean_encoder='log/benchmark_logs/imagenet/version_0/BYOL/checkpoints/epoch=199-step=98800.ckpt')

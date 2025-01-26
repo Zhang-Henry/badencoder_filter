@@ -73,7 +73,9 @@ def net_test(net, test_loader, epoch, criterion, keyword='Accuracy'):
             output = net(data)
             test_loss += criterion(output, target.long()).item()
             pred = output.argmax(dim=1, keepdim=True)
-
+            # if keyword == 'Attack Success Rate (ASR)':
+            #     print("Predictions:", pred.view(-1).cpu().numpy())  # Print the predictions
+            #     print("Labels:", target.cpu().numpy())  # Print the labels
             correct += pred.eq(target.view_as(pred)).sum().item()
 
     test_acc = 100. * correct / len(test_loader.dataset)
