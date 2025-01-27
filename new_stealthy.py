@@ -66,11 +66,11 @@ class BadEncoderTestBackdoor(Dataset):
         ###########################
         ### for ins filter only ###
 
-        # image_pil = Image.fromarray(img)
-        # # filtered_image_pil = pilgram.xpro2(image_pil)
-        # filtered_image_pil = pilgram.kelvin(image_pil)
+        image_pil = Image.fromarray(img)
+        # filtered_image_pil = pilgram.xpro2(image_pil)
+        filtered_image_pil = pilgram.kelvin(image_pil)
 
-        # img_backdoor =self.test_transform(filtered_image_pil)
+        img_backdoor =self.test_transform(filtered_image_pil)
 
         ###########################
 
@@ -101,8 +101,8 @@ class BadEncoderTestBackdoor(Dataset):
         ########################
 
 
-        img = Image.fromarray(img)
-        img_backdoor =self.test_transform(img)
+        # img = Image.fromarray(img)
+        # img_backdoor =self.test_transform(img)
 
         clean_img = self.test_transform(clean_img)
 
@@ -341,6 +341,7 @@ def calculate_metrics_inactive(dataloader, mean, std, trigger_file):
     return avg_ssim, avg_psnr, avg_lpips
 
 
+
 def calculate_all_metrics(dataloader, mean, std, trigger_file, device='cuda'):
     fsim_scores = []
     lpips_scores = []
@@ -370,9 +371,12 @@ def calculate_all_metrics(dataloader, mean, std, trigger_file, device='cuda'):
         img_backdoor_denorm = (img_backdoor_denorm * 255).clamp(0, 255).to(torch.uint8)
         clean_img_denorm = (clean_img_denorm * 255).clamp(0, 255).to(torch.uint8)
 
-        # 计算 FSIM (支持批量计算)
-        fsim_batch = fsim(img_backdoor_denorm, clean_img_denorm, data_range=255)  # 批量计算
-        fsim_scores.extend(fsim_batch.cpu().numpy())
+        # 计算 FSIM (逐图计算以避免 0-d 数组问题)
+        for i in range(img_backdoor_denorm.shape[0]):
+            img_b = img_backdoor_denorm[i].unsqueeze(0)  # 添加批次维度
+            img_c = clean_img_denorm[i].unsqueeze(0)    # 添加批次维度
+            fsim_value = fsim(img_b, img_c, data_range=255)
+            fsim_scores.append(fsim_value.item())  # 转为标量
 
         # 更新 FID 批量
         fid_metric.update(img_backdoor_denorm, real=False)
@@ -392,7 +396,6 @@ def calculate_all_metrics(dataloader, mean, std, trigger_file, device='cuda'):
         'FID': fid_score,
         'Perceptual_Loss': avg_lpips
     }
-
 
 data = [
     ('cifar10', 'stl10', 'output/cifar10/stl10_backdoored_encoder/2023-12-29-13:14:52/unet_filter_200_trained.pt'),
@@ -415,7 +418,7 @@ for pre, down, trigger_file in data:
 
     # 创建测试 DataLoader
     bd_test = BadEncoderTestBackdoor(f'data/{down}/test.npz', transform)
-    dataloader = DataLoader(bd_test, batch_size=4096, shuffle=False)
+    dataloader = DataLoader(bd_test, batch_size=512, shuffle=False)
 
     # 计算指标
     metrics = calculate_all_metrics(dataloader, mean, std, trigger_file)
